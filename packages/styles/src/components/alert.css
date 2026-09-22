@@ -29,6 +29,17 @@
     margin-top: calc((var(--kh-leading-ui) * 1em - var(--kh-icon-size)) / 2);
   }
 
+  /* 中身が空なら variant ごとの既定グリフを描く。
+     利用側が <svg> を入れたら :empty が外れて差し替わる。
+     neutral は「中立」なので絵柄を持たない。 */
+  [data-kh="alert"] [data-part="icon"]:empty {
+    width:  var(--kh-icon-size);
+    height: var(--kh-icon-size);
+    background: currentColor;
+    -webkit-mask: var(--kh-alert-glyph) center / contain no-repeat;
+            mask: var(--kh-alert-glyph) center / contain no-repeat;
+  }
+
   [data-kh="alert"] [data-part="title"] {
     margin: 0;
     font-weight: 600;
@@ -46,11 +57,23 @@
     gap: var(--kh-space-2);
   }
 
-  /* variant はアイコンの色だけを変える */
-  [data-kh="alert"][data-variant="danger"]  { --kh-alert-icon: var(--kh-color-danger); }
-  [data-kh="alert"][data-variant="warning"] { --kh-alert-icon: var(--kh-color-warning); }
-  [data-kh="alert"][data-variant="success"] { --kh-alert-icon: var(--kh-color-success); }
-  [data-kh="alert"][data-variant="info"]    { --kh-alert-icon: var(--kh-color-info); }
+  /* variant はアイコンの色と絵柄を変える */
+  [data-kh="alert"][data-variant="danger"] {
+    --kh-alert-icon:  var(--kh-color-danger);
+    --kh-alert-glyph: var(--kh-glyph-circle-x);
+  }
+  [data-kh="alert"][data-variant="warning"] {
+    --kh-alert-icon:  var(--kh-color-warning);
+    --kh-alert-glyph: var(--kh-glyph-triangle-alert);
+  }
+  [data-kh="alert"][data-variant="success"] {
+    --kh-alert-icon:  var(--kh-color-success);
+    --kh-alert-glyph: var(--kh-glyph-circle-check);
+  }
+  [data-kh="alert"][data-variant="info"] {
+    --kh-alert-icon:  var(--kh-color-info);
+    --kh-alert-glyph: var(--kh-glyph-info);
+  }
 
   /* 地を塗る版。情報量は同じで、主張だけ強い。多用しない */
   [data-kh="alert"][data-tone="soft"] [data-part="icon"]        { --kh-alert-icon: currentColor; }

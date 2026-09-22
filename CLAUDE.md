@@ -131,9 +131,12 @@ pnpm ink <png>    # 文字のインク位置を測る
   Known Gaps に、切り替え用の CSS ごと書いてある
 - **アイコンは「部品を操作するために要る図形」だけ持つ。** チェック・丸・シェブロン・×
   は `tokens.css` に `--kh-glyph-*` として data URI で同梱する（`mask` で使い、色は
-  `currentColor`）。Alert の警告アイコンのような**中身を説明するアイコンは持たない** ——
-  利用側のアイコンセットと絵柄が割れるため。Bootstrap も Shoelace も同じ線引き
-  （根拠は `docs/notes.md`）。絵柄は Lucide の幾何（viewBox 24 / stroke-width 2 / round）
-  を基準にし、利用側が差す svg にはサイズと位置だけ CSS が与える
+  `currentColor`）。Bootstrap も Shoelace も同じ線引き（根拠は `docs/notes.md`）。
+- **Alert の variant アイコンも同梱する。** 一般にはここは持たないが、それは
+  「利用側が別のアイコンセットで揃えていると絵柄が割れる」ため。**kohaku の利用者は
+  あさひ 1 人で Lucide に揃えるので、割れる相手がいない。** 配る相手が増えたら見直す
+- 絵柄は Lucide の幾何（viewBox 24 / stroke-width 2 / round）で統一する。
+  利用側が差す svg にはサイズと位置だけ CSS が与える
+- **Button のアイコンは持たない。** 何が来るか kohaku が知らないため
 - **Tailwind は利用側で使う前提。** `@kohaku/styles/tailwind` でトークンを Tailwind の
   テーマに流す。上書きの境界は shadcn/lint で守る（`templates/oxlintrc.json`）

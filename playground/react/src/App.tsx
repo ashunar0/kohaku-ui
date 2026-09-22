@@ -187,20 +187,24 @@ export function App() {
 
       <h2 style={h2}>Alert</h2>
       <div style={{ display: "grid", gap: ".75rem" }}>
-        <Alert
-          variant="info"
-          icon={<Icon><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></Icon>}
-          title="メンテナンスのお知らせ"
-        >
+        <Alert variant="info" title="メンテナンスのお知らせ">
           3 月 12 日 2:00〜4:00 の間、一部機能が利用できません。
         </Alert>
-        <Alert
-          variant="danger"
-          tone="soft"
-          icon={<Icon><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></Icon>}
-          title="支払いが確認できませんでした"
-        >
+        <Alert variant="danger" tone="soft" title="支払いが確認できませんでした">
           3 日以内に更新されない場合、サービスが停止します。
+        </Alert>
+        <Alert variant="warning" title="容量が残りわずかです">
+          80% を超えました。不要なファイルを削除してください。
+        </Alert>
+        <Alert variant="success" title="デプロイが完了しました">
+          2 分 14 秒で 3 件の変更が反映されました。
+        </Alert>
+        <Alert
+          variant="info"
+          icon={<Icon><path d="M12 2v20" /><path d="m19 9-7 7-7-7" /></Icon>}
+          title="icon を渡した場合はそちらが勝つ"
+        >
+          :empty が外れるので既定のグリフは引っ込む。
         </Alert>
       </div>
 

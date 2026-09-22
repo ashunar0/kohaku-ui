@@ -552,6 +552,24 @@ Alert のアイコンは 24px で目立ち、**セットごとに絵柄が明確
 
 Shoelace が同梱できるのは 1500 個 + 差し替え API を持っているから。規模が違う。
 
+### ただし kohaku には当てはまらなかった
+
+上の線引きは「**誰が使うかわからないライブラリ**」の前提で成り立っている。
+Alert のアイコンを同梱しない理由は「利用側が別のセットで揃えていると絵柄が割れる」
+だが、**kohaku の利用者はあさひ 1 人で、アイコンは Lucide で揃える。**
+割れる相手が存在しない。
+
+なので **Alert の 4 つも同梱する**。`info` / `circle-x` / `triangle-alert` /
+`circle-check` を variant ごとに割り当て、`<Alert variant="danger" title="…">`
+だけでアイコンが出るようにした。`icon` を渡せば `:empty` が外れてそちらが勝つ。
+neutral は「中立」なので絵柄を持たない。
+
+**配る相手が増えたらここを見直す。** 外すのは `alert.css` の variant ごとの
+`--kh-alert-glyph` を消すだけで、4 行で戻せる。
+
+調べたこと自体は無駄ではなかった。checkbox / select の判断は同梱側で正しかったし、
+「なぜ普通は同梱しないのか」を知った上で外れる方が、知らずに外れるより安全。
+
 ### kohaku の実装
 
 `tokens.css` に `--kh-glyph-*` として data URI で持つ。絵柄は Lucide から
@@ -584,6 +602,7 @@ dark も 1 つの定義で済む。
 | check / minus | ✅ checkbox と select の item-indicator で使用 |
 | radio の点 | ✅ CSS の `::after` で描画（図形なので data URI すら不要） |
 | chevron-down | ✅ select。`▾` という**文字**の直打ちをやめた |
+| info / circle-x / triangle-alert / circle-check | ✅ Alert の variant ごと |
 | × | ⬜ dialog に閉じるボタンを作るときに足す。今は使う場所が無い（YAGNI） |
 | ‹ › / eye / star / grip | ⬜ pagination / password-input / rating / 並べ替えを作るとき |
 
