@@ -35,11 +35,9 @@
     box-shadow: var(--kh-shadow-lg);
   }
 
-  /* Ark は閉じているあいだ content に hidden 属性を付ける。
-     author の display 宣言は UA の [hidden] { display: none } に勝ってしまうので、
-     display だけは :not([hidden]) に限って当てる。
-     これを外すと「閉じたダイアログが画面中央に出たまま消えない」になる。
-     （閉じたまま fade-out のアニメーションが 1 度走って終わり、opacity が 1 に戻る） */
+  /* Ark が hidden を付ける part。author の display 宣言は UA の
+     [hidden] { display: none } に勝つので :not([hidden]) で囲う。
+     外すと閉じたダイアログが画面中央に出たまま消えない */
   [data-scope="dialog"][data-part="content"]:not([hidden]) { display: flex; }
 
   [data-scope="dialog"][data-part="title"] {

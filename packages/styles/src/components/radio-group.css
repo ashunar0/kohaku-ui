@@ -1,12 +1,10 @@
 @layer kohaku {
-  /* Ark の radio-group。root の中に group label と item が並ぶ。
-     item は <label>、item-control が丸、item-text がラベル文字。
+  /* Ark の radio-group。item は <label>、item-control が丸、item-text が文字。
 
      anatomy には indicator（選択位置を滑らせるハイライト）もあるが、
      これは segmented control 用。素のラジオでは使わないので CSS も持たない。
 
-     丸の中の点は CSS で描く。図形であってアイコンではないので、
-     「アイコンは同梱しない」の対象外。 */
+     点は単なる円なので、data URI ではなく ::after で描く */
 
   [data-scope="radio-group"][data-part="root"] {
     display: flex;
@@ -57,14 +55,11 @@
       border-color var(--kh-duration-fast) var(--kh-ease);
   }
 
-  /* 中の点。checkbox のチェックと同じく、塗られた面の上に乗るので accent-fg。
-     常に描いて scale で出し入れする（要素の生成より滑らかで、ずれない）
+  /* 常に描いて scale で出し入れする（要素の生成より滑らかで、ずれない）。
 
-     点は「直径」ではなく「縁からの距離」で決める。
-     place-items: center の余白は (中身 - 直径) / 2 なので、直径で決めると
-     差が奇数になったとき余白が 0.5px になり、ブラウザがどちらかへ 1 デバイスpx
-     寄せて中心から外れる。18px の丸に 7px の点がまさにそれだった（余白 4.5px）。
-     inset を直接持てば、--kh-radio-size をどう変えても余白は常に整数。 */
+     直径ではなく「縁からの距離」で決める。直径で決めると余白が 0.5px になる
+     組み合わせが出て、ブラウザがどちらかへ寄せて中心から外れる（経緯は
+     docs/notes.md）。inset を持てば余白は常に整数。 */
   [data-scope="radio-group"][data-part="item-control"]::after {
     content: "";
     --kh-radio-dot-size: calc(

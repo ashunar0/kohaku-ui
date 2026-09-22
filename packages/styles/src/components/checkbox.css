@@ -2,9 +2,8 @@
   /* Ark の checkbox。root は <label>、control は aria-hidden の箱で、
      実体の <input> は視覚的に隠されている。CSS は control だけを描く。
 
-     indicator は未チェック時に Ark が hidden 属性を付けて消す。
-     author の display 宣言は UA の [hidden] { display: none } に勝ってしまうので、
-     display は :not([hidden]) に限って当てる。 */
+     indicator は Ark が hidden を付ける part なので :not([hidden]) で囲う。
+     外すと未チェックでもチェックが出る（dialog の content と同じ罠） */
 
   [data-scope="checkbox"][data-part="root"] {
     display: inline-flex;
@@ -29,7 +28,7 @@
 
     border: 1px solid var(--kh-color-border-strong);
     background: var(--kh-color-surface);
-    /* indicator の線色。塗られた箱の上に乗るので accent-fg */
+    /* グリフは currentColor で塗られる。箱の上に乗るので accent-fg */
     color: var(--kh-color-accent-fg);
 
     /* 18px の箱に 16px のアイコンだと枠に触れる。一段落とす */
@@ -46,8 +45,7 @@
     border-color: var(--kh-color-accent);
   }
 
-  /* hover は「まだ選ばれていない」ときだけ意味がある。
-     選択済みの箱を暗くしても「押せる」以上の情報が増えない */
+  /* 選択済みの箱を暗くしても情報が増えないので、hover は未選択時だけ */
   [data-scope="checkbox"][data-part="control"][data-state="unchecked"][data-hover] {
     background: var(--kh-color-surface-muted);
   }
@@ -61,9 +59,7 @@
     color: inherit;
   }
 
-  /* 中身が空なら kohaku がグリフを描く。利用側が <svg> を入れたら :empty が
-     外れて何も描かれないので、差し替えの邪魔をしない。
-     mask なので塗りは currentColor（control が持つ accent-fg）が決める。 */
+  /* 空なら kohaku が描く。<svg> を入れれば :empty が外れて差し替わる */
   [data-scope="checkbox"][data-part="indicator"]:empty {
     background: currentColor;
     -webkit-mask: var(--kh-glyph-check) center / contain no-repeat;
@@ -85,8 +81,7 @@
   }
 
   /* ---- state ------------------------------------------------------------ */
-  /* リングは control に付ける。root に付けるとラベルまで囲ってしまい、
-     「どこが操作対象か」がぼやける */
+  /* リングは control に。root に付けるとラベルまで囲って操作対象がぼやける */
   [data-scope="checkbox"][data-part="control"][data-focus-visible] {
     outline: var(--kh-ring-width) solid var(--kh-color-ring);
     outline-offset: var(--kh-ring-offset);

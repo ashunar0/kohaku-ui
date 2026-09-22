@@ -29,9 +29,7 @@
     margin-top: calc((var(--kh-leading-ui) * 1em - var(--kh-icon-size)) / 2);
   }
 
-  /* 中身が空なら variant ごとの既定グリフを描く。
-     利用側が <svg> を入れたら :empty が外れて差し替わる。
-     neutral は「中立」なので絵柄を持たない。 */
+  /* 空なら variant ごとの既定グリフを描く。neutral は絵柄を持たない */
   [data-kh="alert"] [data-part="icon"]:empty {
     width:  var(--kh-icon-size);
     height: var(--kh-icon-size);
