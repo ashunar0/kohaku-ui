@@ -676,3 +676,43 @@ dark の値は Spindle の `#ff6a59` に寄せた。従来の `danger-deep` の 
 | dark | `#ff6055` | `#ff6055` | ✓ | 6.69:1 |
 
 danger ボタン（塗り）と soft alert の文字（dark で 7.65:1）は無傷。
+
+## checkbox / switch / radio-group の書き味レイヤー（2026-09-22）
+
+CSS が固まったので @kohaku/react に 3 つ足した。見た目のコードは 1 行も入れない。
+隠すのは定型だけで、隠した部品は `Checkbox.Control` などで再輸出してある。
+
+```tsx
+<Checkbox defaultChecked>メールで通知を受け取る</Checkbox>
+<Switch>ゲストの招待を許可する</Switch>
+<RadioGroup label="プラン" defaultValue="pro">
+  <RadioGroup.Item value="pro">Pro</RadioGroup.Item>
+</RadioGroup>
+```
+
+`RadioGroup` だけ label を props で受ける。root の中で label と item が
+並ぶ構造なので、children に混ぜると位置を間違えられる。
+
+### Ark の React 実装は zag と違うことがある
+
+**checkbox の Indicator は 2 つ要る。** zag の `getIndicatorProps` は
+`hidden: !indeterminate && !checked` で、checked でも indeterminate でも
+1 つの indicator を出す。ところが Ark の React 側がこれを上書きしている。
+
+```tsx
+// @ark-ui/react/checkbox-indicator.tsx
+const isVisible = indeterminate ? checkbox.indeterminate : checkbox.checked
+```
+
+`indeterminate` prop を付けない Indicator は **indeterminate のとき隠れる**。
+1 つで足りると思って書いたら横棒が出なくなった。ラッパーでは両方置いてある。
+
+**zag の anatomy と connect を読んだだけでは足りない。** Ark の各 FW 実装が
+振る舞いを足していることがある。DOM は実測で確かめる。
+
+### 出力 DOM が素の Ark と一致することを実測
+
+ラッパー経由の署名を取り、素の Ark で書いたときと同じ構造・同じ属性であることを
+確認した（id など Ark が毎回変えるものは除外）。
+CSS の当たり方も checked / unchecked / indeterminate / disabled / invalid と
+`indicator` を渡した場合まで含めて変わっていない。

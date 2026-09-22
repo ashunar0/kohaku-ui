@@ -1,8 +1,7 @@
 import {
-  Actions, Alert, Badge, Button, Card, Dialog, Field, Group,
-  Icon, Input, Select, createListCollection,
+  Actions, Alert, Badge, Button, Card, Checkbox, Dialog, Field, Group,
+  Icon, Input, RadioGroup, Select, Switch, createListCollection,
 } from "@kohaku/react"
-import { Checkbox, RadioGroup, Switch } from "@ark-ui/react"
 import { useEffect, useState } from "react"
 
 const plans = createListCollection({
@@ -49,89 +48,39 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Checkbox / Switch / Radio（Ark・素で組んだもの）</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Checkbox / Switch / Radio（@kohaku/react）</h2>
       <div style={{ display: "grid", gap: "1.25rem", maxWidth: "28rem" }}>
         <div style={{ display: "grid", gap: ".5rem" }}>
-          <Checkbox.Root defaultChecked>
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>メールで通知を受け取る</Checkbox.Label>
-            <Checkbox.HiddenInput />
-          </Checkbox.Root>
-
-          <Checkbox.Root>
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>週次のダイジェストを送る</Checkbox.Label>
-            <Checkbox.HiddenInput />
-          </Checkbox.Root>
-
-          <Checkbox.Root checked="indeterminate">
-            <Checkbox.Control>
-              <Checkbox.Indicator indeterminate />
-            </Checkbox.Control>
-            <Checkbox.Label>一部のメンバーだけ選択中（indeterminate）</Checkbox.Label>
-            <Checkbox.HiddenInput />
-          </Checkbox.Root>
-
-          <Checkbox.Root disabled>
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>この設定は変更できません</Checkbox.Label>
-            <Checkbox.HiddenInput />
-          </Checkbox.Root>
-
-          <Checkbox.Root invalid>
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>利用規約に同意する（未同意 = invalid）</Checkbox.Label>
-            <Checkbox.HiddenInput />
-          </Checkbox.Root>
+          <Checkbox defaultChecked>メールで通知を受け取る</Checkbox>
+          <Checkbox>週次のダイジェストを送る</Checkbox>
+          <Checkbox checked="indeterminate">一部のメンバーだけ選択中（indeterminate）</Checkbox>
+          <Checkbox disabled>この設定は変更できません</Checkbox>
+          <Checkbox invalid>利用規約に同意する（未同意 = invalid）</Checkbox>
+          <Checkbox
+            defaultChecked
+            indicator={<Icon><path d="M12 2v20" /><path d="m19 9-7 7-7-7" /></Icon>}
+          >
+            indicator を渡すと既定のグリフが引っ込む
+          </Checkbox>
         </div>
 
         <div style={{ display: "grid", gap: ".5rem" }}>
-          <Switch.Root defaultChecked>
-            <Switch.Control><Switch.Thumb /></Switch.Control>
-            <Switch.Label>ワークスペースを公開する</Switch.Label>
-            <Switch.HiddenInput />
-          </Switch.Root>
-          <Switch.Root>
-            <Switch.Control><Switch.Thumb /></Switch.Control>
-            <Switch.Label>ゲストの招待を許可する</Switch.Label>
-            <Switch.HiddenInput />
-          </Switch.Root>
-          <Switch.Root disabled>
-            <Switch.Control><Switch.Thumb /></Switch.Control>
-            <Switch.Label>エンタープライズ機能（プラン外）</Switch.Label>
-            <Switch.HiddenInput />
-          </Switch.Root>
+          <Switch defaultChecked>ワークスペースを公開する</Switch>
+          <Switch>ゲストの招待を許可する</Switch>
+          <Switch disabled>エンタープライズ機能（プラン外）</Switch>
         </div>
 
-        <RadioGroup.Root defaultValue="pro">
-          <RadioGroup.Label>プラン</RadioGroup.Label>
+        <RadioGroup label="プラン" defaultValue="pro">
           {[["free","Free — 個人で試す"],["pro","Pro — チームで使う"],["ent","Enterprise — 監査ログつき"]].map(([v,l]) => (
-            <RadioGroup.Item key={v} value={v}>
-              <RadioGroup.ItemControl />
-              <RadioGroup.ItemText>{l}</RadioGroup.ItemText>
-              <RadioGroup.ItemHiddenInput />
-            </RadioGroup.Item>
+            <RadioGroup.Item key={v} value={v}>{l}</RadioGroup.Item>
           ))}
-        </RadioGroup.Root>
+        </RadioGroup>
 
-        <RadioGroup.Root defaultValue="month" orientation="horizontal">
-          <RadioGroup.Label>支払い周期</RadioGroup.Label>
+        <RadioGroup label="支払い周期" defaultValue="month" orientation="horizontal">
           {[["month","毎月"],["year","毎年"]].map(([v,l]) => (
-            <RadioGroup.Item key={v} value={v}>
-              <RadioGroup.ItemControl />
-              <RadioGroup.ItemText>{l}</RadioGroup.ItemText>
-              <RadioGroup.ItemHiddenInput />
-            </RadioGroup.Item>
+            <RadioGroup.Item key={v} value={v}>{l}</RadioGroup.Item>
           ))}
-        </RadioGroup.Root>
+        </RadioGroup>
       </div>
 
       <h2 style={h2}>Button / Badge</h2>
