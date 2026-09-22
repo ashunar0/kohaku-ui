@@ -511,3 +511,81 @@ dark を目で確認する手段が無かったので、React playground の上�
 トグルを置いた。`data-theme` を `<html>` に付け外しするだけ。
 地の色（`--kh-color-canvas`）はページ側の責任なので playground が指定している。
 **kohaku は body に何も指定しない。**
+
+## アイコンをどこまで kohaku が持つか（2026-09-22）
+
+checkbox のチェックマークで「同梱しない方針」と衝突した。自己流で決める前に
+**CSS-only と Web Components で 1 つずつ、実物のソースを読んだ。**
+
+### Bootstrap が CSS に同梱している SVG（`scss/_variables.scss`・全 16 個）
+
+チェック / 横棒 / 丸（checkbox・indeterminate・radio）、丸 ×3（switch のつまみ）、
+▾（select）、▾ ×2（accordion）、‹ ›（carousel）、ハンバーガー ×2（navbar）、
+×（close）、チェックと ! （バリデーション表示）。
+
+**Bootstrap Icons（同じ組織の 2000 個のセット）からすら引いていない。**
+scss に手で書いた文字列で、`viewBox 0 0 20 20` / `stroke-width 3` と、
+Bootstrap Icons とも揃っていない。外部依存ゼロを優先している。
+
+### Shoelace の `system` ライブラリ（全 18 個）
+
+`caret` `check` `chevron-down/left/right` `copy` `eye` `eye-slash` `eyedropper`
+`grip-vertical` `indeterminate` `person-fill` `play-fill` `pause-fill` `radio`
+`star-fill` `x-lg` `x-circle-fill`
+
+Bootstrap Icons を 1500 個同梱しているのに、そこから独立した system を別に持つ。
+ソースのコメントいわく「利用者がアイコンライブラリをどう設定しても、解決に
+失敗しても、**常に使えることを保証するため**」。
+
+### 一致した線引き
+
+設計が全く違う 2 つが、ほぼ同じ集合を持っていた。
+
+> **その部品を操作するために要る図形は同梱する。
+> 中身を説明するアイコンは同梱しない。**
+
+Alert のアイコンは **Bootstrap も daisyUI も持っていない**（docs が「自分で svg を
+書け」と言い、daisyUI は全例が手書き svg）。理由は後付けではなく説明がつく。
+チェックマークはどのセットでもほぼ同じ形で 16px、セットが違っても気づかれない。
+Alert のアイコンは 24px で目立ち、**セットごとに絵柄が明確に違う**ので、
+利用側が Heroicons で揃えている所に Lucide の三角を出すとそこだけ浮く。
+
+Shoelace が同梱できるのは 1500 個 + 差し替え API を持っているから。規模が違う。
+
+### kohaku の実装
+
+`tokens.css` に `--kh-glyph-*` として data URI で持つ。絵柄は Lucide から
+path だけ写す（Bootstrap は自前で座標を書いているが、kohaku は利用側が
+Button / Alert に差す Lucide と線の太さ・端の丸めを揃えたいので同じ出典から取る）。
+
+**`background-image` ではなく `mask` を使う。** Bootstrap は background-image な
+ため svg に色を焼き込んでおり、その結果 dark 対応に `--bs-btn-close-filter` で
+`invert()` をかけるハックを持つ羽目になっている。mask なら形だけ借りて塗りは
+`currentColor` が決めるので、`--kh-color-accent-fg` を上書きすれば追従するし、
+dark も 1 つの定義で済む。
+
+使う側は `:empty` で判定する。利用側が `<svg>` を入れたらグリフは引っ込むので、
+**差し替えの邪魔をしない。**
+
+```css
+[data-part="indicator"]:empty {
+  background: currentColor;
+  mask: var(--kh-glyph-chevron-down) center / contain no-repeat;
+}
+```
+
+`item-indicator` は Ark が `hidden` を付けるので `:not([hidden])` で囲う。
+**dialog の content で踏んだ罠と同じ。**
+
+### 現状と残り
+
+| 図形 | 状態 |
+|---|---|
+| check / minus | ✅ checkbox と select の item-indicator で使用 |
+| radio の点 | ✅ CSS の `::after` で描画（図形なので data URI すら不要） |
+| chevron-down | ✅ select。`▾` という**文字**の直打ちをやめた |
+| × | ⬜ dialog に閉じるボタンを作るときに足す。今は使う場所が無い（YAGNI） |
+| ‹ › / eye / star / grip | ⬜ pagination / password-input / rating / 並べ替えを作るとき |
+
+React と Vue の両方で `m6 9 6 6 6-6` が出ることを実測した。
+**CSS 1 枚で FW を問わず同じ図形が出る**ことの裏付けにもなっている。

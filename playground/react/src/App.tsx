@@ -18,10 +18,6 @@ const h2 = {
   color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem", fontWeight: 600,
 }
 
-/* Lucide の幾何（viewBox 24 / stroke-width 2 / round）。kohaku は同梱しない */
-const Check = () => <Icon><path d="M20 6 9 17l-5-5" /></Icon>
-const Minus = () => <Icon><path d="M5 12h14" /></Icon>
-
 export function App() {
   const [invalid, setInvalid] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark">("light")
@@ -58,7 +54,7 @@ export function App() {
         <div style={{ display: "grid", gap: ".5rem" }}>
           <Checkbox.Root defaultChecked>
             <Checkbox.Control>
-              <Checkbox.Indicator><Check /></Checkbox.Indicator>
+              <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Label>メールで通知を受け取る</Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -66,7 +62,7 @@ export function App() {
 
           <Checkbox.Root>
             <Checkbox.Control>
-              <Checkbox.Indicator><Check /></Checkbox.Indicator>
+              <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Label>週次のダイジェストを送る</Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -74,7 +70,7 @@ export function App() {
 
           <Checkbox.Root checked="indeterminate">
             <Checkbox.Control>
-              <Checkbox.Indicator indeterminate><Minus /></Checkbox.Indicator>
+              <Checkbox.Indicator indeterminate />
             </Checkbox.Control>
             <Checkbox.Label>一部のメンバーだけ選択中（indeterminate）</Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -82,7 +78,7 @@ export function App() {
 
           <Checkbox.Root disabled>
             <Checkbox.Control>
-              <Checkbox.Indicator><Check /></Checkbox.Indicator>
+              <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Label>この設定は変更できません</Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -90,7 +86,7 @@ export function App() {
 
           <Checkbox.Root invalid>
             <Checkbox.Control>
-              <Checkbox.Indicator><Check /></Checkbox.Indicator>
+              <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Label>利用規約に同意する（未同意 = invalid）</Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -244,13 +240,13 @@ export function App() {
         <Select.Label>プラン</Select.Label>
         <Select.Trigger>
           <Select.ValueText placeholder="選択してください" />
-          <Select.Indicator>▾</Select.Indicator>
+          <Select.Indicator />
         </Select.Trigger>
         <Select.Content>
           {plans.items.map((item) => (
             <Select.Item key={item.value} item={item}>
               <Select.ItemText>{item.label}</Select.ItemText>
-              <Select.ItemIndicator>✓</Select.ItemIndicator>
+              <Select.ItemIndicator />
             </Select.Item>
           ))}
         </Select.Content>

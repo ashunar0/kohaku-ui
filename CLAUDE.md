@@ -129,7 +129,11 @@ pnpm ink <png>    # 文字のインク位置を測る
 - **ブランド色を持たない。** accent は無彩色。ブランド色は利用側が L2 を 3 行上書きして注入
 - **a11y は WCAG 2.2 AA を目標。AAA は追わない。** 見送った項目は `docs/notes.md` の
   Known Gaps に、切り替え用の CSS ごと書いてある
-- **アイコンは同梱しない。** Lucide の幾何（viewBox 24 / stroke-width 2 / round）を基準に
-  サイズと位置だけ CSS が管理する
+- **アイコンは「部品を操作するために要る図形」だけ持つ。** チェック・丸・シェブロン・×
+  は `tokens.css` に `--kh-glyph-*` として data URI で同梱する（`mask` で使い、色は
+  `currentColor`）。Alert の警告アイコンのような**中身を説明するアイコンは持たない** ——
+  利用側のアイコンセットと絵柄が割れるため。Bootstrap も Shoelace も同じ線引き
+  （根拠は `docs/notes.md`）。絵柄は Lucide の幾何（viewBox 24 / stroke-width 2 / round）
+  を基準にし、利用側が差す svg にはサイズと位置だけ CSS が与える
 - **Tailwind は利用側で使う前提。** `@kohaku/styles/tailwind` でトークンを Tailwind の
   テーマに流す。上書きの境界は shadcn/lint で守る（`templates/oxlintrc.json`）

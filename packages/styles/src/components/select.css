@@ -44,8 +44,19 @@
     cursor: not-allowed;
   }
   [data-scope="select"][data-part="indicator"] {
+    flex: none;
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
     color: var(--kh-color-fg-muted);
     transition: transform var(--kh-duration-fast) var(--kh-ease);
+  }
+  /* 中身が空なら kohaku がシェブロンを描く。
+     「開ける」ことを示す図形は部品の一部なので kohaku が持つ。
+     利用側が <svg> を入れたら :empty が外れて差し替わる。 */
+  [data-scope="select"][data-part="indicator"]:empty {
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-chevron-down) center / contain no-repeat;
+            mask: var(--kh-glyph-chevron-down) center / contain no-repeat;
   }
   [data-scope="select"][data-part="indicator"][data-state="open"] { transform: rotate(180deg); }
 
@@ -82,6 +93,18 @@
   [data-scope="select"][data-part="item"][data-state="checked"] { color: var(--kh-color-fg); font-weight: 500; }
   [data-scope="select"][data-part="item"][data-disabled] { color: var(--kh-color-fg-faint); cursor: not-allowed; }
   [data-scope="select"][data-part="item-indicator"] { color: var(--kh-color-accent); }
+  /* Ark は未選択のあいだ item-indicator に hidden を付ける。
+     author の display / size 宣言は UA の [hidden] { display: none } に勝つので、
+     :not([hidden]) で囲う（dialog の content で踏んだのと同じ罠）。 */
+  [data-scope="select"][data-part="item-indicator"]:not([hidden]):empty {
+    display: block;
+    flex: none;
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-check) center / contain no-repeat;
+            mask: var(--kh-glyph-check) center / contain no-repeat;
+  }
 
   @keyframes kh-pop-in  { from { opacity: 0; transform: translateY(-2px) } }
   @keyframes kh-pop-out { to   { opacity: 0; transform: translateY(-2px) } }

@@ -56,7 +56,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
     color: inherit;
+  }
+
+  /* 中身が空なら kohaku がグリフを描く。利用側が <svg> を入れたら :empty が
+     外れて何も描かれないので、差し替えの邪魔をしない。
+     mask なので塗りは currentColor（control が持つ accent-fg）が決める。 */
+  [data-scope="checkbox"][data-part="indicator"]:empty {
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-check) center / contain no-repeat;
+            mask: var(--kh-glyph-check) center / contain no-repeat;
+  }
+  [data-scope="checkbox"][data-part="indicator"][data-state="indeterminate"]:empty {
+    -webkit-mask-image: var(--kh-glyph-minus);
+            mask-image: var(--kh-glyph-minus);
   }
 
   /* ---- label ------------------------------------------------------------ */

@@ -89,7 +89,7 @@ const h2 = {
       <Select.Control>
         <Select.Trigger>
           <Select.ValueText placeholder="選択してください" />
-          <Select.Indicator>▾</Select.Indicator>
+          <Select.Indicator />
         </Select.Trigger>
       </Select.Control>
       <Teleport to="body">
@@ -97,7 +97,7 @@ const h2 = {
           <Select.Content>
             <Select.Item v-for="item in plans.items" :key="item.value" :item="item">
               <Select.ItemText>{{ item.label }}</Select.ItemText>
-              <Select.ItemIndicator>✓</Select.ItemIndicator>
+              <Select.ItemIndicator />
             </Select.Item>
           </Select.Content>
         </Select.Positioner>

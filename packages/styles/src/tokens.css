@@ -91,6 +91,30 @@
      surface にすると dark で #18181a になり、暗いトラックに沈む */
   --kh-color-thumb: oklch(1 0 0);
 
+  /* ---- glyph: kohaku が持つ唯一の絵柄 -----------------------------------
+     アイコンは同梱しない方針だが、checkbox のチェックだけは例外。
+     Alert や Button のアイコンは無くても成立する「飾り」だが、
+     チェックマークは状態そのもので、無いと塗られた四角にしか見えない。
+
+     @kohaku/react に置くと Vue / Solid では出ない（CSS しか読まないため）。
+     本体は CSS なので CSS 側に持つ。
+
+     mask として使う。色は currentColor が決めるので、accent-fg を
+     上書きすればチェックの色も追従する。background-image だと data URI に
+     色を焼き込むことになり、dark にも上書きにも追従しない。
+
+     持つのは「その部品を操作するために要る図形」だけ。Bootstrap も Shoelace も
+     同じ線引きで、チェック・丸・シェブロン・× は同梱し、Alert の警告アイコンの
+     ような「中身を説明するアイコン」は持たない（調査は docs/notes.md）。
+
+     絵柄は Lucide（ISC・MIT）。path データだけを写している。Bootstrap は
+     座標を自前で書いているが、kohaku は利用側が Button や Alert に差す
+     Lucide のアイコンと線の太さ・端の丸めを揃えたいので同じ出典から取る。
+     差し替えたいときはこの 1 行を上書きする。 */
+  --kh-glyph-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  --kh-glyph-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
+  --kh-glyph-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
   --kh-duration-fast: 120ms;
   --kh-duration-md:   180ms;
   --kh-ease: cubic-bezier(0.2, 0, 0, 1);
