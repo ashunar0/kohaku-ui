@@ -54,8 +54,8 @@
   [data-part="textarea"][data-invalid],
   [data-kh="input"][aria-invalid="true"],
   [data-kh="textarea"][aria-invalid="true"] {
-    border-color: var(--kh-color-danger);
-    --kh-color-ring: var(--kh-color-danger);
+    border-color: var(--kh-color-invalid);
+    --kh-color-ring: var(--kh-color-invalid);
   }
 
   [data-kh="input"][data-size="sm"],

@@ -88,8 +88,8 @@
   }
 
   [data-scope="checkbox"][data-part="control"][data-invalid] {
-    border-color: var(--kh-color-danger);
-    --kh-color-ring: var(--kh-color-danger);
+    border-color: var(--kh-color-invalid);
+    --kh-color-ring: var(--kh-color-invalid);
   }
 
   [data-scope="checkbox"][data-part="root"][data-disabled] {

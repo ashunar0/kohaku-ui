@@ -73,7 +73,8 @@
   }
 
   [data-scope="switch"][data-part="control"][data-invalid] {
-    --kh-color-ring: var(--kh-color-danger);
+    --kh-color-ring: var(--kh-color-invalid);
+    /* トラックは塗りなので danger のまま。自分で地を作るので反転が要らない */
     background: var(--kh-color-danger);
   }
 

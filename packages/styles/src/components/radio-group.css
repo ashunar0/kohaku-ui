@@ -103,8 +103,8 @@
     outline-offset: var(--kh-ring-offset);
   }
   [data-scope="radio-group"][data-part="item-control"][data-invalid] {
-    border-color: var(--kh-color-danger);
-    --kh-color-ring: var(--kh-color-danger);
+    border-color: var(--kh-color-invalid);
+    --kh-color-ring: var(--kh-color-invalid);
   }
   [data-scope="radio-group"][data-part="item"][data-disabled] {
     opacity: 0.5;

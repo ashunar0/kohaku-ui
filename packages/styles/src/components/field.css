@@ -22,7 +22,7 @@
     line-height: var(--kh-leading-ui);
   }
   [data-scope="field"][data-part="required-indicator"] {
-    color: var(--kh-color-danger);
+    color: var(--kh-color-invalid);
   }
 
   /* ---- helper / error ---------------------------------------------------- */
@@ -40,7 +40,8 @@
     gap: var(--kh-space-1);
     margin-top: var(--kh-space-2);
     font-size: var(--kh-text-sm);
-    color: var(--kh-color-danger-deep);
+    /* 枠線と同じトークン。エラーの枠と文言が一組だと読めるようにする */
+    color: var(--kh-color-invalid);
     line-height: var(--kh-leading-ui);
   }
 

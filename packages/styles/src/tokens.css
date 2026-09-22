@@ -171,6 +171,17 @@
   --kh-color-info-line:   oklch(0.880 0.080 259.8);      /* #b9d9ff soft の枠線 */
   --kh-color-info-deep:     oklch(0.455 0.155 259.8);       /* #1951ab */
 
+  /* ---- invalid: フォームの検証状態 -----------------------------------------
+     danger とは別の役割として持つ。danger は「塗り」が本体で、自分で地を作るので
+     テーマが変わっても中身の関係が変わらない（白文字 vs 赤地は light / dark とも
+     4.57:1）。invalid は枠線とエラー文言として**ページの地の上に直接**置かれるので、
+     地が反転する以上こちらも反転しないと沈む。
+
+     danger-deep に相乗りさせられない理由: あちらは soft 地 (#ffe2dd) の上の文字を
+     兼ねており、鮮やかにすると soft 地との差が 3.9:1 まで落ちる。
+     「薄い赤地の上」と「ページの地の上」は要求が違う。 */
+  --kh-color-invalid: var(--kh-color-danger);   /* #e7000b  canvas 4.57:1 */
+
   /* ---- misc -------------------------------------------------------------- */
   --kh-color-overlay: oklch(0.1403 0.0022 286.1 / 0.5);
   /* focus リングは outline で描く。box-shadow で隙間を「塗る」と
@@ -218,6 +229,11 @@
   --kh-color-info-soft:     oklch(0.275 0.055 259.8);  /* #172742 */
   --kh-color-info-line:   oklch(0.360 0.070 259.8);  /* #263d62 */
   --kh-color-info-deep:     oklch(0.800 0.120 259.8);  /* #90bfff */
+
+  /* 暗い地の上では赤は明るくしないと文字として読めない。light の #e7000b は
+     dark canvas で 4.17:1 しか出ず AA を落ちる。実測で canvas 6.69 / surface 5.96。
+     Spindle が dark 用に Caution Red Vivid を別に持つのと同じ考え方。 */
+  --kh-color-invalid: oklch(0.70 0.20 27.3);   /* #ff6055 */
 
   --kh-color-overlay: oklch(0.1403 0.0022 286.1 / 0.7);
 
