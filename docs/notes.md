@@ -716,3 +716,41 @@ const isVisible = indeterminate ? checkbox.indeterminate : checkbox.checked
 確認した（id など Ark が毎回変えるものは除外）。
 CSS の当たり方も checked / unchecked / indeterminate / disabled / invalid と
 `indicator` を渡した場合まで含めて変わっていない。
+
+## Storybook に 13 個すべて落とした（2026-09-22）
+
+`storybook/` をワークスペースに足した。renderer は `@storybook/react-vite`（v10）。
+全 59 story が描画され、型エラーは 0。
+
+テーマはツールバーから `<html data-theme>` を切り替える。地の色は decorator が
+当てる（kohaku は body に触らないため）。Storybook の `backgrounds` は
+kohaku 自身が canvas を持つので無効にした。二重管理になる。
+
+### story を書いたら実バグが 2 つ出た
+
+**1. `Input` の `size` が HTML の size 属性と衝突していた。**
+`ComponentPropsWithoutRef<"input">` には `size?: number`（表示幅）が含まれる。
+そこに `& { size?: FieldSize }` を交差させると `number & "sm"` = `never` になり、
+**`<Input size="sm" />` が型エラーになっていた。** playground では `size` を
+渡していなかったので気づいていなかった。`Omit<..., "size">` で先に落とす。
+
+**2. `@kohaku/react` に `@types/react` が無かった。**
+pnpm は厳格なので、他パッケージから型を覗けない。playground が動いていたのは
+playground 側に型があったからで、パッケージ単体では型が付いていなかった。
+
+**story は「使う側の型」を通す最初の場所**だった。playground は自分で書いた
+呼び出ししか含まないが、story は props を網羅するので当たり方が違う。
+
+### 分類
+
+```
+Base/      Button / Badge / Icon
+Form/      Field / Input / Checkbox / Switch / RadioGroup / Select
+Layout/    Card / Group
+Feedback/  Alert
+Overlay/   Dialog
+```
+
+各コンポーネントに `Default` と、状態を並べた `States`（または `Variants`）を置く。
+argTypes は Controls で触れる意味のあるものだけ出す（`indicator` のような
+ReactNode は `control: false`）。
