@@ -36,13 +36,13 @@ tree-view
 | menu / popover / tooltip | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
-検証は playground で行う。
+確定したものは Storybook で見る。検証は playground で行う。
 
 | | URL | 起動 |
 |---|---|---|
-| ギャラリー（素の HTML） | http://localhost:5173 | `pnpm dev` |
-| React | http://localhost:5174 | `pnpm dev:react` |
-| Vue | http://localhost:5175 | `pnpm dev:vue` |
+| Storybook（確定したもの） | http://localhost:6006 | `pnpm storybook` |
+| React playground（作業台） | http://localhost:5174 | `pnpm dev:react` |
+| Vue playground（FW 非依存の確認） | http://localhost:5175 | `pnpm dev:vue` |
 
 ## 実測した anatomy
 

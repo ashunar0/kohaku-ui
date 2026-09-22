@@ -82,7 +82,7 @@ DOM で測れるものは Playwright の `browser_evaluate` で computed style �
 
 ### 選択肢は並べて描画してから聞く
 
-文章で「A は◯◯、B は△△」と説明しない。ギャラリーに比較セクションを足して、
+文章で「A は◯◯、B は△△」と説明しない。playground に比較セクションを足して、
 **同じ内容**を左右に並べる。判断が済んだら**そのセクションは消す**。
 
 ### 和文が基準
@@ -115,12 +115,12 @@ DOM で測れるものは Playwright の `browser_evaluate` で computed style �
 作業中と確定後で置き場所が違う。
 
 ```
-playground / preview   作業台。比較セクションを足す・消すのはここ
+playground            作業台。比較セクションを足す・消すのはここ
 Storybook              確定したものの置き場。ドキュメントとして読む用
 ```
 
 **見た目と API が決まるまでは Storybook に書かない。** 途中で書くと、比較のたびに
-story を直すことになる。逆に**決まったら必ず落とす**。ギャラリーは作業台なので、
+story を直すことになる。逆に**決まったら必ず落とす**。playground は作業台なので、
 そこに置きっぱなしのものは「まだ決まっていない」と読める状態にしておく。
 
 renderer は React。参考にしている他のデザインシステムと形式を揃えるため。
@@ -136,15 +136,15 @@ FW 非依存の検証は `playground/vue` が担当する。
 
 ```bash
 pnpm storybook    # Storybook（確定したもの） http://localhost:6006
-pnpm dev          # ギャラリー（素の HTML）  http://localhost:5173
 pnpm dev:react    # React playground        http://localhost:5174
 pnpm dev:vue      # Vue playground          http://localhost:5175
 pnpm lint:tokens  # component CSS に生の色が無いか
 pnpm ink <png>    # 文字のインク位置を測る
 ```
 
-ギャラリーは自動リロードする。新しいコンポーネントを作ったら**必ずギャラリーに足す**
-（載せ忘れ = 目視もテストもされていない、ということ）。
+**確定したコンポーネントは必ず Storybook に落とす**
+（落とし忘れ = 目視もテストもされていない、ということ）。
+状態を並べた `States` を必ず 1 つ置き、dark でも見る。
 
 ## 方針
 

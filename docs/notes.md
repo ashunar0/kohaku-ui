@@ -754,3 +754,15 @@ Overlay/   Dialog
 各コンポーネントに `Default` と、状態を並べた `States`（または `Variants`）を置く。
 argTypes は Controls で触れる意味のあるものだけ出す（`indicator` のような
 ReactNode は `control: false`）。
+
+### 素の HTML ギャラリーを畳んだ（2026-09-22）
+
+`preview/index.html` と `scripts/dev.mjs` を削除した。Storybook と役割が被るため。
+
+**「Ark 無しで CSS だけが効くか」を確かめる唯一の場所ではあった**が、
+FW 非依存の裏付けは `playground/vue` が担っている（同じ CSS で React と Vue が
+同じ DOM・同じ見た目になることは実測済み）。素の HTML での確認が必要になったら
+そのとき作り直す。git に残っている。
+
+CLAUDE.md の「新しいコンポーネントを作ったら必ずギャラリーに足す」も
+「確定したコンポーネントは必ず Storybook に落とす」に書き換えた。
