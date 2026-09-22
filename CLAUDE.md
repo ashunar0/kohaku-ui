@@ -135,6 +135,7 @@ FW 非依存の検証は `playground/vue` が担当する。
 ## コマンド
 
 ```bash
+pnpm storybook    # Storybook（確定したもの） http://localhost:6006
 pnpm dev          # ギャラリー（素の HTML）  http://localhost:5173
 pnpm dev:react    # React playground        http://localhost:5174
 pnpm dev:vue      # Vue playground          http://localhost:5175
