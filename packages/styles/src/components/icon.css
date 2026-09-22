@@ -1,0 +1,31 @@
+@layer kohaku {
+  /* kohaku はアイコンを同梱しない。マークアップは利用側の責任。
+     基準は Lucide の幾何: viewBox 0 0 24 24 / stroke-width 2 /
+     stroke-linecap round / stroke-linejoin round / fill none / currentColor。
+     この規約に従うセット（Lucide, Tabler など）ならそのまま差し込める。
+
+     --kh-icon-size は「祖先で指定して継承させる」前提。
+     アイコン自身には既定値を持たせず fallback で受ける。 */
+  [data-kh="icon"] {
+    display: block;
+    flex: none;
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+    color: inherit;
+  }
+  [data-kh="icon"][data-size="sm"] { --kh-icon-size: 0.875rem; }
+  [data-kh="icon"][data-size="md"] { --kh-icon-size: 1rem; }
+  [data-kh="icon"][data-size="lg"] { --kh-icon-size: 1.25rem; }
+  [data-kh="icon"][data-size="xl"] { --kh-icon-size: 1.5rem; }
+
+  /* Lucide の絵柄は 24 グリッドのうち約 20 しか使わないので、1em 指定だと
+     em を埋める和文グリフより一回り小さく見える。一段大きい実寸を当てる。 */
+  [data-kh="button"]                 { --kh-icon-size: 1rem; }
+  [data-kh="button"][data-size="xs"] { --kh-icon-size: 0.875rem; }
+  [data-kh="button"][data-size="sm"] { --kh-icon-size: 0.875rem; }
+  [data-kh="button"][data-size="lg"] { --kh-icon-size: 1.125rem; }
+
+  /* 和文スタックの ink box は em より縦に大きく、中心が em 中心よりわずかに上に出る。
+     実測 0.5px @14px ≒ 0.036em。flex 中央揃えでは margin の半分だけ動く。 */
+  [data-kh="button"] [data-kh="icon"] { margin-bottom: var(--kh-icon-optical-shift, 0.072em); }
+}

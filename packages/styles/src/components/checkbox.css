@@ -1,0 +1,89 @@
+@layer kohaku {
+  /* Ark の checkbox。root は <label>、control は aria-hidden の箱で、
+     実体の <input> は視覚的に隠されている。CSS は control だけを描く。
+
+     indicator は未チェック時に Ark が hidden 属性を付けて消す。
+     author の display 宣言は UA の [hidden] { display: none } に勝ってしまうので、
+     display は :not([hidden]) に限って当てる。 */
+
+  [data-scope="checkbox"][data-part="root"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    cursor: pointer;
+  }
+
+  /* ---- control ---------------------------------------------------------- */
+  [data-scope="checkbox"][data-part="control"] {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width:  var(--kh-checkbox-size, 1.125rem);
+    height: var(--kh-checkbox-size, 1.125rem);
+
+    /* 角丸は高さに対する比率で決まる。18px の箱に --kh-radius (8px) を当てると
+       44% でほぼ丸になる。小さい要素はスケールから外して L3 で持つ。 */
+    border-radius: var(--kh-checkbox-radius, 0.3125rem);
+
+    border: 1px solid var(--kh-color-border-strong);
+    background: var(--kh-color-surface);
+    /* indicator の線色。塗られた箱の上に乗るので accent-fg */
+    color: var(--kh-color-accent-fg);
+
+    /* 18px の箱に 16px のアイコンだと枠に触れる。一段落とす */
+    --kh-icon-size: 0.75rem;
+
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      border-color var(--kh-duration-fast) var(--kh-ease);
+  }
+
+  [data-scope="checkbox"][data-part="control"][data-state="checked"],
+  [data-scope="checkbox"][data-part="control"][data-state="indeterminate"] {
+    background: var(--kh-color-accent);
+    border-color: var(--kh-color-accent);
+  }
+
+  /* hover は「まだ選ばれていない」ときだけ意味がある。
+     選択済みの箱を暗くしても「押せる」以上の情報が増えない */
+  [data-scope="checkbox"][data-part="control"][data-state="unchecked"][data-hover] {
+    background: var(--kh-color-surface-muted);
+  }
+
+  [data-scope="checkbox"][data-part="indicator"]:not([hidden]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  /* ---- label ------------------------------------------------------------ */
+  [data-scope="checkbox"][data-part="label"] {
+    font-size: var(--kh-checkbox-font-size, var(--kh-text-md));
+    line-height: var(--kh-leading-ui);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    color: var(--kh-color-fg);
+    user-select: none;
+  }
+
+  /* ---- state ------------------------------------------------------------ */
+  /* リングは control に付ける。root に付けるとラベルまで囲ってしまい、
+     「どこが操作対象か」がぼやける */
+  [data-scope="checkbox"][data-part="control"][data-focus-visible] {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  [data-scope="checkbox"][data-part="control"][data-invalid] {
+    border-color: var(--kh-color-danger);
+    --kh-color-ring: var(--kh-color-danger);
+  }
+
+  [data-scope="checkbox"][data-part="root"][data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

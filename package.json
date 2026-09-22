@@ -1,0 +1,12 @@
+{
+  "name": "kohaku-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:react": "pnpm --filter kohaku-playground-react dev",
+    "dev:vue": "pnpm --filter kohaku-playground-vue dev",
+    "lint:tokens": "node scripts/lint-tokens.mjs",
+    "ink": "node scripts/ink.mjs"
+  }
+}

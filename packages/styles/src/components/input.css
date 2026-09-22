@@ -1,0 +1,85 @@
+@layer kohaku {
+  [data-scope="field"][data-part="input"],
+  [data-scope="field"][data-part="textarea"],
+  [data-scope="field"][data-part="select"],
+  [data-kh="input"],
+  [data-kh="textarea"] {
+    /* 既定は md（40px / 16px）。fallback で持つので祖先から一括で寄せられる */
+    display: block;
+    width: 100%;
+    height: var(--kh-field-height, 2.5rem);
+    padding-inline: var(--kh-field-padding-x, var(--kh-space-4));
+    /* 和文フォントの ink box は em より縦に大きく、中心が em 中心より上に出る。
+       高さ固定なので、上下 padding の差の半分だけ中心が動く。
+       差 2×shift で shift ぶん下げる。実測 1px @14px ≒ 0.07em。 */
+    padding-block: calc(var(--kh-field-optical-shift, 0.07em) * 2) 0;
+    font-size: var(--kh-field-font-size, var(--kh-text-md));
+    color: var(--kh-color-fg);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border-strong);
+    border-radius: var(--kh-radius);
+    transition: border-color var(--kh-duration-fast) var(--kh-ease),
+                box-shadow var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="field"][data-part="input"]::placeholder,
+  [data-scope="field"][data-part="textarea"]::placeholder,
+  [data-kh="input"]::placeholder,
+  [data-kh="textarea"]::placeholder {
+    /* placeholder は「テキスト」なので WCAG 1.4.3 (AA) の 4.5:1 が要る。
+       fg-faint (#9fa0a2) は 2.62:1 で不足するため fg-muted を使う。 */
+    color: var(--kh-color-fg-muted);
+  }
+
+  /* リングを離して描くと、隙間の分だけ「ずれている」ように見える。
+     input 自身の枠を太くする方式にすると、同じ角丸の矩形を使うので
+     構造上ずれようがない。border 1px + inset 1px = 見た目 2px の枠。
+     inset shadow は padding box に沿うため、角も完全に同心。 */
+  [data-scope="field"][data-part="input"]:focus-visible,
+  [data-scope="field"][data-part="textarea"]:focus-visible,
+  [data-kh="input"]:focus-visible,
+  [data-kh="textarea"]:focus-visible {
+    outline: none;
+    border-color: var(--kh-color-ring);
+    box-shadow: inset 0 0 0 var(--kh-ring-inset) var(--kh-color-ring);
+  }
+  [data-scope="field"][data-part="input"]:disabled,
+  [data-scope="field"][data-part="textarea"]:disabled,
+  [data-kh="input"]:disabled,
+  [data-kh="textarea"]:disabled {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+  [data-part="input"][data-invalid],
+  [data-part="textarea"][data-invalid],
+  [data-kh="input"][aria-invalid="true"],
+  [data-kh="textarea"][aria-invalid="true"] {
+    border-color: var(--kh-color-danger);
+    --kh-color-ring: var(--kh-color-danger);
+  }
+
+  [data-kh="input"][data-size="sm"],
+  [data-kh="textarea"][data-size="sm"] {
+    --kh-field-height:    2.25rem;
+    --kh-field-padding-x: var(--kh-space-3);
+    --kh-field-font-size: var(--kh-text-sm);
+  }
+  [data-kh="input"][data-size="lg"],
+  [data-kh="textarea"][data-size="lg"] {
+    --kh-field-height:    2.75rem;
+    --kh-field-padding-x: var(--kh-space-4);
+    --kh-field-font-size: var(--kh-text-lg);
+  }
+
+  /* textarea は単独で [data-kh="textarea"] を付ける。
+     input と両方書くと HTML の属性重複になり後者が捨てられる。 */
+  [data-kh="textarea"] {
+    min-height: 5rem;
+    height: auto;
+    /* 複数行なので中央揃えではない。補正は不要 */
+    padding-block: var(--kh-space-3);
+    line-height: var(--kh-leading-ui);
+    resize: vertical;
+  }
+
+}

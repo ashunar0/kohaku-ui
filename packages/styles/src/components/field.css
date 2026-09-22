@@ -1,0 +1,52 @@
+@layer kohaku {
+  /* Field は Ark UI のコンポーネント。第一に Ark の anatomy を狙う。
+     Ark を使わない素の HTML 用に data-kh="..." も併記する。
+     （Ark の part 名は Zag の慣例に沿った kebab-case。playground で要検証） */
+
+  [data-scope="field"][data-part="root"],
+  [data-kh="field"] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- label ------------------------------------------------------------ */
+  [data-scope="field"][data-part="label"],
+  [data-kh="label"] {
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-1);
+    margin-bottom: var(--kh-space-2);
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    color: var(--kh-color-fg);
+    line-height: var(--kh-leading-ui);
+  }
+  [data-scope="field"][data-part="required-indicator"] {
+    color: var(--kh-color-danger);
+  }
+
+  /* ---- helper / error ---------------------------------------------------- */
+  [data-scope="field"][data-part="helper-text"],
+  [data-kh="help"] {
+    margin-top: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-fg-muted);
+    line-height: var(--kh-leading-ui);
+  }
+  [data-scope="field"][data-part="error-text"],
+  [data-kh="error"] {
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-1);
+    margin-top: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-danger-deep);
+    line-height: var(--kh-leading-ui);
+  }
+
+  /* 無効化されたフィールドはラベルまで落とす。Ark は root の状態を全 part に配る */
+  [data-scope="field"][data-part="root"][data-disabled] [data-part="label"],
+  [data-scope="field"][data-part="root"][data-disabled] [data-part="helper-text"] {
+    color: var(--kh-color-fg-faint);
+  }
+}

@@ -1,0 +1,50 @@
+@layer kohaku {
+  /* コントロールを横に並べる箱。Ark には無い（振る舞いを持たない見た目だけの
+     プリミティブなので Ark の守備範囲外）。Chakra も Group は自前で持っている。
+     Button と Field は既定でどちらも 40px なので、役割は
+     「サイズの一括指定」と「連結（data-attached）」。 */
+  [data-kh="group"] {
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+
+    --kh-button-height: var(--kh-field-height, 2.5rem);
+  }
+
+  [data-kh="group"][data-size="sm"] {
+    --kh-field-height:    2.25rem;
+    --kh-field-padding-x: var(--kh-space-3);
+    --kh-field-font-size: var(--kh-text-sm);
+    --kh-button-font-size: var(--kh-text-sm);
+  }
+  [data-kh="group"][data-size="lg"] {
+    --kh-field-height:    2.75rem;
+    --kh-field-font-size: var(--kh-text-lg);
+    --kh-button-font-size: var(--kh-text-lg);
+  }
+
+  /* 隙間なく連結する版（検索欄 + 実行ボタンなど） */
+  [data-kh="group"][data-attached] { gap: 0; }
+  [data-kh="group"][data-attached] > :not(:first-child) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    margin-inline-start: -1px;
+  }
+  [data-kh="group"][data-attached] > :not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+  [data-kh="group"][data-attached] > :focus-visible { position: relative; z-index: 1; }
+
+  /* アクションの行。既定は右寄せ（主要な操作を右端に置く）。
+     Ark の Dialog には footer part が無いので kohaku が持つ。 */
+  [data-kh="actions"] {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--kh-space-2);
+    justify-content: flex-end;
+  }
+  [data-kh="actions"][data-align="start"]   { justify-content: flex-start; }
+  [data-kh="actions"][data-align="between"] { justify-content: space-between; }
+}

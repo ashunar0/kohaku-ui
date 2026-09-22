@@ -1,0 +1,122 @@
+@layer kohaku {
+  /* Ark の radio-group。root の中に group label と item が並ぶ。
+     item は <label>、item-control が丸、item-text がラベル文字。
+
+     anatomy には indicator（選択位置を滑らせるハイライト）もあるが、
+     これは segmented control 用。素のラジオでは使わないので CSS も持たない。
+
+     丸の中の点は CSS で描く。図形であってアイコンではないので、
+     「アイコンは同梱しない」の対象外。 */
+
+  [data-scope="radio-group"][data-part="root"] {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--kh-space-2);
+  }
+  [data-scope="radio-group"][data-part="root"][data-orientation="horizontal"] {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--kh-space-4);
+  }
+
+  /* ---- group label ------------------------------------------------------ */
+  [data-scope="radio-group"][data-part="label"] {
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg);
+  }
+  /* 横並びでも見出しは行を占有する。折り返しで 1 行目を独占させる */
+  [data-orientation="horizontal"] > [data-scope="radio-group"][data-part="label"] {
+    flex-basis: 100%;
+  }
+
+  /* ---- item ------------------------------------------------------------- */
+  [data-scope="radio-group"][data-part="item"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    cursor: pointer;
+  }
+
+  [data-scope="radio-group"][data-part="item-control"] {
+    flex: none;
+    display: grid;
+    place-items: center;
+
+    width:  var(--kh-radio-size, 1.125rem);
+    height: var(--kh-radio-size, 1.125rem);
+    border-radius: var(--kh-radius-full);
+
+    border: var(--kh-radio-border, 1px) solid var(--kh-color-border-strong);
+    background: var(--kh-color-surface);
+
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      border-color var(--kh-duration-fast) var(--kh-ease);
+  }
+
+  /* 中の点。checkbox のチェックと同じく、塗られた面の上に乗るので accent-fg。
+     常に描いて scale で出し入れする（要素の生成より滑らかで、ずれない）
+
+     点は「直径」ではなく「縁からの距離」で決める。
+     place-items: center の余白は (中身 - 直径) / 2 なので、直径で決めると
+     差が奇数になったとき余白が 0.5px になり、ブラウザがどちらかへ 1 デバイスpx
+     寄せて中心から外れる。18px の丸に 7px の点がまさにそれだった（余白 4.5px）。
+     inset を直接持てば、--kh-radio-size をどう変えても余白は常に整数。 */
+  [data-scope="radio-group"][data-part="item-control"]::after {
+    content: "";
+    --kh-radio-dot-size: calc(
+      var(--kh-radio-size, 1.125rem)
+      - var(--kh-radio-border, 1px) * 2
+      - var(--kh-radio-dot-inset, 4px) * 2
+    );
+    width:  var(--kh-radio-dot-size);
+    height: var(--kh-radio-dot-size);
+    border-radius: var(--kh-radius-full);
+    background: var(--kh-color-accent-fg);
+    scale: 0;
+    transition: scale var(--kh-duration-fast) var(--kh-ease);
+  }
+
+  [data-scope="radio-group"][data-part="item-control"][data-state="checked"] {
+    background: var(--kh-color-accent);
+    border-color: var(--kh-color-accent);
+  }
+  [data-scope="radio-group"][data-part="item-control"][data-state="checked"]::after {
+    scale: 1;
+  }
+
+  [data-scope="radio-group"][data-part="item-control"][data-state="unchecked"][data-hover] {
+    background: var(--kh-color-surface-muted);
+  }
+
+  /* ---- item-text -------------------------------------------------------- */
+  [data-scope="radio-group"][data-part="item-text"] {
+    font-size: var(--kh-radio-font-size, var(--kh-text-md));
+    line-height: var(--kh-leading-ui);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    color: var(--kh-color-fg);
+    user-select: none;
+  }
+
+  /* ---- state ------------------------------------------------------------ */
+  [data-scope="radio-group"][data-part="item-control"][data-focus-visible] {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+  [data-scope="radio-group"][data-part="item-control"][data-invalid] {
+    border-color: var(--kh-color-danger);
+    --kh-color-ring: var(--kh-color-danger);
+  }
+  [data-scope="radio-group"][data-part="item"][data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-scope="radio-group"][data-part="item-control"]::after { transition: none; }
+  }
+}

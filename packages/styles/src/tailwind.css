@@ -1,0 +1,64 @@
+/* ==========================================================================
+   @kohaku/styles/tailwind — Tailwind v4 bridge
+
+   使い方（利用側の CSS）:
+     @import "tailwindcss";
+     @import "@kohaku/styles";
+     @import "@kohaku/styles/tailwind";
+
+   これで bg-accent / text-fg-muted / rounded-md / p-4 などが
+   kohaku のトークンを指すようになる。微調整がトンマナから外れない。
+   ========================================================================== */
+
+@theme inline {
+  /* ---- color: L2 semantic をそのまま Tailwind の色名にする -------------- */
+  --color-canvas:        var(--kh-color-canvas);
+  --color-surface:       var(--kh-color-surface);
+  --color-surface-muted: var(--kh-color-surface-muted);
+
+  --color-fg:            var(--kh-color-fg);
+  --color-fg-body:       var(--kh-color-fg-body);
+  --color-fg-muted:      var(--kh-color-fg-muted);
+  --color-fg-faint:      var(--kh-color-fg-faint);
+
+  --color-border:        var(--kh-color-border);
+  --color-border-strong: var(--kh-color-border-strong);
+
+  --color-accent:        var(--kh-color-accent);
+  --color-accent-hover:  var(--kh-color-accent-hover);
+  --color-accent-fg:     var(--kh-color-accent-fg);
+  --color-accent-subtle: var(--kh-color-accent-subtle);
+
+  --color-link:          var(--kh-color-link);
+
+  --color-danger:        var(--kh-color-danger);
+  --color-danger-soft:   var(--kh-color-danger-soft);
+  --color-danger-deep:   var(--kh-color-danger-deep);
+  --color-warning:       var(--kh-color-warning);
+  --color-warning-soft:  var(--kh-color-warning-soft);
+  --color-warning-deep:  var(--kh-color-warning-deep);
+  --color-success:       var(--kh-color-success);
+  --color-success-soft:  var(--kh-color-success-soft);
+  --color-success-deep:  var(--kh-color-success-deep);
+  --color-info:          var(--kh-color-info);
+  --color-info-soft:     var(--kh-color-info-soft);
+  --color-info-deep:     var(--kh-color-info-deep);
+
+  /* ---- radius ----------------------------------------------------------- */
+  --radius-sm:   var(--kh-radius-sm);
+  --radius-md:   var(--kh-radius-md);
+  --radius-lg:   var(--kh-radius-lg);
+
+  /* ---- typography -------------------------------------------------------- */
+  --font-sans:   var(--kh-font-sans);
+  --text-sm:     var(--kh-text-sm);
+  --text-base:   var(--kh-text-md);
+  --text-lg:     var(--kh-text-lg);
+  --text-xl:     var(--kh-text-xl);
+
+  /* ---- spacing: kohaku の刻みに合わせる ---------------------------------- */
+  --spacing: 0.25rem;   /* p-1 = 0.25rem, p-3 = 0.75rem … kohaku と一致 */
+
+  /* ---- motion ------------------------------------------------------------ */
+  --ease-kohaku: var(--kh-ease);
+}

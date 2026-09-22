@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>kohaku — gallery</title>
+  <link rel="stylesheet" href="../packages/styles/src/index.css">
+  <style>
+    .page { max-width: 48rem; margin: 0 auto; padding: 2rem 1rem 6rem; }
+    h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+    .lead { color: var(--kh-color-fg-muted); margin: 0 0 2rem; font-size: .875rem; }
+    section { margin-block: 2.5rem; }
+    h2 { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em;
+         color: var(--kh-color-fg-muted); margin: 0 0 .75rem; font-weight: 600; }
+    @media (max-width: 640px) { section > div[style*='1fr 1fr'] { grid-template-columns: 1fr !important; } }
+    .row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+    .swatch { display: flex; flex-direction: column; gap: .35rem; font-size: .7rem;
+              color: var(--kh-color-fg-muted); }
+    .swatch i { display: block; width: 4rem; height: 2.5rem; border-radius: var(--kh-radius-sm);
+                border: 1px solid var(--kh-color-border); }
+    
+    table.tok { border-collapse: collapse; width: 100%; font-size: .75rem; }
+    table.tok th { text-align: left; font-weight: 600; color: var(--kh-color-fg-muted);
+                   padding: .4rem .5rem; border-bottom: 1px solid var(--kh-color-border); }
+    table.tok td { padding: .3rem .5rem; border-bottom: 1px solid var(--kh-color-border);
+                   font-variant-numeric: tabular-nums; }
+    table.tok td.name { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                        color: var(--kh-color-fg-body); white-space: nowrap; }
+    table.tok td.val  { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                        color: var(--kh-color-fg-muted); white-space: nowrap; }
+    table.tok i.chip { display: inline-block; width: 2.5rem; height: 1.1rem; vertical-align: middle;
+                       border-radius: 3px; border: 1px solid var(--kh-color-border); }
+    .grp td { padding-top: 1rem; font-weight: 600; color: var(--kh-color-fg); }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <h1>kohaku</h1>
+        <p class="lead">framework-agnostic UI styles — コンポーネントギャラリー</p>
+      </div>
+      <button data-kh="button" data-variant="outline" data-size="sm" id="theme">dark</button>
+    </div>
+
+    <section>
+      <h2>Button / variant</h2>
+      <div class="row" style="margin-bottom:.75rem">
+        <button data-kh="button">
+          <svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+          保存する
+        </button>
+        <button data-kh="button" data-variant="outline">
+          <svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          メンバーを追加
+        </button>
+        <button data-kh="button" data-variant="ghost" data-size="sm">
+          <svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 22v-6h-6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M3 2v6h6"/></svg>
+          再同期
+        </button>
+        <button data-kh="button" data-variant="danger" data-size="sm">
+          <svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          削除
+        </button>
+      </div>
+      <div class="row">
+        <button data-kh="button" data-variant="solid">保存する</button>
+        <button data-kh="button" data-variant="outline">キャンセル</button>
+        <button data-kh="button" data-variant="ghost">あとで</button>
+        <button data-kh="button" data-variant="danger">削除する</button>
+        <button data-kh="button" disabled>送信済み</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Button / size</h2>
+      <div class="row">
+        <button data-kh="button" data-size="xs">編集</button>
+        <button data-kh="button" data-size="sm">変更を保存</button>
+        <button data-kh="button" data-size="md">アカウントを作成する</button>
+        <button data-kh="button" data-size="lg">申し込む</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Text ladder — 濃い順に 4 段。これ以外の濃さを作らない</h2>
+      <p style="margin:0 0 .25rem;color:var(--kh-color-fg);font-size:1.125rem;font-weight:600">fg — 見出し・主要テキスト</p>
+      <p style="margin:0 0 .25rem;color:var(--kh-color-fg-body)">fg-body — 本文。長い文章はこの濃さで組みます</p>
+      <p style="margin:0 0 .25rem;color:var(--kh-color-fg-muted);font-size:.8125rem">fg-muted — 補助テキスト・ラベル・キャプション</p>
+      <p style="margin:0;color:var(--kh-color-fg-faint);font-size:.8125rem">fg-faint — プレースホルダ・無効状態</p>
+    </section>
+
+    <section>
+      <h2>Brand injection — accent を 1 行で差し替える</h2>
+      <div class="row">
+        <button data-kh="button" data-variant="outline" data-size="sm" id="brand">brand color を入れる</button>
+        <code id="brandcode" style="font-size:.75rem;color:var(--kh-color-fg-muted)">accent = 無彩色（デフォルト）</code>
+      </div>
+      <div class="row" style="margin-top:.75rem">
+        <button data-kh="button">申し込む</button>
+        <button data-kh="button" data-variant="outline">資料をダウンロード</button>
+        <button data-kh="button" data-variant="ghost">くわしく見る</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>和欧混植 — 同じ設定で英数字が混ざったとき</h2>
+      <div class="row">
+        <button data-kh="button">CSV を書き出す</button>
+        <button data-kh="button" data-variant="outline">Google で続ける</button>
+        <button data-kh="button" data-variant="outline">API キーを再発行</button>
+        <button data-kh="button" data-variant="ghost">2 件を選択中</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>本文 — 行間 1.75 / 字送り 0.02em / palt</h2>
+      <p style="max-width:34em;margin:0">
+        このライブラリは日本語のアプリケーションで使うことを前提に組んでいます。和文は字面が大きく
+        密度が高いため、欧文と同じ行間・字送りでは詰まって見えます。kohaku では本文の行間を 1.75、
+        字送りを 0.02em に取り、<code>font-feature-settings: "palt"</code> で約物を詰めています。
+        HTTP や JSON のような英数字が混ざっても破綻しないことを、ここで確認してください。
+      </p>
+    </section>
+
+    <section>
+      <h2>Badge</h2>
+      <div class="row">
+        <span data-kh="badge">下書き</span>
+        <span data-kh="badge" data-variant="outline">アーカイブ</span>
+        <span data-kh="badge" data-variant="accent">Pro</span>
+        <span data-kh="badge" data-variant="success">公開中</span>
+        <span data-kh="badge" data-variant="warning">承認待ち</span>
+        <span data-kh="badge" data-variant="danger">失敗</span>
+        <span data-kh="badge" data-variant="info">3 件の更新</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Alert — 左が既定（白）、右が data-tone="soft"</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div style="font-size:.7rem;color:var(--kh-color-fg-muted);text-transform:uppercase;letter-spacing:.08em">既定 — 色はアイコンだけ</div>
+        <div style="font-size:.7rem;color:var(--kh-color-fg-muted);text-transform:uppercase;letter-spacing:.08em">soft — 地・枠線・文字も色</div>
+        <div data-kh="alert" data-variant="info">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <p data-part="title">メンテナンスのお知らせ</p>
+          <p data-part="description">3 月 12 日 2:00〜4:00 の間、一部機能が利用できません。</p>
+        </div>
+        <div data-kh="alert" data-variant="info" data-tone="soft">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <p data-part="title">メンテナンスのお知らせ</p>
+          <p data-part="description">3 月 12 日 2:00〜4:00 の間、一部機能が利用できません。</p>
+        </div>
+        <div data-kh="alert" data-variant="warning">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+          <p data-part="title">プランの上限に近づいています</p>
+          <p data-part="description">今月のリクエスト数が上限の 90% に達しました。</p>
+        </div>
+        <div data-kh="alert" data-variant="warning" data-tone="soft">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+          <p data-part="title">プランの上限に近づいています</p>
+          <p data-part="description">今月のリクエスト数が上限の 90% に達しました。</p>
+        </div>
+        <div data-kh="alert" data-variant="danger">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+          <p data-part="title">同期に失敗しました</p>
+          <p data-part="description">API キーが無効です。設定画面から再発行してください。</p>
+        </div>
+        <div data-kh="alert" data-variant="danger" data-tone="soft">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+          <p data-part="title">同期に失敗しました</p>
+          <p data-part="description">API キーが無効です。設定画面から再発行してください。</p>
+        </div>
+        <div data-kh="alert" data-variant="success">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg></span>
+          <p data-part="title">変更を保存しました</p>
+          <p data-part="description">すべてのメンバーに反映されます。</p>
+        </div>
+        <div data-kh="alert" data-variant="success" data-tone="soft">
+          <span data-part="icon"><svg data-kh="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg></span>
+          <p data-part="title">変更を保存しました</p>
+          <p data-part="description">すべてのメンバーに反映されます。</p>
+        </div>
+      </div>
+      <p style="margin:1rem 0 0;font-size:.8125rem;color:var(--kh-color-fg-muted);max-width:40em">
+        既定は画面に何枚あっても静か。soft は 1 枚だけ置いて注意を集めるためのもの。
+        同じ画面に soft を 2 枚以上置くと、どちらも効かなくなります。
+      </p>
+    </section>
+
+    <section>
+      <h2>Field — label / control / help・error を束ねる</h2>
+      <div style="max-width:24rem;display:grid;gap:1rem">
+        <div data-kh="field">
+          <label data-kh="label" for="f1">ワークスペース名</label>
+          <input data-kh="input" id="f1" value="あさひの個人開発">
+        </div>
+        <div data-kh="field">
+          <label data-kh="label" for="f2">連絡先メールアドレス</label>
+          <input data-kh="input" id="f2" placeholder="you@example.com">
+          <span data-kh="help">請求書とセキュリティ通知の送付先になります。</span>
+        </div>
+        <div data-kh="field">
+          <label data-kh="label" for="f3">サブドメイン</label>
+          <input data-kh="input" id="f3" value="my workspace" aria-invalid="true">
+          <span data-kh="error">半角英数字とハイフンのみ使用できます。</span>
+        </div>
+        <div data-kh="field">
+          <label data-kh="label" for="f4">説明</label>
+          <textarea data-kh="textarea" id="f4" placeholder="このワークスペースの用途を書いてください"></textarea>
+        </div>
+        <div data-kh="field">
+          <label data-kh="label" for="f5">プラン ID</label>
+          <input data-kh="input" id="f5" value="plan_free" disabled>
+        </div>
+      </div>
+      <p style="margin:1rem 0 0;font-size:.8125rem;color:var(--kh-color-fg-muted);max-width:40em">
+        Field は Ark UI のコンポーネント。CSS は <code>[data-scope="field"][data-part="label"]</code> を
+        第一に狙い、Ark を使わない素の HTML 用に <code>data-kh="label"</code> も併記しています。
+      </p>
+    </section>
+
+    <section>
+      <h2>Input / size</h2>
+      <div style="max-width:24rem;display:grid;gap:.75rem">
+        <input data-kh="input" data-size="sm" placeholder="sm — 36px / 12px">
+        <input data-kh="input" placeholder="md — 40px / 16px（既定）">
+        <input data-kh="input" data-size="lg" placeholder="lg — 44px / 16px">
+      </div>
+    </section>
+
+    <section>
+      <h2>Group — 連結とサイズの一括指定</h2>
+      <div style="max-width:28rem;display:grid;gap:1.25rem">
+        <div data-kh="field">
+          <label data-kh="label">メンバーを招待</label>
+          <div data-kh="group">
+            <input data-kh="input" placeholder="you@example.com">
+            <button data-kh="button">招待する</button>
+          </div>
+          <span data-kh="help">既定でどちらも 40px なので、そのまま揃います。</span>
+        </div>
+
+        <div data-kh="field">
+          <label data-kh="label">連結する（data-attached）</label>
+          <div data-kh="group" data-attached>
+            <input data-kh="input" placeholder="キーワードで検索">
+            <button data-kh="button" data-variant="outline">検索</button>
+          </div>
+        </div>
+
+        <div data-kh="field">
+          <label data-kh="label">サイズを一括指定（data-size="sm"）</label>
+          <div data-kh="group" data-size="sm">
+            <input data-kh="input" placeholder="you@example.com">
+            <button data-kh="button">招待する</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Card — 左が既定、右が data-elevated（影あり）</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start">
+        <div style="font-size:.7rem;color:var(--kh-color-fg-muted);text-transform:uppercase;letter-spacing:.08em">flat — 既定</div>
+        <div style="font-size:.7rem;color:var(--kh-color-fg-muted);text-transform:uppercase;letter-spacing:.08em">elevated</div>
+        <div data-kh="card">
+          <div data-part="header">
+            <h3 data-part="title">チームメンバー</h3>
+            <p data-part="description">12 人が参加しています。</p>
+          </div>
+          <div data-part="body" style="font-size:.875rem">
+            招待リンクは 7 日で失効します。
+          </div>
+          <div data-part="footer">
+            <button data-kh="button" data-variant="outline" data-size="sm">招待リンクを発行</button>
+          </div>
+        </div>
+        <div data-kh="card">
+          <div data-part="header">
+            <h3 data-part="title">チームメンバー</h3>
+            <p data-part="description">12 人が参加しています。</p>
+          </div>
+          <div data-part="body" style="font-size:.875rem">
+            招待リンクは 7 日で失効します。
+          </div>
+          <div data-part="footer">
+            <button data-kh="button" data-variant="outline" data-size="sm">招待リンクを発行</button>
+          </div>
+        </div>
+      </div>
+      <p style="margin:1rem 0 0;font-size:.8125rem;color:var(--kh-color-fg-muted);max-width:40em">
+        既定は flat。影は「地の上に浮いている」ことを示す必要があるときだけ使います。
+        並べて置くカードは全部 flat が正しく、影を付けると一覧が騒がしくなります。
+      </p>
+    </section>
+
+    <section>
+      <h2>Card — 実際の画面に組んだところ</h2>
+      <div style="display:grid;gap:1rem">
+        <div data-kh="card">
+          <div data-part="header">
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <h3 data-part="title">請求プラン</h3>
+              <span data-kh="badge" data-variant="accent">Pro</span>
+            </div>
+            <p data-part="description">次回の請求は 2026 年 10 月 1 日です。</p>
+          </div>
+          <div data-part="body">
+            <div style="display:flex;justify-content:space-between;padding:.4rem 0">
+              <span>月額</span><span style="color:var(--kh-color-fg)">¥4,800</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-top:1px solid var(--kh-color-border)">
+              <span>シート数</span><span style="color:var(--kh-color-fg)">12</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-top:1px solid var(--kh-color-border)">
+              <span>今月の使用量</span><span style="color:var(--kh-color-fg)">8,412 / 10,000 リクエスト</span>
+            </div>
+          </div>
+          <div data-part="footer">
+            <button data-kh="button" data-variant="ghost">請求履歴</button>
+            <button data-kh="button" data-variant="outline">プランを変更</button>
+            <button data-kh="button">支払い方法を更新</button>
+          </div>
+        </div>
+
+        <div data-kh="card">
+          <div data-part="body">
+            <h3 data-part="title">ワークスペースを削除</h3>
+            <p data-part="description">削除すると、メンバー・プロジェクト・API キーがすべて失われます。この操作は取り消せません。</p>
+            <div style="margin-top:1rem">
+              <button data-kh="button" data-variant="danger">ワークスペースを削除する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Token reference — 実際に効いている値</h2>
+      <table class="tok" id="toktable">
+        <thead><tr><th style="width:3.5rem"></th><th>token</th><th>hex</th><th>oklch</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Override test — 利用側の CSS が @layer kohaku に勝つか</h2>
+      <div class="row">
+        <button data-kh="button" class="taller">高さを上書き（44px）</button>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    /* レイヤー外 = kohaku より必ず後。Tailwind の utilities と同じ立場 */
+    .taller { height: 44px; }
+  </style>
+
+  <script>
+    const root = document.documentElement, btn = document.getElementById("theme")
+    btn.addEventListener("click", () => {
+      const dark = root.dataset.theme === "dark"
+      root.dataset.theme = dark ? "light" : "dark"
+      btn.textContent = dark ? "dark" : "light"
+    })
+    const bbtn = document.getElementById("brand"), bcode = document.getElementById("brandcode")
+    let branded = false
+    bbtn.addEventListener("click", () => {
+      branded = !branded
+      if (branded) {
+        root.style.setProperty("--kh-color-accent", "oklch(0.55 0.20 265)")
+        root.style.setProperty("--kh-color-accent-hover", "oklch(0.48 0.20 265)")
+        root.style.setProperty("--kh-color-accent-fg", "oklch(0.99 0 0)")
+        bcode.textContent = "--kh-color-accent: oklch(0.55 0.20 265)"
+        bbtn.textContent = "戻す"
+      } else {
+        ;["--kh-color-accent","--kh-color-accent-hover","--kh-color-accent-fg"]
+          .forEach(k => root.style.removeProperty(k))
+        bcode.textContent = "accent = 無彩色（デフォルト）"
+        bbtn.textContent = "brand color を入れる"
+      }
+    })
+
+    /* ---- 実効値を読んで hex / oklch に変換する ---------------------------- */
+    const probe = document.createElement("div")
+    probe.style.display = "none"
+    document.body.appendChild(probe)
+
+    const srgb2lin = (c) => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+    function rgb2oklch(r, g, b) {
+      r = srgb2lin(r / 255); g = srgb2lin(g / 255); b = srgb2lin(b / 255)
+      const l = Math.cbrt(0.4122214708*r + 0.5363325363*g + 0.0514459929*b)
+      const m = Math.cbrt(0.2119034982*r + 0.6806995451*g + 0.1073969566*b)
+      const s = Math.cbrt(0.0883024619*r + 0.2817188376*g + 0.6299787005*b)
+      const L = 0.2104542553*l + 0.7936177850*m - 0.0040720468*s
+      const A = 1.9779984951*l - 2.4285922050*m + 0.4505937099*s
+      const B = 0.0259040371*l + 0.7827717662*m - 0.8086757660*s
+      let H = Math.atan2(B, A) * 180 / Math.PI; if (H < 0) H += 360
+      return [L, Math.hypot(A, B), H]
+    }
+    const hex2 = (n) => Math.round(n).toString(16).padStart(2, "0")
+
+    function resolve(varName) {
+      probe.style.color = ""
+      probe.style.color = `var(${varName})`
+      const c = getComputedStyle(probe).color
+      const m = c.match(/[\d.]+/g)
+      if (!m) return null
+      const [r, g, b] = m.map(Number)
+      const a = m[3] !== undefined ? Number(m[3]) : 1
+      const [L, C, H] = rgb2oklch(r, g, b)
+      return {
+        hex: "#" + hex2(r) + hex2(g) + hex2(b) + (a < 1 ? hex2(a * 255) : ""),
+        oklch: `oklch(${L.toFixed(3)} ${C.toFixed(3)} ${H.toFixed(1)}${a < 1 ? " / " + a : ""})`,
+        css: c,
+      }
+    }
+
+    const GROUPS = [
+      ["surface", ["--kh-color-canvas", "--kh-color-surface", "--kh-color-surface-muted"]],
+      ["text",    ["--kh-color-fg", "--kh-color-fg-body", "--kh-color-fg-muted", "--kh-color-fg-faint"]],
+      ["border",  ["--kh-color-border", "--kh-color-border", "--kh-color-border-strong"]],
+      ["accent",  ["--kh-color-accent", "--kh-color-accent-hover", "--kh-color-accent-fg", "--kh-color-accent-subtle"]],
+      ["status",  ["--kh-color-danger", "--kh-color-danger-soft", "--kh-color-danger-deep",
+                   "--kh-color-warning", "--kh-color-warning-soft", "--kh-color-warning-deep",
+                   "--kh-color-success", "--kh-color-success-soft", "--kh-color-success-deep",
+                   "--kh-color-info", "--kh-color-info-soft", "--kh-color-info-deep"]],
+      ["misc",    ["--kh-color-overlay", "--kh-color-ring"]],
+    ]
+
+    function renderTokens() {
+      const tb = document.querySelector("#toktable tbody")
+      tb.innerHTML = ""
+      for (const [group, names] of GROUPS) {
+        const gr = tb.insertRow(); gr.className = "grp"
+        const gc = gr.insertCell(); gc.colSpan = 4; gc.textContent = group
+        for (const n of names) {
+          const v = resolve(n); if (!v) continue
+          const tr = tb.insertRow()
+          tr.insertCell().innerHTML = `<i class="chip" style="background:${v.css}"></i>`
+          const c1 = tr.insertCell(); c1.className = "name"; c1.textContent = n.replace("--kh-color-", "")
+          const c2 = tr.insertCell(); c2.className = "val";  c2.textContent = v.hex
+          const c3 = tr.insertCell(); c3.className = "val";  c3.textContent = v.oklch
+        }
+      }
+    }
+    renderTokens()
+    document.getElementById("theme").addEventListener("click", renderTokens)
+    document.getElementById("brand").addEventListener("click", renderTokens)
+  </script>
+</body>
+</html>

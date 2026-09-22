@@ -1,0 +1,76 @@
+@layer kohaku {
+  /* Ark UI Dialog の anatomy（playground で実測）
+     backdrop / positioner / content / title / description / close-trigger
+     content と backdrop には data-state="open|closed" が付く */
+
+  [data-scope="dialog"][data-part="backdrop"] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--kh-z-overlay, 50);
+    background: var(--kh-color-overlay);
+  }
+
+  [data-scope="dialog"][data-part="positioner"] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--kh-z-overlay, 50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--kh-space-4);
+    overflow: auto;
+  }
+
+  [data-scope="dialog"][data-part="content"] {
+    --kh-dialog-padding: var(--kh-space-6);
+
+    width: 100%;
+    max-width: var(--kh-dialog-width, 28rem);
+    flex-direction: column;
+    gap: var(--kh-space-4);
+    padding: var(--kh-dialog-padding);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius-lg);
+    box-shadow: var(--kh-shadow-lg);
+  }
+
+  /* Ark は閉じているあいだ content に hidden 属性を付ける。
+     author の display 宣言は UA の [hidden] { display: none } に勝ってしまうので、
+     display だけは :not([hidden]) に限って当てる。
+     これを外すと「閉じたダイアログが画面中央に出たまま消えない」になる。
+     （閉じたまま fade-out のアニメーションが 1 度走って終わり、opacity が 1 に戻る） */
+  [data-scope="dialog"][data-part="content"]:not([hidden]) { display: flex; }
+
+  [data-scope="dialog"][data-part="title"] {
+    margin: 0;
+    font-size: var(--kh-text-xl);
+    font-weight: 600;
+    line-height: var(--kh-leading-tight);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="dialog"][data-part="description"] {
+    margin: 0;
+    margin-top: calc(var(--kh-space-4) * -1 + var(--kh-space-2));
+    font-size: var(--kh-text-md);
+    color: var(--kh-color-fg-muted);
+  }
+
+  /* ---- 出入り ------------------------------------------------------------
+     Ark は data-state を open / closed で切り替える。閉じるアニメーションを
+     効かせるには Dialog.Root に unmountOnExit を付けず presence に任せる。 */
+  @keyframes kh-fade-in  { from { opacity: 0 } }
+  @keyframes kh-fade-out { to   { opacity: 0 } }
+  @keyframes kh-dialog-in  { from { opacity: 0; transform: translateY(4px) scale(0.98) } }
+  @keyframes kh-dialog-out { to   { opacity: 0; transform: translateY(4px) scale(0.98) } }
+
+  [data-scope="dialog"][data-part="backdrop"][data-state="open"]  { animation: kh-fade-in  var(--kh-duration-md) var(--kh-ease); }
+  [data-scope="dialog"][data-part="backdrop"][data-state="closed"] { animation: kh-fade-out var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="dialog"][data-part="content"][data-state="open"]   { animation: kh-dialog-in  var(--kh-duration-md) var(--kh-ease); }
+  [data-scope="dialog"][data-part="content"][data-state="closed"]  { animation: kh-dialog-out var(--kh-duration-fast) var(--kh-ease); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-scope="dialog"][data-part="backdrop"],
+    [data-scope="dialog"][data-part="content"] { animation: none; }
+  }
+}

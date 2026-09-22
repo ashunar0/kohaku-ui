@@ -1,0 +1,26 @@
+@layer kohaku.reset {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--kh-font-sans);
+    font-feature-settings: var(--kh-font-feature);
+    line-height: var(--kh-leading-normal);
+    letter-spacing: var(--kh-tracking-normal);
+    background: var(--kh-color-bg);
+    color: var(--kh-color-fg);
+    /* 和文の禁則・改行 */
+    line-break: strict;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  h1, h2, h3, h4 { line-height: var(--kh-leading-tight); }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    font-feature-settings: var(--kh-font-feature);
+    letter-spacing: inherit;
+  }
+}

@@ -1,0 +1,105 @@
+@layer kohaku {
+  [data-kh="button"] {
+    /* L3 component token — ピンポイント調整の逃げ道 */
+    --kh-button-bg: transparent;
+    --kh-button-fg: var(--kh-color-fg);
+    --kh-button-border: transparent;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--kh-space-2);
+
+    height: var(--kh-button-height, 2.5rem);
+    padding-inline: var(--kh-button-padding-x, var(--kh-space-4));
+    font-size: var(--kh-button-font-size, var(--kh-text-md));
+
+    font-family: var(--kh-font-sans);
+    font-weight: 500;
+    line-height: var(--kh-leading-none);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    white-space: nowrap;
+
+    border: 1px solid var(--kh-button-border);
+    border-radius: var(--kh-radius);
+    background: var(--kh-button-bg);
+    color: var(--kh-button-fg);
+    cursor: pointer;
+
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      border-color var(--kh-duration-fast) var(--kh-ease),
+      color var(--kh-duration-fast) var(--kh-ease);
+  }
+
+  /* ---- size ------------------------------------------------------------
+     既定値は fallback で持つ（要素に宣言しない）。こうすると祖先側で
+     --kh-button-height などを指定して一括で寄せられる。
+     data-size を明示したものは要素側の宣言が勝つ。                        */
+  /* Field と同じ段（36 / 40 / 44）。既定は md = 40px。
+     日本のデザインシステムはボタンを大きめに取る傾向があり、SmartHR は
+     モバイルで「小」を使わないよう明記している（操作ミスが増えるため）。 */
+  [data-kh="button"][data-size="xs"] {
+    --kh-button-height: 1.75rem;
+    --kh-button-padding-x: var(--kh-space-2);
+    --kh-button-font-size: var(--kh-text-sm);
+  }
+  [data-kh="button"][data-size="sm"] {
+    --kh-button-height: 2.25rem;
+    --kh-button-padding-x: var(--kh-space-3);
+    --kh-button-font-size: var(--kh-text-sm);
+  }
+  [data-kh="button"][data-size="md"] {
+    --kh-button-height: 2.5rem;
+    --kh-button-padding-x: var(--kh-space-4);
+    --kh-button-font-size: var(--kh-text-md);
+  }
+  [data-kh="button"][data-size="lg"] {
+    --kh-button-height: 2.75rem;
+    --kh-button-padding-x: var(--kh-space-5);
+    --kh-button-font-size: var(--kh-text-lg);
+  }
+
+  /* ---- variant --------------------------------------------------------- */
+  [data-kh="button"][data-variant="solid"],
+  [data-kh="button"]:not([data-variant]) {
+    --kh-button-bg: var(--kh-color-accent);
+    --kh-button-fg: var(--kh-color-accent-fg);
+  }
+  [data-kh="button"][data-variant="solid"]:hover,
+  [data-kh="button"]:not([data-variant]):hover {
+    --kh-button-bg: var(--kh-color-accent-hover);
+  }
+
+  [data-kh="button"][data-variant="outline"] {
+    --kh-button-border: var(--kh-color-border-strong);
+  }
+  [data-kh="button"][data-variant="outline"]:hover {
+    --kh-button-bg: var(--kh-color-surface-muted);
+  }
+
+  [data-kh="button"][data-variant="ghost"] {
+    --kh-button-fg: var(--kh-color-fg-muted);
+  }
+  [data-kh="button"][data-variant="ghost"]:hover {
+    --kh-button-bg: var(--kh-color-surface-muted);
+    --kh-button-fg: var(--kh-color-fg);
+  }
+
+  [data-kh="button"][data-variant="danger"] {
+    --kh-button-bg: var(--kh-color-danger);
+    --kh-button-fg: var(--kh-color-danger-fg);
+  }
+
+  /* ---- state ----------------------------------------------------------- */
+  [data-kh="button"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+  [data-kh="button"]:disabled,
+  [data-kh="button"][data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

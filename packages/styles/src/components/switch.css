@@ -1,0 +1,100 @@
+@layer kohaku {
+  /* Ark の switch。root は <label>、control がトラック、thumb がつまみ。
+
+     checkbox との違いは「即座に効く」こと。checkbox はフォームを送信して
+     初めて反映されるが、switch は切り替えた瞬間に効く。
+     だから形が違う（四角 / トラック）。見た目の趣味ではなく役割の差。 */
+
+  [data-scope="switch"][data-part="root"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    cursor: pointer;
+  }
+
+  /* ---- control（トラック） ---------------------------------------------- */
+  [data-scope="switch"][data-part="control"] {
+    flex: none;
+    display: flex;
+    align-items: center;
+
+    width:  var(--kh-switch-width, 1.875rem);
+    height: var(--kh-switch-height, 1.125rem);
+    padding: var(--kh-switch-padding, 2px);
+    border-radius: var(--kh-radius-full);
+
+    /* off のトラックは border-strong。canvas (#fafafb) 上で 1.42:1 しかなく
+       1.4.11 (3:1) を満たさないが、input の枠線と同じ濃さで揃うことを取った。
+       3:1 を満たす fg-muted (4.6:1) は off の switch が黒く重すぎる。
+       docs/notes.md の Known Gaps に切り替え用の 1 行を置いてある。 */
+    background: var(--kh-switch-track-off, var(--kh-color-border-strong));
+
+    transition: background-color var(--kh-duration-md) var(--kh-ease);
+  }
+
+  [data-scope="switch"][data-part="control"][data-state="checked"] {
+    background: var(--kh-color-accent);
+  }
+
+  /* ---- thumb（つまみ） --------------------------------------------------- */
+  [data-scope="switch"][data-part="thumb"] {
+    /* トラックの高さから上下の padding を引いた残り。
+       高さを変えれば勝手に追従する */
+    width:  calc(var(--kh-switch-height, 1.125rem) - var(--kh-switch-padding, 2px) * 2);
+    height: calc(var(--kh-switch-height, 1.125rem) - var(--kh-switch-padding, 2px) * 2);
+    border-radius: var(--kh-radius-full);
+
+    /* つまみは「明るいノブ」。light / dark とも明るい面で、色そのものが
+       トラックとの差を作る（dark の off トラックは gray-700 なので十分開く）。
+
+       light だけは off トラックが薄い (border-strong) ため、白いつまみとの差が
+       1.48:1 しか残らない。つまみは物理的に「トラックの中で浮いている」ものなので、
+       ここは影で分離する。kohaku で影を使ってよい数少ない場面。
+       Chakra も同じ場面で thumb に shadow を当てている。 */
+    background: var(--kh-color-thumb);
+    box-shadow: var(--kh-switch-thumb-shadow, var(--kh-shadow-thumb));
+
+    /* 移動距離 = width - height。thumb + padding×2 = height なので、
+       右端に寄せたときの左端は width - height になる */
+    translate: 0;
+    transition:
+      translate var(--kh-duration-md) var(--kh-ease),
+      background-color var(--kh-duration-md) var(--kh-ease);
+  }
+
+  [data-scope="switch"][data-part="thumb"][data-state="checked"] {
+    translate: calc(var(--kh-switch-width, 1.875rem) - var(--kh-switch-height, 1.125rem));
+    background: var(--kh-color-accent-fg);
+  }
+
+  /* ---- label ------------------------------------------------------------ */
+  [data-scope="switch"][data-part="label"] {
+    font-size: var(--kh-switch-font-size, var(--kh-text-md));
+    line-height: var(--kh-leading-ui);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    color: var(--kh-color-fg);
+    user-select: none;
+  }
+
+  /* ---- state ------------------------------------------------------------ */
+  [data-scope="switch"][data-part="control"][data-focus-visible] {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  [data-scope="switch"][data-part="control"][data-invalid] {
+    --kh-color-ring: var(--kh-color-danger);
+    background: var(--kh-color-danger);
+  }
+
+  [data-scope="switch"][data-part="root"][data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* 動きを減らす設定では位置だけ変える。色の変化は残す（状態が読めなくなるため） */
+  @media (prefers-reduced-motion: reduce) {
+    [data-scope="switch"][data-part="thumb"] { transition: background-color var(--kh-duration-md) var(--kh-ease); }
+  }
+}

@@ -1,0 +1,90 @@
+@layer kohaku {
+  /* Ark UI Select の anatomy（playground で実測）
+     root / label / control / trigger / value-text / indicator /
+     positioner / content / item / item-text / item-indicator */
+
+  [data-scope="select"][data-part="root"] {
+    display: flex;
+    flex-direction: column;
+  }
+  [data-scope="select"][data-part="label"] {
+    margin-bottom: var(--kh-space-2);
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    color: var(--kh-color-fg);
+  }
+
+  /* trigger は Input と同じ見た目にする */
+  [data-scope="select"][data-part="trigger"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--kh-space-2);
+    width: 100%;
+    height: var(--kh-field-height, 2.5rem);
+    padding-inline: var(--kh-field-padding-x, var(--kh-space-4));
+    padding-block: calc(var(--kh-field-optical-shift, 0.07em) * 2) 0;
+    font-size: var(--kh-field-font-size, var(--kh-text-md));
+    text-align: start;
+    color: var(--kh-color-fg);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border-strong);
+    border-radius: var(--kh-radius);
+    cursor: pointer;
+    transition: border-color var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="select"][data-part="trigger"]:focus-visible {
+    outline: none;
+    border-color: var(--kh-color-ring);
+    box-shadow: inset 0 0 0 var(--kh-ring-inset) var(--kh-color-ring);
+  }
+  [data-scope="select"][data-part="trigger"][data-disabled] {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+  [data-scope="select"][data-part="indicator"] {
+    color: var(--kh-color-fg-muted);
+    transition: transform var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="select"][data-part="indicator"][data-state="open"] { transform: rotate(180deg); }
+
+  /* ---- ドロップダウン ----------------------------------------------------- */
+  [data-scope="select"][data-part="positioner"] { z-index: var(--kh-z-popover, 60); }
+
+  [data-scope="select"][data-part="content"] {
+    min-width: var(--reference-width, 10rem);
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: var(--kh-space-1);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius);
+    box-shadow: var(--kh-shadow-lg);
+  }
+  [data-scope="select"][data-part="content"]:focus-visible { outline: none; }
+
+  [data-scope="select"][data-part="item"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--kh-space-2);
+    padding: var(--kh-space-2) var(--kh-space-3);
+    font-size: var(--kh-text-md);
+    color: var(--kh-color-fg-body);
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  [data-scope="select"][data-part="item"][data-highlighted] {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="select"][data-part="item"][data-state="checked"] { color: var(--kh-color-fg); font-weight: 500; }
+  [data-scope="select"][data-part="item"][data-disabled] { color: var(--kh-color-fg-faint); cursor: not-allowed; }
+  [data-scope="select"][data-part="item-indicator"] { color: var(--kh-color-accent); }
+
+  @keyframes kh-pop-in  { from { opacity: 0; transform: translateY(-2px) } }
+  @keyframes kh-pop-out { to   { opacity: 0; transform: translateY(-2px) } }
+  [data-scope="select"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="select"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+}

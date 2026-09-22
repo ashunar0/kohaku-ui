@@ -1,0 +1,25 @@
+{
+  "name": "@kohaku/styles",
+  "version": "0.0.0",
+  "description": "Framework-agnostic UI styles for Ark UI",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": "./src/index.css",
+    "./tokens": "./src/tokens.css",
+    "./reset": "./src/reset.css",
+    "./tailwind": "./src/tailwind.css"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "lint:tokens": "node scripts/lint-tokens.mjs",
+    "ink": "node scripts/ink.mjs",
+    "dev:react": "pnpm --dir playground/react dev"
+  }
+}

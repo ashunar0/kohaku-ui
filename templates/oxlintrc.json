@@ -1,0 +1,22 @@
+{
+  "jsPlugins": ["@shadcn/lint"],
+  "settings": {
+    "shadcn": {
+      "componentImports": ["^@kohaku/react(/|$)"],
+      "note": "kohaku デザインシステム。見た目は kohaku が決めます。外側（余白・配置）だけ className で調整可。色は --kh-color-*、サイズは size プロパティ、角丸は --kh-radius を使ってください。"
+    }
+  },
+  "rules": {
+    "shadcn/no-restyle": ["error", {
+      "allow": ["layout"],
+      "contracts": [
+        { "pattern": "^Button$", "allow": ["layout", "w-full", "mt-*", "mb-*"] }
+      ]
+    }],
+    "shadcn/no-raw-colors": "error",
+    "shadcn/no-arbitrary-values": "error",
+    "shadcn/no-inline-styles": "error",
+    "shadcn/no-unknown-classes": "error",
+    "shadcn/require-static-classes": "error"
+  }
+}

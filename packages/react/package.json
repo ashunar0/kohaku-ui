@@ -1,0 +1,15 @@
+{
+  "name": "@kohaku/react",
+  "version": "0.0.0",
+  "description": "React ergonomics layer for kohaku. Styling lives in @kohaku/styles.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@ark-ui/react": ">=5",
+    "react": ">=18"
+  }
+}

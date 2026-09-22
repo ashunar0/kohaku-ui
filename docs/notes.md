@@ -1,0 +1,513 @@
+# 決定ログ
+
+DESIGN.md を書くための素材置き場。判断が出るたびに追記する。
+「なぜそうしたか」だけを書く。値そのものは `src/tokens.css` を見ればよい。
+
+---
+
+## 角丸は単一スケールで決めない
+
+角丸の見え方は絶対値ではなく **要素の高さに対する比率** で決まる。
+小さい要素ほど比率を上げないと角が立って見える。
+
+| | 高さ | 角丸 | 比 | |
+|---|---|---|---|---|
+| Button md | 36px | 8px | 0.22 | ちょうど |
+| Badge | 22px | 4px | 0.18 | 足りない |
+| Badge | 22px | **6px** | **0.27** | ちょうど |
+| Badge | 22px | 8px | 0.36 | 丸すぎる |
+
+→ 角丸はコンポーネントごとに光学的に決める。L3 トークン（`--kh-badge-radius`）に持たせ、
+   スケール外の値になってもよい。スケールはあくまで出発点。
+
+## アイコンは同梱せず、幾何の規約だけ決める
+
+アイコンは CSS ではなくマークアップなので、CSS だけのライブラリが抱えると
+FW 非依存が崩れる。Lucide の幾何（viewBox 24 / stroke-width 2 / round / currentColor）
+を基準として、サイズと位置だけ CSS が管理する。
+
+Lucide の絵柄は 24 グリッドのうち約 20 しか使わないため、`1em` 指定では
+em を丸ごと埋める和文グリフより一回り小さく見える。文字サイズより一段大きい
+実寸を当てる（14px 文字 → 16px アイコン）。
+
+## Alert の既定は中立。色を持つのはアイコンだけ
+
+左のカラーバーと地の塗りは主張が強すぎ、画面に複数置くと全部が効かなくなる。
+既定は `surface` + `border` の中立な面にして、status はアイコンの色だけで伝える。
+地を塗る版は `data-tone="soft"` に隔離し、1 画面に 1 枚までとする。
+
+## ブランド色を持たない
+
+accent は無彩色（light = #18181a / dark = #fafafb）。
+ブランド色は利用側が L2 を 3 行上書きして注入する。
+意味が固定されている status（danger / warning / success / info）だけ既定値を持つ。
+
+## 和文を基準にタイポグラフィを組む
+
+和文は字面が大きく密度が高いので、欧文と同じ行間・字送りでは詰まって見える。
+行間 1.75 / 字送り 0.02em / `font-feature-settings: "palt"` を既定とする。
+
+また和文スタックの ink box は em より縦に大きく、中心が em 中心よりわずかに上に出る。
+flex 中央揃えでアイコンと並べると約 0.036em ずれるため、`--kh-icon-optical-shift` で補正する。
+
+## 影より先に線で区切る
+
+flat が既定。`border` で面を分け、持ち上げる必要があるときだけ影を足す。
+暗い地の上では影がほとんど見えないため、dark では影トークンを 1px の輪郭に差し替える。
+
+## 区切り線は既定で引かない
+
+Card の header / footer の境界線は既定では出さない。padding のリズムだけで
+区画は十分に伝わる。線を足すと情報量が増えていないのに視覚的な密度だけ上がる。
+
+本当に別物の区画を分けるときだけ `data-divided` で明示的に引く。
+「影より先に線」と同じ原則の一段下 —— **線より先に余白**。
+
+## 使えない濃さはトークンに置かない
+
+`--kh-color-border-soft` (#f4f4f5) は白い面 (#ffffff) との差が L で 0.03 しかなく、
+dark では surface と同色になって完全に不可視だった。「控えめな区切り線」のつもりが
+「無い線」になっていた。
+
+→ 廃止し、border は 2 段（`border` / `border-strong`）にした。
+   **トークンは「使える値」だけを持つ。** 選べる選択肢が全部使えることが、
+   選ぶ側の判断を速くする。
+
+## focus リングは「離す」か「重ねる」かを要素ごとに決める
+
+まず前提として、`box-shadow: 0 0 0 2px canvas, 0 0 0 4px ring` のように
+**リングの隙間を地の色で塗る**方式は使わない。地の色を決め打ちすることになり、
+白い Card の上に置いた瞬間に灰色の輪が浮いて「枠線がずれている」ように見える。
+
+その上で、枠線を持つかどうかで方式が分かれる。
+
+**枠線を持つ要素（Input / Textarea / Select）→ 枠に重ねる**
+
+```css
+border-color: var(--kh-color-ring);
+box-shadow: inset 0 0 0 var(--kh-ring-inset) var(--kh-color-ring);
+```
+
+離して描くと隙間の分だけ「ずれている」と読まれる。要素自身の角丸矩形を
+そのまま使えば構造上ずれようがない。inset shadow は padding box に沿うので
+角も完全に同心。border 1px + inset 1px = 見た目 2px の枠。
+
+**枠線を持たない要素（Button）→ 離して描く**
+
+```css
+outline: var(--kh-ring-width) solid var(--kh-color-ring);
+outline-offset: var(--kh-ring-offset);
+```
+
+塗りつぶしの上に重ねてもリングが埋もれるため、外に出す。
+`outline-offset` の隙間は透明なので地の色を決め打ちしない。
+
+**合成済みの値をトークンにしない**
+
+`--kh-focus-ring: 0 0 0 2px ... var(--kh-color-ring)` を `:root` で組み立てていたとき、
+要素側で `--kh-color-ring` を赤に上書きしてもリングは黒のままだった。
+custom property は**宣言された場所**で var() が解決されるため。
+使う場所で var() を並べること。
+
+## Ark にあるものは自作しない（Field の取りこぼし）
+
+`data-kh="label"` / `help` / `error` を自作していたが、**Field は Ark UI のコンポーネント**
+（Field.Root / Label / Input / Textarea / Select / HelperText / ErrorText / RequiredIndicator）。
+kohaku のルールは「Ark にあるものは Ark の属性を狙う」なので、これは方針違反だった。
+
+→ CSS は `[data-scope="field"][data-part="label"]` を第一に狙い、
+   Ark を使わない素の HTML 用に `data-kh="label"` を併記する。
+
+**新しいコンポーネントを作る前に、Ark の一覧に無いか確認する。**
+
+## Field と Group は別物
+
+| | 役割 | 方向 |
+|---|---|---|
+| Field | label + control + help/error を束ね、invalid / disabled を全 part に配る | 縦 |
+| Group | コントロールを横に並べ、高さを揃える・連結する | 横 |
+
+## コントロールの高さは 40px で統一する
+
+Button 単体は 36px の方が締まって見えたが、40px に統一した。理由は 2 つ。
+
+1. **フォームで必ず Input と並ぶ。** 揃っていない方が後で効いてくる
+2. **日本のデザインシステムはボタンを大きめに取る傾向がある。**
+   SmartHR はモバイルで「小」サイズを使わないよう明記している（操作ミスが増えるため）
+
+サイズの段は Button と Field で完全に一致させる（36 / 40 / 44）。
+密なツールバー用に Button だけ `xs`（28px）を持つ。
+
+| | xs | sm | md（既定） | lg |
+|---|---|---|---|---|
+| Button | 28px | 36px | **40px** | 44px |
+| Field | — | 36px | **40px** | 44px |
+
+「Button 単体は詰まっている方が良い」という観察自体は正しい。
+**一貫性がその差分より価値がある**と判断した、という記録。
+
+サイズの既定値は要素に宣言せず `var(--kh-button-height, 2.25rem)` と fallback で持つ。
+こうすると祖先から一括で寄せられる。`data-size` を明示したものは要素側が勝つ。
+
+## 和文は「中央揃え」しても中央に来ない
+
+和文フォントの ink box は em より縦に大きく、中心が em 中心よりわずかに**上**に出る。
+ブラウザは行ボックスを中央に置くが、その中でグリフが中央に来ない。
+結果、高さ固定の Input では文字が 1px 上にずれる（実測 @14px / 40px）。
+
+これは Input に限らず、**縦中央揃えをする全ての場所**で起きる。
+既に 2 箇所で補正している。
+
+| 場所 | 補正 | 値 |
+|---|---|---|
+| Button 内のアイコン | `margin-bottom` | `--kh-icon-optical-shift: 0.072em` |
+| Input の文字 | `padding-block` を非対称に | `--kh-field-optical-shift: 0.07em` |
+
+高さ固定の要素では、上下 padding の**差の半分**だけ中心が動く。
+差 `2 × shift` で `shift` ぶん下がる。
+
+### 測り方
+
+目視では判断できないので、要素だけをスクリーンショットして
+ピクセルのインク位置を測る。`scripts/ink.mjs` がそれをやる。
+
+```bash
+pnpm ink .playwright-mcp/input-jp.png
+```
+
+インク行の上端・下端から中心を出し、枠の中心との差を px で返す。
+**フォントを変えたら測り直す。** 補正値はフォント固有の値なので。
+
+## focus リングは青 1px
+
+黒 2px は「太い」と読まれた。原因は太さではなく**明度差**だった。
+白地との差が黒は 0.86、青は 0.38 と半分以下になるため、同じ太さでも圧が全く違う。
+
+さらに 1px まで落としても、非フォーカスとの差が**色相**になるので気づける。
+黒 1px は明度差だけになるため見つけにくい。
+
+```css
+--kh-color-ring:  var(--kh-blue-500);
+--kh-ring-inset:  0;        /* border の 1px だけ */
+--kh-ring-width:  1px;      /* Button 等、離して描く場合 */
+```
+
+太さは Input（枠線 1px）と Button（離して 1px）で揃える。
+片方だけ 2px だと、同じ「フォーカス」という状態なのに強さが違って見える。
+
+青は `--kh-color-info` ではなく **L1 primitive から直接引く**。
+focus は「状態」であって「意味」ではないので、info の色を変えたときに
+focus が追従してはいけない。
+
+### 未決: accent に連動させるか
+
+`--kh-color-ring: var(--kh-color-accent)` にすると、ブランド色を注入した利用者は
+focus リングも自動でブランド色になる（Chakra / Radix はこの作り）。
+一方で「focus は常に青」の方が予測しやすいという利点もある。
+利用側で 1 行変えれば済むので、既定は青のままにして保留。
+
+## a11y の到達点と、意図的に見送ったもの
+
+方針: **WCAG 2.2 AA を目標**。AAA は追わない。
+
+### 満たしているもの
+
+| 基準 | 内容 | 状態 |
+|---|---|---|
+| 2.4.7 Focus Visible (AA) | フォーカスが見えること | ✅ |
+| 1.4.3 Contrast (AA) | テキスト 4.5:1 | ✅ placeholder を fg-muted に修正して達成 |
+| 1.4.11 Non-text Contrast (AA) | focus リング | ✅ 青 #2b7fff は白地 3.76:1 |
+
+focus リングは 1px だが、**色で 3:1 を超えている**ので Focus Visible としては十分。
+
+### 意図的に見送ったもの（Known Gaps）
+
+**1.4.11 Non-text Contrast (AA) — 枠線**
+
+| 対象 | 現在 | 白地とのコントラスト | 必要 |
+|---|---|---|---|
+| input の枠線 `border-strong` | `#d4d4d6` | 1.48:1 | 3:1 |
+| card の枠線 `border` | `#e4e4e6` | 1.27:1 | 3:1 |
+
+3:1 を満たすには `#949497` 程度まで濃くする必要があり、トンマナが「線が強い」方向に
+大きく振れる。shadcn / Vercel / Linear も同様に満たしていない。
+個人利用のため現状維持とし、**必要になった時点でトークン 1 行で切り替える**。
+
+```css
+:root {
+  --kh-color-border:        #9a9a9d;
+  --kh-color-border-strong: #949497;
+}
+```
+
+**2.4.13 Focus Appearance (AAA)** — 2px 以上を求めるが 1px を採用。AAA なので追わない。
+必要になったら `--kh-ring-width: 2px; --kh-ring-inset: 1px;`。
+
+### 測り方
+
+`scripts/` には入れていない。コントラスト比は
+`(明るい方の相対輝度 + 0.05) / (暗い方 + 0.05)` で出す。
+
+## Ark UI への CSS 適用を実機で検証した（2026-09-22）
+
+`playground/react`（Vite + React 19 + @ark-ui/react 5.39）で確認。
+
+### 確認できたこと
+
+**1. part 名は推測どおりだった**
+
+```
+field  : root / label / input / helper-text / error-text / required-indicator
+dialog : trigger / backdrop / positioner / content / title / description / close-trigger
+select : root / label / control / trigger / value-text / indicator /
+         positioner / content / item / item-text / item-indicator
+```
+
+**2. 状態は root から全 part に配られる**
+
+`<Field.Root invalid>` だけで:
+
+```
+root       : data-invalid
+label      : data-required data-invalid
+input      : data-invalid aria-invalid="true" aria-errormessage="..."
+error-text : aria-live="polite"（invalid のときだけ描画される）
+```
+
+kohaku 側は `[data-part="input"][data-invalid]` を書くだけでよい。
+`aria-*` は一切書かなくてよい。
+
+disabled は input には `data-disabled` ではなく **native の `disabled`** が付く。
+`:disabled` で拾えばよい（root / label / helper-text には `data-disabled` が付く）。
+
+**3. Portal を越えても CSS が当たる**
+
+Dialog の content は `<body>` 直下に移動するが、kohaku のセレクタは
+`[data-scope][data-part]` という**グローバルな属性セレクタ**なので影響を受けない。
+子孫セレクタに依存していたら壊れていた。これが data 属性方式の効きどころ。
+
+**4. Ark が面倒を見てくれる部分**
+
+`Select.ItemIndicator` は未選択時に `hidden` 属性が付く。CSS で隠す必要はない。
+
+### 結論
+
+> **Ark の DOM に CSS を当てれば、FW を問わず 1 枚で効く**
+
+という kohaku の前提は成立している。残る検証は「React 以外でも同じ DOM が出るか」で、
+これは Solid の playground を立てて確かめる。
+
+## React と Vue で DOM が一致することを実測（2026-09-22）
+
+`playground/react`（React 19 / @ark-ui/react 5.39）と
+`playground/vue`（Vue 3.5 / @ark-ui/vue 5.39）で、Field・Dialog・Select を
+同じ構成で描画し、`[data-scope]` を持つ全ノードの署名を突き合わせた。
+
+**結果: 41 ノード、構造・属性・computed style すべて一致。**
+
+```
+dialog content : backgroundColor / borderRadius / maxWidth / padding / boxShadow  完全一致
+select trigger : height / borderRadius / paddingInlineStart / borderColor        完全一致
+field label    : fontSize / fontWeight / color / marginBottom                    完全一致
+field input    : height / padding / borderColor / fontSize                       完全一致
+```
+
+差分は 2 つだけで、どちらも CSS に影響しない。
+
+1. **id 生成が違う**（React `_r_3_` / Vue `v-3`）。`data-ownedby` や
+   `data-activedescendant` に現れるが、kohaku の CSS は id を一切見ていない
+2. マークアップの書き方が違う（React は `<Portal>`、Vue は `<Teleport to="body">`。
+   `defaultValue` は Vue の Field.Input が受け取らないので `value` を使う）
+   → **書き方は違っても出力される DOM は同じ**
+
+### これで確定したこと
+
+> **kohaku の CSS は 1 枚で React でも Vue でも同じ見た目になる。**
+
+ライブラリの前提が実測で裏付けられた。Solid / Svelte も Ark が同じ Zag の
+machine を使っている以上、同じ DOM が出るはず（未検証）。
+
+## @kohaku/react を作った（2026-09-22）
+
+CSS が固まった 10 個について React の書き味レイヤーを用意した。
+**見た目のコードは 1 行も入れない。**やることは 2 つだけ。
+
+1. `data-*` を型付きの props にする（補完が効き、タイポが型エラーになる）
+2. Ark の組み立て（Portal / Backdrop / Positioner / Control）を隠す
+
+```tsx
+// 素の Ark
+<Dialog.Root>
+  <Portal><Dialog.Backdrop /><Dialog.Positioner>
+    <Dialog.Content>…</Dialog.Content>
+  </Dialog.Positioner></Portal>
+</Dialog.Root>
+
+// @kohaku/react
+<Dialog.Root>
+  <Dialog.Content>…</Dialog.Content>
+</Dialog.Root>
+```
+
+### 出力 DOM が変わらないことを実測
+
+ラッパー経由で描画した Dialog（8 ノード）と Select（17 ノード）の署名が、
+素の Ark で書いたものと**完全に一致**した。つまり:
+
+- ラッパーは DOM を一切変えない → CSS は書き方に依存しない
+- ラッパーを使わない FW（Vue / Solid）でも同じ CSS がそのまま効く
+
+### 逃げ道を残す
+
+隠した部品は `Dialog.Backdrop` / `Dialog.Positioner` / `Dialog.RawContent`、
+`Select.Control` / `Select.RawTrigger` / `Select.RawContent` として再輸出してある。
+Portal を使いたくない場合などに素の構造で組める。
+**隠すことで選択肢を奪わない。**
+
+### Known Gap
+
+`exports` が `./src/index.ts` を直接指している（TSX をそのまま配っている）。
+publish する前にビルド（tsup など）が必要。playground は Vite が解決するので今は動く。
+
+## checkbox / switch / radio-group を入れた（2026-09-22）
+
+Ark にある 3 つ。anatomy は `@zag-js/*` の `*.anatomy.mjs` から直接取った。
+
+```
+checkbox    : root / label / control / indicator      （+ group、今は未使用）
+switch      : root / label / control / thumb
+radio-group : root / label / item / item-text / item-control / indicator
+```
+
+`data-state` は `checked` / `unchecked`（checkbox だけ `indeterminate`）。
+`data-hover` / `data-focus-visible` / `data-disabled` / `data-invalid` は全 part に配られる。
+
+radio-group の `indicator` は「選択位置を滑らせるハイライト」で segmented control 用。
+素のラジオでは使わないので CSS も持たない。
+
+### Ark が `hidden` を付ける part に `display` を書かない
+
+**Dialog が閉じているのに画面中央に出たまま消えない**バグが見つかった。原因は
+kohaku の CSS が `[data-part="content"] { display: flex }` と書いていたこと。
+
+`hidden` 属性そのものに要素を消す力は無い。効いているのは UA スタイルシートの
+`[hidden] { display: none }` という 1 行だけ。そして CSS のカスケードは詳細度や
+レイヤーより先に **origin**（どこで宣言されたか）を見る。
+
+```
+UA スタイルシート  <  利用者スタイル  <  author（kohaku の CSS）
+```
+
+つまり author の `display` 宣言は、詳細度が何であれ `@layer` の何段目であれ、
+**UA の `display: none` に無条件で勝ってしまう**。Ark は `hidden` を付けるところまでが
+仕事で、その先は CSS 側の責任。Ark が `display: none !important` を差し込めば防げるが、
+それをやると利用側がアニメーションも位置調整もできなくなるので、付けていないのが正しい。
+
+気づかなかったのは、閉じた content に `kh-dialog-out` が当たっていて**読み込み直後に
+1 回だけ走る**から。`forwards` が無いので走り終わると opacity が 1 に戻り、出っぱなしになる。
+前回の検証は「開いたときの見た目」しか測っておらず、**閉じている状態を測っていなかった**。
+
+対処は `display` だけを `:not([hidden])` に限ること。
+
+```css
+[data-scope="dialog"][data-part="content"]:not([hidden]) { display: flex; }
+```
+
+**これは Ark を CSS で狙うライブラリの構造的な罠なので、規約として扱う。**
+select の content は `display` を書いていなかったので無事だった。checkbox の
+indicator は最初からこの形で書いてある。機械的に検出できるはず（lint 候補）。
+
+### 円の中の点は「直径」ではなく「縁からの距離」で持つ
+
+radio の白い点が中心からずれて見えた。幾何は合っていて、原因はラスタライズだった。
+
+```
+外径 18px − border 1px × 2 = 中身 16px
+(16 − 7) / 2 = 4.5px        ← デバイスピクセルに乗らない
+```
+
+`place-items: center` は余白を数学的に等分するが、0.5px はどちらかに寄せるしかない。
+点が小さいほど 1px の比重が大きく、7px の点では直径の 14% のズレになる。
+DPR 2 では 9 デバイスpx で割り切れるためズレず、**画面によって出たり出なかったりする**。
+
+直径ではなく inset を持てば、余白は定義上いつも整数になる。
+
+```css
+--kh-radio-dot-size: calc(
+  var(--kh-radio-size, 1.125rem)
+  - var(--kh-radio-border, 1px) * 2
+  - var(--kh-radio-dot-inset, 4px) * 2
+);
+```
+
+16 / 18 / 20 / 24 / 32px で振って、全て余白 4px ちょうどを確認した。
+checkbox（余白 2px）と switch（上下 2px / 移動 12px）は元から整数だった。
+
+### 和文の光学補正は入れない
+
+Button のアイコンには `--kh-icon-optical-shift` を入れたので、ラベルと control の
+あいだにも同じ補正が要ると思って測った。**要らなかった。**
+
+ラベル 17 本でインク中心と control 中心のズレを測ると **−0.18px 〜 +0.60px、
+中央値 +0.12px**。符号が文字列ごとに反転する（「週次の〜」−0.18、「Enterprise — 監査
+ログつき」+0.60）。これはフォントの系統誤差ではなく、**その文字列にディセンダや欧文
+大文字が入るかどうかの差**。固定値で補正すると特定の文字列に過剰適合する。
+
+Button と違うのは、あちらが `line-height: 1` の箱に置いたアイコンで、こちらが
+行ボックス同士の突き合わせだから。**補正が要るかどうかは毎回測って決める。**
+
+### switch の off トラックは border-strong、つまみは影で分ける
+
+off のトラックを濃くする案（fg-muted / 4.6:1・1.4.11 を満たす）と薄くする案
+（border-strong / 1.42:1・input の枠線と同じ濃さ）を並べて、**薄い方を選んだ**。
+濃いトラックは off の switch が黒く重すぎた。
+
+薄くすると白いつまみとの差が 1.48:1 しか残らないので、つまみを分離する必要が出る。
+線と影を並べて **影**を選んだ。つまみは物理的に「トラックの中で浮いている」ものなので、
+kohaku で影を使ってよい数少ない場面。
+
+`--kh-shadow-thumb` として持つ。`--kh-shadow-sm`（4%）では薄いトラックとの差を
+作れないため専用に用意した。面が小さいので 30% でも重く見えない。
+
+**dark で一度やらかした。** 最初つまみを `--kh-color-surface` にしたため、dark で
+`#18181a` になって暗いトラックに沈んだ（1.69:1）。そこを `--kh-shadow-sm` が dark で
+線に置き換わるのと同じ方針で「1px の明るい輪」にしたら、**つまみが縁取られて
+見た目が壊れた**。輪郭のあるノブは物として見えない。
+
+Chakra の switch recipe を見たら off のつまみは light / dark とも `bg: white` だった。
+**つまみは物理的なノブなので、明るいことがそもそも常態**で、トラックとの差は色自体が
+作る。`--kh-color-thumb`（light 白 / dark gray-300）として持ち直したら、dark の
+off は 7.09:1、on は 17:1 になり、**dark では影に仕事をさせなくて済む**。
+
+沈んだのは「つまみはトラックの反対側の明度」という当初の規則が間違っていたからで、
+影の置き換え方の問題ではなかった。**`--kh-shadow-thumb` は dark でも影のまま**。
+影を線に置き換えるのは面を持ち上げるとき（card / dialog）の作法であって、
+中で動く部品には当てはまらない。
+
+on のときはトラックが accent なのでつまみとの差が 17:1 あり、分離は要らないが、
+滑る途中で影が消えると目立つので両状態とも同じ影を保つ。
+
+### Known Gaps に追加
+
+**1.4.11 Non-text Contrast (AA) — switch の off トラック**
+
+| 対象 | 現在 | 地とのコントラスト | 必要 |
+|---|---|---|---|
+| off トラック `border-strong` | `#d4d4d6` | 1.42:1 | 3:1 |
+
+塗りなので枠線より厳しいが、input の枠線と濃さが揃うことを優先した。
+**つまみが明るいノブとして立つので、状態の判別自体はできる**
+（light は影で 1.48:1 を補い、dark は色だけで 7.09:1）。
+1.4.11 が本来求めているのは「コントロールの状態と境界が知覚できること」で、
+塗りの濃さそのものではない。濃い方に振るなら 1 行で切り替わる。
+
+```css
+:root { --kh-switch-track-off: var(--kh-color-fg-muted); }  /* 4.6:1 */
+```
+
+### playground にテーマ切り替えを付けた
+
+dark を目で確認する手段が無かったので、React playground の上部に sticky の
+トグルを置いた。`data-theme` を `<html>` に付け外しするだけ。
+地の色（`--kh-color-canvas`）はページ側の責任なので playground が指定している。
+**kohaku は body に何も指定しない。**

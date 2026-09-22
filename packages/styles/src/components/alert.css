@@ -1,0 +1,80 @@
+@layer kohaku {
+  /* 既定は中立な面。色を持つのはアイコンだけ。
+     地を塗るのは本当に止めたいときだけ（data-tone="soft"）。 */
+  [data-kh="alert"] {
+    --kh-alert-bg: var(--kh-color-surface);
+    --kh-alert-border: var(--kh-color-border);
+    --kh-alert-icon: var(--kh-color-fg-muted);
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--kh-space-3);
+    row-gap: var(--kh-space-1);
+    padding: var(--kh-space-4);
+    background: var(--kh-alert-bg);
+    border: 1px solid var(--kh-alert-border);
+    border-radius: var(--kh-radius);
+    font-size: var(--kh-text-md);
+    line-height: var(--kh-leading-ui);
+  }
+
+  [data-kh="alert"] [data-part="icon"] {
+    --kh-icon-size: 1rem;
+
+    grid-row: 1 / span 2;
+    display: flex;
+    align-self: start;
+    color: var(--kh-alert-icon);
+    /* 1 行目の行ボックス中央に載せる: (行の高さ - アイコン) / 2 */
+    margin-top: calc((var(--kh-leading-ui) * 1em - var(--kh-icon-size)) / 2);
+  }
+
+  [data-kh="alert"] [data-part="title"] {
+    margin: 0;
+    font-weight: 600;
+    color: var(--kh-color-fg);
+  }
+  [data-kh="alert"] [data-part="description"] {
+    margin: 0;
+    color: var(--kh-color-fg-muted);
+  }
+  [data-kh="alert"]:not(:has([data-part="icon"])) { grid-template-columns: 1fr; }
+  [data-kh="alert"] [data-part="actions"] {
+    grid-column: 2;
+    margin-top: var(--kh-space-2);
+    display: flex;
+    gap: var(--kh-space-2);
+  }
+
+  /* variant はアイコンの色だけを変える */
+  [data-kh="alert"][data-variant="danger"]  { --kh-alert-icon: var(--kh-color-danger); }
+  [data-kh="alert"][data-variant="warning"] { --kh-alert-icon: var(--kh-color-warning); }
+  [data-kh="alert"][data-variant="success"] { --kh-alert-icon: var(--kh-color-success); }
+  [data-kh="alert"][data-variant="info"]    { --kh-alert-icon: var(--kh-color-info); }
+
+  /* 地を塗る版。情報量は同じで、主張だけ強い。多用しない */
+  [data-kh="alert"][data-tone="soft"] [data-part="icon"]        { --kh-alert-icon: currentColor; }
+  [data-kh="alert"][data-tone="soft"] [data-part="title"]       { color: inherit; }
+  [data-kh="alert"][data-tone="soft"] [data-part="description"] { color: inherit; opacity: 0.75; }
+
+  [data-kh="alert"][data-tone="soft"][data-variant="danger"] {
+    --kh-alert-bg: var(--kh-color-danger-soft);
+    --kh-alert-border: var(--kh-color-danger-line);
+    color: var(--kh-color-danger-deep);
+  }
+  [data-kh="alert"][data-tone="soft"][data-variant="warning"] {
+    --kh-alert-bg: var(--kh-color-warning-soft);
+    --kh-alert-border: var(--kh-color-warning-line);
+    color: var(--kh-color-warning-deep);
+  }
+  [data-kh="alert"][data-tone="soft"][data-variant="success"] {
+    --kh-alert-bg: var(--kh-color-success-soft);
+    --kh-alert-border: var(--kh-color-success-line);
+    color: var(--kh-color-success-deep);
+  }
+  [data-kh="alert"][data-tone="soft"][data-variant="info"] {
+    --kh-alert-bg: var(--kh-color-info-soft);
+    --kh-alert-border: var(--kh-color-info-line);
+    color: var(--kh-color-info-deep);
+  }
+}

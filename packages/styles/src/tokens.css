@@ -1,0 +1,217 @@
+/* ==========================================================================
+   kohaku tokens
+
+   L1 primitive : 生の値。意味を持たない。直接使わない
+   L2 semantic  : 役割。テーマを変えるときはここだけ触る
+
+   kohaku はブランド色を持たない。accent は無彩色（light=黒 / dark=白）。
+   ブランド色を入れるときは L2 を 1 行上書きするだけ:
+
+     :root {
+       --kh-color-accent:       oklch(0.55 0.20 265);
+       --kh-color-accent-hover: oklch(0.48 0.20 265);
+       --kh-color-accent-fg:    oklch(0.99 0 0);
+     }
+   ========================================================================== */
+
+:root {
+  /* ---- L1 primitive: neutral -------------------------------------------
+     色相 286.1（zinc 系のごく淡い青み）で統一。純粋な無彩色より沈んで見える。
+     950 = #09090a  ← ここが kohaku の「黒」                                */
+  --kh-gray-50:  oklch(0.9850 0.0010 286.1);  /* #fafafb */
+  --kh-gray-100: oklch(0.9670 0.0015 286.1);  /* #f4f4f5 */
+  --kh-gray-200: oklch(0.9200 0.0020 286.1);  /* #e4e4e6 */
+  --kh-gray-300: oklch(0.8710 0.0030 286.1);  /* #d4d4d6 */
+  --kh-gray-400: oklch(0.7050 0.0040 286.1);  /* #9fa0a2 */
+  --kh-gray-500: oklch(0.5520 0.0050 286.1);  /* #727275 */
+  --kh-gray-600: oklch(0.4420 0.0050 286.1);  /* #535356 */
+  --kh-gray-700: oklch(0.3700 0.0050 286.1);  /* #3f3f42 */
+  --kh-gray-800: oklch(0.2740 0.0040 286.1);  /* #272729 */
+  --kh-gray-900: oklch(0.2100 0.0040 286.1);  /* #18181a */
+  --kh-gray-950: oklch(0.1403 0.0022 286.1);  /* #09090a */
+
+  /* ---- L1 primitive: status（意味が固定されている色だけ） ---------------- */
+  --kh-red-500:    oklch(0.577 0.245 27.3);
+  --kh-amber-500:  oklch(0.769 0.188 70.1);
+  --kh-green-500:  oklch(0.627 0.194 149.2);
+  --kh-blue-500:   oklch(0.623 0.214 259.8);
+
+  /* ---- L1 primitive: scale ---------------------------------------------- */
+  --kh-space-1: 0.25rem;
+  --kh-space-2: 0.5rem;
+  --kh-space-3: 0.75rem;
+  --kh-space-4: 1rem;
+  --kh-space-5: 1.25rem;
+  --kh-space-6: 1.5rem;
+  --kh-space-8: 2rem;
+
+  --kh-text-sm: 0.8125rem;
+  --kh-text-md: 0.875rem;
+  --kh-text-lg: 1rem;
+  --kh-text-xl: 1.125rem;
+
+  --kh-radius-sm: 0.25rem;
+  --kh-radius-md: 0.5rem;
+  --kh-radius-lg: 0.75rem;
+  --kh-radius-full: 9999px;
+
+  /* 日本語を第一級に扱うスタック。和文フェイスを欧文の直後に置く */
+  --kh-font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    "Yu Gothic UI", Meiryo, sans-serif;
+
+  /* ---- L1 primitive: 和文向けタイポグラフィ ------------------------------ */
+  /* 和文は字面が大きく密度が高いので、欧文より行間を広く・字送りを開ける */
+  --kh-leading-none:    1;
+  --kh-leading-tight:   1.45;   /* 見出し */
+  --kh-leading-normal:  1.75;   /* 本文。欧文の 1.5 相当 */
+  --kh-leading-ui:      1.5;    /* ボタン・ラベルなど 1〜2 行の UI */
+
+  --kh-tracking-tight:  0;
+  --kh-tracking-normal: 0.02em; /* 和文は少し開けた方が読みやすい */
+  --kh-tracking-wide:   0.04em;
+
+  /* palt = 和文の約物・仮名を詰める。UI では基本オン */
+  --kh-font-feature: "palt" 1;
+
+  /* 影は 2 段だけ。まず線で区切り、足りないときだけ持ち上げる */
+  --kh-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.04);
+  --kh-shadow-md: 0 1px 2px oklch(0 0 0 / 0.04), 0 4px 12px oklch(0 0 0 / 0.06);
+  --kh-shadow-lg: 0 2px 4px oklch(0 0 0 / 0.05), 0 12px 32px oklch(0 0 0 / 0.10);
+
+  /* switch のつまみのように「薄いトラックの中で浮いている小さい面」用。
+     shadow-sm (4%) では薄いトラックとの差を作れないので専用に持つ。
+     面が小さいぶん濃くしても重く見えない。
+     影は 2 段だけという原則の例外。dark でも線に置き換えない（つまみは
+     線で囲むと「輪郭のあるノブ」になってしまい、物として見えなくなる）。 */
+  --kh-shadow-thumb: 0 1px 2px oklch(0 0 0 / 0.30);
+
+  /* switch の off のつまみ。物理的なノブなので light / dark とも明るい面。
+     surface にすると dark で #18181a になり、暗いトラックに沈む */
+  --kh-color-thumb: oklch(1 0 0);
+
+  --kh-duration-fast: 120ms;
+  --kh-duration-md:   180ms;
+  --kh-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ======================================================================
+     L2 semantic — 役割で名前を付ける。利用側が上書きするのはこの層だけ
+     ====================================================================== */
+
+  /* ---- surface: 奥から手前へ -------------------------------------------- */
+  --kh-color-canvas:        var(--kh-gray-50);   /* #fafafb ページの地 */
+  --kh-color-surface:       oklch(1 0 0);        /* #ffffff 持ち上がった面 */
+  --kh-color-surface-muted: var(--kh-gray-100);  /* #f4f4f5 沈んだ面 */
+  --kh-color-bg:            var(--kh-color-canvas);  /* alias */
+
+  /* ---- text: 濃い順に 4 段。これ以外の濃さを作らない --------------------- */
+  --kh-color-fg:        var(--kh-gray-950);  /* #09090a 見出し・主要 */
+  --kh-color-fg-body:   var(--kh-gray-700);  /* #3f3f42 本文 */
+  --kh-color-fg-muted:  var(--kh-gray-500);  /* #727275 補助・ラベル */
+  --kh-color-fg-faint:  var(--kh-gray-400);  /* #9fa0a2 プレースホルダ */
+
+  /* ---- border: 2 段。どちらも「確実に見える」濃さしか持たない -------------
+     以前あった border-soft (#f4f4f5) は白い面との差が L で 0.03 しかなく
+     事実上不可視だったため廃止。使えない濃さはトークンに置かない。          */
+  --kh-color-border:        var(--kh-gray-200);  /* #e4e4e6 枠線・区切り線 */
+  --kh-color-border-strong: var(--kh-gray-300);  /* #d4d4d6 強調・input */
+
+  /* ---- accent: 無彩色。ここを上書きしてブランド色を入れる ----------------- */
+  --kh-color-accent:        var(--kh-gray-900);  /* #18181a */
+  --kh-color-accent-hover:  var(--kh-gray-800);  /* #272729 */
+  --kh-color-accent-fg:     var(--kh-gray-50);   /* #fafafb accent の上の文字 */
+  --kh-color-accent-subtle: var(--kh-gray-100);  /* #f4f4f5 薄い塗り */
+
+  /* ---- link ------------------------------------------------------------- */
+  --kh-color-link:       var(--kh-color-accent);
+  --kh-color-link-hover: var(--kh-color-accent-hover);
+
+  /* ---- status: 塗り / 薄い背景 / その上の文字 ---------------------------- */
+  --kh-color-danger:        var(--kh-red-500);              /* 塗り */
+  --kh-color-danger-fg:     var(--kh-gray-50);              /* 塗りの上の文字 */
+  --kh-color-danger-soft:   oklch(0.945 0.045 27.3);        /* #ffe2dd 背景 */
+  --kh-color-danger-line:   oklch(0.880 0.080 27.3);    /* #ffc4bb soft の枠線 */
+  --kh-color-danger-deep:   oklch(0.455 0.155 27.3);        /* #9b2421 soft の上の文字 */
+
+  --kh-color-warning:       var(--kh-amber-500);
+  --kh-color-warning-fg:    var(--kh-gray-950);
+  --kh-color-warning-soft:  oklch(0.945 0.045 70.1);        /* #ffe8cd */
+  --kh-color-warning-line:   oklch(0.880 0.080 70.1);   /* #facf9e soft の枠線 */
+  --kh-color-warning-deep:  oklch(0.455 0.155 70.1);        /* #8a4000 */
+
+  --kh-color-success:       var(--kh-green-500);
+  --kh-color-success-fg:    var(--kh-gray-50);
+  --kh-color-success-soft:  oklch(0.945 0.045 149.2);       /* #d9f6dd */
+  --kh-color-success-line:   oklch(0.880 0.080 149.2);   /* #b3e7bb soft の枠線 */
+  --kh-color-success-deep:  oklch(0.455 0.155 149.2);       /* #006c1d */
+
+  --kh-color-info:          var(--kh-blue-500);
+  --kh-color-info-fg:       var(--kh-gray-50);
+  --kh-color-info-soft:     oklch(0.945 0.045 259.8);       /* #dceeff */
+  --kh-color-info-line:   oklch(0.880 0.080 259.8);      /* #b9d9ff soft の枠線 */
+  --kh-color-info-deep:     oklch(0.455 0.155 259.8);       /* #1951ab */
+
+  /* ---- misc -------------------------------------------------------------- */
+  --kh-color-overlay: oklch(0.1403 0.0022 286.1 / 0.5);
+  /* focus リングは outline で描く。box-shadow で隙間を「塗る」と
+     地の色を決め打ちすることになり、白い面の上で輪が浮く。
+     outline-offset の隙間は透明なので、どんな地の上でも正しく見える。 */
+  /* focus は「状態」であって「意味」ではないので、青を status の info からではなく
+     L1 primitive から直接引く。--kh-color-info を変えても focus は追従しない。 */
+  --kh-color-ring:   var(--kh-blue-500);
+  --kh-ring-width:   1px;   /* 離して描くリング（Button 等）。Input の 1px と揃える */
+  --kh-ring-offset:  2px;
+  --kh-ring-inset:   0;     /* 枠に重ねるリング（Input 等）。0 = border の 1px だけ */
+
+  --kh-radius: var(--kh-radius-md);
+}
+
+/* ---- dark: L2 だけ差し替える ------------------------------------------- */
+:root[data-theme="dark"] {
+  --kh-color-canvas:        var(--kh-gray-950);  /* #09090a */
+  --kh-color-surface:       var(--kh-gray-900);  /* #18181a */
+  --kh-color-surface-muted: var(--kh-gray-800);  /* #272729 */
+
+  --kh-color-fg:        var(--kh-gray-50);   /* #fafafb */
+  --kh-color-fg-body:   var(--kh-gray-300);  /* #d4d4d6 */
+  --kh-color-fg-muted:  var(--kh-gray-400);  /* #9fa0a2 */
+  --kh-color-fg-faint:  var(--kh-gray-600);  /* #535356 */
+
+  --kh-color-border:        var(--kh-gray-800);  /* #272729 surface #18181a の上で見える */
+  --kh-color-border-strong: var(--kh-gray-700);  /* #3f3f42 */
+
+  /* accent は反転する（白ボタン + 黒文字） */
+  --kh-color-accent:        var(--kh-gray-50);
+  --kh-color-accent-hover:  var(--kh-gray-200);
+  --kh-color-accent-fg:     var(--kh-gray-900);
+  --kh-color-accent-subtle: var(--kh-gray-800);
+
+  --kh-color-danger-soft:   oklch(0.275 0.055 27.3);   /* #3f1c18 */
+  --kh-color-danger-line:   oklch(0.360 0.070 27.3);  /* #5d2d28 */
+  --kh-color-danger-deep:   oklch(0.800 0.120 27.3);   /* #ff9f93 */
+  --kh-color-warning-soft:  oklch(0.275 0.055 70.1);   /* #392204 */
+  --kh-color-warning-line:   oklch(0.360 0.070 70.1);  /* #54360b */
+  --kh-color-warning-deep:  oklch(0.800 0.120 70.1);   /* #efb062 */
+  --kh-color-success-soft:  oklch(0.275 0.055 149.2);  /* #112f18 */
+  --kh-color-success-line:   oklch(0.360 0.070 149.2);  /* #1f4728 */
+  --kh-color-success-deep:  oklch(0.800 0.120 149.2);  /* #84d393 */
+  --kh-color-info-soft:     oklch(0.275 0.055 259.8);  /* #172742 */
+  --kh-color-info-line:   oklch(0.360 0.070 259.8);  /* #263d62 */
+  --kh-color-info-deep:     oklch(0.800 0.120 259.8);  /* #90bfff */
+
+  --kh-color-overlay: oklch(0.1403 0.0022 286.1 / 0.7);
+
+  /* 暗い地の上では影がほぼ見えない。線を強めて持ち上げる */
+  --kh-shadow-sm: 0 0 0 1px var(--kh-gray-800);
+  --kh-shadow-md: 0 0 0 1px var(--kh-gray-800), 0 8px 24px oklch(0 0 0 / 0.5);
+  --kh-shadow-lg: 0 0 0 1px var(--kh-gray-700), 0 16px 48px oklch(0 0 0 / 0.6);
+  /* つまみは明るい面のまま。暗いトラック (gray-700) との差は色そのものが作るので、
+     dark では影に仕事をさせない（shadow-sm のように線へ置き換えると、
+     明るい輪がつまみを縁取って見た目が壊れる）。
+
+     純白ではなく gray-50。kohaku の dark はどこにも純白を使っておらず、
+     一番明るいのが gray-50（accent も fg もこれ）。ここだけ純白にすると
+     dark で唯一そこだけが突出して明るい点になる。 */
+  --kh-color-thumb: var(--kh-gray-50);
+}
