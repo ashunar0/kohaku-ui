@@ -31,6 +31,8 @@
 
   --color-link:          var(--kh-color-link);
 
+  --color-neutral-soft:  var(--kh-color-neutral-soft);
+
   --color-danger:        var(--kh-color-danger);
   --color-danger-soft:   var(--kh-color-danger-soft);
   --color-danger-deep:   var(--kh-color-danger-deep);

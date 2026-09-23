@@ -147,6 +147,11 @@
   --kh-color-link-hover: var(--kh-color-accent-hover);
 
   /* ---- status: 塗り / 薄い背景 / その上の文字 ---------------------------- */
+  /* 無彩色の soft。surface-muted（L 0.967）は canvas と 1.05:1 しか差がなく
+     白と見分けられなかった。色つき soft と明度（L 0.945）を揃える。
+     dark は gray-800 がすでに soft の明度（0.275）と揃っている */
+  --kh-color-neutral-soft:  oklch(0.945 0.0018 286.1);      /* #ecedee */
+
   --kh-color-danger:        var(--kh-red-500);              /* 塗り */
   --kh-color-danger-fg:     var(--kh-gray-50);              /* 塗りの上の文字 */
   --kh-color-danger-soft:   oklch(0.945 0.045 27.3);        /* #ffe2dd 背景 */
@@ -217,6 +222,7 @@
   --kh-color-accent-fg:     var(--kh-gray-900);
   --kh-color-accent-subtle: var(--kh-gray-800);
 
+  --kh-color-neutral-soft:  var(--kh-gray-800);        /* #272729 */
   --kh-color-danger-soft:   oklch(0.275 0.055 27.3);   /* #3f1c18 */
   --kh-color-danger-line:   oklch(0.360 0.070 27.3);  /* #5d2d28 */
   --kh-color-danger-deep:   oklch(0.800 0.120 27.3);   /* #ff9f93 */

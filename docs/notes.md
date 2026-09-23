@@ -807,3 +807,17 @@ container query で足す。
 root に `gap` と `padding-block` を持たせ、part は `padding-inline` だけにした。
 
 divided の線は、線の上下どちらも gap（12px）になるようにしてある。
+
+## Badge neutral の地を色つき soft と同じ明度にする（2026-09-23）
+
+neutral の地は `surface-muted`（L 0.967）だった。canvas と 1.05:1、白と 1.10:1 しか
+差がなく、白と見分けられなかった。色つき soft は L 0.945 で白と 1.16:1 あるので、
+**neutral だけ地から浮いていなかった。**
+
+L 0.967 / 0.945 / 0.920 を並べて、0.945 に決めた。色つきの Badge と同じだけ浮く。
+
+`surface-muted` 自体は変えずに、L2 に `--kh-color-neutral-soft` を立てた。
+`surface-muted` は input や button など他でも「沈んだ面」として使っていて、
+役割が違う。**Badge の地は soft の仲間**なので、soft と明度を揃える。
+
+dark は gray-800（L 0.274）がもともと soft の明度（0.275）と揃っていたので、そのまま。

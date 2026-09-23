@@ -1,6 +1,6 @@
 @layer kohaku {
   [data-kh="badge"] {
-    --kh-badge-bg: var(--kh-color-surface-muted);
+    --kh-badge-bg: var(--kh-color-neutral-soft);
     --kh-badge-fg: var(--kh-color-fg-body);
     /* 6px。スケール(4/8/12)の中間なので L3 に literal で持つ。
        pill にしたいときは var(--kh-radius-full) */
