@@ -48,9 +48,16 @@
     color: var(--kh-color-fg-muted);
   }
   [data-kh="alert"]:not(:has([data-part="icon"])) { grid-template-columns: 1fr; }
+  /* actions は文と同じ行の右端に置く。文の下に置くと、読み終えた視線が
+     左に戻ってからボタンを探すことになる */
+  [data-kh="alert"]:has([data-part="actions"]) { grid-template-columns: auto 1fr auto; }
+  [data-kh="alert"]:not(:has([data-part="icon"])):has([data-part="actions"]) { grid-template-columns: 1fr auto; }
   [data-kh="alert"] [data-part="actions"] {
-    grid-column: 2;
-    margin-top: var(--kh-space-2);
+    /* 最後の列。数字で決め打ちすると icon の有無で暗黙の列ができ、
+       description がそこへ流れる */
+    grid-column: -2;
+    grid-row: 1 / span 2;
+    align-self: center;
     display: flex;
     gap: var(--kh-space-2);
   }
