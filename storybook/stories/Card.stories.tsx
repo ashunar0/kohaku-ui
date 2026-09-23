@@ -9,10 +9,9 @@ const meta = {
     divided: { control: "boolean" },
   },
   render: (args) => (
-    <Card.Root {...args}>
+    <Card.Root {...args} style={{ maxWidth: "24rem" }}>
       <Card.Header>
         <Card.Title>チームメンバー</Card.Title>
-        <Card.Description>12 人が参加しています。</Card.Description>
       </Card.Header>
       <Card.Body style={{ fontSize: ".875rem" }}>招待リンクは 7 日で失効します。</Card.Body>
       <Card.Footer>

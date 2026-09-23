@@ -792,3 +792,18 @@ CLAUDE.md の「新しいコンポーネントを作ったら必ずギャラリ�
 Primer は狭い画面で actions を文の下へ落とす。kohaku はまだやらない。
 サイドバーのような狭い場所に actions 付きの Alert を置く場面が出たら、
 container query で足す。
+
+## Card の余白は外 16 / 区画の間 12（2026-09-23）
+
+以前は外周も区画の間も 20px だった。本文が 1 行のカードだと中身より余白が勝ち、
+縦に間延びして見えた。外 20 / 間 20、外 20 / 間 12、外 16 / 間 12 を
+狭い幅（235px）と広い幅（736px）の両方で並べて、外 16 / 間 12 に決めた。
+**区画の間を外周より狭くする**と、中身どうしが 1 つのまとまりに見える。
+
+### 区画の間は root の gap で作る
+
+以前は header / body / footer の padding で間を作っていた。そのため
+**body を省くと header と footer の間が 0 になっていた**（InLayout の story で発覚）。
+root に `gap` と `padding-block` を持たせ、part は `padding-inline` だけにした。
+
+divided の線は、線の上下どちらも gap（12px）になるようにしてある。

@@ -1,9 +1,13 @@
 @layer kohaku {
   [data-kh="card"] {
-    --kh-card-padding: var(--kh-space-5);
+    --kh-card-padding: var(--kh-space-4);
+    /* 区画の間。外周より狭くして、中身どうしを 1 つのまとまりに見せる */
+    --kh-card-gap: var(--kh-space-3);
 
     display: flex;
     flex-direction: column;
+    gap: var(--kh-card-gap);
+    padding-block: var(--kh-card-padding);
     background: var(--kh-color-surface);
     border: 1px solid var(--kh-color-border);
     border-radius: var(--kh-radius-lg);
@@ -15,23 +19,22 @@
     box-shadow: var(--kh-shadow-md);
   }
 
-  /* 既定は区切り線なし。padding だけでリズムを作る */
-  [data-kh="card"] > [data-part="header"] { padding: var(--kh-card-padding) var(--kh-card-padding) 0; }
-  [data-kh="card"] > [data-part="body"]   { padding: var(--kh-card-padding); }
+  /* 区画の間は root の gap で作る。part の padding で作ると、
+     body を省いたとき header と footer がくっつく */
+  [data-kh="card"] > [data-part] { padding-inline: var(--kh-card-padding); }
   [data-kh="card"] > [data-part="footer"] {
-    padding: 0 var(--kh-card-padding) var(--kh-card-padding);
     display: flex;
     gap: var(--kh-space-2);
     justify-content: flex-end;
   }
 
-  /* 情報の区画が本当に別物のときだけ線を引く */
+  /* 情報の区画が本当に別物のときだけ線を引く。線の両側を gap で揃える */
   [data-kh="card"][data-divided] > [data-part="header"] {
-    padding-bottom: var(--kh-card-padding);
+    padding-bottom: var(--kh-card-gap);
     border-bottom: 1px solid var(--kh-color-border);
   }
   [data-kh="card"][data-divided] > [data-part="footer"] {
-    padding-top: var(--kh-card-padding);
+    padding-top: var(--kh-card-gap);
     border-top: 1px solid var(--kh-color-border);
   }
 
