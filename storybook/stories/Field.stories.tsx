@@ -31,10 +31,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
+/**
+ * 必須の印は「必須」の小さなバッジ（10px）。Ark が入れる `*` を CSS で描き替えている。
+ * 文言は `--kh-field-required-text` で変えられる。
+ */
 export const Required: Story = { args: { required: true } }
 
 /**
- * 枠線・エラー文言・必須マークがすべて `--kh-color-invalid` を見る。
+ * 枠線とエラー文言が `--kh-color-invalid` を見る（必須のバッジは塗りなので danger の soft）。
  * danger（塗り用）とは別のトークン。テーマで反転する
  * （light #e7000b / dark #ff6055）。
  */

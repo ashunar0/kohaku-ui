@@ -842,3 +842,45 @@ focus や invalid を直すたびに 2 箇所触ることになる。
 `Field.Textarea` は高さ 40px・resize 自由の 1 行**になっていた。
 `textarea.css` では Ark の part と `data-kh` の両方に当てている。
 実測で 80px / 上下 12px / resize vertical。
+
+## ラベルのルールと、必須の印（2026-09-23）
+
+日本語 5 つ（デジタル庁・SmartHR・Spindle・Ubie・freee）と海外 7 つ
+（GOV.UK・Polaris・Carbon・Atlassian・Primer・Spectrum・M3）＋ NN/g を調べた。
+
+### どこも同じだったので、そのまま採る
+
+- placeholder をラベルの代わりにしない
+- 必須の印はラベル文字の後ろ
+- ラベルは入力欄の上が既定。左置きは作らない（認めるのは Spectrum・Polaris・DADS くらい）
+- ラベルの末尾にコロンを付けない（GOV.UK・Carbon・Spectrum が明文で禁止）
+- ラベルと入力欄の間は 4〜8px（kohaku は 8px）
+
+### 必須の印は「必須」の文字バッジ、10px
+
+**和文の 5 つはすべて「必須」という文字で書き、`*` だけのものは無かった。**
+海外は `*` が多い。和文基準なので文字にした。バッジ（SmartHR・Spindle・Ubie・freee）と
+「※必須」テキスト（DADS）を並べてバッジに、12 / 11 / 10px を並べて 10px に決めた。
+ラベル（14px）の脇役なので、小さくてよい。
+
+Ark の RequiredIndicator は React でも Vue でも中身に `*` を入れ、`aria-hidden` が付く。
+**見た目専用なので CSS の `::before` で描き替えた。** FW を問わず同じに出る
+（React / Vue とも 28.7 × 15px を実測）。文言は `--kh-field-required-text` で変える。
+読み上げは input の `required` が担う。
+
+色は invalid ではなく danger の soft / deep。**自分で地を作る塗り**だから
+（「塗り」と「地の上の線・文字」の線引き）。文字と地は light 6.44 / dark 7.65。
+
+縦位置: 箱の中心はラベルと 0.00px。インクで見るとラベル文字より 0.6px 下だが、
+checkbox の −0.18〜+0.60px と同じ幅なので補正しない。
+
+### 補足文は入力欄の下のまま
+
+DADS と GOV.UK はラベルと入力欄の間に置くが、他の大半は下。SmartHR と Spindle は
+内容で上下を使い分ける。並べて見て、下のままにした。
+
+### 未決: 任意の印
+
+「どちらに印を付けるか」は完全に割れていた（必須だけ / 任意だけ / 両方 / 少ない方だけ）。
+今は必須だけ。任意を示したくなったら Ark の `fallback`（required でないとき描かれる）で
+出せるが、fallback は data-part を持たないので CSS で狙う手段を別に考える必要がある。

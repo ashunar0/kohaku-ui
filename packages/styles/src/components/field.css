@@ -21,8 +21,27 @@
     color: var(--kh-color-fg);
     line-height: var(--kh-leading-ui);
   }
+  /* 必須の印は「必須」の小さなバッジ。和文のデザインシステムは 5 つとも文字で書き、
+     * だけのものは無い。Ark は中身に "*" を入れるが aria-hidden の見た目専用なので、
+     CSS で描き替える（FW を問わず同じに出る）。文言は --kh-field-required-text */
   [data-scope="field"][data-part="required-indicator"] {
-    color: var(--kh-color-invalid);
+    /* 10px。スケール外なので L3 に literal で持つ */
+    --kh-field-required-size: 0.625rem;
+
+    display: inline-flex;
+    margin-inline-start: var(--kh-space-1);
+    font-size: 0;
+  }
+  [data-scope="field"][data-part="required-indicator"]::before {
+    content: var(--kh-field-required-text, "必須");
+    padding-inline: 0.4em;
+    font-size: var(--kh-field-required-size);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: var(--kh-tracking-normal);
+    border-radius: var(--kh-radius-sm);
+    background: var(--kh-color-danger-soft);
+    color: var(--kh-color-danger-deep);
   }
 
   /* ---- helper / error ---------------------------------------------------- */
