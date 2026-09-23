@@ -1,0 +1,27 @@
+@layer kohaku {
+  /* 入力欄の外に添える単位や文字（歳・年・月・日・円）。Group の中で入力欄の隣に置く。
+     枠の内側には置かない（あさひの判断。GOV.UK・Ubie・freee と同じ）。
+     読み上げには出さない（aria-hidden）。意味はラベルや aria-label で持たせる */
+  [data-kh="affix"] {
+    /* 入力欄と同じ高さの箱の中で中央に置く。Group は Field を含むと上揃えになるため、
+       補足文やエラーで Field が伸びても、単位は入力欄の横に留まる */
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: var(--kh-field-height, 2.5rem);
+    flex-shrink: 0;
+    /* 入力欄の文字と同じ高さに見せる。input は上 padding で和文の ink を下げているので、
+       同じだけ下げる（--kh-field-optical-shift） */
+    padding-block-start: calc(var(--kh-field-optical-shift, 0.07em) * 2);
+    font-size: var(--kh-field-font-size, var(--kh-text-md));
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg-body);
+    white-space: nowrap;
+  }
+
+  /* 年 [  ] 月 [  ] のように続くとき、単位は前の欄に寄せる。
+     Group の gap（8px）に足して、次の欄との間を広げる */
+  [data-kh="group"] > [data-kh="affix"]:not(:last-child) {
+    margin-inline-end: var(--kh-space-2);
+  }
+}

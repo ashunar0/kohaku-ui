@@ -17,7 +17,7 @@ export { Alert, type AlertProps, type AlertVariant } from "./alert"
 export { Input, type InputProps } from "./input"
 export { Textarea, type TextareaProps } from "./textarea"
 export { Icon, type IconProps } from "./icon"
-export { Group, Actions, type GroupProps, type ActionsProps } from "./layout"
+export { Group, Actions, Affix, type GroupProps, type ActionsProps, type AffixProps } from "./layout"
 
 // Ark に組み立て規約を被せたもの
 export { Checkbox, type CheckboxProps } from "./checkbox"

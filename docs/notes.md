@@ -983,3 +983,44 @@ strict: false で、外では `undefined.required` を読んで落ちる）。le
 **`<Fieldset.Legend data-required>` を付けると CSS がバッジを描く。**
 見た目は field.css の `::before` と同じ宣言を共有している（10px / 高さ 15px / 文字から 8px）。
 読み上げ用には中の Field それぞれに required を付ける。
+
+## 年齢・生年月日・数値の入力と Affix（2026-09-23）
+
+日本語 5 つ（DADS・SmartHR・Spindle・Ubie・freee）と海外 6 つ
+（GOV.UK・Polaris・Carbon・Atlassian・Primer・Spectrum）＋ NN/g・Ark を調べた。
+
+### どこも同じだったので、そのまま採る
+
+- **生年月日にカレンダーを使わない。** DADS「カレンダーボタンを置くべきではありません」。
+  カレンダーは近い日付向け（NN/g「1 年以内」）
+- **年齢に＋－ボタン（NumberInput）を使わない。** NN/g が age / date of birth を名指し。
+  NumberInput は人数・数量のように小さく増減する値向け
+- 欄の幅は桁数に合わせ、年を月・日より広くする（DADS 72 / 56px をそのまま採用）
+- 3 欄の間でフォーカスを自動で移さない（DADS・Spindle・GOV.UK）
+- 年は西暦で持つ。和暦は添えるだけ
+
+### `type="number"` は使わない
+
+`inputMode="numeric"` の普通の入力欄にする。Ubie（E 表記を受け入れる）・GOV.UK
+（ホイールで値が変わる、音声入力で入らない）・Spectrum・DADS が同じ。
+Ark の NumberInput も中身は text + `role="spinbutton"`。Polaris・Carbon・Primer は
+使うので割れてはいるが、使う側も SmartHR のようにホイールを殺す処理を足している。
+
+### 生年月日は年・月・日の 3 欄。セレクトにしない
+
+DADS・Ubie・GOV.UK が 3 つの入力欄。セレクト 3 つ（freee）は DADS と NN/g が
+退けている（何十年も遡るのに選択肢が長すぎる、a11y 上の問題）。
+あさひの判断も「欄は分けたい」。
+
+### 単位は枠の外（Affix）
+
+「年」「歳」を枠の内側に置く（SmartHR・Polaris・Primer）か外（GOV.UK・Ubie・freee）かは
+割れていた。あさひの判断で**外**。`<Affix>` を Group の中で入力欄の隣に置く。
+
+- 読み上げには出さない（`aria-hidden`）。GOV.UK「Do not rely on prefixes or suffixes alone」。
+  意味は入力欄のラベルか `aria-label`（年・月・日）で持たせる
+- 入力欄と同じ高さの箱の中で中央に置き、入力欄と同じ光学補正（`--kh-field-optical-shift`）を
+  入れる。Group は Field を含むと上揃えになるので、エラーで Field が伸びても単位は動かない。
+  インクの中心は入力欄の数字と sm −0.13 / md 0.00 / lg 0.00px
+- 単位は前の欄に寄せる。欄 → 単位は 8px、単位 → 次の欄は 16px（Ubie と同じ考え方）
+- 文字の大きさは Group の size（`--kh-field-font-size`）に従う
