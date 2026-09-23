@@ -821,3 +821,24 @@ L 0.967 / 0.945 / 0.920 を並べて、0.945 に決めた。色つきの Badge �
 役割が違う。**Badge の地は soft の仲間**なので、soft と明度を揃える。
 
 dark は gray-800（L 0.274）がもともと soft の明度（0.275）と揃っていたので、そのまま。
+
+## Textarea を Input から分けた（2026-09-23）
+
+部品としては最初から `Input` と `Textarea` の 2 つだったが、ファイルと
+Storybook が一緒だった。HTML のタグも役割も別なので分けた。
+
+名前は TextField / TextArea にしなかった。他のライブラリで TextField は
+**ラベルと補足文まで含んだ部品**を指すことが多く、kohaku ではそれが Ark の `Field`。
+`Field` と `TextField` が並ぶと紛らわしい。HTML のタグ名と Ark の part 名
+（`input` / `textarea`）に揃える。
+
+CSS は `input.css` に共通の枠・focus・disabled・invalid・size を残し、
+複数行だけの指定を `textarea.css` に出した。共通部分まで複製すると、
+focus や invalid を直すたびに 2 箇所触ることになる。
+
+### Field.Textarea が 1 行になっていた
+
+複数行の指定が `[data-kh="textarea"]` にしか当たっておらず、**Ark の
+`Field.Textarea` は高さ 40px・resize 自由の 1 行**になっていた。
+`textarea.css` では Ark の part と `data-kh` の両方に当てている。
+実測で 80px / 上下 12px / resize vertical。

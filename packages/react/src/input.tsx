@@ -12,8 +12,3 @@ export type InputProps = Omit<ComponentPropsWithoutRef<"input">, "size"> & { siz
 export function Input({ size, ...props }: InputProps) {
   return <input data-kh="input" data-size={size} {...props} />
 }
-
-export type TextareaProps = Omit<ComponentPropsWithoutRef<"textarea">, "size"> & { size?: FieldSize }
-export function Textarea({ size, ...props }: TextareaProps) {
-  return <textarea data-kh="textarea" data-size={size} {...props} />
-}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Input, Textarea } from "@kohaku/react"
+import { Input } from "@kohaku/react"
 
 /**
  * Field の外で使う素の入力欄。Field.Root の中では Ark の `<Field.Input>` を使う
@@ -39,8 +39,3 @@ export const Disabled: Story = { args: { disabled: true, defaultValue: "plan_fre
  * 見えるため、border 1px + inset 1px で同心の矩形にしている。
  */
 export const Invalid: Story = { args: { "aria-invalid": true, defaultValue: "my workspace" } }
-
-export const TextareaStory: StoryObj<typeof Textarea> = {
-  name: "Textarea",
-  render: () => <Textarea placeholder="複数行の入力" />,
-}

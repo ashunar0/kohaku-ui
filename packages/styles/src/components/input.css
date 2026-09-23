@@ -1,4 +1,6 @@
 @layer kohaku {
+  /* 1 行の入力欄と textarea に共通する枠・focus・disabled・invalid・size。
+     複数行だけの指定は textarea.css */
   [data-scope="field"][data-part="input"],
   [data-scope="field"][data-part="textarea"],
   [data-scope="field"][data-part="select"],
@@ -70,16 +72,4 @@
     --kh-field-padding-x: var(--kh-space-4);
     --kh-field-font-size: var(--kh-text-lg);
   }
-
-  /* textarea は単独で [data-kh="textarea"] を付ける。
-     input と両方書くと HTML の属性重複になり後者が捨てられる。 */
-  [data-kh="textarea"] {
-    min-height: 5rem;
-    height: auto;
-    /* 複数行なので中央揃えではない。補正は不要 */
-    padding-block: var(--kh-space-3);
-    line-height: var(--kh-leading-ui);
-    resize: vertical;
-  }
-
 }

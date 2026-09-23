@@ -1,0 +1,13 @@
+@layer kohaku {
+  /* 枠・focus・invalid・size は input.css と共通。ここは複数行だけの指定。
+     Field の中（Ark の part）と外（data-kh）の両方に当てる */
+  [data-scope="field"][data-part="textarea"],
+  [data-kh="textarea"] {
+    min-height: 5rem;
+    height: auto;
+    /* 複数行なので中央揃えではない。光学補正は不要 */
+    padding-block: var(--kh-space-3);
+    line-height: var(--kh-leading-ui);
+    resize: vertical;
+  }
+}
