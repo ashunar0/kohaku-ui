@@ -58,3 +58,33 @@ export const Textarea: Story = {
     </div>
   ),
 }
+
+/**
+ * PC 前提の項目が多いフォーム用。祖先に `data-label-position="side"` を付けると
+ * 中の Field がまとめて横並びになる。ラベル列の幅は `--kh-field-label-width`（既定 8rem）。
+ * ラベルは左寄せで、入力欄の 1 行目と中心を揃える（textarea も）。
+ */
+export const LabelSide: Story = {
+  render: () => (
+    <form data-label-position="side" style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
+      <Field.Root required>
+        <Field.Label>氏名<Field.RequiredIndicator /></Field.Label>
+        <Field.Input defaultValue="あさひ" />
+      </Field.Root>
+      <Field.Root required invalid>
+        <Field.Label>メールアドレス<Field.RequiredIndicator /></Field.Label>
+        <Field.Input defaultValue="asahi@" />
+        <Field.ErrorText>メールアドレスの形式が正しくありません。</Field.ErrorText>
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>会社名</Field.Label>
+        <Field.Input />
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>自己紹介</Field.Label>
+        <Field.Textarea />
+        <Field.HelperText>プロフィールに表示されます。</Field.HelperText>
+      </Field.Root>
+    </form>
+  ),
+}
