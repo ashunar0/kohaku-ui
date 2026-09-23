@@ -21,15 +21,19 @@ type Story = StoryObj<typeof meta>
 /**
  * 姓・名は見える小ラベルを付けず、placeholder で示すよくある形。
  * placeholder は入力すると消えるので、読み上げ用の名前は aria-label で別に持たせる。
+ *
+ * 問い全体が必須なので、バッジは legend に 1 つ（`data-required`）。
+ * 読み上げ用には中の Field それぞれに required を付ける。
+ * 住所のように項目ごとに必須かどうかが違うときは、中のラベルに付ける。
  */
-const Name = ({ legend, last, first, invalid = false }: {
-  legend: string; last: string; first: string; invalid?: boolean
+const Name = ({ legend, last, first, required = true, invalid = false }: {
+  legend: string; last: string; first: string; required?: boolean; invalid?: boolean
 }) => (
   <Fieldset.Root invalid={invalid}>
-    <Fieldset.Legend>{legend}</Fieldset.Legend>
+    <Fieldset.Legend data-required={required || undefined}>{legend}</Fieldset.Legend>
     <Group>
-      <Field.Root><Field.Input placeholder={last} aria-label={last} /></Field.Root>
-      <Field.Root invalid={invalid}><Field.Input placeholder={first} aria-label={first} /></Field.Root>
+      <Field.Root required={required}><Field.Input placeholder={last} aria-label={last} /></Field.Root>
+      <Field.Root required={required} invalid={invalid}><Field.Input placeholder={first} aria-label={first} /></Field.Root>
     </Group>
     {invalid && <Fieldset.ErrorText>{first}を入力してください。</Fieldset.ErrorText>}
   </Fieldset.Root>
@@ -71,7 +75,7 @@ const Address = () => (
 const Form = () => (
   <>
     <Name legend="氏名" last="姓" first="名" />
-    <Name legend="氏名（カタカナ）" last="セイ" first="メイ" />
+    <Name legend="氏名（カタカナ）" last="セイ" first="メイ" required={false} />
     <Address />
   </>
 )

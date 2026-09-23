@@ -61,7 +61,7 @@ export const Textarea: Story = {
 
 /**
  * PC 前提の項目が多いフォーム用。祖先に `data-label-position="side"` を付けると
- * 中の Field がまとめて横並びになる。ラベル列の幅は `--kh-field-label-width`（既定 8rem）。
+ * 中の Field がまとめて横並びになる。ラベル列の幅は `--kh-field-label-width`（既定 9rem）。
  * ラベルは左寄せで、入力欄の 1 行目と中心を揃える（textarea も）。
  */
 export const LabelSide: Story = {

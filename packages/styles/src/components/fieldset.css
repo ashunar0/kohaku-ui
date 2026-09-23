@@ -39,6 +39,12 @@
     margin-top: var(--kh-space-3);
   }
 
+  /* 必須バッジの見た目は field.css と共通。Field のラベル（gap 4 + margin 4）と同じ 8px 離す */
+  [data-scope="fieldset"][data-part="legend"][data-required]::after {
+    flex-shrink: 0;
+    margin-inline-start: var(--kh-space-2);
+  }
+
   [data-scope="fieldset"][data-part="helper-text"] {
     margin-top: var(--kh-space-2);
     font-size: var(--kh-text-sm);
@@ -64,7 +70,7 @@
   :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
       [data-scope="fieldset"][data-part="root"][data-label-position="side"]) {
     display: grid;
-    grid-template-columns: var(--kh-field-label-width, 8rem) minmax(0, 1fr);
+    grid-template-columns: var(--kh-field-label-width, 9rem) minmax(0, 1fr);
     column-gap: var(--kh-space-4);
   }
   :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
