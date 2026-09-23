@@ -1,0 +1,93 @@
+@layer kohaku {
+  /* 複数の Field を 1 つの問いとして束ねる（氏名の姓・名、住所など）。
+     Field は入力欄 1 つにつき 1 つ。Ark は Field 内の control に同じ id を振るので、
+     1 つの Field に入力欄を 2 つ入れてはいけない。 */
+  [data-scope="fieldset"][data-part="root"] {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* legend は Field のラベルと同じ見た目。グループ全体のラベルなので */
+  [data-scope="fieldset"][data-part="legend"] {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-bottom: var(--kh-space-2);
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    color: var(--kh-color-fg);
+    line-height: var(--kh-leading-ui);
+  }
+
+  /* 中のラベル（郵便番号・都道府県など）は legend より一段下げる。入力欄の上に置く */
+  [data-scope="fieldset"] [data-scope="field"][data-part="root"] > [data-part="label"] {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--kh-space-1);
+    font-size: var(--kh-text-sm);
+    font-weight: 400;
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg-muted);
+  }
+
+  /* 行（Group）を縦に重ねたときの間。住所の「郵便番号…」「町名・番地」など */
+  [data-scope="fieldset"] > [data-kh="group"] + [data-kh="group"] {
+    margin-top: var(--kh-space-3);
+  }
+
+  [data-scope="fieldset"][data-part="helper-text"] {
+    margin-top: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-fg-muted);
+    line-height: var(--kh-leading-ui);
+  }
+  [data-scope="fieldset"][data-part="error-text"] {
+    margin-top: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-invalid);
+    line-height: var(--kh-leading-ui);
+  }
+
+  /* 中の Field は Ark 上 disabled を知らない（input は fieldset の disabled で無効になる）
+     ので、ラベルもここで落とす */
+  [data-scope="fieldset"][data-part="root"][data-disabled] :is([data-part="legend"], [data-part="label"], [data-part="helper-text"]) {
+    color: var(--kh-color-fg-faint);
+  }
+
+  /* ---- ラベルを横に置くフォームの中 ----------------------------------------
+     legend を左の列に置く。描画上の legend は fieldset の枠に特別扱いで置かれ
+     grid に参加しないので、float で普通の子に戻してから grid に載せる */
+  :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]) {
+    display: grid;
+    grid-template-columns: var(--kh-field-label-width, 8rem) minmax(0, 1fr);
+    column-gap: var(--kh-space-4);
+  }
+  :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]) > * {
+    grid-column: 2;
+  }
+  :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]) > [data-part="legend"] {
+    float: left;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+    min-height: var(--kh-field-height, 2.5rem);
+    margin-bottom: 0;
+  }
+  /* 中の Field にラベルがあるときは、その分だけ下げて入力欄と中心を揃える */
+  :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]):has([data-scope="field"][data-part="label"]) > [data-part="legend"] {
+    margin-top: calc(var(--kh-text-sm) * var(--kh-leading-ui) + var(--kh-space-1));
+  }
+
+  /* Field を Group で横に並べたとき。高さの違う補足文やエラーが出ても
+     入力欄の上端が揃うよう上揃えにし、幅は等分する */
+  [data-kh="group"]:has(> [data-scope="field"][data-part="root"]) { align-items: flex-start; }
+  [data-kh="group"] > [data-scope="field"][data-part="root"] { flex: 1 1 0; min-width: 0; }
+}

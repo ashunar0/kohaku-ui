@@ -67,20 +67,21 @@
   /* ---- ラベルを横に置く ------------------------------------------------
      PC 前提の項目が多いフォーム用。祖先（form など）か Field.Root 自身に
      data-label-position="side" を付ける。ラベル列の幅は --kh-field-label-width を
-     祖先で上書きして、フォーム全体で揃える。ラベルは左寄せ */
+     祖先で上書きして、フォーム全体で揃える。ラベルは左寄せ。
+     Fieldset の中の Field（姓・名など）は横にしない。legend が左の列に立つ */
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
-      [data-scope="field"][data-part="root"][data-label-position="side"]) {
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) {
     display: grid;
     grid-template-columns: var(--kh-field-label-width, 8rem) minmax(0, 1fr);
     column-gap: var(--kh-space-4);
   }
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
-      [data-scope="field"][data-part="root"][data-label-position="side"]) > * {
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) > * {
     grid-column: 2;
   }
   /* 入力欄と同じ高さの箱の中で中央に置き、1 行目と中心を揃える */
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
-      [data-scope="field"][data-part="root"][data-label-position="side"]) > [data-part="label"] {
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) > [data-part="label"] {
     grid-column: 1;
     grid-row: 1 / span 3;
     align-self: start;
@@ -89,7 +90,7 @@
   }
   /* textarea は 1 行目の高さ = 上下 padding + 1 行 + 枠線 2 本 */
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
-      [data-scope="field"][data-part="root"][data-label-position="side"]):has(> [data-part="textarea"]) > [data-part="label"] {
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *):has(> [data-part="textarea"]) > [data-part="label"] {
     min-height: calc(var(--kh-space-3) * 2 + var(--kh-leading-ui) * 1em + 2px);
   }
 

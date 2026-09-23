@@ -28,7 +28,7 @@ tree-view
 | field | ✅ 対応済み・実機検証済み |
 | dialog | ✅ 対応済み・実機検証済み |
 | select | ✅ 対応済み・実機検証済み |
-| fieldset | ⬜ 未対応 |
+| fieldset | ✅ 対応済み・実機検証済み |
 | checkbox | ✅ 対応済み・実機検証済み |
 | switch | ✅ 対応済み・実機検証済み |
 | radio-group | ✅ 対応済み・実機検証済み |
