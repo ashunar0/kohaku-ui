@@ -45,8 +45,10 @@ export const Variants: Story = {
 export const Soft: Story = {
   render: () => (
     <div style={{ display: "grid", gap: ".75rem" }}>
+      <Alert variant="info" tone="soft" title="メンテナンスのお知らせ">3 月 12 日 2:00〜4:00 は一部機能が使えません。</Alert>
+      <Alert variant="success" tone="soft" title="デプロイが完了しました">2 分 14 秒で 3 件の変更が反映されました。</Alert>
+      <Alert variant="warning" tone="soft" title="容量が残りわずかです">80% を超えました。不要なファイルを削除してください。</Alert>
       <Alert variant="danger" tone="soft" title="支払いが確認できませんでした">3 日以内に更新されない場合、サービスが停止します。</Alert>
-      <Alert variant="warning" tone="soft" title="容量が残りわずかです">80% を超えました。</Alert>
     </div>
   ),
 }
