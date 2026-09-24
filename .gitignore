@@ -8,3 +8,6 @@ dist/
 
 # Storybook のビルド成果物
 storybook-static/
+
+# 外部の参考資料（出どころ・ライセンス未確認のため公開しない）
+docs/references/
