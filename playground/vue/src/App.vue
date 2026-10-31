@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, Field, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Dialog, Field, Popover, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -23,8 +23,34 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Popover -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Popover（Ark）</h2>
+    <Popover.Root :positioning="{ placement: 'bottom-start' }">
+      <Popover.Trigger data-kh="button" data-variant="outline">表示項目</Popover.Trigger>
+      <Teleport to="body">
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Title>表示する列</Popover.Title>
+            <Popover.Description>一覧に出す列を選んでください。</Popover.Description>
+            <div style="display: grid; gap: 0.5rem; margin-top: 0.75rem">
+              <Checkbox.Root default-checked>
+                <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+                <Checkbox.Label>氏名</Checkbox.Label>
+                <Checkbox.HiddenInput />
+              </Checkbox.Root>
+              <Checkbox.Root>
+                <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+                <Checkbox.Label>最終ログイン</Checkbox.Label>
+                <Checkbox.HiddenInput />
+              </Checkbox.Root>
+            </div>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Teleport>
+    </Popover.Root>
+
     <!-- Tooltip: Ark を直接使うので interactive は自分で付ける（WCAG 1.4.13） -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Tooltip（Ark）</h2>
+    <h2 :style="h2">Tooltip（Ark）</h2>
     <Tooltip.Root interactive>
       <Tooltip.Trigger data-kh="button" data-variant="outline">エクスポート</Tooltip.Trigger>
       <Teleport to="body">

@@ -34,7 +34,8 @@ tree-view
 | radio-group | ✅ 対応済み・実機検証済み |
 | tabs | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
 | tooltip | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
-| menu / popover | ⬜ 未対応 |
+| popover | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
+| menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
 これから作る順番は [`roadmap.md`](roadmap.md)。
@@ -59,6 +60,9 @@ select : root / label / control / trigger / value-text / indicator
          （trigger・content・item に data-state、item に data-highlighted）
 checkbox    : root / label / control / indicator      （+ group）
 switch      : root / label / control / thumb
+popover     : trigger / anchor / positioner / content / title / description
+         / close-trigger / indicator / arrow / arrow-tip
+         （content は role="dialog"。開くとフォーカスが中に入り、閉じると trigger に戻る）
 tooltip     : trigger / positioner / content / arrow / arrow-tip
          （positioner と content は Portal。content に data-state / data-placement。
            z-index は content に書く。Ark が positioner の --z-index に写す）

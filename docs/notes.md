@@ -1167,3 +1167,15 @@ Esc で閉じることは Ark がやる（実測）。
 Ark は content の computed z-index を読んで、positioner のインライン style
 （`z-index: var(--z-index)`）に写す。positioner に書いた z-index はインラインに負けて `auto` になっていた。
 Select も同じで、選択肢が sticky なヘッダー（z-index 10）の下に潜る状態だった。両方 content に移した。
+
+## 2026-10-31 Popover
+
+### Select の選択肢と同じ面（線＋shadow-lg）
+
+線だけ（Tooltip と同じ）と並べて、こちらにした。Tooltip は読むだけの面なので線で足りるが、
+Popover と Select は下の画面に重なったまま操作する面で、浮いていることが分かった方が迷わない
+（「影は浮いていることを示すときだけ」の場面）。あさひの判断は「今は見た目より動くこと」。
+影のぼかし（32px）が強すぎる件は、Select・Dialog と合わせて後で見直す余地がある。
+
+閉じるボタンは付けていない。Esc と外のクリックで閉じる（Ark の既定）。
+React / Vue とも、開く・中のチェックボックス・Esc・外クリック・フォーカスが trigger に戻る、を実測した。

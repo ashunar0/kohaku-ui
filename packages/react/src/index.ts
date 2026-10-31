@@ -26,6 +26,7 @@ export { RadioGroup, type RadioGroupProps, type RadioGroupItemProps } from "./ra
 export { Dialog, type DialogContentProps } from "./dialog"
 export { Select, type SelectTriggerProps, type SelectContentProps } from "./select"
 export { Tooltip, type TooltipRootProps, type TooltipContentProps } from "./tooltip"
+export { Popover, type PopoverContentProps } from "./popover"
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
 export { Field, Fieldset, Portal, Tabs, createListCollection } from "@ark-ui/react"

@@ -1,0 +1,39 @@
+@layer kohaku {
+  /* Ark の popover。trigger / anchor / positioner / content / title / description
+     / close-trigger（/ arrow / arrow-tip / indicator）
+     positioner と content は Portal で <body> 直下に飛ぶ */
+
+  [data-scope="popover"][data-part="content"] {
+    /* positioner ではなく content に書く（select.css 参照） */
+    z-index: var(--kh-z-popover, 60);
+    width: max-content;
+    max-width: var(--kh-popover-max-width, 20rem);
+    padding: var(--kh-popover-padding, var(--kh-space-4));
+    font-size: var(--kh-text-md);
+    line-height: var(--kh-leading-ui);
+    background: var(--kh-color-surface);
+    color: var(--kh-color-fg-body);
+    /* Select の選択肢と同じ面。下の画面に重なったまま操作するので、浮いていることを影で示す */
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius);
+    box-shadow: var(--kh-shadow-lg);
+  }
+  [data-scope="popover"][data-part="content"]:focus-visible { outline: none; }
+
+  [data-scope="popover"][data-part="title"] {
+    margin: 0;
+    font-size: var(--kh-text-md);
+    font-weight: 600;
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="popover"][data-part="description"] {
+    margin: 0;
+    margin-top: var(--kh-space-1);
+    font-size: var(--kh-text-md);
+    color: var(--kh-color-fg-muted);
+  }
+
+  [data-scope="popover"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="popover"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+}

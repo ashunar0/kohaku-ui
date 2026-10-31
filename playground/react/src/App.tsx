@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Dialog, Field, Group,
-  Icon, Input, RadioGroup, Select, Switch, Tabs, Tooltip, createListCollection,
+  Icon, Input, RadioGroup, Popover, Select, Switch, Tabs, Tooltip, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
 
@@ -48,7 +48,23 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Tooltip — Portal / Positioner は隠れている</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Popover — Portal / Positioner は隠れている</h2>
+      <Popover.Root positioning={{ placement: "bottom-start" }}>
+        <Popover.Trigger asChild>
+          <Button variant="outline">表示項目</Button>
+        </Popover.Trigger>
+        <Popover.Content>
+          <Popover.Title>表示する列</Popover.Title>
+          <Popover.Description>一覧に出す列を選んでください。</Popover.Description>
+          <div style={{ display: "grid", gap: ".5rem", marginTop: ".75rem" }}>
+            <Checkbox defaultChecked>氏名</Checkbox>
+            <Checkbox defaultChecked>メールアドレス</Checkbox>
+            <Checkbox>最終ログイン</Checkbox>
+          </div>
+        </Popover.Content>
+      </Popover.Root>
+
+      <h2 style={h2}>Tooltip — Portal / Positioner は隠れている</h2>
       <div style={{ display: "flex", gap: ".75rem", alignItems: "center" }}>
         <Tooltip.Root>
           <Tooltip.Trigger asChild>
