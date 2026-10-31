@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Dialog, Field, Group,
-  Icon, Input, RadioGroup, Select, Switch, createListCollection,
+  Icon, Input, RadioGroup, Select, Switch, Tabs, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
 
@@ -48,7 +48,26 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Checkbox / Switch / Radio（@kohaku/react）</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Tabs（Ark をそのまま再輸出）</h2>
+      <Tabs.Root defaultValue="overview">
+        <Tabs.List>
+          <Tabs.Trigger value="overview">概要</Tabs.Trigger>
+          <Tabs.Trigger value="members">メンバー</Tabs.Trigger>
+          <Tabs.Trigger value="billing">請求</Tabs.Trigger>
+          <Tabs.Trigger value="audit" disabled>監査ログ</Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="overview">
+          <p style={{ margin: 0, fontSize: ".875rem" }}>組織の基本情報と、契約中のプランを表示します。</p>
+        </Tabs.Content>
+        <Tabs.Content value="members">
+          <p style={{ margin: 0, fontSize: ".875rem" }}>招待済みのメンバーは 12 人です。</p>
+        </Tabs.Content>
+        <Tabs.Content value="billing">
+          <p style={{ margin: 0, fontSize: ".875rem" }}>次回の請求日は 11 月 25 日です。</p>
+        </Tabs.Content>
+      </Tabs.Root>
+
+      <h2 style={h2}>Checkbox / Switch / Radio（@kohaku/react）</h2>
       <div style={{ display: "grid", gap: "1.25rem", maxWidth: "28rem" }}>
         <div style={{ display: "grid", gap: ".5rem" }}>
           <Checkbox defaultChecked>メールで通知を受け取る</Checkbox>

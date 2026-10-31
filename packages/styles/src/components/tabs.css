@@ -1,0 +1,70 @@
+@layer kohaku {
+  /* Ark の tabs。root / list / trigger / content（/ indicator は使わない）
+     選択中の印は trigger 自身の線で描く。indicator は JS で位置を計算するので、
+     Ark を使わない素の HTML では出ない。trigger の線なら CSS だけで済む */
+
+  [data-scope="tabs"][data-part="list"] {
+    position: relative;
+    display: flex;
+    gap: var(--kh-tabs-gap, var(--kh-space-1));
+    /* タブが入りきらないときは横にスクロールする（Carbon・SmartHR と同じ） */
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* 下の線は border ではなく背景で list の内側に描く。overflow は border の手前で
+       切り取るので、border に trigger を重ねると重ねた分が消える */
+    background: linear-gradient(var(--kh-color-border), var(--kh-color-border))
+      bottom / 100% 1px no-repeat;
+  }
+
+  [data-scope="tabs"][data-part="trigger"] {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    height: var(--kh-tabs-height, 2.5rem);
+    padding-inline: var(--kh-tabs-padding-x, var(--kh-space-3));
+    font-size: var(--kh-tabs-font-size, var(--kh-text-md));
+    font-weight: 500;
+    line-height: var(--kh-leading-none);
+    white-space: nowrap;
+    color: var(--kh-color-fg-muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition:
+      color var(--kh-duration-fast) var(--kh-ease),
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      border-color var(--kh-duration-fast) var(--kh-ease);
+  }
+
+  [data-scope="tabs"][data-part="trigger"]:hover:not([data-disabled]) {
+    color: var(--kh-color-fg);
+  }
+  [data-scope="tabs"][data-part="trigger"][data-selected] {
+    color: var(--kh-color-fg);
+  }
+  [data-scope="tabs"][data-part="trigger"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: calc(var(--kh-ring-offset) * -1);
+  }
+  [data-scope="tabs"][data-part="trigger"][data-disabled] {
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  [data-scope="tabs"][data-part="content"] {
+    padding-block: var(--kh-tabs-content-padding, var(--kh-space-4));
+  }
+  [data-scope="tabs"][data-part="content"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  /* 選択中の下線。上にも同じ太さの透明な線を置いて、文字を高さの中央に保つ */
+  [data-scope="tabs"][data-part="trigger"] {
+    border-block: var(--kh-tabs-indicator-width, 2px) solid transparent;
+  }
+  [data-scope="tabs"][data-part="trigger"][data-selected] {
+    border-bottom-color: var(--kh-color-accent);
+  }
+}

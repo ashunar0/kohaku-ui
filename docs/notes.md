@@ -1100,3 +1100,37 @@ Tailwind v4 preflight / Josh Comeau / Andy Bell / kiso.css を読み、複数が
 - 全部 `:where()` で詳細度 0。疑似要素は `:where()` に入れられないので外に出した
 
 playground・Storybook は余白をインライン指定しているので、入れ替えても見た目の差分は 0 だった。
+
+## 2026-10-31 Tabs
+
+### 下線（line）にした。箱（contained）にしない
+
+調べたら 2 系統に分かれていた。下線は SmartHR・Primer・Carbon の line、箱は DADS
+（クリアフォルダのインデックス）・Carbon の contained。playground に並べて、あさひの判断で line。
+
+- 業務 SaaS では line が主流
+- 「影より先に線、線より先に余白」の順に合う。contained は線が多く、Card の中に置くと箱が二重になる。
+  Carbon も「モーダルのような部品の中では line」としている
+- 同じものの状態の切り替え・絞り込みには Tabs を使わない（SmartHR・Primer は Segmented Control に分けている。
+  DADS も絞り込みはフォーム部品で、としている）
+
+### 選択中の印は trigger 自身の下線。Ark の indicator は使わない
+
+indicator は JS が位置（`--left` / `--width`）を計算するので、Ark を使わない素の HTML では出ない。
+trigger の `border-bottom` なら CSS だけで済む。動く下線のアニメーションは捨てた。
+
+### list の線は border ではなく背景で描く
+
+入りきらないときは横にスクロールさせたい（Carbon・SmartHR と同じ。折り返さない）。
+`overflow-x: auto` は border の手前で切り取るので、list の border に trigger の下線を
+重ねると、重ねた 1px が消えた（実測: 下端 1px が list 側になっていた）。
+list の線を `linear-gradient` の背景で内側に描き、trigger は重ねずに並べると、下線 2px が全部見える。
+
+### 上にも透明な 2px の線を置く
+
+下線の分だけ内容の箱が上に寄り、文字が 1px 上にずれる。`border-block` で上下に同じ太さを置いた。
+同じ文字（「あとで」）で ghost Button と比べて、インク中心のずれは両方 0.00px。
+
+### 高さは 40px（Button・Input の md と同じ）
+
+Carbon の line も Medium 40px。サイズの段は作っていない（YAGNI）。L3 の `--kh-tabs-height` で寄せられる。

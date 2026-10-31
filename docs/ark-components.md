@@ -32,7 +32,7 @@ tree-view
 | checkbox | ✅ 対応済み・実機検証済み |
 | switch | ✅ 対応済み・実機検証済み |
 | radio-group | ✅ 対応済み・実機検証済み |
-| tabs | ⬜ 未対応 |
+| tabs | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
 | menu / popover / tooltip | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -58,6 +58,9 @@ select : root / label / control / trigger / value-text / indicator
          （trigger・content・item に data-state、item に data-highlighted）
 checkbox    : root / label / control / indicator      （+ group）
 switch      : root / label / control / thumb
+tabs        : root / list / trigger / content / indicator
+         （trigger と content に data-selected、trigger に data-disabled。
+           indicator は JS が --left / --width を計算する。kohaku は使わない）
 radio-group : root / label / item / item-text / item-control / indicator
          （3 つとも data-state は checked / unchecked。checkbox だけ
            indeterminate も取る。hover / focus-visible / disabled /

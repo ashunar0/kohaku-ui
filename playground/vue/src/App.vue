@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, Field, Select, createListCollection } from "@ark-ui/vue"
+import { Dialog, Field, Select, Tabs, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -23,8 +23,28 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Tabs -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Tabs（Ark）</h2>
+    <Tabs.Root default-value="overview">
+      <Tabs.List>
+        <Tabs.Trigger value="overview">概要</Tabs.Trigger>
+        <Tabs.Trigger value="members">メンバー</Tabs.Trigger>
+        <Tabs.Trigger value="billing">請求</Tabs.Trigger>
+        <Tabs.Trigger value="audit" disabled>監査ログ</Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="overview">
+        <p style="margin: 0; font-size: 0.875rem">組織の基本情報と、契約中のプランを表示します。</p>
+      </Tabs.Content>
+      <Tabs.Content value="members">
+        <p style="margin: 0; font-size: 0.875rem">招待済みのメンバーは 12 人です。</p>
+      </Tabs.Content>
+      <Tabs.Content value="billing">
+        <p style="margin: 0; font-size: 0.875rem">次回の請求日は 11 月 25 日です。</p>
+      </Tabs.Content>
+    </Tabs.Root>
+
     <!-- Field -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Field（Ark）</h2>
+    <h2 :style="h2">Field（Ark）</h2>
     <div style="max-width: 24rem; display: grid; gap: 1rem">
       <Field.Root>
         <Field.Label>ワークスペース名</Field.Label>

@@ -27,6 +27,6 @@ export { Dialog, type DialogContentProps } from "./dialog"
 export { Select, type SelectTriggerProps, type SelectContentProps } from "./select"
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
-export { Field, Fieldset, Portal, createListCollection } from "@ark-ui/react"
+export { Field, Fieldset, Portal, Tabs, createListCollection } from "@ark-ui/react"
 
 export type { Size, FieldSize } from "./types"
