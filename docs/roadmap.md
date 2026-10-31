@@ -7,7 +7,6 @@
 
 | 部品 | Ark | 重さ | メモ |
 |---|---|---|---|
-| Progress | progress | 軽 | 線形だけ |
 | Pagination | pagination | 中 | |
 | Toast | toast | 中 | |
 | File Upload | file-upload | 中 | |

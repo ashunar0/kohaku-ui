@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  Icon, Input, RadioGroup, Popover, Select, Switch, Tabs, Tooltip, createListCollection,
+  Icon, Input, RadioGroup, Popover, Progress, Select, Switch, Tabs, Tooltip, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
 
@@ -48,7 +48,15 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Collapsible（Ark をそのまま再輸出）</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Progress — Track / Range は隠れている</h2>
+      <div style={{ display: "grid", gap: "1.25rem", maxWidth: "28rem" }}>
+        <Progress label="アップロード中" showValue defaultValue={40} />
+        <Progress label="完了" showValue defaultValue={100} />
+        <Progress label="読み込み中（終わりが分からない）" defaultValue={null} />
+        <Progress aria-label="ラベルなし" defaultValue={70} />
+      </div>
+
+      <h2 style={h2}>Collapsible（Ark をそのまま再輸出）</h2>
       <Collapsible.Root>
         <Collapsible.Trigger>
           詳細な条件<Collapsible.Indicator />

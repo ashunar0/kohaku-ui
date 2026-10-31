@@ -1186,3 +1186,22 @@ trigger は素のテキストボタン（枠なし）、indicator は Select と
 開閉は Ark が content に入れる `--height` を keyframes で使う。`prefers-reduced-motion` では止める。
 React / Vue とも、クリック・Space・Enter での開閉、`aria-expanded`、閉じたときの `hidden` を実測した。
 開閉できる Card は Card の中に Collapsible を置けば組める。専用の部品は作っていない（YAGNI）。
+
+## 2026-10-31 Progress
+
+線形だけ。track は `--kh-color-neutral-soft`、range は accent、高さ 6px・角丸 full。
+値が無いときは短い帯が流れる。`prefers-reduced-motion` では帯を全幅に薄く敷いて止める。
+
+### progressbar の名前を label に結び付ける（`@kohaku/react`）
+
+Ark は `role="progressbar"` を Track に付け、`aria-label` を値の文字列（"40%"）にする。
+読み上げが「40%、プログレスバー」になり、何の進み具合か分からない。ラッパーで Track に
+`aria-labelledby` を付けて label を指すようにした。label が無いときは Root の `aria-label` を Track に移す。
+Ark を直接使う場合（Vue）は自分で付ける（playground/vue に書き方がある）。
+
+## 2026-10-31 Vue での確認をやり直した
+
+Tabs〜Collapsible で「React / Vue で一致」と書いたが、止めたつもりの開発サーバーが残っていて
+5175 番で React の playground が動いており、Vue を測れていなかった（ページのタイトルで気づいた）。
+サーバーを止めて本物の Vue で 5 つとも測り直し、動作・見た目の値が一致することを確認した。
+再発しないよう、playground の dev に `--strictPort` を付けた（番号が埋まっていたらずれずに止まる）。

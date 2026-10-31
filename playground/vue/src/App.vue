@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Checkbox, Collapsible, Dialog, Field, Popover, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Collapsible, Dialog, Field, Popover, Progress, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -23,8 +23,22 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Progress: Ark は Track の名前を値（"40%"）にするので、Label に結び付ける -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Progress（Ark）</h2>
+    <div style="display: grid; gap: 1.25rem; max-width: 28rem">
+      <Progress.Root :default-value="40" :ids="{ label: 'upload-label' }">
+        <Progress.Label>アップロード中</Progress.Label>
+        <Progress.ValueText />
+        <Progress.Track aria-labelledby="upload-label"><Progress.Range /></Progress.Track>
+      </Progress.Root>
+      <Progress.Root :default-value="null" :ids="{ label: 'loading-label' }">
+        <Progress.Label>読み込み中（終わりが分からない）</Progress.Label>
+        <Progress.Track aria-labelledby="loading-label"><Progress.Range /></Progress.Track>
+      </Progress.Root>
+    </div>
+
     <!-- Collapsible -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Collapsible（Ark）</h2>
+    <h2 :style="h2">Collapsible（Ark）</h2>
     <Collapsible.Root>
       <Collapsible.Trigger>詳細な条件<Collapsible.Indicator /></Collapsible.Trigger>
       <Collapsible.Content>

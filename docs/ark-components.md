@@ -32,10 +32,11 @@ tree-view
 | checkbox | ✅ 対応済み・実機検証済み |
 | switch | ✅ 対応済み・実機検証済み |
 | radio-group | ✅ 対応済み・実機検証済み |
-| tabs | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
+| tabs | ✅ 対応済み・実機検証済み（React / Vue で動作一致。Vue は全 trigger に aria-disabled が付く） |
 | tooltip | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
 | popover | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | collapsible | ✅ 対応済み・実機検証済み（React / Vue で動作一致） |
+| progress | ✅ 対応済み・実機検証済み（線形だけ。React / Vue で動作一致） |
 | menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -61,6 +62,9 @@ select : root / label / control / trigger / value-text / indicator
          （trigger・content・item に data-state、item に data-highlighted）
 checkbox    : root / label / control / indicator      （+ group）
 switch      : root / label / control / thumb
+progress    : root / label / value-text / track / range（/ view / circle 系）
+         （role="progressbar" は track。名前は値の文字列になるので label に結び付ける。
+           値が無いと data-state="indeterminate"）
 collapsible : root / trigger / content / indicator
          （content に Ark が --height を入れる。閉じると hidden）
 popover     : trigger / anchor / positioner / content / title / description
