@@ -36,6 +36,8 @@ tree-view
 | menu / popover / tooltip | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
+これから作る順番は [`roadmap.md`](roadmap.md)。
+
 確定したものは Storybook で見る。検証は playground で行う。
 
 | | URL | 起動 |
