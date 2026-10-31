@@ -9,11 +9,12 @@
   "dependencies": {
     "@ark-ui/vue": "^5.39.2",
     "vue": "^3.5.43",
-    "@kohaku/styles": "workspace:*"
+    "@kohaku/styles": "workspace:*",
+    "@kohaku/vue": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.9",
-    "typescript": "^7.0.2",
+    "typescript": "~5.9.3",
     "vite": "^8.3.0",
     "vue-tsc": "^3.3.11"
   }

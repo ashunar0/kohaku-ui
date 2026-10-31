@@ -1,8 +1,27 @@
 <script setup lang="ts">
-import { Checkbox, Collapsible, Dialog, Field, FileUpload, Pagination, Popover, Progress, Toast, Toaster, createToaster, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
-import { ref } from "vue"
+import {
+  Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, FileUpload, Group,
+  Icon, Input, Pagination, Popover, Progress, RadioGroup, Select, Switch, Tabs, Toaster, Tooltip,
+  createListCollection, createToaster,
+} from "@kohaku/vue"
+import { ref, watchEffect } from "vue"
 
 const invalid = ref(false)
+// v-model の確認（Vue だけの欄）
+const agree = ref(false)
+const publish = ref(true)
+const plan = ref("pro")
+const page = ref(3)
+const keyword = ref("")
+const theme = ref<"light" | "dark">("light")
+watchEffect(() => {
+  document.documentElement.setAttribute("data-theme", theme.value)
+  // 地の色はページ側の責任。kohaku は body に何も指定しない
+  document.body.style.background = "var(--kh-color-canvas)"
+  document.body.style.color = "var(--kh-color-fg-body)"
+  document.body.style.margin = "0"
+})
+
 const plans = createListCollection({
   items: [
     { label: "Free", value: "free" },
@@ -10,109 +29,72 @@ const plans = createListCollection({
     { label: "Enterprise", value: "enterprise" },
   ],
 })
-// Ark の既定は英語なので、Vue では自分で渡す（React は @kohaku/react が持っている）
-const paginationJa = {
-  rootLabel: "ページ送り",
-  prevTriggerLabel: "前のページ",
-  nextTriggerLabel: "次のページ",
-  itemLabel: ({ page, totalPages }: { page: number; totalPages: number }) =>
-    `${totalPages > 1 && page === totalPages ? "最後のページ、" : ""}${page} ページ目`,
-}
-const fileUploadJa = {
-  dropzone: "ファイルのドロップ領域",
-  itemPreview: (file: File) => `${file.name} のプレビュー`,
-  deleteFile: (file: File) => `${file.name} を削除`,
-}
 const toaster = createToaster({ placement: "bottom-end", overlap: true })
+const wait = () => new Promise((r) => setTimeout(r, 2000))
+
 const h2 = {
   fontSize: ".75rem", textTransform: "uppercase", letterSpacing: ".08em",
-  color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem",
+  color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem", fontWeight: 600,
 } as const
 </script>
 
 <template>
   <div style="max-width: 48rem; margin: 0 auto; padding: 2rem 1rem 6rem">
     <h1 style="font-size: 1.5rem; margin: 0 0 0.25rem">kohaku — Vue playground</h1>
-    <p style="color: var(--kh-color-fg-muted); font-size: 0.875rem; margin: 0 0 2rem">
-      React と同じ CSS・同じ DOM になるかを検証する場所
+    <p style="color: var(--kh-color-fg-muted); font-size: 0.875rem; margin: 0 0 1rem">
+      @kohaku/vue を使って書いたもの。React の playground と同じ内容・同じ DOM になる
     </p>
-
-    <!-- File Upload: 名前は既定が英語なので translations を渡す -->
-    <h2 :style="{ ...h2, marginTop: 0 }">File Upload（Ark）</h2>
-    <div style="max-width: 28rem">
-      <FileUpload.Root :max-files="3" :max-file-size="1024 * 1024" :translations="fileUploadJa">
-        <FileUpload.Label>添付ファイル</FileUpload.Label>
-        <!-- 中のボタンと入れ子にしないよう、領域はドロップを受けるだけにする -->
-        <FileUpload.Dropzone disable-click role="group">
-          <span>ここにファイルをドロップ</span>
-          <FileUpload.Trigger>ファイルを選択</FileUpload.Trigger>
-        </FileUpload.Dropzone>
-        <FileUpload.HiddenInput />
-        <FileUpload.Context v-slot="api">
-          <FileUpload.ItemGroup>
-            <FileUpload.Item v-for="file in api.acceptedFiles" :key="file.name" :file="file">
-              <FileUpload.ItemPreview type="image/*"><FileUpload.ItemPreviewImage /></FileUpload.ItemPreview>
-              <FileUpload.ItemName />
-              <FileUpload.ItemSizeText />
-              <FileUpload.ItemDeleteTrigger />
-            </FileUpload.Item>
-          </FileUpload.ItemGroup>
-          <FileUpload.ItemGroup type="rejected">
-            <FileUpload.Item v-for="r in api.rejectedFiles" :key="r.file.name" :file="r.file">
-              <FileUpload.ItemName />
-              <FileUpload.ItemSizeText>{{ r.errors.join(", ") }}</FileUpload.ItemSizeText>
-              <FileUpload.ItemDeleteTrigger />
-            </FileUpload.Item>
-          </FileUpload.ItemGroup>
-        </FileUpload.Context>
-      </FileUpload.Root>
+    <div
+      style="position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0.75rem;
+             padding: 0.75rem 0; margin-bottom: 1.5rem;
+             background: var(--kh-color-canvas); border-bottom: 1px solid var(--kh-color-border)"
+    >
+      <Button variant="outline" size="sm" @click="theme = theme === 'light' ? 'dark' : 'light'">
+        テーマ: {{ theme }}
+      </Button>
+      <span style="font-size: 0.75rem; color: var(--kh-color-fg-muted)">
+        dark は :root[data-theme="dark"] で L2 トークンだけ差し替わる
+      </span>
     </div>
 
-    <!-- Toast: 名前は既定が英語なので aria-label で上書きする -->
-    <h2 :style="h2">Toast（Ark）</h2>
-    <Toaster :toaster="toaster" aria-label="通知" v-slot="t">
-      <Toast.Root>
-        <Toast.Title v-if="t.title">{{ t.title }}</Toast.Title>
-        <Toast.Description v-if="t.description">{{ t.description }}</Toast.Description>
-        <Toast.ActionTrigger v-if="t.action">{{ t.action.label }}</Toast.ActionTrigger>
-        <Toast.CloseTrigger aria-label="通知を閉じる" />
-      </Toast.Root>
-    </Toaster>
+    <h2 :style="{ ...h2, marginTop: 0 }">File Upload — 一覧と却下理由は隠れている</h2>
+    <div style="display: grid; gap: 1.5rem; max-width: 28rem">
+      <FileUpload label="添付ファイル" :max-files="3" :max-file-size="1024 * 1024" />
+      <FileUpload label="画像だけ" accept="image/*" />
+      <FileUpload label="無効" disabled />
+    </div>
+
+    <h2 :style="h2">Toast — Toaster が中身を組み立てる</h2>
+    <Toaster :toaster="toaster" />
     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
-      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.success({ title: '保存しました', description: '変更は全員に反映されます。' })">success</button>
-      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.error({ title: '保存できませんでした' })">error</button>
-      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.create({ title: '3 件を削除しました', action: { label: '元に戻す', onClick: () => {} } })">action</button>
+      <Button variant="outline" size="sm" @click="toaster.create({ title: '下書きを保存しました' })">info（既定）</Button>
+      <Button variant="outline" size="sm" @click="toaster.success({ title: '保存しました', description: '変更は全員に反映されます。' })">success</Button>
+      <Button variant="outline" size="sm" @click="toaster.warning({ title: 'まもなくセッションが切れます' })">warning</Button>
+      <Button variant="outline" size="sm" @click="toaster.error({ title: '保存できませんでした', description: '通信が切れています。時間をおいてもう一度お試しください。' })">error</Button>
+      <Button variant="outline" size="sm" @click="toaster.create({ title: '3 件を削除しました', action: { label: '元に戻す', onClick: () => {} } })">action</Button>
+      <Button
+        variant="outline" size="sm"
+        @click="toaster.promise(wait(), { loading: { title: 'アップロード中…' }, success: { title: 'アップロードしました' }, error: { title: '失敗しました' } })"
+      >loading → success</Button>
     </div>
 
-    <!-- Pagination -->
-    <h2 :style="h2">Pagination（Ark）</h2>
-    <Pagination.Root :count="200" :page-size="10" :default-page="10" :translations="paginationJa">
-      <Pagination.PrevTrigger />
-      <Pagination.Context v-slot="api">
-        <template v-for="(page, i) in api.pages" :key="i">
-          <Pagination.Item v-if="page.type === 'page'" v-bind="page">{{ page.value }}</Pagination.Item>
-          <Pagination.Ellipsis v-else :index="i" />
-        </template>
-      </Pagination.Context>
-      <Pagination.NextTrigger />
-    </Pagination.Root>
+    <h2 :style="h2">Pagination — ページ番号の並びは隠れている</h2>
+    <div style="display: grid; gap: 1rem">
+      <Pagination :count="200" :page-size="10" :default-page="1" />
+      <Pagination :count="200" :page-size="10" :default-page="10" show-edges />
+      <Pagination :count="200" :page-size="10" :default-page="20" />
+      <Pagination :count="50" :page-size="10" type="link" :get-page-url="({ page }: { page: number }) => `#page=${page}`" />
+    </div>
 
-    <!-- Progress: Ark は Track の名前を値（"40%"）にするので、Label に結び付ける -->
-    <h2 :style="h2">Progress（Ark）</h2>
+    <h2 :style="h2">Progress — Track / Range は隠れている</h2>
     <div style="display: grid; gap: 1.25rem; max-width: 28rem">
-      <Progress.Root :default-value="40" :ids="{ label: 'upload-label' }">
-        <Progress.Label>アップロード中</Progress.Label>
-        <Progress.ValueText />
-        <Progress.Track aria-labelledby="upload-label"><Progress.Range /></Progress.Track>
-      </Progress.Root>
-      <Progress.Root :default-value="null" :ids="{ label: 'loading-label' }">
-        <Progress.Label>読み込み中（終わりが分からない）</Progress.Label>
-        <Progress.Track aria-labelledby="loading-label"><Progress.Range /></Progress.Track>
-      </Progress.Root>
+      <Progress label="アップロード中" show-value :default-value="40" />
+      <Progress label="完了" show-value :default-value="100" />
+      <Progress label="読み込み中（終わりが分からない）" :default-value="null" />
+      <Progress aria-label="ラベルなし" :default-value="70" />
     </div>
 
-    <!-- Collapsible -->
-    <h2 :style="h2">Collapsible（Ark）</h2>
+    <h2 :style="h2">Collapsible（Ark をそのまま再輸出）</h2>
     <Collapsible.Root>
       <Collapsible.Trigger>詳細な条件<Collapsible.Indicator /></Collapsible.Trigger>
       <Collapsible.Content>
@@ -122,45 +104,39 @@ const h2 = {
       </Collapsible.Content>
     </Collapsible.Root>
 
-    <!-- Popover -->
-    <h2 :style="h2">Popover（Ark）</h2>
+    <h2 :style="h2">Popover — Teleport / Positioner は隠れている</h2>
     <Popover.Root :positioning="{ placement: 'bottom-start' }">
-      <Popover.Trigger data-kh="button" data-variant="outline">表示項目</Popover.Trigger>
-      <Teleport to="body">
-        <Popover.Positioner>
-          <Popover.Content>
-            <Popover.Title>表示する列</Popover.Title>
-            <Popover.Description>一覧に出す列を選んでください。</Popover.Description>
-            <div style="display: grid; gap: 0.5rem; margin-top: 0.75rem">
-              <Checkbox.Root default-checked>
-                <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
-                <Checkbox.Label>氏名</Checkbox.Label>
-                <Checkbox.HiddenInput />
-              </Checkbox.Root>
-              <Checkbox.Root>
-                <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
-                <Checkbox.Label>最終ログイン</Checkbox.Label>
-                <Checkbox.HiddenInput />
-              </Checkbox.Root>
-            </div>
-          </Popover.Content>
-        </Popover.Positioner>
-      </Teleport>
+      <Popover.Trigger as-child>
+        <Button variant="outline">表示項目</Button>
+      </Popover.Trigger>
+      <Popover.Content>
+        <Popover.Title>表示する列</Popover.Title>
+        <Popover.Description>一覧に出す列を選んでください。</Popover.Description>
+        <div style="display: grid; gap: 0.5rem; margin-top: 0.75rem">
+          <Checkbox default-checked>氏名</Checkbox>
+          <Checkbox default-checked>メールアドレス</Checkbox>
+          <Checkbox>最終ログイン</Checkbox>
+        </div>
+      </Popover.Content>
     </Popover.Root>
 
-    <!-- Tooltip: Ark を直接使うので interactive は自分で付ける（WCAG 1.4.13） -->
-    <h2 :style="h2">Tooltip（Ark）</h2>
-    <Tooltip.Root interactive>
-      <Tooltip.Trigger data-kh="button" data-variant="outline">エクスポート</Tooltip.Trigger>
-      <Teleport to="body">
-        <Tooltip.Positioner>
-          <Tooltip.Content>CSV でダウンロード</Tooltip.Content>
-        </Tooltip.Positioner>
-      </Teleport>
-    </Tooltip.Root>
+    <h2 :style="h2">Tooltip — Teleport / Positioner は隠れている</h2>
+    <div style="display: flex; gap: 0.75rem; align-items: center">
+      <Tooltip.Root>
+        <Tooltip.Trigger as-child>
+          <Button variant="outline">エクスポート</Button>
+        </Tooltip.Trigger>
+        <Tooltip.Content>CSV でダウンロード</Tooltip.Content>
+      </Tooltip.Root>
+      <Tooltip.Root>
+        <Tooltip.Trigger as-child>
+          <Button variant="ghost">招待</Button>
+        </Tooltip.Trigger>
+        <Tooltip.Content>メンバーを招待するには管理者の権限が必要です。権限は組織の設定から変更できます。</Tooltip.Content>
+      </Tooltip.Root>
+    </div>
 
-    <!-- Tabs -->
-    <h2 :style="h2">Tabs（Ark）</h2>
+    <h2 :style="h2">Tabs（Ark をそのまま再輸出）</h2>
     <Tabs.Root default-value="overview">
       <Tabs.List>
         <Tabs.Trigger value="overview">概要</Tabs.Trigger>
@@ -179,85 +155,170 @@ const h2 = {
       </Tabs.Content>
     </Tabs.Root>
 
-    <!-- Field -->
+    <h2 :style="h2">Checkbox / Switch / Radio（@kohaku/vue）</h2>
+    <div style="display: grid; gap: 1.25rem; max-width: 28rem">
+      <div style="display: grid; gap: 0.5rem">
+        <Checkbox default-checked>メールで通知を受け取る</Checkbox>
+        <Checkbox>週次のダイジェストを送る</Checkbox>
+        <Checkbox checked="indeterminate">一部のメンバーだけ選択中（indeterminate）</Checkbox>
+        <Checkbox disabled>この設定は変更できません</Checkbox>
+        <Checkbox invalid>利用規約に同意する（未同意 = invalid）</Checkbox>
+        <Checkbox default-checked>
+          <template #indicator><Icon><path d="M12 2v20" /><path d="m19 9-7 7-7-7" /></Icon></template>
+          indicator を渡すと既定のグリフが引っ込む
+        </Checkbox>
+      </div>
+
+      <div style="display: grid; gap: 0.5rem">
+        <Switch default-checked>ワークスペースを公開する</Switch>
+        <Switch>ゲストの招待を許可する</Switch>
+        <Switch disabled>エンタープライズ機能（プラン外）</Switch>
+      </div>
+
+      <RadioGroup label="プラン" default-value="pro">
+        <RadioGroup.Item
+          v-for="[v, l] in [['free', 'Free — 個人で試す'], ['pro', 'Pro — チームで使う'], ['ent', 'Enterprise — 監査ログつき']]"
+          :key="v" :value="v!"
+        >{{ l }}</RadioGroup.Item>
+      </RadioGroup>
+
+      <RadioGroup label="支払い周期" default-value="month" orientation="horizontal">
+        <RadioGroup.Item v-for="[v, l] in [['month', '毎月'], ['year', '毎年']]" :key="v" :value="v!">{{ l }}</RadioGroup.Item>
+      </RadioGroup>
+    </div>
+
+    <h2 :style="h2">Button / Badge</h2>
+    <Group>
+      <Button>
+        <Icon><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" /><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" /><path d="M7 3v4a1 1 0 0 0 1 1h7" /></Icon>
+        保存する
+      </Button>
+      <Button variant="outline">キャンセル</Button>
+      <Button variant="ghost">あとで</Button>
+      <Button variant="danger" size="sm">削除</Button>
+      <Badge variant="success">公開中</Badge>
+      <Badge variant="warning">承認待ち</Badge>
+    </Group>
+
     <h2 :style="h2">Field（Ark）</h2>
     <div style="max-width: 24rem; display: grid; gap: 1rem">
       <Field.Root>
         <Field.Label>ワークスペース名</Field.Label>
-        <Field.Input value="あさひの個人開発" />
+        <Field.Input default-value="あさひの個人開発" />
         <Field.HelperText>あとから変更できます。</Field.HelperText>
       </Field.Root>
 
       <Field.Root :invalid="invalid" required>
-        <Field.Label>
-          サブドメイン
-          <Field.RequiredIndicator />
-        </Field.Label>
-        <Field.Input value="my workspace" />
+        <Field.Label>サブドメイン<Field.RequiredIndicator /></Field.Label>
+        <Field.Input default-value="my workspace" />
         <Field.HelperText>半角英数字とハイフン。</Field.HelperText>
         <Field.ErrorText>使用できない文字が含まれています。</Field.ErrorText>
       </Field.Root>
 
       <Field.Root disabled>
         <Field.Label>プラン ID</Field.Label>
-        <Field.Input value="plan_free" />
+        <Field.Input default-value="plan_free" />
         <Field.HelperText>変更できません。</Field.HelperText>
       </Field.Root>
 
-      <button data-kh="button" data-variant="outline" data-size="sm" @click="invalid = !invalid">
+      <Button variant="outline" size="sm" @click="invalid = !invalid">
         invalid を切り替え（現在: {{ invalid }}）
-      </button>
+      </Button>
     </div>
 
-    <!-- Dialog -->
-    <h2 :style="h2">Dialog（Ark）</h2>
+    <h2 :style="h2">Group / Input</h2>
+    <div style="max-width: 28rem; display: grid; gap: 1rem">
+      <Group>
+        <Input placeholder="you@example.com" />
+        <Button>招待する</Button>
+      </Group>
+      <Group attached>
+        <Input placeholder="キーワードで検索" />
+        <Button variant="outline">検索</Button>
+      </Group>
+    </div>
+
+    <h2 :style="h2">Alert</h2>
+    <div style="display: grid; gap: 0.75rem">
+      <Alert variant="info" title="メンテナンスのお知らせ">
+        3 月 12 日 2:00〜4:00 の間、一部機能が利用できません。
+      </Alert>
+      <Alert variant="danger" tone="soft" title="支払いが確認できませんでした">
+        3 日以内に更新されない場合、サービスが停止します。
+      </Alert>
+      <Alert variant="warning" title="容量が残りわずかです">
+        80% を超えました。不要なファイルを削除してください。
+      </Alert>
+      <Alert variant="success" title="デプロイが完了しました">
+        2 分 14 秒で 3 件の変更が反映されました。
+      </Alert>
+      <Alert variant="info" title="icon を渡した場合はそちらが勝つ">
+        <template #icon><Icon><path d="M12 2v20" /><path d="m19 9-7 7-7-7" /></Icon></template>
+        :empty が外れるので既定のグリフは引っ込む。
+      </Alert>
+    </div>
+
+    <h2 :style="h2">Card</h2>
+    <Card.Root>
+      <Card.Header>
+        <Card.Title>チームメンバー</Card.Title>
+      </Card.Header>
+      <Card.Body style="font-size: 0.875rem">招待リンクは 7 日で失効します。</Card.Body>
+      <Card.Footer>
+        <Button variant="outline" size="sm">招待リンクを発行</Button>
+      </Card.Footer>
+    </Card.Root>
+
+    <h2 :style="h2">Dialog — Teleport / Backdrop / Positioner は隠れている</h2>
     <Dialog.Root>
       <Dialog.Trigger as-child>
-        <button data-kh="button">プロフィールを編集</button>
+        <Button>プロフィールを編集</Button>
       </Dialog.Trigger>
-      <Teleport to="body">
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Title>プロフィールを編集</Dialog.Title>
-            <Dialog.Description>変更内容はすぐに反映されます。</Dialog.Description>
-            <Field.Root>
-              <Field.Label>表示名</Field.Label>
-              <Field.Input value="あさひ" />
-            </Field.Root>
-            <div data-kh="actions">
-              <Dialog.CloseTrigger as-child>
-                <button data-kh="button" data-variant="outline">キャンセル</button>
-              </Dialog.CloseTrigger>
-              <Dialog.CloseTrigger as-child>
-                <button data-kh="button">保存する</button>
-              </Dialog.CloseTrigger>
-            </div>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Teleport>
+      <Dialog.Content>
+        <Dialog.Title>プロフィールを編集</Dialog.Title>
+        <Dialog.Description>変更内容はすぐに反映されます。</Dialog.Description>
+        <Field.Root>
+          <Field.Label>表示名</Field.Label>
+          <Field.Input default-value="あさひ" />
+        </Field.Root>
+        <Actions>
+          <Dialog.CloseTrigger as-child><Button variant="outline">キャンセル</Button></Dialog.CloseTrigger>
+          <Dialog.CloseTrigger as-child><Button>保存する</Button></Dialog.CloseTrigger>
+        </Actions>
+      </Dialog.Content>
     </Dialog.Root>
 
-    <!-- Select -->
-    <h2 :style="h2">Select（Ark）</h2>
-    <Select.Root :collection="plans" :value="['pro']" style="max-width: 16rem">
+    <h2 :style="h2">Select — Control / Teleport / Positioner は隠れている</h2>
+    <Select.Root :collection="plans" :default-value="['pro']" style="max-width: 16rem">
       <Select.Label>プラン</Select.Label>
-      <Select.Control>
-        <Select.Trigger>
-          <Select.ValueText placeholder="選択してください" />
-          <Select.Indicator />
-        </Select.Trigger>
-      </Select.Control>
-      <Teleport to="body">
-        <Select.Positioner>
-          <Select.Content>
-            <Select.Item v-for="item in plans.items" :key="item.value" :item="item">
-              <Select.ItemText>{{ item.label }}</Select.ItemText>
-              <Select.ItemIndicator />
-            </Select.Item>
-          </Select.Content>
-        </Select.Positioner>
-      </Teleport>
+      <Select.Trigger>
+        <Select.ValueText placeholder="選択してください" />
+        <Select.Indicator />
+      </Select.Trigger>
+      <Select.Content>
+        <Select.Item v-for="item in plans.items" :key="item.value" :item="item">
+          <Select.ItemText>{{ item.label }}</Select.ItemText>
+          <Select.ItemIndicator />
+        </Select.Item>
+      </Select.Content>
     </Select.Root>
+
+    <h2 :style="h2">v-model（Vue だけ）</h2>
+    <div data-test="vmodel" style="display: grid; gap: 0.75rem; max-width: 28rem">
+      <Checkbox v-model:checked="agree">利用規約に同意する</Checkbox>
+      <Switch v-model:checked="publish">公開する</Switch>
+      <RadioGroup v-model="plan" label="プラン" orientation="horizontal">
+        <RadioGroup.Item value="free">Free</RadioGroup.Item>
+        <RadioGroup.Item value="pro">Pro</RadioGroup.Item>
+      </RadioGroup>
+      <Pagination v-model:page="page" :count="100" :page-size="10" />
+      <Input v-model="keyword" placeholder="キーワード" />
+      <output data-test="vmodel-out" style="font-size: 0.875rem">
+        {{ JSON.stringify({ agree, publish, plan, page, keyword }) }}
+      </output>
+      <Button variant="outline" size="sm" data-test="vmodel-reset" @click="agree = true; publish = false; plan = 'free'; page = 7; keyword = 'リセット'">
+        値を外から書き換える
+      </Button>
+    </div>
   </div>
 </template>

@@ -5,6 +5,7 @@ FW 非依存の UI ライブラリ。**本体は CSS**で、振る舞いは Ark 
 ```
 @kohaku/styles   CSS 1 枚。React / Vue / Solid / Svelte すべてで効く ← 本体
 @kohaku/react    書き味レイヤー。見た目のコードは持たない
+@kohaku/vue      同じ API の Vue 版（SFC）
 ```
 
 Ark UI が吐く DOM は FW を問わず同一（実測済み）。そこに CSS を当てるので 1 枚で済む。
@@ -74,10 +75,16 @@ base.css    kohaku の文字組みと地の色を body に広げる。値を足�
 **部品はこの 2 つに頼らない。** box-sizing と文字組みは `components/part.css` が
 部品自身に持たせている。
 
-### 6. `@kohaku/react` に見た目のコードを書かない
+### 6. `@kohaku/react` / `@kohaku/vue` に見た目のコードを書かない
 
 やるのは 2 つだけ。`data-*` を型付き props にする / Ark の組み立てを隠す。
 隠した部品は `RawContent` などで再輸出して、**選択肢を奪わない**。
+
+**片方に足したら、もう片方にも同じものを足す。** a11y の既定（Tooltip の interactive など）と
+日本語の文言（Ark の既定は英語）は書き味レイヤーにしか無いので、片方だけだと FW で差が出る。
+Vue は kohaku が足す props だけ宣言し、残りは attrs のフォールスルーで Ark に流す。
+**v-model と同じ名前の props を宣言したら、`update:*` を自分で emit し直す**
+（Vue は宣言した側が扱うとみなして下へ流さない。Checkbox で踏んだ）。
 
 ## 見た目を変えるときの作法
 
@@ -136,7 +143,8 @@ story を直すことになる。逆に**決まったら必ず落とす**。play
 そこに置きっぱなしのものは「まだ決まっていない」と読める状態にしておく。
 
 renderer は React。参考にしている他のデザインシステムと形式を揃えるため。
-FW 非依存の検証は `playground/vue` が担当する。
+Vue の確認は `playground/vue`。React の playground と同じ内容を `@kohaku/vue` で書いてあるので、
+両方を開いて DOM と動きを突き合わせる。
 
 ## 判断を記録する
 
@@ -151,6 +159,7 @@ pnpm storybook    # Storybook（確定したもの） http://localhost:6006
 pnpm dev:react    # React playground        http://localhost:5174
 pnpm dev:vue      # Vue playground          http://localhost:5175
 pnpm lint:tokens  # component CSS に生の色が無いか
+pnpm --filter @kohaku/vue typecheck   # Vue 版の型（vue-tsc は TS 7 で動かないので TS 5 系を使う）
 pnpm ink <png>    # 文字のインク位置を測る
 ```
 

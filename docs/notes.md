@@ -1276,3 +1276,36 @@ Ark は Intl の単位で "70 byte" / "2.05 kB" と出す。`ja-JP` でも "byte
 ドロップはあさひが手で確認した。ドラッグ中の見た目（`data-dragging`）は実測。
 Playwright の MCP はファイル選択画面を横取りするので、そのブラウザでは「ファイルを選択」が
 反応しないように見える（`browser_file_upload` で処理するまで止まっている）。
+
+## 2026-10-31 @kohaku/vue を作った
+
+会社の既存 Vue に入れるため。これまで Vue は Ark を直接使っていて、`@kohaku/react` が足している
+a11y の既定（Tooltip の interactive、Progress の aria-labelledby、FileUpload の入れ子回避）と
+日本語の文言（Pagination / Toast / FileUpload）を毎回自分で書く必要があった。
+上の各項目にある「Vue は自分で書く（playground/vue）」は、ここで `@kohaku/vue` に置き換わった。
+
+### 形
+
+`@kohaku/react` と同じ名前・同じ組み立て（`Dialog.Content` は Teleport / Backdrop / Positioner を隠す、など）。
+SFC で書き、kohaku が足す props だけを宣言する。残りは Vue の attrs のフォールスルーで Ark に流れる
+（React の `{...props}` に当たる）。ReactNode を受けていた props（label / title / icon など）は
+文字列の props と同名の slot の両方で受ける。
+
+### Vue で踏んだもの
+
+- **`<Checkbox default-checked>` が効かない。** Ark Vue の checked は `boolean | "indeterminate"` なので、
+  値を書かない属性（`""`）が true に変換されない。ラッパーで `[Boolean, String]` として宣言し直した。
+  素の Ark Vue でも同じことが起きる
+- **その結果 `v-model:checked` が届かなくなった。** Vue は、自分が props として宣言した名前の
+  `onUpdate:*` を下へ流さない（宣言した側が v-model を扱うとみなす）。`update:checked` を受けて emit し直した
+- **Progress の track の `aria-label`。** Vue は `undefined` を明示すると Ark が付けた属性ごと消す。
+  React と同じ DOM にするため、渡す属性そのものを分けた
+- **vue-tsc は TypeScript 7 で動かない**（TS 5 系の内部 API を使う）。`@kohaku/vue` と playground/vue だけ TS 5.9
+
+### 一致の確かめ方
+
+playground/vue を React の playground と同じ内容にして、画面の全要素（265 個）の
+タグ・data-*・role・aria-*・文字・大きさを突き合わせた。違いは見出しの文言（Portal → Teleport）だけ。
+動き（ページ送り・開閉・キー操作・Tooltip の上に移っても閉じない・Toast の action と閉じる・
+ファイルの選択と削除）も同じ操作を流して一致。`v-model` は Checkbox / Switch / RadioGroup /
+Pagination / Input で両方向を確かめた（Vue だけの欄を playground の末尾に置いてある）。

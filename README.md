@@ -8,6 +8,7 @@ Ark UI が出す DOM は React / Vue / Solid / Svelte のどれでも同じな�
 ```
 @kohaku/styles   CSS。どの FW でも同じものを使う ← 本体
 @kohaku/react    書き味レイヤー。見た目のコードは持たない
+@kohaku/vue      同じ API の Vue 版
 ```
 
 > 開発中。配布はプロジェクトごとにいじれるよう、shadcn のようなコピペ方式にする予定。
@@ -92,6 +93,30 @@ import { Button, Dialog } from "@kohaku/react"
   </Dialog.Content>
 </Dialog.Root>
 ```
+
+### Vue
+
+`@kohaku/react` と同じ名前・同じ組み立て。kohaku が足す props 以外は Ark にそのまま流れるので、
+`v-model:checked` / `v-model:page` なども Ark と同じように書ける。
+
+```vue
+<script setup lang="ts">
+import { Button, Dialog } from "@kohaku/vue"
+</script>
+
+<template>
+  <Dialog.Root>
+    <Dialog.Trigger as-child>
+      <Button>開く</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Title>タイトル</Dialog.Title>
+    </Dialog.Content>
+  </Dialog.Root>
+</template>
+```
+
+`.vue` のまま配っているので、利用側の Vite（`@vitejs/plugin-vue`）でコンパイルされる。
 
 ## トークン
 

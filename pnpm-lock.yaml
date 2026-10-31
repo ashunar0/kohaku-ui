@@ -29,6 +29,21 @@ importers:
 
   packages/styles: {}
 
+  packages/vue:
+    devDependencies:
+      '@ark-ui/vue':
+        specifier: ^5.39.2
+        version: 5.39.2(vue@3.5.43(typescript@5.9.3))
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      vue:
+        specifier: ^3.5.43
+        version: 3.5.43(typescript@5.9.3)
+      vue-tsc:
+        specifier: ^3.3.11
+        version: 3.3.11(typescript@5.9.3)
+
   playground/react:
     dependencies:
       '@ark-ui/react':
@@ -67,26 +82,29 @@ importers:
     dependencies:
       '@ark-ui/vue':
         specifier: ^5.39.2
-        version: 5.39.2(vue@3.5.43(typescript@7.0.2))
+        version: 5.39.2(vue@3.5.43(typescript@5.9.3))
       '@kohaku/styles':
         specifier: workspace:*
         version: link:../../packages/styles
+      '@kohaku/vue':
+        specifier: workspace:*
+        version: link:../../packages/vue
       vue:
         specifier: ^3.5.43
-        version: 3.5.43(typescript@7.0.2)
+        version: 3.5.43(typescript@5.9.3)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.9
-        version: 6.0.9(vite@8.3.0(esbuild@0.28.2))(vue@3.5.43(typescript@7.0.2))
+        version: 6.0.9(vite@8.3.0(esbuild@0.28.2))(vue@3.5.43(typescript@5.9.3))
       typescript:
-        specifier: ^7.0.2
-        version: 7.0.2
+        specifier: ~5.9.3
+        version: 5.9.3
       vite:
         specifier: ^8.3.0
         version: 8.3.0(esbuild@0.28.2)
       vue-tsc:
         specifier: ^3.3.11
-        version: 3.3.11(typescript@7.0.2)
+        version: 3.3.11(typescript@5.9.3)
 
   storybook:
     dependencies:
@@ -1058,6 +1076,11 @@ packages:
 
   '@volar/typescript@2.4.28':
     resolution: {integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@vue/compiler-core@3.5.43':
     resolution: {integrity: sha512-zdiLhnbe1QQqgDT8xZMpNmyqZ3qlI+/Q/FHQco57Kwl/b05HhCzN6eVGN9QU9rbga4CrS0H5SYY8VGHZCt/1Hg==}
@@ -1844,6 +1867,11 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
@@ -2020,7 +2048,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@ark-ui/vue@5.39.2(vue@3.5.43(typescript@7.0.2))':
+  '@ark-ui/vue@5.39.2(vue@3.5.43(typescript@5.9.3))':
     dependencies:
       '@internationalized/date': 3.12.4
       '@zag-js/accordion': 1.43.3
@@ -2090,8 +2118,8 @@ snapshots:
       '@zag-js/tree-view': 1.43.3
       '@zag-js/types': 1.43.3
       '@zag-js/utils': 1.43.3
-      '@zag-js/vue': 1.43.3(vue@3.5.43(typescript@7.0.2))
-      vue: 3.5.43(typescript@7.0.2)
+      '@zag-js/vue': 1.43.3(vue@3.5.43(typescript@5.9.3))
+      vue: 3.5.43(typescript@5.9.3)
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -2749,11 +2777,11 @@ snapshots:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.3.0(esbuild@0.28.2)
 
-  '@vitejs/plugin-vue@6.0.9(vite@8.3.0(esbuild@0.28.2))(vue@3.5.43(typescript@7.0.2))':
+  '@vitejs/plugin-vue@6.0.9(vite@8.3.0(esbuild@0.28.2))(vue@3.5.43(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.3.0(esbuild@0.28.2)
-      vue: 3.5.43(typescript@7.0.2)
+      vue: 3.5.43(typescript@5.9.3)
 
   '@vitest/expect@3.2.4':
     dependencies:
@@ -2783,11 +2811,13 @@ snapshots:
 
   '@volar/source-map@2.4.28': {}
 
-  '@volar/typescript@2.4.28':
+  '@volar/typescript@2.4.28(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
       vscode-uri: 3.2.0
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@vue/compiler-core@3.5.43':
     dependencies:
@@ -3432,13 +3462,13 @@ snapshots:
 
   '@zag-js/utils@1.43.3': {}
 
-  '@zag-js/vue@1.43.3(vue@3.5.43(typescript@7.0.2))':
+  '@zag-js/vue@1.43.3(vue@3.5.43(typescript@5.9.3))':
     dependencies:
       '@zag-js/core': 1.43.3
       '@zag-js/store': 1.43.3
       '@zag-js/types': 1.43.3
       '@zag-js/utils': 1.43.3
-      vue: 3.5.43(typescript@7.0.2)
+      vue: 3.5.43(typescript@5.9.3)
 
   alien-signals@3.2.1: {}
 
@@ -3925,6 +3955,8 @@ snapshots:
 
   tslib@2.8.1: {}
 
+  typescript@5.9.3: {}
+
   typescript@7.0.2:
     optionalDependencies:
       '@typescript/typescript-aix-ppc64': 7.0.2
@@ -3973,13 +4005,13 @@ snapshots:
 
   vscode-uri@3.2.0: {}
 
-  vue-tsc@3.3.11(typescript@7.0.2):
+  vue-tsc@3.3.11(typescript@5.9.3):
     dependencies:
-      '@volar/typescript': 2.4.28
+      '@volar/typescript': 2.4.28(typescript@5.9.3)
       '@vue/language-core': 3.3.11
-      typescript: 7.0.2
+      typescript: 5.9.3
 
-  vue@3.5.43(typescript@7.0.2):
+  vue@3.5.43(typescript@5.9.3):
     dependencies:
       '@vue/compiler-dom': 3.5.43
       '@vue/compiler-sfc': 3.5.43
@@ -3987,7 +4019,7 @@ snapshots:
       '@vue/server-renderer': 3.5.43
       '@vue/shared': 3.5.43
     optionalDependencies:
-      typescript: 7.0.2
+      typescript: 5.9.3
 
   ws@8.21.3: {}
 
