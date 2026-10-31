@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Checkbox, Dialog, Field, Popover, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Collapsible, Dialog, Field, Popover, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -23,8 +23,19 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Collapsible -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Collapsible（Ark）</h2>
+    <Collapsible.Root>
+      <Collapsible.Trigger>詳細な条件<Collapsible.Indicator /></Collapsible.Trigger>
+      <Collapsible.Content>
+        <p style="margin: 0; padding-top: 0.5rem; font-size: 0.875rem">
+          登録日・最終ログイン・所属部署で絞り込めます。条件は保存され、次に開いたときも残ります。
+        </p>
+      </Collapsible.Content>
+    </Collapsible.Root>
+
     <!-- Popover -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Popover（Ark）</h2>
+    <h2 :style="h2">Popover（Ark）</h2>
     <Popover.Root :positioning="{ placement: 'bottom-start' }">
       <Popover.Trigger data-kh="button" data-variant="outline">表示項目</Popover.Trigger>
       <Teleport to="body">

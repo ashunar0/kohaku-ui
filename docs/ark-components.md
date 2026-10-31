@@ -35,6 +35,7 @@ tree-view
 | tabs | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
 | tooltip | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致） |
 | popover | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
+| collapsible | ✅ 対応済み・実機検証済み（React / Vue で動作一致） |
 | menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -60,6 +61,8 @@ select : root / label / control / trigger / value-text / indicator
          （trigger・content・item に data-state、item に data-highlighted）
 checkbox    : root / label / control / indicator      （+ group）
 switch      : root / label / control / thumb
+collapsible : root / trigger / content / indicator
+         （content に Ark が --height を入れる。閉じると hidden）
 popover     : trigger / anchor / positioner / content / title / description
          / close-trigger / indicator / arrow / arrow-tip
          （content は role="dialog"。開くとフォーカスが中に入り、閉じると trigger に戻る）

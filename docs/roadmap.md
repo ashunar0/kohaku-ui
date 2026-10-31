@@ -7,7 +7,6 @@
 
 | 部品 | Ark | 重さ | メモ |
 |---|---|---|---|
-| Collapsible | collapsible | 軽 | 開閉できる Card もこれで作る |
 | Progress | progress | 軽 | 線形だけ |
 | Pagination | pagination | 中 | |
 | Toast | toast | 中 | |

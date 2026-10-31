@@ -1,0 +1,55 @@
+@layer kohaku {
+  /* Ark の collapsible。root / trigger / content / indicator
+     content には Ark が開閉後の高さを --height で入れる */
+
+  [data-scope="collapsible"][data-part="trigger"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    padding: 0;
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg);
+    background: transparent;
+    border: 0;
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  [data-scope="collapsible"][data-part="trigger"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+  [data-scope="collapsible"][data-part="trigger"][data-disabled] {
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  /* Select の indicator と同じ。空なら kohaku が描き、<svg> を入れれば差し替わる */
+  [data-scope="collapsible"][data-part="indicator"] {
+    flex: none;
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+    color: var(--kh-color-fg-muted);
+    transition: transform var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="collapsible"][data-part="indicator"]:empty {
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-chevron-down) center / contain no-repeat;
+            mask: var(--kh-glyph-chevron-down) center / contain no-repeat;
+  }
+  [data-scope="collapsible"][data-part="indicator"][data-state="open"] { transform: rotate(180deg); }
+
+  /* ---- 開閉 -------------------------------------------------------------- */
+  @keyframes kh-expand   { from { height: 0 } to { height: var(--height) } }
+  @keyframes kh-collapse { from { height: var(--height) } to { height: 0 } }
+
+  [data-scope="collapsible"][data-part="content"] { overflow: hidden; }
+  [data-scope="collapsible"][data-part="content"][data-state="open"]   { animation: kh-expand   var(--kh-duration-md) var(--kh-ease); }
+  [data-scope="collapsible"][data-part="content"][data-state="closed"] { animation: kh-collapse var(--kh-duration-fast) var(--kh-ease); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-scope="collapsible"][data-part="content"],
+    [data-scope="collapsible"][data-part="indicator"] { animation: none; transition: none; }
+  }
+}

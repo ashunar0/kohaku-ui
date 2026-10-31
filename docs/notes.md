@@ -1179,3 +1179,10 @@ Popover と Select は下の画面に重なったまま操作する面で、浮�
 
 閉じるボタンは付けていない。Esc と外のクリックで閉じる（Ark の既定）。
 React / Vue とも、開く・中のチェックボックス・Esc・外クリック・フォーカスが trigger に戻る、を実測した。
+
+## 2026-10-31 Collapsible
+
+trigger は素のテキストボタン（枠なし）、indicator は Select と同じシェブロン（空なら kohaku が描く）。
+開閉は Ark が content に入れる `--height` を keyframes で使う。`prefers-reduced-motion` では止める。
+React / Vue とも、クリック・Space・Enter での開閉、`aria-expanded`、閉じたときの `hidden` を実測した。
+開閉できる Card は Card の中に Collapsible を置けば組める。専用の部品は作っていない（YAGNI）。

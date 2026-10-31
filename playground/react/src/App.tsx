@@ -1,5 +1,5 @@
 import {
-  Actions, Alert, Badge, Button, Card, Checkbox, Dialog, Field, Group,
+  Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
   Icon, Input, RadioGroup, Popover, Select, Switch, Tabs, Tooltip, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -48,7 +48,19 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Popover — Portal / Positioner は隠れている</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Collapsible（Ark をそのまま再輸出）</h2>
+      <Collapsible.Root>
+        <Collapsible.Trigger>
+          詳細な条件<Collapsible.Indicator />
+        </Collapsible.Trigger>
+        <Collapsible.Content>
+          <p style={{ margin: 0, paddingTop: ".5rem", fontSize: ".875rem" }}>
+            登録日・最終ログイン・所属部署で絞り込めます。条件は保存され、次に開いたときも残ります。
+          </p>
+        </Collapsible.Content>
+      </Collapsible.Root>
+
+      <h2 style={h2}>Popover — Portal / Positioner は隠れている</h2>
       <Popover.Root positioning={{ placement: "bottom-start" }}>
         <Popover.Trigger asChild>
           <Button variant="outline">表示項目</Button>
