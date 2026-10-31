@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Checkbox, Collapsible, Dialog, Field, Pagination, Popover, Progress, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Collapsible, Dialog, Field, Pagination, Popover, Progress, Toast, Toaster, createToaster, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -18,6 +18,7 @@ const paginationJa = {
   itemLabel: ({ page, totalPages }: { page: number; totalPages: number }) =>
     `${totalPages > 1 && page === totalPages ? "最後のページ、" : ""}${page} ページ目`,
 }
+const toaster = createToaster({ placement: "bottom-end", overlap: true })
 const h2 = {
   fontSize: ".75rem", textTransform: "uppercase", letterSpacing: ".08em",
   color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem",
@@ -31,8 +32,24 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Toast: 名前は既定が英語なので aria-label で上書きする -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Toast（Ark）</h2>
+    <Toaster :toaster="toaster" aria-label="通知" v-slot="t">
+      <Toast.Root>
+        <Toast.Title v-if="t.title">{{ t.title }}</Toast.Title>
+        <Toast.Description v-if="t.description">{{ t.description }}</Toast.Description>
+        <Toast.ActionTrigger v-if="t.action">{{ t.action.label }}</Toast.ActionTrigger>
+        <Toast.CloseTrigger aria-label="通知を閉じる" />
+      </Toast.Root>
+    </Toaster>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.success({ title: '保存しました', description: '変更は全員に反映されます。' })">success</button>
+      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.error({ title: '保存できませんでした' })">error</button>
+      <button data-kh="button" data-variant="outline" data-size="sm" @click="toaster.create({ title: '3 件を削除しました', action: { label: '元に戻す', onClick: () => {} } })">action</button>
+    </div>
+
     <!-- Pagination -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Pagination（Ark）</h2>
+    <h2 :style="h2">Pagination（Ark）</h2>
     <Pagination.Root :count="200" :page-size="10" :default-page="10" :translations="paginationJa">
       <Pagination.PrevTrigger />
       <Pagination.Context v-slot="api">

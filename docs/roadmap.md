@@ -7,7 +7,6 @@
 
 | 部品 | Ark | 重さ | メモ |
 |---|---|---|---|
-| Toast | toast | 中 | |
 | File Upload | file-upload | 中 | |
 | Date Picker | date-picker | 重 | 月・年の切り替えまで要る。入力欄 + カレンダー |
 

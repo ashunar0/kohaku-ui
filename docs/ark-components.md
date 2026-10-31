@@ -38,6 +38,7 @@ tree-view
 | collapsible | ✅ 対応済み・実機検証済み（React / Vue で動作一致） |
 | progress | ✅ 対応済み・実機検証済み（線形だけ。React / Vue で動作一致） |
 | pagination | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
+| toast | ✅ 対応済み・実機検証済み（React / Vue で寸法・動作一致） |
 | menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -69,6 +70,9 @@ progress    : root / label / value-text / track / range（/ view / circle 系）
 pagination  : root / item / ellipsis / first-trigger / prev-trigger / next-trigger / last-trigger
          （root は nav。現在のページは item に data-selected と aria-current="page"。
            端の前後ボタンに data-disabled。ラベルは既定が英語なので translations を渡す）
+toast       : group / root / title / description / action-trigger / close-trigger
+         （icon の part は無い。種類は root の data-type。位置は Ark が --x / --y などで入れる。
+           group と閉じるボタンの名前は既定が英語なので aria-label で上書きする）
 collapsible : root / trigger / content / indicator
          （content に Ark が --height を入れる。閉じると hidden）
 popover     : trigger / anchor / positioner / content / title / description

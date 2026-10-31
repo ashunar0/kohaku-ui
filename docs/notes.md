@@ -603,8 +603,8 @@ dark も 1 つの定義で済む。
 | radio の点 | ✅ CSS の `::after` で描画（図形なので data URI すら不要） |
 | chevron-down | ✅ select。`▾` という**文字**の直打ちをやめた |
 | info / circle-x / triangle-alert / circle-check | ✅ Alert の variant ごと |
-| × | ⬜ dialog に閉じるボタンを作るときに足す。今は使う場所が無い（YAGNI） |
 | ‹ › / « » | ✅ pagination の前後・最初最後のボタン |
+| × | ✅ toast の閉じるボタン |
 | eye / star / grip | ⬜ password-input / rating / 並べ替えを作るとき |
 
 React と Vue の両方で `m6 9 6 6 6-6` が出ることを実測した。
@@ -1225,3 +1225,23 @@ Progress の aria-labelledby と同じく、Vue 版の書き味レイヤーを�
 
 Ark は `type="link"` でも既定で `<button>` に href を付けるだけなので、ラッパーで `asChild` の `<a>` にした。
 端のボタンは href が外れ、フォーカスも当たらなくなる（実測）。
+
+## 2026-10-31 Toast
+
+面は Popover と同じ（白地＋線＋影）。画面に重なって浮くので影を使う。種類のアイコンは Alert と同じ
+絵柄と色。Toast には icon の part が無いので root の `::before` に描く。**info は Ark の既定の種類**なので、
+Alert の neutral と同じくアイコンを持たない（付けると普通の通知すべてに「i」が付く）。
+loading は線の輪を回す（Spinner を作るときに揃える）。
+
+位置・重なり・積み上げは Ark が root に入れる `--x` / `--y` / `--scale` などを使う（Ark の推奨 CSS のまま）。
+
+### 列の間は gap ではなく margin で作る
+
+列は icon / 文 / action / 閉じる。アイコンや action が無いときも列は残るので、`column-gap` だと
+幅 0 の列の分だけ文が右に 12px ずれた（実測）。各要素の margin で間を作るようにした。
+
+### 名前を日本語にする（`@kohaku/react`）
+
+Ark の既定は group が "Notifications, bottom-end (altKey+T)"、閉じるボタンが "Dismiss notification"。
+`<Toaster>` で「通知」「通知を閉じる」にした。閉じるボタンの名前は toast ごとの `translations` でしか
+変えられないので、要素に `aria-label` を直接渡して上書きしている。Vue は自分で書く（playground/vue）。
