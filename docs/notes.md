@@ -1309,3 +1309,15 @@ playground/vue を React の playground と同じ内容にして、画面の全�
 動き（ページ送り・開閉・キー操作・Tooltip の上に移っても閉じない・Toast の action と閉じる・
 ファイルの選択と削除）も同じ操作を流して一致。`v-model` は Checkbox / Switch / RadioGroup /
 Pagination / Input で両方向を確かめた（Vue だけの欄を playground の末尾に置いてある）。
+
+## 2026-10-31 Pagination / Toast / File Upload を dark で測った
+
+崩れは無し。文字は light / dark とも 4.5:1 以上（最小は light の Pagination の番号 4.6:1）。
+3:1 を下回ったものは、どれも既存の判断の範囲にあるので直していない。
+
+| 対象 | light / dark | 扱い |
+|---|---|---|
+| Pagination の端の前後ボタン（薄くしたもの） | 1.94 / 2.65 | 押せない部品は 1.4.11 の対象外 |
+| ドロップ領域の破線 `border-strong` | 1.48 / 1.69 | input の枠線と同じ Known Gap。`--kh-color-border-strong` の 1 行で一緒に切り替わる |
+| Toast の枠線 `border` | 1.22 / 1.33 | card・popover と同じ Known Gap。浮く面は影でも分かれる |
+| Toast の warning アイコン | 2.14 / 8.27 | 意味は見出しの文字が持ち、アイコンは補助（1.4.11 は理解に必要な図形が対象）。Alert の warning と同じ |
