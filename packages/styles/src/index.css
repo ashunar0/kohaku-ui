@@ -1,7 +1,8 @@
 /* レイヤー順の宣言。レイヤーの外に書いた利用側の CSS は必ず kohaku に勝つ。
    Tailwind v4 と併用するときは `@import "@kohaku/styles" layer(components);` で
    Tailwind の components 層に入れる（utilities が勝つ）。README 参照 */
-@layer kohaku.reset, kohaku;
+@layer kohaku.reset, kohaku.base, kohaku;
 
 @import "./components.css";
 @import "./reset.css";
+@import "./base.css";

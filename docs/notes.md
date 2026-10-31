@@ -1074,3 +1074,29 @@ base.css が無いと Button と Input が 4px 膨らみ、Input は明朝にな
 消して kohaku の reset に替えればいい、とはならない。既存の reset（Meyer 系：余白 0・リストの点を消す）と
 kohaku の reset（行間・フォント）はやることが違い、古い画面の scoped CSS は既存の reset を前提にしている。
 入れ替えは画面単位で進むので、その間は既存の reset のまま部品だけ入れる。全部終わったら切り替える。
+
+### reset.css を本来の意味に戻し、base.css を分けた
+
+それまでの `reset.css` は、ブラウザ既定を消すものではなく、body に kohaku の文字組みを
+**足す**もの（一般には base と呼ぶ）だった。ブラウザ既定を消していたのは box-sizing と
+フォーム部品のフォント継承だけ。名前と中身がずれていたので分けた。
+
+- `reset.css` = 消すだけ。値は足さない
+- `base.css` = kohaku の文字組みと地の色を body に広げる
+
+トークン（`tokens.css`）と base を同じファイルにしないのは、トークンは既存プロダクトにも
+必ず読ませるから。変数の宣言は画面を変えないが、`body { line-height }` は変える。
+
+reset は「困るものだけ消す」流派にした。部品は見た目を全部自分で持つので、見出しの大きさまで
+消す流派（Meyer・destyle）にする理由がない。Tailwind の preflight とも重なりが少ない方がいい。
+Tailwind v4 preflight / Josh Comeau / Andy Bell / kiso.css を読み、複数が揃って消しているものを採った。
+
+- 採った: box-sizing、余白（body・見出し・p・リストなど）、リストの点とインデント、リンクの色、
+  画像を block + 親幅まで、フォーム部品のフォント継承、fieldset の枠と余白、placeholder の薄さ、
+  表の border-collapse、iOS の文字サイズ自動調整
+- リストの点は `list-style-type: ""` で消す。`none` だと Safari がリストとして読み上げなくなる（kiso と同じ）
+- 採らなかった: 見出しの大きさ・太さ（preflight だけが消す）、リンクの下線（Andy Bell・kiso は残すか
+  リンクだけ戻す。リンクだと分かることを優先）、ボタンの背景・角丸（部品が持つ）
+- 全部 `:where()` で詳細度 0。疑似要素は `:where()` に入れられないので外に出した
+
+playground・Storybook は余白をインライン指定しているので、入れ替えても見た目の差分は 0 だった。

@@ -1,9 +1,9 @@
-/* reset 抜きの入口。既存プロダクトに後から入れるとき用（アプリ全体の見た目を変えない）。
+/* reset / base 抜きの入口。既存プロダクトに後から入れるとき用（アプリ全体の見た目を変えない）。
    部品は box-sizing と文字組みを自分で持つので、既存の reset の上でも崩れない */
-@layer kohaku.reset, kohaku;
+@layer kohaku.reset, kohaku.base, kohaku;
 
 @import "./tokens.css";
-@import "./components/base.css";
+@import "./components/part.css";
 @import "./components/icon.css";
 @import "./components/button.css";
 @import "./components/card.css";

@@ -11,6 +11,7 @@
     "./components": "./src/components.css",
     "./tokens": "./src/tokens.css",
     "./reset": "./src/reset.css",
+    "./base": "./src/base.css",
     "./tailwind": "./src/tailwind.css"
   },
   "files": [

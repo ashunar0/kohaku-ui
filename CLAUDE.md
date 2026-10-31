@@ -57,15 +57,22 @@ L3 component   --kh-button-bg       個別調整の逃げ道
 ### 5. `@layer kohaku` の中に書く
 
 ```css
-@layer kohaku.reset, kohaku;
+@layer kohaku.reset, kohaku.base, kohaku;
 ```
 
 レイヤーの外の利用側 CSS が必ず勝つ。詳細度で殴らない。Tailwind の層名（`utilities`
 など）を kohaku 側で宣言しない。宣言すると読み込み順で並びが変わる（Tailwind と併用する
 ときは利用側が `layer(components)` で読み込む。README 参照）。
 
-**部品は reset に頼らない。** 既存プロダクトには reset を入れずに使うため。
-box-sizing と文字組みは `components/base.css` が部品自身に持たせている。
+ページ全体に効くものは 2 つに分けてある。どちらも既存プロダクトには入れない。
+
+```
+reset.css   ブラウザ既定のうち困るものを消す。値は足さない
+base.css    kohaku の文字組みと地の色を body に広げる。値を足す
+```
+
+**部品はこの 2 つに頼らない。** box-sizing と文字組みは `components/part.css` が
+部品自身に持たせている。
 
 ### 6. `@kohaku/react` に見た目のコードを書かない
 

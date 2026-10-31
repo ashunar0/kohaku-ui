@@ -48,9 +48,15 @@ kohaku に勝つ。
 
 ### 既存プロダクトに入れる
 
-`@kohaku/styles/components` は reset 抜きの入口。kohaku の reset は行間やフォントを
-アプリ全体に効かせるので、既存の画面が残っているうちは入れない（全部入れ替え終わったら
-既存の reset を消して `@kohaku/styles` に切り替える）。
+`@kohaku/styles` はページ全体に効く 2 つを含む。
+
+| | 中身 |
+|---|---|
+| `reset.css` | ブラウザ既定のうち困るもの（余白・リストの点など）を消す |
+| `base.css` | kohaku の文字組み（行間 1.75 など）と地の色を body に広げる |
+
+`@kohaku/styles/components` はこの 2 つを抜いた入口。既存の画面が残っているうちは
+こちらを使う（全部入れ替え終わったら既存の reset を消して `@kohaku/styles` に切り替える）。
 
 既存のグローバル CSS は kohaku より手前の層に閉じ込める。レイヤーの外に置いたままだと、
 `button { }` のような要素セレクタが kohaku の部品を上書きしてしまう。

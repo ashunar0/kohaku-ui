@@ -1,0 +1,23 @@
+/* ==========================================================================
+   base — kohaku の文字組みと地の色をページ全体に広げる
+
+   値を足すもの（reset.css は消すもの）。新規プロダクト向け。
+   既存プロダクトでは読まない。古い画面の行間やフォントまで変わるため。
+   ========================================================================== */
+
+@layer kohaku.base {
+  body {
+    font-family: var(--kh-font-sans);
+    font-feature-settings: var(--kh-font-feature);
+    line-height: var(--kh-leading-normal);
+    letter-spacing: var(--kh-tracking-normal);
+    background: var(--kh-color-bg);
+    color: var(--kh-color-fg);
+    /* 和文の禁則・改行 */
+    line-break: strict;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  h1, h2, h3, h4 { line-height: var(--kh-leading-tight); }
+}

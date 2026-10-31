@@ -1,26 +1,75 @@
-@layer kohaku.reset {
-  *, *::before, *::after { box-sizing: border-box; }
+/* ==========================================================================
+   reset — ブラウザが最初から付けている CSS のうち、困るものだけ消す
 
-  body {
-    margin: 0;
-    font-family: var(--kh-font-sans);
-    font-feature-settings: var(--kh-font-feature);
-    line-height: var(--kh-leading-normal);
-    letter-spacing: var(--kh-tracking-normal);
-    background: var(--kh-color-bg);
-    color: var(--kh-color-fg);
-    /* 和文の禁則・改行 */
-    line-break: strict;
-    overflow-wrap: anywhere;
-    word-break: normal;
+   消すだけで、kohaku の値は足さない（それは base.css）。
+   見出しの大きさ・太さのように、消すと困るものは残す。
+
+   参考: Tailwind v4 preflight / Josh Comeau / Andy Bell / kiso.css。
+   複数が揃って消しているものを採った。根拠は docs/notes.md。
+
+   全部 :where() で詳細度 0（疑似要素は :where() に入れられないので外に出す）。
+   部品や利用側の CSS が必ず勝つ。
+   ========================================================================== */
+
+@layer kohaku.reset {
+  :where(*), :where(*)::before, :where(*)::after {
+    box-sizing: border-box;
   }
 
-  h1, h2, h3, h4 { line-height: var(--kh-leading-tight); }
+  :where(html) {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
 
-  button, input, select, textarea {
-    font: inherit;
+  /* ---- 余白: 間隔は書く側が決める ------------------------------------------ */
+  :where(body, h1, h2, h3, h4, h5, h6, p, blockquote, figure, pre, dl, dd, ul, ol, menu) {
+    margin: 0;
+  }
+
+  /* list-style: none だと Safari がリストとして読み上げなくなる。"" なら残る */
+  :where(ul, ol, menu) {
+    padding-inline-start: 0;
+    list-style-type: "";
+  }
+
+  /* ---- リンク: 色はまわりに合わせる。下線は残す（リンクだと分かるように） ---- */
+  :where(a) {
     color: inherit;
-    font-feature-settings: var(--kh-font-feature);
+  }
+
+  /* ---- 画像・動画: 下の隙間を消し、親からはみ出さない ------------------------ */
+  :where(img, picture, svg, video, canvas, iframe, embed, object) {
+    display: block;
+    max-inline-size: 100%;
+  }
+  :where(img, video) {
+    block-size: auto;
+  }
+
+  /* ---- フォーム: ブラウザ既定の小さいフォントで継承が切れるのを戻す ---------- */
+  :where(button, input, select, textarea, optgroup) {
+    font: inherit;
+    font-feature-settings: inherit;
     letter-spacing: inherit;
+    color: inherit;
+  }
+
+  :where(fieldset) {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  :where(legend) {
+    padding: 0;
+  }
+
+  ::placeholder {
+    opacity: 1;
+  }
+
+  /* ---- 表 ---------------------------------------------------------------- */
+  :where(table) {
+    border-collapse: collapse;
   }
 }
