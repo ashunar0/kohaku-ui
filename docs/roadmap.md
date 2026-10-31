@@ -7,7 +7,6 @@
 
 | 部品 | Ark | 重さ | メモ |
 |---|---|---|---|
-| Tooltip | tooltip | 軽 | |
 | Popover | popover | 軽 | ヘルプの吹き出しもこれ |
 | Collapsible | collapsible | 軽 | 開閉できる Card もこれで作る |
 | Progress | progress | 軽 | 線形だけ |

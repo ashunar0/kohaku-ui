@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, Field, Select, Tabs, createListCollection } from "@ark-ui/vue"
+import { Dialog, Field, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -23,8 +23,19 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Tooltip: Ark を直接使うので interactive は自分で付ける（WCAG 1.4.13） -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Tooltip（Ark）</h2>
+    <Tooltip.Root interactive>
+      <Tooltip.Trigger data-kh="button" data-variant="outline">エクスポート</Tooltip.Trigger>
+      <Teleport to="body">
+        <Tooltip.Positioner>
+          <Tooltip.Content>CSV でダウンロード</Tooltip.Content>
+        </Tooltip.Positioner>
+      </Teleport>
+    </Tooltip.Root>
+
     <!-- Tabs -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Tabs（Ark）</h2>
+    <h2 :style="h2">Tabs（Ark）</h2>
     <Tabs.Root default-value="overview">
       <Tabs.List>
         <Tabs.Trigger value="overview">概要</Tabs.Trigger>

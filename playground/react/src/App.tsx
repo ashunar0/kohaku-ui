@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Dialog, Field, Group,
-  Icon, Input, RadioGroup, Select, Switch, Tabs, createListCollection,
+  Icon, Input, RadioGroup, Select, Switch, Tabs, Tooltip, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
 
@@ -36,7 +36,7 @@ export function App() {
         @kohaku/react を使って書いたもの。DOM は素の Ark と同じになる
       </p>
       <div style={{
-        position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: ".75rem",
+        position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", gap: ".75rem",
         padding: ".75rem 0", marginBottom: "1.5rem",
         background: "var(--kh-color-canvas)", borderBottom: "1px solid var(--kh-color-border)",
       }}>
@@ -48,7 +48,23 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Tabs（Ark をそのまま再輸出）</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Tooltip — Portal / Positioner は隠れている</h2>
+      <div style={{ display: "flex", gap: ".75rem", alignItems: "center" }}>
+        <Tooltip.Root>
+          <Tooltip.Trigger asChild>
+            <Button variant="outline">エクスポート</Button>
+          </Tooltip.Trigger>
+          <Tooltip.Content>CSV でダウンロード</Tooltip.Content>
+        </Tooltip.Root>
+        <Tooltip.Root>
+          <Tooltip.Trigger asChild>
+            <Button variant="ghost">招待</Button>
+          </Tooltip.Trigger>
+          <Tooltip.Content>メンバーを招待するには管理者の権限が必要です。権限は組織の設定から変更できます。</Tooltip.Content>
+        </Tooltip.Root>
+      </div>
+
+      <h2 style={h2}>Tabs（Ark をそのまま再輸出）</h2>
       <Tabs.Root defaultValue="overview">
         <Tabs.List>
           <Tabs.Trigger value="overview">概要</Tabs.Trigger>

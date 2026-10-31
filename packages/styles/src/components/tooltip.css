@@ -1,0 +1,28 @@
+@layer kohaku {
+  /* Ark の tooltip。trigger / positioner / content（/ arrow / arrow-tip）
+     positioner と content は Portal で <body> 直下に飛ぶ */
+
+  [data-scope="tooltip"][data-part="content"] {
+    /* positioner ではなく content に書く（select.css 参照） */
+    z-index: var(--kh-z-tooltip, 70);
+    max-width: var(--kh-tooltip-max-width, 16rem);
+    /* 和文のインクは中心が上に出る（実測 -1.5px @13px）。上を足して下を同じだけ引き、
+       高さを変えずに文字を下げる。フォントを変えたら測り直す */
+    padding-block:
+      calc(var(--kh-space-1) + var(--kh-tooltip-optical-shift, 0.115em))
+      calc(var(--kh-space-1) - var(--kh-tooltip-optical-shift, 0.115em));
+    padding-inline: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    line-height: var(--kh-leading-ui);
+
+    /* 白地に線だけ。影は使わない（ぼかすと輪郭がぼやける。dark では shadow-sm が
+       外側の線に化けて枠線と二重になる） */
+    background: var(--kh-color-surface);
+    color: var(--kh-color-fg);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius-sm);
+  }
+
+  [data-scope="tooltip"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="tooltip"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+}

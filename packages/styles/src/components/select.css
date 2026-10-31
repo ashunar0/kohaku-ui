@@ -59,9 +59,11 @@
   [data-scope="select"][data-part="indicator"][data-state="open"] { transform: rotate(180deg); }
 
   /* ---- ドロップダウン ----------------------------------------------------- */
-  [data-scope="select"][data-part="positioner"] { z-index: var(--kh-z-popover, 60); }
+  /* z-index は content に書く。Ark は content の z-index を読んで positioner の
+     インライン style（z-index: var(--z-index)）に写すので、positioner に書いても負ける */
 
   [data-scope="select"][data-part="content"] {
+    z-index: var(--kh-z-popover, 60);
     min-width: var(--reference-width, 10rem);
     max-height: 18rem;
     overflow-y: auto;

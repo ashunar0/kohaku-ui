@@ -1134,3 +1134,36 @@ list の線を `linear-gradient` の背景で内側に描き、trigger は重ね
 ### 高さは 40px（Button・Input の md と同じ）
 
 Carbon の line も Medium 40px。サイズの段は作っていない（YAGNI）。L3 の `--kh-tabs-height` で寄せられる。
+
+## 2026-10-31 Tooltip
+
+### 白地に線だけ。影なし・矢印なし
+
+反転（黒地。Primer・Carbon・shadcn）と白地（SmartHR）を並べて、あさひの判断で白地。
+最初は白地に `--kh-shadow-md` を付けたが「ぼんやりして気持ち悪い」。12px のぼかしが輪郭を
+ぼかしていた。線だけ / 線＋`--kh-shadow-sm` を並べて、線だけにした。
+
+- 影より先に線、の順にも合う
+- dark では `--kh-shadow-sm` が外側の 1px の線になり、枠線と二重になる
+- dark は地（gray-950）の上に一段明るい面（gray-900）と線（gray-800）で分かれる
+
+矢印は付けていない（Primer も無し）。
+
+### interactive の既定を true にした（`@kohaku/react` だけ）
+
+Ark の既定（false）は positioner に `pointer-events: none` を付け、Tooltip の上にポインタを
+移すと閉じる。WCAG 1.4.13（ホバーで出た内容の上に移れる）を満たさない。kohaku は AA が目標なので
+Root の既定を変えた。Ark を直接使う場合（Vue など）は自分で `interactive` を付ける。
+Esc で閉じることは Ark がやる（実測）。
+
+### 和文の光学補正を padding で入れた
+
+行間 1.5 で組むと、同じ文字（「あとで」）でインクの中心が -1.5px 上に出た（13px）。
+上の padding を `--kh-tooltip-optical-shift`（0.115em）足して下を同じだけ引き、高さを変えずに下げた。
+補正後 -0.5px。Tooltip の高さが 29.5px で中央が画素の境目に来るので、これ以上は 1px 単位の丸めの範囲。
+
+### z-index は content に書く（Select の不具合も直した）
+
+Ark は content の computed z-index を読んで、positioner のインライン style
+（`z-index: var(--z-index)`）に写す。positioner に書いた z-index はインラインに負けて `auto` になっていた。
+Select も同じで、選択肢が sticky なヘッダー（z-index 10）の下に潜る状態だった。両方 content に移した。
