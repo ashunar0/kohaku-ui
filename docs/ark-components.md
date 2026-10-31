@@ -37,6 +37,7 @@ tree-view
 | popover | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | collapsible | ✅ 対応済み・実機検証済み（React / Vue で動作一致） |
 | progress | ✅ 対応済み・実機検証済み（線形だけ。React / Vue で動作一致） |
+| pagination | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -65,6 +66,9 @@ switch      : root / label / control / thumb
 progress    : root / label / value-text / track / range（/ view / circle 系）
          （role="progressbar" は track。名前は値の文字列になるので label に結び付ける。
            値が無いと data-state="indeterminate"）
+pagination  : root / item / ellipsis / first-trigger / prev-trigger / next-trigger / last-trigger
+         （root は nav。現在のページは item に data-selected と aria-current="page"。
+           端の前後ボタンに data-disabled。ラベルは既定が英語なので translations を渡す）
 collapsible : root / trigger / content / indicator
          （content に Ark が --height を入れる。閉じると hidden）
 popover     : trigger / anchor / positioner / content / title / description

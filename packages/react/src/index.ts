@@ -28,6 +28,7 @@ export { Select, type SelectTriggerProps, type SelectContentProps } from "./sele
 export { Tooltip, type TooltipRootProps, type TooltipContentProps } from "./tooltip"
 export { Popover, type PopoverContentProps } from "./popover"
 export { Progress, type ProgressProps } from "./progress"
+export { Pagination, type PaginationProps } from "./pagination"
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
 export { Collapsible, Field, Fieldset, Portal, Tabs, createListCollection } from "@ark-ui/react"

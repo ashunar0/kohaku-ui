@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  Icon, Input, RadioGroup, Popover, Progress, Select, Switch, Tabs, Tooltip, createListCollection,
+  Icon, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Tooltip, createListCollection,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
 
@@ -48,7 +48,15 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Progress — Track / Range は隠れている</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Pagination — ページ番号の並びは隠れている</h2>
+      <div style={{ display: "grid", gap: "1rem" }}>
+        <Pagination count={200} pageSize={10} defaultPage={1} />
+        <Pagination count={200} pageSize={10} defaultPage={10} showEdges />
+        <Pagination count={200} pageSize={10} defaultPage={20} />
+        <Pagination count={50} pageSize={10} type="link" getPageUrl={({ page }) => `#page=${page}`} />
+      </div>
+
+      <h2 style={h2}>Progress — Track / Range は隠れている</h2>
       <div style={{ display: "grid", gap: "1.25rem", maxWidth: "28rem" }}>
         <Progress label="アップロード中" showValue defaultValue={40} />
         <Progress label="完了" showValue defaultValue={100} />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Checkbox, Collapsible, Dialog, Field, Popover, Progress, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Collapsible, Dialog, Field, Pagination, Popover, Progress, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -10,6 +10,14 @@ const plans = createListCollection({
     { label: "Enterprise", value: "enterprise" },
   ],
 })
+// Ark の既定は英語なので、Vue では自分で渡す（React は @kohaku/react が持っている）
+const paginationJa = {
+  rootLabel: "ページ送り",
+  prevTriggerLabel: "前のページ",
+  nextTriggerLabel: "次のページ",
+  itemLabel: ({ page, totalPages }: { page: number; totalPages: number }) =>
+    `${totalPages > 1 && page === totalPages ? "最後のページ、" : ""}${page} ページ目`,
+}
 const h2 = {
   fontSize: ".75rem", textTransform: "uppercase", letterSpacing: ".08em",
   color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem",
@@ -23,8 +31,21 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- Pagination -->
+    <h2 :style="{ ...h2, marginTop: 0 }">Pagination（Ark）</h2>
+    <Pagination.Root :count="200" :page-size="10" :default-page="10" :translations="paginationJa">
+      <Pagination.PrevTrigger />
+      <Pagination.Context v-slot="api">
+        <template v-for="(page, i) in api.pages" :key="i">
+          <Pagination.Item v-if="page.type === 'page'" v-bind="page">{{ page.value }}</Pagination.Item>
+          <Pagination.Ellipsis v-else :index="i" />
+        </template>
+      </Pagination.Context>
+      <Pagination.NextTrigger />
+    </Pagination.Root>
+
     <!-- Progress: Ark は Track の名前を値（"40%"）にするので、Label に結び付ける -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Progress（Ark）</h2>
+    <h2 :style="h2">Progress（Ark）</h2>
     <div style="display: grid; gap: 1.25rem; max-width: 28rem">
       <Progress.Root :default-value="40" :ids="{ label: 'upload-label' }">
         <Progress.Label>アップロード中</Progress.Label>

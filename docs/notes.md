@@ -604,7 +604,8 @@ dark も 1 つの定義で済む。
 | chevron-down | ✅ select。`▾` という**文字**の直打ちをやめた |
 | info / circle-x / triangle-alert / circle-check | ✅ Alert の variant ごと |
 | × | ⬜ dialog に閉じるボタンを作るときに足す。今は使う場所が無い（YAGNI） |
-| ‹ › / eye / star / grip | ⬜ pagination / password-input / rating / 並べ替えを作るとき |
+| ‹ › / « » | ✅ pagination の前後・最初最後のボタン |
+| eye / star / grip | ⬜ password-input / rating / 並べ替えを作るとき |
 
 React と Vue の両方で `m6 9 6 6 6-6` が出ることを実測した。
 **CSS 1 枚で FW を問わず同じ図形が出る**ことの裏付けにもなっている。
@@ -1205,3 +1206,22 @@ Tabs〜Collapsible で「React / Vue で一致」と書いたが、止めたつ�
 5175 番で React の playground が動いており、Vue を測れていなかった（ページのタイトルで気づいた）。
 サーバーを止めて本物の Vue で 5 つとも測り直し、動作・見た目の値が一致することを確認した。
 再発しないよう、playground の dev に `--strictPort` を付けた（番号が埋まっていたらずれずに止まる）。
+
+## 2026-10-31 Pagination
+
+項目は ghost の Button、現在のページは solid の Button と同じ塗り。36px の正方形（Button の sm と同じ段）で、
+桁が増えたら横に伸びる。端の前後ボタンは消さずに薄くする。消すと押す位置がずれるため。
+
+矢印は前後ボタンが空のときに CSS が描く（`--kh-glyph-chevron-*`）。省略の「…」も空のときに
+`content: "…" / ""` で描き、読み上げからは外す。どちらも Vue で何も書かずに出る。
+
+### ラベルを日本語にする（`@kohaku/react`）
+
+Ark の既定は "next page" / "page 3" のような英語で、読み上げがそのまま英語になる。ラッパーで
+`translations` の既定を日本語にした。Ark を直接使う場合（Vue）は自分で渡す（playground/vue に書き方がある）。
+Progress の aria-labelledby と同じく、Vue 版の書き味レイヤーを考えるときの材料。
+
+### `type="link"` は `<a>` にする
+
+Ark は `type="link"` でも既定で `<button>` に href を付けるだけなので、ラッパーで `asChild` の `<a>` にした。
+端のボタンは href が外れ、フォーカスも当たらなくなる（実測）。

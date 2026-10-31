@@ -1,0 +1,108 @@
+@layer kohaku {
+  /* Ark の pagination。root / item / ellipsis / first-trigger / prev-trigger /
+     next-trigger / last-trigger。root は <nav>、それ以外は <button>（type="link" なら <a>）。
+     現在のページは item に data-selected と aria-current="page" */
+
+  [data-scope="pagination"][data-part="root"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kh-pagination-gap, var(--kh-space-1));
+  }
+
+  [data-scope="pagination"]:is(
+    [data-part="item"], [data-part="ellipsis"],
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  ) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 正方形が基本。桁が増えたら横に伸びる */
+    min-width: var(--kh-pagination-size, 2.25rem);
+    height: var(--kh-pagination-size, 2.25rem);
+    padding-inline: var(--kh-space-2);
+    font-size: var(--kh-pagination-font-size, var(--kh-text-sm));
+    font-weight: 500;
+    line-height: var(--kh-leading-none);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--kh-color-fg-muted);
+  }
+
+  /* 押せるもの。ghost の Button と同じ振る舞い */
+  [data-scope="pagination"]:is(
+    [data-part="item"],
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  ) {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--kh-radius);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      color var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="pagination"]:is(
+    [data-part="item"],
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  ):hover:not([data-disabled], [data-selected]) {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="pagination"]:is(
+    [data-part="item"],
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  ):focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  /* 現在のページ。solid の Button と同じ塗り */
+  [data-scope="pagination"][data-part="item"][data-selected] {
+    background: var(--kh-color-accent);
+    color: var(--kh-color-accent-fg);
+    cursor: default;
+  }
+
+  /* 端にいるときの前後ボタン。消さずに薄くする（位置がずれないように） */
+  [data-scope="pagination"][data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* 省略。Ark は空の要素を出すので、空なら CSS が「…」を描く。読み上げはしない */
+  [data-scope="pagination"][data-part="ellipsis"]:empty::before {
+    content: "…" / "";
+  }
+
+  /* ---- 矢印 -------------------------------------------------------------
+     空なら kohaku が描く。<svg> や文字を入れれば :empty が外れて差し替わる */
+  [data-scope="pagination"]:is(
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  ):empty::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: currentColor;
+    -webkit-mask: var(--kh-pagination-glyph) center / contain no-repeat;
+            mask: var(--kh-pagination-glyph) center / contain no-repeat;
+  }
+  [data-scope="pagination"][data-part="first-trigger"] { --kh-pagination-glyph: var(--kh-glyph-chevrons-left); }
+  [data-scope="pagination"][data-part="prev-trigger"]  { --kh-pagination-glyph: var(--kh-glyph-chevron-left); }
+  [data-scope="pagination"][data-part="next-trigger"]  { --kh-pagination-glyph: var(--kh-glyph-chevron-right); }
+  [data-scope="pagination"][data-part="last-trigger"]  { --kh-pagination-glyph: var(--kh-glyph-chevrons-right); }
+
+  /* 右から左に書く言語では矢印を裏返す */
+  [data-scope="pagination"][dir="rtl"]:is(
+    [data-part="first-trigger"], [data-part="prev-trigger"],
+    [data-part="next-trigger"], [data-part="last-trigger"]
+  )::before {
+    transform: scaleX(-1);
+  }
+}
