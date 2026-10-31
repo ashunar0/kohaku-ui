@@ -1,0 +1,22 @@
+/* reset 抜きの入口。既存プロダクトに後から入れるとき用（アプリ全体の見た目を変えない）。
+   部品は box-sizing と文字組みを自分で持つので、既存の reset の上でも崩れない */
+@layer kohaku.reset, kohaku;
+
+@import "./tokens.css";
+@import "./components/base.css";
+@import "./components/icon.css";
+@import "./components/button.css";
+@import "./components/card.css";
+@import "./components/field.css";
+@import "./components/input.css";
+@import "./components/textarea.css";
+@import "./components/fieldset.css";
+@import "./components/group.css";
+@import "./components/affix.css";
+@import "./components/checkbox.css";
+@import "./components/switch.css";
+@import "./components/radio-group.css";
+@import "./components/badge.css";
+@import "./components/alert.css";
+@import "./components/dialog.css";
+@import "./components/select.css";

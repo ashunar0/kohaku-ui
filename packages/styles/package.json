@@ -8,6 +8,7 @@
   ],
   "exports": {
     ".": "./src/index.css",
+    "./components": "./src/components.css",
     "./tokens": "./src/tokens.css",
     "./reset": "./src/reset.css",
     "./tailwind": "./src/tailwind.css"

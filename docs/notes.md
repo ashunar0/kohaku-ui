@@ -1024,3 +1024,53 @@ DADS・Ubie・GOV.UK が 3 つの入力欄。セレクト 3 つ（freee）は DA
   インクの中心は入力欄の数字と sm −0.13 / md 0.00 / lg 0.00px
 - 単位は前の欄に寄せる。欄 → 単位は 8px、単位 → 次の欄は 16px（Ubie と同じ考え方）
 - 文字の大きさは Group の size（`--kh-field-font-size`）に従う
+
+## 2026-10-31 レイヤーと reset — 既存プロダクトに後から入れる
+
+会社の既存 Vue（自前 reset + グローバル SCSS）と、Tailwind ありの新規 React の両方に
+入れる前提で見直した。どれも「新しい CSS を既存のページに後から入れる」ときに起きる問題で、
+kohaku 特有ではない。
+
+### `utilities` をレイヤー宣言から外した
+
+層の並びは**最初に名前が出た順**で決まる。Tailwind v4 は先頭で
+`@layer theme, base, components, utilities;` を宣言するので、その後に kohaku を読むと
+`utilities` は登録済みで、kohaku はその後ろに並ぶ。結果、kohaku が utility に勝って
+`class="h-12"` が効かなかった（実測 40px、期待 48px）。
+
+他人の層の名前を kohaku が宣言しても、並びは読み込み順に負けるので意味がない。外して、
+Tailwind と併用するときは利用側が `@import "@kohaku/styles" layer(components)` で
+読み込む形にした（実測 48px）。
+
+### 既存のグローバル CSS は層に閉じ込めてもらう
+
+レイヤーの外の CSS は全レイヤーに勝つ。「利用側が必ず勝つ」の裏返しで、既存アプリの
+`.legacy button { height: 20px }` が kohaku の Button を壊した（実測 20px・角丸 0）。
+既存 CSS を `@layer legacy` に入れて kohaku より手前に並べれば壊れない（実測 40px）。
+dart-sass なら `@include meta.load-css()` を `@layer` で包むだけで済む。
+
+### 部品は reset に頼らない（`components/base.css`）
+
+既存プロダクトに kohaku の reset を入れると、kohaku と関係ない画面まで行間（1.75）や
+フォントが変わる。だから既存側では reset を入れない。そのとき部品が崩れないよう、
+部品が reset から受け取っていたもの（box-sizing、文字組み）を部品自身に持たせた。
+
+- 全部 `:where()` で詳細度 0。各部品の CSS が必ず勝つ
+- 内側の部品は `font: inherit` などを明示する。button / input はブラウザ既定で継承が切れ、
+  既存 CSS の `* { font-family }` は継承より強いため
+- 起点の部品（kohaku の部品の中にいないもの）で kohaku の文字組みを始める。
+  Portal で body 直下に飛んだ部品もここに当たる
+- **文字色は持たない。** 地の色と同じくページ側の責任。持たせると、周りの文字色を
+  受け継いでいた部品（Checkbox のラベルなど）が黒くなった
+
+意地悪な既存 CSS（`* { font-family: serif; box-sizing: content-box }`、
+`button, input { font-size: 13px }`）の下でも、部品の値は reset ありと全部一致した。
+base.css が無いと Button と Input が 4px 膨らみ、Input は明朝になる。
+
+副作用で、Alert の字送りが 0.32px → 0.28px になった。`0.02em` を body（16px）で計算した
+値を受け継いでいたのが、Alert 自身の 14px で計算されるようになったため。こちらが正しい。
+
+既存プロダクト用に reset 抜きの入口 `@kohaku/styles/components` を足した。既存の reset を
+消して kohaku の reset に替えればいい、とはならない。既存の reset（Meyer 系：余白 0・リストの点を消す）と
+kohaku の reset（行間・フォント）はやることが違い、古い画面の scoped CSS は既存の reset を前提にしている。
+入れ替えは画面単位で進むので、その間は既存の reset のまま部品だけ入れる。全部終わったら切り替える。

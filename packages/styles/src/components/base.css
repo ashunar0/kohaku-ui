@@ -1,0 +1,40 @@
+/* ==========================================================================
+   部品の土台 — reset を読まなくても部品が崩れないための最低限
+
+   既存プロダクトに後から入れるときは reset.css を読まない（アプリ全体の見た目が
+   変わるため）。それでも部品が壊れないように、部品が reset に頼っていたものを
+   ここで部品自身に持たせる。
+
+   全部 :where() で詳細度 0。各部品の CSS が必ず勝つ。
+   ========================================================================== */
+
+@layer kohaku {
+  :where([data-kh], [data-scope]),
+  :where([data-kh], [data-scope])::before,
+  :where([data-kh], [data-scope])::after {
+    box-sizing: border-box;
+  }
+
+  /* 内側の部品は親から受け継ぐ。本来は継承されるものだが、
+     - button / input などはブラウザ既定のフォントで継承が切れる
+     - 既存 CSS の `* { font-family: … }` は継承より強い
+     ので明示する */
+  :where([data-kh], [data-scope]) {
+    font: inherit;
+    font-feature-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  /* 起点の部品（kohaku の部品の中にいないもの）で kohaku の文字組みを始める。
+     Portal で <body> 直下に飛んだ部品もここに当たる。
+     文字色は持たない（地の色と同じくページ側の責任。周りの文字色を受け継ぐ） */
+  :where([data-kh], [data-scope]):where(:not([data-kh] *, [data-scope] *)) {
+    font-family: var(--kh-font-sans);
+    font-feature-settings: var(--kh-font-feature);
+    line-height: var(--kh-leading-normal);
+    letter-spacing: var(--kh-tracking-normal);
+    line-break: strict;
+    overflow-wrap: anywhere;
+  }
+}

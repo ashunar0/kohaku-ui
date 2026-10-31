@@ -29,10 +29,50 @@ Ark UI が出す DOM は React / Vue / Solid / Svelte のどれでも同じな�
 ## 使い方
 
 ```css
-@import "tailwindcss";
 @import "@kohaku/styles";
-@import "@kohaku/styles/tailwind";  /* トークンを Tailwind のテーマに流す */
 ```
+
+レイヤーの外に書いた CSS（Vue の `<style scoped>`、CSS Modules など）は、詳細度に関係なく
+kohaku に勝つ。
+
+### Tailwind v4 と使う
+
+```css
+@import "tailwindcss";
+@import "@kohaku/styles" layer(components);  /* Tailwind の components 層に入れる */
+@import "@kohaku/styles/tailwind";           /* トークンを Tailwind のテーマに流す */
+```
+
+`layer(components)` を付けないと、kohaku が Tailwind の utilities 層より後ろに並び、
+`class="h-12"` が効かなくなる。Tailwind v3 は `@layer` を出力時に消すので対象外。
+
+### 既存プロダクトに入れる
+
+`@kohaku/styles/components` は reset 抜きの入口。kohaku の reset は行間やフォントを
+アプリ全体に効かせるので、既存の画面が残っているうちは入れない（全部入れ替え終わったら
+既存の reset を消して `@kohaku/styles` に切り替える）。
+
+既存のグローバル CSS は kohaku より手前の層に閉じ込める。レイヤーの外に置いたままだと、
+`button { }` のような要素セレクタが kohaku の部品を上書きしてしまう。
+
+```scss
+@use "sass:meta";
+@layer legacy, kohaku;
+
+@layer legacy {
+  @include meta.load-css("./global");  // 今までのグローバル SCSS（reset 含む）
+}
+```
+
+```ts
+// main.ts — main.scss を先に読んで層の順番を決めておく
+import "./main.scss"
+import "@kohaku/styles/components"
+```
+
+部品は box-sizing と文字組みを自分で持っているので、既存の reset の上でも崩れない。
+
+### React
 
 ```tsx
 import { Button, Dialog } from "@kohaku/react"

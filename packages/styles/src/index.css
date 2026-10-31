@@ -1,21 +1,7 @@
-/* レイヤー順の宣言。kohaku より後ろ = 利用側の CSS / Tailwind が必ず勝つ */
-@layer kohaku.reset, kohaku, utilities;
+/* レイヤー順の宣言。レイヤーの外に書いた利用側の CSS は必ず kohaku に勝つ。
+   Tailwind v4 と併用するときは `@import "@kohaku/styles" layer(components);` で
+   Tailwind の components 層に入れる（utilities が勝つ）。README 参照 */
+@layer kohaku.reset, kohaku;
 
-@import "./tokens.css";
+@import "./components.css";
 @import "./reset.css";
-@import "./components/icon.css";
-@import "./components/button.css";
-@import "./components/card.css";
-@import "./components/field.css";
-@import "./components/input.css";
-@import "./components/textarea.css";
-@import "./components/fieldset.css";
-@import "./components/group.css";
-@import "./components/affix.css";
-@import "./components/checkbox.css";
-@import "./components/switch.css";
-@import "./components/radio-group.css";
-@import "./components/badge.css";
-@import "./components/alert.css";
-@import "./components/dialog.css";
-@import "./components/select.css";
