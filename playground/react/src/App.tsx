@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  Icon, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Toaster, Tooltip,
+  FileUpload, Icon, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -51,7 +51,14 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Toast — Toaster が中身を組み立てる</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>File Upload — 一覧と却下理由は隠れている</h2>
+      <div style={{ display: "grid", gap: "1.5rem", maxWidth: "28rem" }}>
+        <FileUpload label="添付ファイル" maxFiles={3} maxFileSize={1024 * 1024} />
+        <FileUpload label="画像だけ" accept="image/*" />
+        <FileUpload label="無効" disabled />
+      </div>
+
+      <h2 style={h2}>Toast — Toaster が中身を組み立てる</h2>
       <Toaster toaster={toaster} />
       <div style={{ display: "flex", flexWrap: "wrap", gap: ".5rem" }}>
         <Button variant="outline" size="sm" onClick={() => toaster.create({ title: "下書きを保存しました" })}>info（既定）</Button>

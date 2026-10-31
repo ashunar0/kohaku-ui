@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Checkbox, Collapsible, Dialog, Field, Pagination, Popover, Progress, Toast, Toaster, createToaster, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
+import { Checkbox, Collapsible, Dialog, Field, FileUpload, Pagination, Popover, Progress, Toast, Toaster, createToaster, Select, Tabs, Tooltip, createListCollection } from "@ark-ui/vue"
 import { ref } from "vue"
 
 const invalid = ref(false)
@@ -18,6 +18,11 @@ const paginationJa = {
   itemLabel: ({ page, totalPages }: { page: number; totalPages: number }) =>
     `${totalPages > 1 && page === totalPages ? "最後のページ、" : ""}${page} ページ目`,
 }
+const fileUploadJa = {
+  dropzone: "ファイルのドロップ領域",
+  itemPreview: (file: File) => `${file.name} のプレビュー`,
+  deleteFile: (file: File) => `${file.name} を削除`,
+}
 const toaster = createToaster({ placement: "bottom-end", overlap: true })
 const h2 = {
   fontSize: ".75rem", textTransform: "uppercase", letterSpacing: ".08em",
@@ -32,8 +37,39 @@ const h2 = {
       React と同じ CSS・同じ DOM になるかを検証する場所
     </p>
 
+    <!-- File Upload: 名前は既定が英語なので translations を渡す -->
+    <h2 :style="{ ...h2, marginTop: 0 }">File Upload（Ark）</h2>
+    <div style="max-width: 28rem">
+      <FileUpload.Root :max-files="3" :max-file-size="1024 * 1024" :translations="fileUploadJa">
+        <FileUpload.Label>添付ファイル</FileUpload.Label>
+        <!-- 中のボタンと入れ子にしないよう、領域はドロップを受けるだけにする -->
+        <FileUpload.Dropzone disable-click role="group">
+          <span>ここにファイルをドロップ</span>
+          <FileUpload.Trigger>ファイルを選択</FileUpload.Trigger>
+        </FileUpload.Dropzone>
+        <FileUpload.HiddenInput />
+        <FileUpload.Context v-slot="api">
+          <FileUpload.ItemGroup>
+            <FileUpload.Item v-for="file in api.acceptedFiles" :key="file.name" :file="file">
+              <FileUpload.ItemPreview type="image/*"><FileUpload.ItemPreviewImage /></FileUpload.ItemPreview>
+              <FileUpload.ItemName />
+              <FileUpload.ItemSizeText />
+              <FileUpload.ItemDeleteTrigger />
+            </FileUpload.Item>
+          </FileUpload.ItemGroup>
+          <FileUpload.ItemGroup type="rejected">
+            <FileUpload.Item v-for="r in api.rejectedFiles" :key="r.file.name" :file="r.file">
+              <FileUpload.ItemName />
+              <FileUpload.ItemSizeText>{{ r.errors.join(", ") }}</FileUpload.ItemSizeText>
+              <FileUpload.ItemDeleteTrigger />
+            </FileUpload.Item>
+          </FileUpload.ItemGroup>
+        </FileUpload.Context>
+      </FileUpload.Root>
+    </div>
+
     <!-- Toast: 名前は既定が英語なので aria-label で上書きする -->
-    <h2 :style="{ ...h2, marginTop: 0 }">Toast（Ark）</h2>
+    <h2 :style="h2">Toast（Ark）</h2>
     <Toaster :toaster="toaster" aria-label="通知" v-slot="t">
       <Toast.Root>
         <Toast.Title v-if="t.title">{{ t.title }}</Toast.Title>

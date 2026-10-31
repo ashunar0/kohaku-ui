@@ -39,6 +39,7 @@ tree-view
 | progress | ✅ 対応済み・実機検証済み（線形だけ。React / Vue で動作一致） |
 | pagination | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | toast | ✅ 対応済み・実機検証済み（React / Vue で寸法・動作一致） |
+| file-upload | ✅ 対応済み・実機検証済み（React / Vue で寸法一致。ドロップは合成イベントで再現できず未実測） |
 | menu | ⬜ 未対応 |
 | それ以外 | ⬜ 未対応 |
 
@@ -73,6 +74,10 @@ pagination  : root / item / ellipsis / first-trigger / prev-trigger / next-trigg
 toast       : group / root / title / description / action-trigger / close-trigger
          （icon の part は無い。種類は root の data-type。位置は Ark が --x / --y などで入れる。
            group と閉じるボタンの名前は既定が英語なので aria-label で上書きする）
+file-upload : root / label / dropzone / trigger / item-group / item / item-preview /
+              item-preview-image / item-name / item-size-text / item-delete-trigger / clear-trigger
+         （item-group は ul、item は li。却下されたものは data-type="rejected"（ItemGroup の type から継ぐ）。
+           dropzone は既定で role="button" になり中の trigger と入れ子になる → disableClick と role="group"）
 collapsible : root / trigger / content / indicator
          （content に Ark が --height を入れる。閉じると hidden）
 popover     : trigger / anchor / positioner / content / title / description

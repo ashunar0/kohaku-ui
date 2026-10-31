@@ -1245,3 +1245,32 @@ loading は線の輪を回す（Spinner を作るときに揃える）。
 Ark の既定は group が "Notifications, bottom-end (altKey+T)"、閉じるボタンが "Dismiss notification"。
 `<Toaster>` で「通知」「通知を閉じる」にした。閉じるボタンの名前は toast ごとの `translations` でしか
 変えられないので、要素に `aria-label` を直接渡して上書きしている。Vue は自分で書く（playground/vue）。
+
+## 2026-10-31 File Upload
+
+ドロップ領域は破線の枠（「ここに置ける」の慣習）。ファイルを持ってきている間は実線の濃い線と薄い地にして
+「受け取れる」を示す。label は Field の label と同じ見た目（field.css に並べた）。一覧の各行は
+Toast と同じ列の作り方（無い列で文がずれないよう margin で間を作る）、削除ボタンも Toast の閉じると同じ。
+
+### ドロップ領域をボタンにしない（`@kohaku/react`）
+
+Ark の dropzone は既定で `role="button"` と `tabindex="0"` を持ち、領域ごとクリックで選択画面が開く。
+その中に「ファイルを選択」ボタンを置くと**操作できる要素の入れ子**になり、読み上げで中のボタンに
+届かない（axe の nested-interactive）。dropzone に `disableClick` と `role="group"` を付け、
+ドロップを受けるだけにした。選ぶ操作はボタンに一本化。押せる見た目（cursor・hover）は
+`[role="button"]` のときだけ付くので、Ark の既定のまま使う人にも矛盾しない。
+
+### 却下されたファイルを黙って消さない
+
+`maxFileSize` や `accept` に合わないファイルは Ark の `rejectedFiles` に入るだけで、何もしないと
+消えたように見える。一覧に invalid の色で並べ、理由を日本語で出す（`formatError` で差し替えられる）。
+
+### 大きさの表記
+
+Ark は Intl の単位で "70 byte" / "2.05 kB" と出す。`ja-JP` でも "byte" のまま。Windows の
+エクスプローラーと同じ 1024 区切り・KB / MB にした（業務の利用者がいちばん見慣れている）。
+
+### 未実測
+
+ドロップそのものは合成イベントでファイルが入らず（ブラウザが合成ファイルからエントリを読めない）、
+実機で手で試していない。ドラッグ中の見た目（`data-dragging`）は実測した。

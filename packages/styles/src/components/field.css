@@ -11,6 +11,7 @@
 
   /* ---- label ------------------------------------------------------------ */
   [data-scope="field"][data-part="label"],
+  [data-scope="file-upload"][data-part="label"],
   [data-kh="label"] {
     display: flex;
     align-items: center;

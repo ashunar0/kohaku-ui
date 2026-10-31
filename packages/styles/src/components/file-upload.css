@@ -1,0 +1,203 @@
+@layer kohaku {
+  /* Ark の file-upload。root / label / dropzone / trigger / item-group / item / item-preview /
+     item-preview-image / item-name / item-size-text / item-delete-trigger / clear-trigger
+     label の見た目は Field の label と同じ（field.css に並べてある）。
+     item-group は <ul>、item は <li>。却下されたファイルは item に data-type="rejected" */
+
+  [data-scope="file-upload"][data-part="root"] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- ドロップ領域 ------------------------------------------------------ */
+  [data-scope="file-upload"][data-part="dropzone"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--kh-space-3);
+    min-height: var(--kh-file-upload-dropzone-height, 8rem);
+    padding: var(--kh-space-6) var(--kh-space-4);
+    font-size: var(--kh-text-sm);
+    line-height: var(--kh-leading-ui);
+    text-align: center;
+    color: var(--kh-color-fg-muted);
+    background: var(--kh-color-surface);
+    /* 破線は「ここに置ける」の慣習。Input と同じ太さ・色 */
+    border: 1px dashed var(--kh-color-border-strong);
+    border-radius: var(--kh-radius);
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      border-color var(--kh-duration-fast) var(--kh-ease);
+  }
+  /* 領域ごとクリックで開くとき（Ark の既定）だけ、押せる見た目にする。
+     @kohaku/react は disableClick で開かない group にしている（入れ子のボタンを避けるため） */
+  [data-scope="file-upload"][data-part="dropzone"][role="button"] { cursor: pointer; }
+  [data-scope="file-upload"][data-part="dropzone"][role="button"]:hover:not([data-disabled], [data-readonly]) {
+    background: var(--kh-color-surface-muted);
+  }
+  /* ファイルを上に持ってきている間。線を実線の濃い色にして「受け取れる」を示す */
+  [data-scope="file-upload"][data-part="dropzone"][data-dragging] {
+    border-style: solid;
+    border-color: var(--kh-color-fg);
+    background: var(--kh-color-surface-muted);
+  }
+  [data-scope="file-upload"][data-part="dropzone"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+  [data-scope="file-upload"][data-part="dropzone"][data-invalid] {
+    border-color: var(--kh-color-invalid);
+  }
+  [data-scope="file-upload"]:is([data-part="dropzone"], [data-part="trigger"])[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* 「ファイルを選択」。outline の Button の sm と同じ */
+  [data-scope="file-upload"][data-part="trigger"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--kh-space-2);
+    height: 2.25rem;
+    padding-inline: var(--kh-space-3);
+    font-size: var(--kh-text-sm);
+    font-weight: 500;
+    line-height: var(--kh-leading-none);
+    white-space: nowrap;
+    color: var(--kh-color-fg);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border-strong);
+    border-radius: var(--kh-radius);
+    cursor: pointer;
+    transition: background-color var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="file-upload"][data-part="trigger"]:hover:not([data-disabled]) {
+    background: var(--kh-color-surface-muted);
+  }
+  [data-scope="file-upload"][data-part="trigger"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  /* ---- 選んだファイルの一覧 ------------------------------------------------ */
+  [data-scope="file-upload"][data-part="item-group"] {
+    display: grid;
+    gap: var(--kh-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  [data-scope="file-upload"][data-part="item-group"]:not(:empty) {
+    margin-top: var(--kh-space-3);
+  }
+
+  /* 列は preview / 名前と大きさ / 削除。無い列は幅 0 になるので、間は margin で作る（toast.css 参照） */
+  [data-scope="file-upload"][data-part="item"] {
+    display: grid;
+    grid-template-columns: [preview] auto [text] minmax(0, 1fr) [action] auto;
+    align-items: center;
+    padding: var(--kh-space-2) var(--kh-space-3);
+    font-size: var(--kh-text-sm);
+    line-height: var(--kh-leading-ui);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius);
+  }
+
+  [data-scope="file-upload"][data-part="item-preview"] {
+    grid-column: preview;
+    grid-row: 1 / span 2;
+    display: flex;
+    margin-inline-end: var(--kh-space-3);
+  }
+  [data-scope="file-upload"][data-part="item-preview-image"] {
+    width: var(--kh-file-upload-preview-size, 2.5rem);
+    height: var(--kh-file-upload-preview-size, 2.5rem);
+    object-fit: cover;
+    border-radius: var(--kh-radius-sm);
+  }
+
+  [data-scope="file-upload"][data-part="item-name"] {
+    grid-column: text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+    color: var(--kh-color-fg);
+  }
+  [data-scope="file-upload"][data-part="item-size-text"] {
+    grid-column: text;
+    font-variant-numeric: tabular-nums;
+    color: var(--kh-color-fg-muted);
+  }
+
+  /* 却下されたファイル。枠と大きさの欄（エラー文言を入れる）を invalid の色にする */
+  [data-scope="file-upload"][data-part="item"][data-type="rejected"] {
+    border-color: var(--kh-color-invalid);
+  }
+  [data-scope="file-upload"][data-part="item-size-text"][data-type="rejected"] {
+    color: var(--kh-color-invalid);
+  }
+
+  /* 削除ボタン。Toast の閉じるボタンと同じ。空なら × を描く */
+  [data-scope="file-upload"][data-part="item-delete-trigger"] {
+    grid-column: action;
+    grid-row: 1 / span 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-inline-start: var(--kh-space-2);
+    margin-inline-end: calc(var(--kh-space-1) * -1);
+    padding: 0;
+    color: var(--kh-color-fg-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      color var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="file-upload"][data-part="item-delete-trigger"]:hover:not(:disabled) {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="file-upload"][data-part="item-delete-trigger"]:empty::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-x) center / contain no-repeat;
+            mask: var(--kh-glyph-x) center / contain no-repeat;
+  }
+  [data-scope="file-upload"]:is([data-part="item-delete-trigger"], [data-part="clear-trigger"]):focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  /* 「すべて削除」。ghost の Button の xs と同じ。ファイルが無いと Ark が hidden を付ける */
+  [data-scope="file-upload"][data-part="clear-trigger"]:not([hidden]) {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    height: 1.75rem;
+    margin-top: var(--kh-space-2);
+    padding-inline: var(--kh-space-2);
+    font-size: var(--kh-text-sm);
+    font-weight: 500;
+    line-height: var(--kh-leading-none);
+    color: var(--kh-color-fg-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--kh-radius);
+    cursor: pointer;
+  }
+  [data-scope="file-upload"][data-part="clear-trigger"]:hover {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+}

@@ -30,6 +30,7 @@ export { Popover, type PopoverContentProps } from "./popover"
 export { Progress, type ProgressProps } from "./progress"
 export { Pagination, type PaginationProps } from "./pagination"
 export { Toast, Toaster, type ToasterProps } from "./toast"
+export { FileUpload, type FileUploadProps } from "./file-upload"
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
 export { Collapsible, Field, Fieldset, Portal, Tabs, createListCollection, createToaster } from "@ark-ui/react"
