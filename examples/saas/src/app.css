@@ -255,13 +255,8 @@
   display: flex;
   align-items: center;
   gap: var(--kh-space-4);
-  /* 選択すると size="sm" のボタン（36px）が出る。高さを先に取っておかないと
-     表が 4px 押し下げられる */
-  min-height: 2.25rem;
+  /* 選んだときだけ出す。出た分だけ表は下にずれる（普段の空きを詰めるほうを選んだ） */
   font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-muted);
-}
-.bulk[data-active] {
   color: var(--kh-color-fg);
 }
 

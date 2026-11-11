@@ -185,15 +185,15 @@ export function ExpensesPage() {
       </div>
 
       {/* ── 一括操作 ──────────────────────────────────────── */}
-      <div className="bulk" data-active={picked.length > 0 ? "" : undefined}>
-        <span>{picked.length > 0 ? `${picked.length} 件を選択中` : `${rows.length} 件`}</span>
-        {picked.length > 0 ? (
+      {picked.length > 0 ? (
+        <div className="bulk">
+          <span>{picked.length} 件を選択中</span>
           <Actions align="start">
             <Button size="sm" onClick={() => approve(picked)}>まとめて承認</Button>
             <Button size="sm" variant="outline" onClick={() => setPicked([])}>選択を解除</Button>
           </Actions>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {/* ── 一覧 ──────────────────────────────────────────── */}
       <Table>
