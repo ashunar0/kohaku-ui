@@ -1,17 +1,16 @@
-import { Toaster, createToaster } from "@kohaku/react"
+import { Icon, Toaster, createToaster } from "@kohaku/react"
 import { BarChart3, Receipt, Settings, Users } from "lucide-react"
-import { khIcon } from "./icon"
 import { ExpensesPage } from "./ExpensesPage"
 
 export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
 
 /* アイコンは利用側の責任。kohaku は図形を持たないので Lucide をそのまま使い、
-   サイズ規約だけ data-kh="icon" で受ける（./icon.ts） */
+   サイズ規約は <Icon asChild> で与える */
 const nav = [
-  { label: "経費申請", Icon: Receipt, current: true },
-  { label: "メンバー", Icon: Users },
-  { label: "レポート", Icon: BarChart3 },
-  { label: "設定", Icon: Settings },
+  { label: "経費申請", Glyph: Receipt, current: true },
+  { label: "メンバー", Glyph: Users },
+  { label: "レポート", Glyph: BarChart3 },
+  { label: "設定", Glyph: Settings },
 ]
 
 export function App() {
@@ -20,15 +19,15 @@ export function App() {
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}
       <aside className="app-side">
         <div className="app-brand">
-          <Receipt {...khIcon} />
+          <Icon asChild><Receipt /></Icon>
           <span>Keihi</span>
         </div>
         <nav aria-label="メインメニュー">
           <ul className="app-nav">
-            {nav.map(({ label, Icon, current }) => (
+            {nav.map(({ label, Glyph, current }) => (
               <li key={label}>
                 <a href="#" aria-current={current ? "page" : undefined}>
-                  <Icon {...khIcon} />
+                  <Icon asChild><Glyph /></Icon>
                   <span>{label}</span>
                 </a>
               </li>

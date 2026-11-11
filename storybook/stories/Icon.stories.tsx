@@ -43,3 +43,39 @@ export const InheritsColor: Story = {
     </div>
   ),
 }
+
+/**
+ * `asChild` は、既に `<svg>` を出すコンポーネント（Lucide などのアイコンライブラリ）を
+ * そのまま通すためのもの。kohaku は `data-kh="icon"` / `data-size` / `aria-hidden` を
+ * 足すだけで、幾何（viewBox・stroke）には触らない。入れ子の svg は作らない。
+ *
+ * Lucide の既定は kohaku が期待する幾何と同じなので、そのまま収まる。
+ *
+ *     <Icon asChild><Search /></Icon>
+ */
+export const AsChild: Story = {
+  render: () => (
+    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <Icon size="xl">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </Icon>
+      <Icon size="xl" asChild>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+      </Icon>
+      <span style={{ fontSize: ".75rem", color: "var(--kh-color-fg-faint)" }}>
+        左: children にパス / 右: asChild
+      </span>
+    </div>
+  ),
+}

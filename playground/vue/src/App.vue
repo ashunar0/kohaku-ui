@@ -72,6 +72,19 @@ const h2 = {
       <Button variant="outline">文字のボタンと並べる</Button>
     </div>
 
+    <h2 :style="h2">Icon — asChild なら外の svg に data-* を足すだけ</h2>
+    <div :style="{ display: 'flex', alignItems: 'center', gap: '1rem' }">
+      <!-- 1. パスを slot に書く（kohaku が svg を出す） -->
+      <Icon size="xl"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+      <!-- 2. asChild。Lucide のように自分で svg を出すものはこちら -->
+      <Icon size="xl" as-child>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+        </svg>
+      </Icon>
+      <span :style="{ fontSize: '.75rem', color: 'var(--kh-color-fg-faint)' }">children / asChild（同じ大きさになる）</span>
+    </div>
+
     <h2 :style="h2">File Upload — 一覧と却下理由は隠れている</h2>
     <div style="display: grid; gap: 1.5rem; max-width: 28rem">
       <FileUpload label="添付ファイル" :max-files="3" :max-file-size="1024 * 1024" />

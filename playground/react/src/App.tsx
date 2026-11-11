@@ -70,6 +70,19 @@ export function App() {
         <Button variant="outline">文字のボタンと並べる</Button>
       </div>
 
+      <h2 style={h2}>Icon — asChild なら外の svg に data-* を足すだけ</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        {/* 1. パスを children に書く（kohaku が svg を出す） */}
+        <Icon size="xl"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+        {/* 2. asChild。Lucide のように自分で svg を出すものはこちら */}
+        <Icon size="xl" asChild>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+          </svg>
+        </Icon>
+        <span style={{ fontSize: ".75rem", color: "var(--kh-color-fg-faint)" }}>children / asChild（同じ大きさになる）</span>
+      </div>
+
       <h2 style={h2}>File Upload — 一覧と却下理由は隠れている</h2>
       <div style={{ display: "grid", gap: "1.5rem", maxWidth: "28rem" }}>
         <FileUpload label="添付ファイル" maxFiles={3} maxFileSize={1024 * 1024} />

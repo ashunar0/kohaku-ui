@@ -1405,11 +1405,18 @@ Button の角丸が `var(--kh-radius)` の直書きだったのを `var(--kh-but
 examples/saas のアイコンを手書きの path から **lucide-react** に替えた。kohaku はアイコンを
 同梱しない方針なので、利用側がライブラリを入れるのが正しい形（手書きは絵柄が崩れる）。
 
-ただし `@kohaku/react` の `Icon` は **children にパスを書く前提**なので、Lucide の
-コンポーネント（自分で `<svg>` を出す）をそのまま通せない。例では `data-kh="icon"` を
-手で付けるだけの小さな定数（`src/icon.ts`）を書いた。Lucide の既定の幾何は kohaku が
-期待するものと同じ（viewBox 24 / stroke-width 2 / round / currentColor）なので、
-CSS のサイズ指定が svg の width/height 属性に勝ってそのまま収まる。
+ただし `@kohaku/react` の `Icon` は **children にパスを書く前提**だったので、Lucide の
+コンポーネント（自分で `<svg>` を出す）をそのまま通せなかった。最初は `data-kh="icon"` を
+手で付ける定数を書いたが、Lucide 前提なら毎回これなので **`Icon` に `asChild` を足した**。
 
-→ `Icon` に `asChild` 相当（外から渡した svg に data-* を付ける）があると、利用側が
-この定数を書かなくて済む。15 個すべて viewBox 24 / stroke 2px / aria-hidden で一致を実測。
+```tsx
+<Icon asChild><Search /></Icon>
+```
+
+kohaku は `data-kh="icon"` / `data-size` / `aria-hidden` を足すだけで、幾何（viewBox・stroke）には
+触らない。Lucide の既定は kohaku が期待するものと同じ（viewBox 24 / stroke-width 2 / round /
+currentColor）なので、CSS のサイズ指定が svg の width/height 属性に勝ってそのまま収まる。
+入れ子の `<svg>` は作らない（実測 0 個）。
+
+Vue 側は vnode を複製する必要があるので、`Icon.vue` だけ template ではなく **render 関数**で
+書き直した（`cloneVNode`）。slot の最初の要素ノードを拾う。React / Vue で属性も大きさも一致を実測。
