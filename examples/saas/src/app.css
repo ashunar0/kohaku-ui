@@ -158,6 +158,13 @@
   /* 左右は詰める。項目側が内側 padding を持つので、ここで二重に空けると
      文字の左端が中に入りすぎる */
   padding: var(--kh-space-5) var(--kh-space-2);
+  /* 画面の高さに固定し、本文だけスクロールさせる。
+     grid の既定（stretch）だと本文の長さに合わせて伸びてしまう */
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100dvh;
+  overflow-y: auto;
   background: var(--kh-color-surface);
   border-right: 1px solid var(--kh-color-border);
 }
