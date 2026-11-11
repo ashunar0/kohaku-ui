@@ -215,7 +215,8 @@
   padding-top: var(--kh-space-4);
   line-height: var(--kh-leading-tight);
   border-top: 1px solid var(--kh-color-border);
-  font-size: var(--kh-text-sm);
+  /* 名前はナビと同じ段。役職（small）だけ sm に落とす */
+  font-size: var(--kh-text-md);
 }
 .app-me span:last-child {
   display: flex;
