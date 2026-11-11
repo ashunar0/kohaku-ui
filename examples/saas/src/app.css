@@ -87,7 +87,9 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--kh-text-sm);
+}
+.table {
+  font-size: var(--kh-text-md);
 }
 .table th,
 .table td {
@@ -190,7 +192,8 @@
   height: 2rem;
   line-height: var(--kh-leading-none);
   border-radius: var(--kh-radius-md);
-  font-size: var(--kh-text-sm);
+  /* 13px（text-sm）だと和文では小さい。ナビは本文と同じ段を使う */
+  font-size: var(--kh-text-md);
   color: var(--kh-color-fg-body);
 }
 .app-nav a:hover {
@@ -217,6 +220,12 @@
 .app-me span:last-child {
   display: flex;
   flex-direction: column;
+}
+/* <small> の既定は 0.83 倍。13px にかかると 10.83px になって読めない。
+   補助文字は段を明示する */
+.app-me small,
+.who small {
+  font-size: var(--kh-text-sm);
 }
 .app-me small {
   color: var(--kh-color-fg-muted);

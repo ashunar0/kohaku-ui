@@ -37,7 +37,8 @@
      既定値は fallback で持つ（要素に宣言しない）。こうすると祖先側で
      --kh-button-height などを指定して一括で寄せられる。
      data-size を明示したものは要素側の宣言が勝つ。                        */
-  /* Field と同じ段（36 / 40 / 44）。既定は md = 40px。
+  /* 文字の大きさは高さで決める（freee と同じ）: 28px → 12 / 36・40px → 14 / 44px → 16。
+     Field と同じ段（36 / 40 / 44）。既定は md = 40px。
      日本のデザインシステムはボタンを大きめに取る傾向があり、SmartHR は
      モバイルで「小」を使わないよう明記している（操作ミスが増えるため）。 */
   [data-kh="button"][data-size="xs"] {
@@ -48,7 +49,7 @@
   [data-kh="button"][data-size="sm"] {
     --kh-button-height: 2.25rem;
     --kh-button-padding-x: var(--kh-space-3);
-    --kh-button-font-size: var(--kh-text-sm);
+    --kh-button-font-size: var(--kh-text-md);
   }
   [data-kh="button"][data-size="md"] {
     --kh-button-height: 2.5rem;

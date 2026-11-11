@@ -14,8 +14,8 @@
   [data-kh="group"][data-size="sm"] {
     --kh-field-height:    2.25rem;
     --kh-field-padding-x: var(--kh-space-3);
-    --kh-field-font-size: var(--kh-text-sm);
-    --kh-button-font-size: var(--kh-text-sm);
+    --kh-field-font-size: var(--kh-text-md);
+    --kh-button-font-size: var(--kh-text-md);
   }
   [data-kh="group"][data-size="lg"] {
     --kh-field-height:    2.75rem;

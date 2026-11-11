@@ -111,7 +111,7 @@
     margin-inline-start: var(--kh-space-3);
     height: 2rem;
     padding-inline: var(--kh-space-3);
-    font-size: var(--kh-text-sm);
+    font-size: var(--kh-text-md);
     font-weight: 500;
     line-height: var(--kh-leading-none);
     white-space: nowrap;

@@ -45,10 +45,12 @@
   --kh-space-6: 1.5rem;
   --kh-space-8: 2rem;
 
-  --kh-text-sm: 0.8125rem;
+  /* 12 / 14 / 16 / 24（freee Vibes と同じ形。実測は docs/notes.md）。
+     下は 2px 刻み、ページ見出しだけ 1.5 倍に跳ぶ。13 は持たない（14 と見分けがつかない） */
+  --kh-text-sm: 0.75rem;
   --kh-text-md: 0.875rem;
   --kh-text-lg: 1rem;
-  --kh-text-xl: 1.125rem;
+  --kh-text-xl: 1.5rem;
 
   --kh-radius-sm: 0.25rem;
   --kh-radius-md: 0.5rem;
