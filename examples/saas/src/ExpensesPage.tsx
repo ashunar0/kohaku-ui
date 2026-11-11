@@ -8,7 +8,6 @@ import {
   Dialog,
   Field,
   Group,
-  Icon,
   IconButton,
   Input,
   Pagination,
@@ -16,6 +15,8 @@ import {
   Tooltip,
   createListCollection,
 } from "@kohaku/react"
+import { Download, Eye, Search } from "lucide-react"
+import { khIcon } from "./icon"
 import { toaster } from "./App"
 import { expenses, formatDate, statusLabel, yen, type Expense, type Status } from "./data"
 
@@ -98,7 +99,7 @@ export function ExpensesPage() {
         </div>
         <Actions>
           <Button variant="outline">
-            <Icon size="sm"><path d="M12 3v12M7 10l5 5 5-5M4 21h16" /></Icon>
+            <Download {...khIcon} />
             CSV で書き出す
           </Button>
           <Button>新しい申請</Button>
@@ -132,7 +133,7 @@ export function ExpensesPage() {
             aria-label="申請を探す"
           />
           <IconButton variant="outline" label="探す">
-            <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+            <Search {...khIcon} />
           </IconButton>
         </Group>
 
@@ -243,7 +244,7 @@ export function ExpensesPage() {
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                       <IconButton size="sm" variant="ghost" onClick={() => setOpen(e)} label={`${e.id} の内容を見る`}>
-                        <Icon><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></Icon>
+                        <Eye {...khIcon} />
                       </IconButton>
                     </Tooltip.Trigger>
                     <Tooltip.Content>内容を見る</Tooltip.Content>

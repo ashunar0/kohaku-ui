@@ -1399,3 +1399,17 @@ DOM も一致。
 円にしたくなることはあるが、それは既定ではなく個別調整なので L3 に逃がす。
 Button の角丸が `var(--kh-radius)` の直書きだったのを `var(--kh-button-radius, var(--kh-radius))`
 に変えた。Tailwind 併用なら `rounded-full` でも勝つ（利用側は layer の外）。
+
+### 利用側が Lucide を使うときの穴（2026-11-11）
+
+examples/saas のアイコンを手書きの path から **lucide-react** に替えた。kohaku はアイコンを
+同梱しない方針なので、利用側がライブラリを入れるのが正しい形（手書きは絵柄が崩れる）。
+
+ただし `@kohaku/react` の `Icon` は **children にパスを書く前提**なので、Lucide の
+コンポーネント（自分で `<svg>` を出す）をそのまま通せない。例では `data-kh="icon"` を
+手で付けるだけの小さな定数（`src/icon.ts`）を書いた。Lucide の既定の幾何は kohaku が
+期待するものと同じ（viewBox 24 / stroke-width 2 / round / currentColor）なので、
+CSS のサイズ指定が svg の width/height 属性に勝ってそのまま収まる。
+
+→ `Icon` に `asChild` 相当（外から渡した svg に data-* を付ける）があると、利用側が
+この定数を書かなくて済む。15 個すべて viewBox 24 / stroke 2px / aria-hidden で一致を実測。
