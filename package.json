@@ -7,6 +7,7 @@
     "storybook:build": "pnpm --filter kohaku-storybook build",
     "dev:react": "pnpm --filter kohaku-playground-react dev",
     "dev:vue": "pnpm --filter kohaku-playground-vue dev",
+    "dev:saas": "pnpm --filter kohaku-example-saas dev",
     "lint:tokens": "node scripts/lint-tokens.mjs",
     "ink": "node scripts/ink.mjs"
   }

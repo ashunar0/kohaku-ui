@@ -1,0 +1,23 @@
+{
+  "name": "kohaku-example-saas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5176 --strictPort",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@ark-ui/react": "^5.39.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "@kohaku/react": "workspace:*",
+    "@kohaku/styles": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  }
+}

@@ -1,0 +1,346 @@
+/*
+ * 利用側（アプリ）の CSS。kohaku の L2 トークンだけを使って書く。
+ *
+ * ここに書いたもののうち「A. kohaku に無いので自分で書いた分」が、
+ * roadmap に部品を足す根拠（= 実際に要った証拠）になる。
+ * 逆に「B. この画面固有」は kohaku に入れてはいけないもの。
+ */
+
+/* ===========================================================
+   A. kohaku に無いので自分で書いた分
+   =========================================================== */
+
+/* sr-only — 読み上げ専用。CSS だけで済む。毎回これを書き写している */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link — 下線と色だけ。kohaku に --kh-color-link はあるのに部品が無い */
+.app a,
+.crumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.crumbs a {
+  color: var(--kh-color-fg-muted);
+}
+.crumbs a:hover {
+  color: var(--kh-color-fg);
+  text-decoration: underline;
+}
+.row-link {
+  font: inherit;
+  color: var(--kh-color-link);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.row-link:hover {
+  color: var(--kh-color-link-hover);
+  text-decoration: underline;
+}
+.row-link:focus-visible {
+  outline: 2px solid var(--kh-color-ring);
+  outline-offset: 2px;
+  border-radius: var(--kh-radius-sm);
+}
+
+/* Breadcrumbs — 区切りの「/」まで含めて毎回書くことになる */
+.crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.crumbs li + li::before {
+  content: "/";
+  margin-right: var(--kh-space-2);
+  color: var(--kh-color-fg-faint);
+}
+.crumbs [aria-current="page"] {
+  color: var(--kh-color-fg);
+}
+
+/* Table — 行の高さ・罫線・数値の右揃え・見出しの扱い。
+   どのプロダクトでも同じものを書くことになる（並べ替えは TanStack に任せる前提でも、
+   この見た目の部分は毎回同じ） */
+.table-wrap {
+  background: var(--kh-color-surface);
+  border: 1px solid var(--kh-color-border);
+  border-radius: var(--kh-radius-lg);
+  overflow: hidden;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--kh-text-sm);
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--kh-space-3) var(--kh-space-4);
+  border-bottom: 1px solid var(--kh-color-border);
+}
+.table thead th {
+  background: var(--kh-color-surface-muted);
+  font-size: var(--kh-text-sm);
+  font-weight: 500;
+  color: var(--kh-color-fg-muted);
+  white-space: nowrap;
+}
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.table tbody tr:hover {
+  background: var(--kh-color-surface-muted);
+}
+.table tbody tr[data-picked] {
+  background: var(--kh-color-accent-subtle);
+}
+.col-amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.table th.col-amount {
+  text-align: right;
+}
+.col-pick {
+  width: 1px;
+  padding-right: 0;
+}
+.col-id {
+  white-space: nowrap;
+}
+.col-ops {
+  width: 1px;
+  white-space: nowrap;
+}
+.col-ops {
+  display: table-cell;
+}
+.table .col-ops > * + * {
+  margin-left: var(--kh-space-2);
+}
+
+/* Stack / Cluster — 縦積み・横並び。これが無いので下の B 側が全部 flex 直書きになる */
+
+/* ===========================================================
+   B. この画面固有のレイアウト（kohaku に入れるものではない）
+   =========================================================== */
+
+.app {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  min-height: 100vh;
+  background: var(--kh-color-canvas);
+}
+
+.app-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kh-space-6);
+  padding: var(--kh-space-5) var(--kh-space-4);
+  background: var(--kh-color-surface);
+  border-right: 1px solid var(--kh-color-border);
+}
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-2);
+  font-weight: 600;
+  letter-spacing: var(--kh-tracking-tight);
+}
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.app-nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-3);
+  padding: var(--kh-space-2) var(--kh-space-3);
+  border-radius: var(--kh-radius-md);
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-body);
+}
+.app-nav a:hover {
+  background: var(--kh-color-surface-muted);
+}
+.app-nav a[aria-current="page"] {
+  background: var(--kh-color-accent-subtle);
+  color: var(--kh-color-fg);
+  font-weight: 500;
+}
+.app-nav a span {
+  flex: 1;
+}
+.app-me {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-3);
+  margin-top: auto;
+  padding-top: var(--kh-space-4);
+  border-top: 1px solid var(--kh-color-border);
+  font-size: var(--kh-text-sm);
+}
+.app-me span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.app-me small {
+  color: var(--kh-color-fg-muted);
+}
+.app-avatar {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--kh-radius-full);
+  background: var(--kh-color-neutral-soft);
+  font-size: var(--kh-text-sm);
+}
+
+.app-main {
+  padding: var(--kh-space-6) var(--kh-space-8);
+  min-width: 0;
+}
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kh-space-5);
+  max-width: 76rem;
+}
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--kh-space-4);
+}
+.page-head h1 {
+  margin: 0;
+  font-size: var(--kh-text-xl);
+  letter-spacing: var(--kh-tracking-tight);
+}
+.page-head p {
+  margin: var(--kh-space-1) 0 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--kh-space-4);
+}
+.stat-label {
+  margin: 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.stat-value {
+  margin: var(--kh-space-1) 0 0;
+  font-size: var(--kh-text-xl);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--kh-tracking-tight);
+}
+.stat-hint {
+  margin: var(--kh-space-1) 0 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-faint);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--kh-space-3);
+}
+.filters > :first-child {
+  flex: 1 1 20rem;
+}
+.range-sep {
+  color: var(--kh-color-fg-muted);
+  font-size: var(--kh-text-sm);
+}
+
+.bulk {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-4);
+  min-height: 2rem;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.bulk[data-active] {
+  color: var(--kh-color-fg);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+}
+.who small {
+  color: var(--kh-color-fg-muted);
+}
+
+.empty {
+  margin: 0;
+  padding: var(--kh-space-8);
+  text-align: center;
+  color: var(--kh-color-fg-muted);
+  font-size: var(--kh-text-sm);
+}
+
+.page-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kh-space-4);
+}
+.count {
+  margin: 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--kh-space-3) var(--kh-space-5);
+  margin: 0;
+  padding: var(--kh-space-4) 0;
+  border-block: 1px solid var(--kh-color-border);
+  font-size: var(--kh-text-sm);
+}
+.detail-wide {
+  grid-column: 1 / -1;
+}
+.detail dt {
+  color: var(--kh-color-fg-muted);
+  margin-bottom: 2px;
+}
+.detail dd {
+  margin: 0;
+}
+.detail-amount {
+  font-variant-numeric: tabular-nums;
+}
