@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  FileUpload, Icon, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Toaster, Tooltip,
+  FileUpload, Icon, IconButton, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -51,7 +51,26 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>File Upload — 一覧と却下理由は隠れている</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>IconButton — 正方形になる。label は必須</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: ".5rem", flexWrap: "wrap" }}>
+        {(["solid", "outline", "ghost", "danger"] as const).map((v) => (
+          <IconButton key={v} variant={v} label={`${v} の操作`}>
+            <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+          </IconButton>
+        ))}
+        {(["xs", "sm", "md", "lg"] as const).map((sz) => (
+          <IconButton key={sz} variant="outline" size={sz} label={`${sz} の操作`}>
+            <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+          </IconButton>
+        ))}
+        {/* 円にしたいときは L3 で 1 行 */}
+        <IconButton variant="ghost" label="円形" style={{ "--kh-button-radius": "var(--kh-radius-full)" } as never}>
+          <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+        </IconButton>
+        <Button variant="outline">文字のボタンと並べる</Button>
+      </div>
+
+      <h2 style={h2}>File Upload — 一覧と却下理由は隠れている</h2>
       <div style={{ display: "grid", gap: "1.5rem", maxWidth: "28rem" }}>
         <FileUpload label="添付ファイル" maxFiles={3} maxFileSize={1024 * 1024} />
         <FileUpload label="画像だけ" accept="image/*" />

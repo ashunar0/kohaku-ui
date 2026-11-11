@@ -22,7 +22,7 @@
     white-space: nowrap;
 
     border: 1px solid var(--kh-button-border);
-    border-radius: var(--kh-radius);
+    border-radius: var(--kh-button-radius, var(--kh-radius));
     background: var(--kh-button-bg);
     color: var(--kh-button-fg);
     cursor: pointer;
@@ -59,6 +59,28 @@
     --kh-button-height: 2.75rem;
     --kh-button-padding-x: var(--kh-space-5);
     --kh-button-font-size: var(--kh-text-lg);
+  }
+
+  /* ---- アイコンだけのボタン --------------------------------------------
+     正方形にする。幅は高さと同じ変数を見るので、祖先で --kh-button-height を
+     寄せれば正方形のまま付いてくる。
+     Primer / Forma 36 / Gestalt は別部品を立てているが、kohaku は本体が CSS なので
+     data-icon 1 つで variant・size・state をそのまま継承する。
+     名前（aria-label）は書き味レイヤーの IconButton が label 必須で強制する。 */
+  [data-kh="button"][data-icon] {
+    width: var(--kh-button-height, 2.5rem);
+    padding-inline: 0;
+    /* Group の中で入力欄に押されて潰れる（実測 40 → 36.92px）。
+       正方形が崩れたら意味が無いので縮まないようにする */
+    flex: none;
+  }
+  /* 円にしたいとき（ツールバーの ghost など）は L3 で 1 行。
+     Tailwind 併用なら rounded-full でも勝つ（利用側は layer の外） */
+
+  /* 和文の ink box に合わせる補正は、隣に文字が無いなら要らない。
+     入れたままだと絵柄が 0.5px 上にずれる（文字なしで実測） */
+  [data-kh="button"][data-icon] [data-kh="icon"] {
+    margin-bottom: 0;
   }
 
   /* ---- variant --------------------------------------------------------- */

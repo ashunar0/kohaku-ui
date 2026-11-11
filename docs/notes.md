@@ -1363,3 +1363,39 @@ Table / Badge / Select / Dialog / Pagination / Checkbox / Toast / Tooltip が一
 - **Stack / Cluster** が無いので、B 側のほぼ全部が flex の直書きになった
 - **Date Picker** が無いので期間の絞り込みが素の `input[type=date]` のまま。業務 SaaS の一覧に
   期間指定はほぼ必ず要るので、roadmap の順番としては妥当
+
+## 2026-11-11 IconButton を足した（examples/saas で出た最初の穴）
+
+経費画面の検索ボタンを虫眼鏡にしたら、**48×40 の横長**になった。アイコン 1 個でも横 padding が
+文字用のままだったため。業務 SaaS の一覧には必ずアイコンだけのボタンが出るので kohaku が持つ。
+
+### 別部品ではなく `data-icon` にした
+
+Primer / Forma 36 / Gestalt は IconButton を別部品として立てている。kohaku は本体が CSS なので、
+別部品にすると variant / size / state の CSS が二重になる。`[data-kh="button"][data-icon]` に
+すると全部そのまま継承する。幅は `var(--kh-button-height)` を見るので、祖先で高さを寄せても
+正方形のまま付いてくる（Group の `--kh-button-height` が効く）。
+
+書き味レイヤー（React / Vue 両方）には `IconButton` を置き、**`label` を必須の prop にした**。
+アイコンしか無いと読み上げが「ボタン」になる。SmartHR も「ラベルテキストがないため、アイコンには
+必ず代替テキストを含めてください」と書いている。文言は Primer の言う通り**操作の名前**で、
+絵柄の名前ではない（虫眼鏡なら「拡大」ではなく「探す」）。Tooltip は添えられるが既定では出さない
+（Primer は既定で出す。kohaku は選択肢を奪わない方針なので利用側が決める）。
+
+### 実測で 2 つ直した
+
+- **和文の光学補正が邪魔だった。** Button の中のアイコンには `--kh-icon-optical-shift`
+  （和文の ink box に合わせる 0.072em）が入っているが、隣に文字が無いと **0.5px 上にずれるだけ**。
+  `[data-icon]` では `margin-bottom: 0` にした。補正は「文字と並ぶとき」の話だったと分かった
+- **Group の中で潰れた。** 40px のはずが **36.92px**（入力欄に押されていた）。`flex: none` を足した。
+  正方形が崩れたら意味が無い
+
+直したあと、React / Vue の両 playground で 9 要素すべて 28/36/40/44 の正方形・dx dy = 0 を実測。
+DOM も一致。
+
+### 角丸は Button と同じにし、L3 で逃がす
+
+並べて比べて（8px / 円形 / 6px）、**既定は 8px**（文字のボタンと揃う）。ツールバーの ghost などで
+円にしたくなることはあるが、それは既定ではなく個別調整なので L3 に逃がす。
+Button の角丸が `var(--kh-radius)` の直書きだったのを `var(--kh-button-radius, var(--kh-radius))`
+に変えた。Tailwind 併用なら `rounded-full` でも勝つ（利用側は layer の外）。

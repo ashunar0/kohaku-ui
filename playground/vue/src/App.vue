@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Button, IconButton, Card, Checkbox, Collapsible, Dialog, Field, FileUpload, Group,
   Icon, Input, Pagination, Popover, Progress, RadioGroup, Select, Switch, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/vue"
@@ -57,7 +57,22 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">File Upload — 一覧と却下理由は隠れている</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">IconButton — 正方形になる。label は必須</h2>
+    <div :style="{ display: 'flex', alignItems: 'center', gap: '.5rem', flexWrap: 'wrap' }">
+      <IconButton v-for="v in (['solid', 'outline', 'ghost', 'danger'] as const)" :key="v" :variant="v" :label="`${v} の操作`">
+        <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+      </IconButton>
+      <IconButton v-for="sz in (['xs', 'sm', 'md', 'lg'] as const)" :key="sz" variant="outline" :size="sz" :label="`${sz} の操作`">
+        <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+      </IconButton>
+      <!-- 円にしたいときは L3 で 1 行 -->
+      <IconButton variant="ghost" label="円形" :style="{ '--kh-button-radius': 'var(--kh-radius-full)' }">
+        <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+      </IconButton>
+      <Button variant="outline">文字のボタンと並べる</Button>
+    </div>
+
+    <h2 :style="h2">File Upload — 一覧と却下理由は隠れている</h2>
     <div style="display: grid; gap: 1.5rem; max-width: 28rem">
       <FileUpload label="添付ファイル" :max-files="3" :max-file-size="1024 * 1024" />
       <FileUpload label="画像だけ" accept="image/*" />

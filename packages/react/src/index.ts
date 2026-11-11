@@ -10,7 +10,7 @@
  */
 
 // kohaku 独自プリミティブ
-export { Button, type ButtonProps } from "./button"
+export { Button, IconButton, type ButtonProps, type IconButtonProps } from "./button"
 export { Badge, type BadgeProps } from "./badge"
 export { Card, type CardRootProps } from "./card"
 export { Alert, type AlertProps, type AlertVariant } from "./alert"

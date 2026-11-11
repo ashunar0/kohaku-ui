@@ -9,6 +9,7 @@ import {
   Field,
   Group,
   Icon,
+  IconButton,
   Input,
   Pagination,
   Select,
@@ -130,7 +131,9 @@ export function ExpensesPage() {
             onChange={(e) => { setQ(e.currentTarget.value); setPage(1) }}
             aria-label="申請を探す"
           />
-          <Button variant="outline">探す</Button>
+          <IconButton variant="outline" label="探す">
+            <Icon><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></Icon>
+          </IconButton>
         </Group>
 
         <Select.Root
@@ -239,9 +242,9 @@ export function ExpensesPage() {
                 <td className="col-ops">
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
-                      <Button size="sm" variant="ghost" onClick={() => setOpen(e)} aria-label={`${e.id} の内容を見る`}>
-                        <Icon size="sm"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></Icon>
-                      </Button>
+                      <IconButton size="sm" variant="ghost" onClick={() => setOpen(e)} label={`${e.id} の内容を見る`}>
+                        <Icon><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></Icon>
+                      </IconButton>
                     </Tooltip.Trigger>
                     <Tooltip.Content>内容を見る</Tooltip.Content>
                   </Tooltip.Root>

@@ -1,4 +1,4 @@
-import { Badge, Icon, Toaster, createToaster } from "@kohaku/react"
+import { Icon, Toaster, createToaster } from "@kohaku/react"
 import { ExpensesPage } from "./ExpensesPage"
 
 export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
@@ -13,7 +13,7 @@ const icons = {
 }
 
 const nav = [
-  { label: "経費申請", icon: icons.receipt, badge: "5", current: true },
+  { label: "経費申請", icon: icons.receipt, current: true },
   { label: "メンバー", icon: icons.users },
   { label: "レポート", icon: icons.chart },
   { label: "設定", icon: icons.gear },
@@ -35,7 +35,6 @@ export function App() {
                 <a href="#" aria-current={item.current ? "page" : undefined}>
                   <Icon size="sm">{item.icon}</Icon>
                   <span>{item.label}</span>
-                  {item.badge ? <Badge variant="neutral">{item.badge}</Badge> : null}
                 </a>
               </li>
             ))}
