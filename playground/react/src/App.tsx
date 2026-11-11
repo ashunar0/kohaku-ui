@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  FileUpload, Icon, IconButton, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
+  FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -79,6 +79,17 @@ export function App() {
           </tr>
         </tbody>
       </Table>
+
+      <h2 style={h2}>Menu — Portal / Positioner は隠れている</h2>
+      <Menu.Root positioning={{ placement: "bottom-start" }}>
+        <Menu.Trigger asChild><Button variant="outline">操作</Button></Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item value="view">内容を見る</Menu.Item>
+          <Menu.Item value="copy">複製する</Menu.Item>
+          <Menu.Separator />
+          <Menu.Item value="archive" disabled>アーカイブ</Menu.Item>
+        </Menu.Content>
+      </Menu.Root>
 
       <h2 style={h2}>IconButton — 正方形になる。label は必須</h2>
       <div style={{ display: "flex", alignItems: "center", gap: ".5rem", flexWrap: "wrap" }}>

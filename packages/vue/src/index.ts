@@ -12,7 +12,7 @@
  */
 import {
   Checkbox as ArkCheckbox, Dialog as ArkDialog, FileUpload as ArkFileUpload,
-  Pagination as ArkPagination, Popover as ArkPopover, Progress as ArkProgress,
+  Menu as ArkMenu, Pagination as ArkPagination, Popover as ArkPopover, Progress as ArkProgress,
   RadioGroup as ArkRadioGroup, Select as ArkSelect, Switch as ArkSwitch,
   Toast as ArkToast, Tooltip as ArkTooltip,
 } from "@ark-ui/vue"
@@ -21,6 +21,7 @@ import CheckboxVue from "./Checkbox.vue"
 import DialogContent from "./DialogContent.vue"
 import FileUploadVue from "./FileUpload.vue"
 import PaginationVue from "./Pagination.vue"
+import MenuContent from "./MenuContent.vue"
 import PopoverContent from "./PopoverContent.vue"
 import ProgressVue from "./Progress.vue"
 import RadioGroupVue from "./RadioGroup.vue"
@@ -72,6 +73,7 @@ export const Tooltip = {
   RawRoot: ArkTooltip.Root, RawContent: ArkTooltip.Content,
 }
 export const Popover = { ...ArkPopover, Content: PopoverContent, RawContent: ArkPopover.Content }
+export const Menu = { ...ArkMenu, Content: MenuContent, RawContent: ArkMenu.Content }
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,
   Track: ArkProgress.Track, Range: ArkProgress.Range, Context: ArkProgress.Context,

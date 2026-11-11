@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
   Actions, Alert, Badge, Button, IconButton, Card, Checkbox, Collapsible, Dialog, Field, FileUpload, Group,
-  Icon, Input, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
+  Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/vue"
 import { ref, watchEffect } from "vue"
@@ -85,6 +85,17 @@ const h2 = {
         </tr>
       </tbody>
     </Table>
+
+    <h2 :style="h2">Menu — Teleport / Positioner は隠れている</h2>
+    <Menu.Root :positioning="{ placement: 'bottom-start' }">
+      <Menu.Trigger as-child><Button variant="outline">操作</Button></Menu.Trigger>
+      <Menu.Content>
+        <Menu.Item value="view">内容を見る</Menu.Item>
+        <Menu.Item value="copy">複製する</Menu.Item>
+        <Menu.Separator />
+        <Menu.Item value="archive" disabled>アーカイブ</Menu.Item>
+      </Menu.Content>
+    </Menu.Root>
 
     <h2 :style="h2">IconButton — 正方形になる。label は必須</h2>
     <div :style="{ display: 'flex', alignItems: 'center', gap: '.5rem', flexWrap: 'wrap' }">

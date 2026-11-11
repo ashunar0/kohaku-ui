@@ -1,0 +1,46 @@
+@layer kohaku {
+  /* Ark UI Menu の anatomy
+     trigger / positioner / content / item / item-group / item-group-label / separator ...
+     面と項目は Select のドロップダウンにそろえる（並んで出てくる部品なので） */
+
+  [data-scope="menu"][data-part="content"] {
+    z-index: var(--kh-z-popover, 60);
+    min-width: 10rem;
+    padding: var(--kh-space-1);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius);
+    box-shadow: var(--kh-shadow-lg);
+  }
+  [data-scope="menu"][data-part="content"]:focus-visible { outline: none; }
+
+  [data-scope="menu"][data-part="item"] {
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-2);
+    padding: var(--kh-space-2) var(--kh-space-3);
+    font-size: var(--kh-text-md);
+    color: var(--kh-color-fg-body);
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+    user-select: none;
+  }
+  [data-scope="menu"][data-part="item"][data-highlighted] {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="menu"][data-part="item"][data-disabled] {
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  [data-scope="menu"][data-part="separator"] {
+    height: 1px;
+    margin: var(--kh-space-1) calc(var(--kh-space-1) * -1);
+    background: var(--kh-color-border);
+    border: 0;
+  }
+
+  [data-scope="menu"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="menu"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+}

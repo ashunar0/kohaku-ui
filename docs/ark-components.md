@@ -40,7 +40,7 @@ tree-view
 | pagination | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | toast | ✅ 対応済み・実機検証済み（React / Vue で寸法・動作一致） |
 | file-upload | ✅ 対応済み・実機検証済み（React / Vue で寸法一致。ドロップは手で確認） |
-| menu | ⬜ 未対応 |
+| menu | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | それ以外 | ⬜ 未対応 |
 
 これから作る順番は [`roadmap.md`](roadmap.md)。

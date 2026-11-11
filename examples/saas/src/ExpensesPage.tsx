@@ -11,6 +11,7 @@ import {
   Icon,
   IconButton,
   Input,
+  Menu,
   Pagination,
   Select,
   Table,
@@ -240,10 +241,30 @@ export function ExpensesPage() {
                 <td data-numeric>{yen(e.amount)}</td>
                 <td data-fit><Badge variant={statusVariant[e.status]}>{statusLabel[e.status]}</Badge></td>
                 <td data-fit>
-                  {/* 操作メニューはまだ無い。いまは詳細を開く */}
-                  <IconButton size="sm" variant="ghost" onClick={() => setOpen(e)} label={`${e.id} の操作`}>
-                    <Icon asChild><Ellipsis /></Icon>
-                  </IconButton>
+                  <Menu.Root
+                    positioning={{ placement: "bottom-end" }}
+                    onSelect={(d) => {
+                      if (d.value === "view") setOpen(e)
+                      if (d.value === "approve") approve([e.id])
+                      if (d.value === "reject") toaster.create({ title: "差し戻しました", description: e.id })
+                    }}
+                  >
+                    <Menu.Trigger asChild>
+                      <IconButton size="sm" variant="ghost" label={`${e.id} の操作`}>
+                        <Icon asChild><Ellipsis /></Icon>
+                      </IconButton>
+                    </Menu.Trigger>
+                    <Menu.Content>
+                      <Menu.Item value="view">内容を見る</Menu.Item>
+                      {e.status === "pending" ? (
+                        <>
+                          <Menu.Separator />
+                          <Menu.Item value="approve">承認する</Menu.Item>
+                          <Menu.Item value="reject">差し戻す</Menu.Item>
+                        </>
+                      ) : null}
+                    </Menu.Content>
+                  </Menu.Root>
                 </td>
               </tr>
             ))}
