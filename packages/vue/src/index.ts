@@ -42,6 +42,7 @@ export { default as Group } from "./Group.vue"
 export { default as Actions } from "./Actions.vue"
 export { default as Affix } from "./Affix.vue"
 export { Card } from "./card"
+export { default as Table } from "./Table.vue"
 export { Alert, type AlertVariant } from "./alert"
 
 // Ark に組み立て規約を被せたもの。隠した部品は同じ名前空間から素のまま出す（選択肢を奪わない）

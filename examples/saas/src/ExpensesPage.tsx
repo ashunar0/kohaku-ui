@@ -13,10 +13,10 @@ import {
   Input,
   Pagination,
   Select,
-  Tooltip,
+  Table,
   createListCollection,
 } from "@kohaku/react"
-import { Download, Eye, Search } from "lucide-react"
+import { Download, Ellipsis, Search } from "lucide-react"
 import { toaster } from "./App"
 import { expenses, formatDate, statusLabel, yen, type Expense, type Status } from "./data"
 
@@ -194,31 +194,30 @@ export function ExpensesPage() {
         ) : null}
       </div>
 
-      {/* ── 一覧: Table が kohaku に無いので利用側で組む ─────────── */}
-      <div className="table-wrap">
-        <table className="table">
+      {/* ── 一覧 ──────────────────────────────────────────── */}
+      <Table>
           <thead>
             <tr>
-              <th scope="col" className="col-pick">
+              <th scope="col">
                 <Checkbox
                   checked={allPicked ? true : somePicked ? "indeterminate" : false}
                   onCheckedChange={(d) => setPicked(d.checked ? shown.map((e) => e.id) : [])}
                   aria-label="表示中のすべてを選択"
                 />
               </th>
-              <th scope="col">申請番号</th>
-              <th scope="col">申請日</th>
+              <th scope="col" data-fit>申請番号</th>
+              <th scope="col" data-fit>申請日</th>
               <th scope="col">申請者</th>
               <th scope="col">科目</th>
-              <th scope="col" className="col-amount">金額</th>
-              <th scope="col">状態</th>
-              <th scope="col" className="col-ops"><span className="sr-only">操作</span></th>
+              <th scope="col" data-numeric>金額</th>
+              <th scope="col" data-fit>状態</th>
+              <th scope="col" data-fit><span className="sr-only">操作</span></th>
             </tr>
           </thead>
           <tbody>
             {shown.map((e) => (
-              <tr key={e.id} data-picked={picked.includes(e.id) ? "" : undefined}>
-                <td className="col-pick">
+              <tr key={e.id} data-selected={picked.includes(e.id) ? "" : undefined}>
+                <td>
                   <Checkbox
                     checked={picked.includes(e.id)}
                     onCheckedChange={(d) =>
@@ -227,10 +226,10 @@ export function ExpensesPage() {
                     aria-label={`${e.id} を選択`}
                   />
                 </td>
-                <td className="col-id">
+                <td data-fit>
                   <button type="button" className="row-link" onClick={() => setOpen(e)}>{e.id}</button>
                 </td>
-                <td>{formatDate(e.date)}</td>
+                <td data-fit>{formatDate(e.date)}</td>
                 <td>
                   <span className="who">
                     <strong>{e.applicant}</strong>
@@ -238,30 +237,23 @@ export function ExpensesPage() {
                   </span>
                 </td>
                 <td>{e.category}</td>
-                <td className="col-amount">{yen(e.amount)}</td>
-                <td><Badge variant={statusVariant[e.status]}>{statusLabel[e.status]}</Badge></td>
-                <td className="col-ops">
-                  <Tooltip.Root>
-                    <Tooltip.Trigger asChild>
-                      <IconButton size="sm" variant="ghost" onClick={() => setOpen(e)} label={`${e.id} の内容を見る`}>
-                        <Icon asChild><Eye /></Icon>
-                      </IconButton>
-                    </Tooltip.Trigger>
-                    <Tooltip.Content>内容を見る</Tooltip.Content>
-                  </Tooltip.Root>
-                  {e.status === "pending" ? (
-                    <Button size="sm" variant="outline" onClick={() => approve([e.id])}>承認</Button>
-                  ) : null}
+                <td data-numeric>{yen(e.amount)}</td>
+                <td data-fit><Badge variant={statusVariant[e.status]}>{statusLabel[e.status]}</Badge></td>
+                <td data-fit>
+                  {/* 操作メニューはまだ無い。いまは詳細を開く */}
+                  <IconButton size="sm" variant="ghost" onClick={() => setOpen(e)} label={`${e.id} の操作`}>
+                    <Icon asChild><Ellipsis /></Icon>
+                  </IconButton>
                 </td>
               </tr>
             ))}
+            {shown.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="empty">条件に合う申請はありません。</td>
+              </tr>
+            ) : null}
           </tbody>
-        </table>
-
-        {shown.length === 0 ? (
-          <p className="empty">条件に合う申請はありません。</p>
-        ) : null}
-      </div>
+      </Table>
 
       <div className="page-foot">
         <p className="count">

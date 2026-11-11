@@ -1,6 +1,6 @@
 import {
   Actions, Alert, Badge, Button, Card, Checkbox, Collapsible, Dialog, Field, Group,
-  FileUpload, Icon, IconButton, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Tabs, Toaster, Tooltip,
+  FileUpload, Icon, IconButton, Input, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -51,7 +51,36 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>IconButton — 正方形になる。label は必須</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Table — 素の table を包むだけ。行は 48px にそろう</h2>
+      <Table>
+        <thead>
+          <tr>
+            <th scope="col"><Checkbox aria-label="すべて選択" /></th>
+            <th scope="col" data-fit>番号</th>
+            <th scope="col">名前</th>
+            <th scope="col" data-numeric>金額</th>
+            <th scope="col" data-fit>状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><Checkbox aria-label="EX-1042 を選択" /></td>
+            <td data-fit>EX-1042</td>
+            <td>佐藤 美咲</td>
+            <td data-numeric>¥12,800</td>
+            <td data-fit><Badge variant="warning">承認待ち</Badge></td>
+          </tr>
+          <tr data-selected="">
+            <td><Checkbox defaultChecked aria-label="EX-1041 を選択" /></td>
+            <td data-fit>EX-1041</td>
+            <td>田中 健太</td>
+            <td data-numeric>¥3,240</td>
+            <td data-fit><Badge variant="success">承認済み</Badge></td>
+          </tr>
+        </tbody>
+      </Table>
+
+      <h2 style={h2}>IconButton — 正方形になる。label は必須</h2>
       <div style={{ display: "flex", alignItems: "center", gap: ".5rem", flexWrap: "wrap" }}>
         {(["solid", "outline", "ghost", "danger"] as const).map((v) => (
           <IconButton key={v} variant={v} label={`${v} の操作`}>

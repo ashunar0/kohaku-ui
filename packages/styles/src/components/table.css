@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Table — Ark の守備範囲外（振る舞いを持たない）なので kohaku が持つ。
+   並べ替え・ページ送りなどの振る舞いは TanStack Table などに任せ、ここは見た目だけ。
+
+   中身は素の <table>。div[data-kh="table"] で包む（角丸と横スクロールのため。
+   border-collapse の表に角丸は効かない）。
+   ========================================================================== */
+
+@layer kohaku {
+  [data-kh="table"] {
+    overflow-x: auto;
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius-lg);
+    color: var(--kh-color-fg-body);
+  }
+
+  [data-kh="table"] table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--kh-text-md);
+    /* 本文の 1.75 を持ち込むと、2 段のセルで行が伸びる。1〜2 行の UI と同じ段にする */
+    line-height: var(--kh-leading-ui);
+  }
+
+  /* 行の高さは padding でなく高さで決める（td の height は min-height として効く）。
+     ボタンやチェックボックスが入っても、2 段のセルが来ても、全行がそろう */
+  [data-kh="table"] :is(th, td) {
+    height: var(--kh-table-row-height, 3rem);
+    padding: 0 var(--kh-table-cell-padding, var(--kh-space-3));
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--kh-color-border);
+  }
+
+  [data-kh="table"] thead th {
+    height: var(--kh-table-head-height, 2.5rem);
+    background: var(--kh-color-surface-muted);
+    font-size: var(--kh-text-sm);
+    font-weight: 500;
+    color: var(--kh-color-fg-muted);
+    white-space: nowrap;
+  }
+
+  [data-kh="table"] tbody tr:last-child > :is(th, td) {
+    border-bottom: 0;
+  }
+
+  [data-kh="table"] tbody tr:hover {
+    background: var(--kh-color-surface-muted);
+  }
+  [data-kh="table"] tbody tr[data-selected] {
+    background: var(--kh-color-accent-subtle);
+  }
+
+  /* 金額・件数。桁をそろえて右に寄せる */
+  [data-kh="table"] [data-numeric] {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 中身の幅まで縮める（番号・日付・状態・操作の列） */
+  [data-kh="table"] [data-fit] {
+    width: 1px;
+    white-space: nowrap;
+  }
+
+  /* 選択用のチェックボックスだけのセル。隣の列に寄せる */
+  [data-kh="table"] :is(th, td):has(> [data-scope="checkbox"][data-part="root"]:only-child) {
+    width: 1px;
+    padding-right: 0;
+  }
+}

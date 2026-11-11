@@ -75,68 +75,8 @@
   color: var(--kh-color-fg);
 }
 
-/* Table — 行の高さ・罫線・数値の右揃え・見出しの扱い。
-   どのプロダクトでも同じものを書くことになる（並べ替えは TanStack に任せる前提でも、
-   この見た目の部分は毎回同じ） */
-.table-wrap {
-  background: var(--kh-color-surface);
-  border: 1px solid var(--kh-color-border);
-  border-radius: var(--kh-radius-lg);
-  overflow: hidden;
-}
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.table {
-  font-size: var(--kh-text-md);
-}
-.table th,
-.table td {
-  text-align: left;
-  padding: var(--kh-space-3) var(--kh-space-4);
-  border-bottom: 1px solid var(--kh-color-border);
-}
-.table thead th {
-  background: var(--kh-color-surface-muted);
-  font-size: var(--kh-text-sm);
-  font-weight: 500;
-  color: var(--kh-color-fg-muted);
-  white-space: nowrap;
-}
-.table tbody tr:last-child td {
-  border-bottom: 0;
-}
-.table tbody tr:hover {
-  background: var(--kh-color-surface-muted);
-}
-.table tbody tr[data-picked] {
-  background: var(--kh-color-accent-subtle);
-}
-.col-amount {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.table th.col-amount {
-  text-align: right;
-}
-.col-pick {
-  width: 1px;
-  padding-right: 0;
-}
-.col-id {
-  white-space: nowrap;
-}
-.col-ops {
-  width: 1px;
-  white-space: nowrap;
-}
-.col-ops {
-  display: table-cell;
-}
-.table .col-ops > * + * {
-  margin-left: var(--kh-space-2);
-}
+/* Table — kohaku に入った（@kohaku/react の Table）。ここで書いていたのは
+   行の高さ・罫線・数値の右揃え・表頭の扱い */
 
 /* Stack / Cluster — 縦積み・横並び。これが無いので下の B 側が全部 flex 直書きになる */
 
@@ -333,9 +273,9 @@
   color: var(--kh-color-fg-muted);
 }
 
-.empty {
-  margin: 0;
-  padding: var(--kh-space-8);
+[data-kh="table"] .empty {
+  /* 行の高さの既定（48px）より高く取る。空の表だと分かるように */
+  height: 8rem;
   text-align: center;
   color: var(--kh-color-fg-muted);
   font-size: var(--kh-text-sm);

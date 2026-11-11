@@ -15,7 +15,6 @@
 
 | 部品 | メモ |
 |---|---|
-| Table | 振る舞い（並べ替えなど）は TanStack Table などに任せ、kohaku は見た目だけ |
 | Breadcrumbs | |
 | Link | |
 | Spinner | |
