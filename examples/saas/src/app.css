@@ -315,7 +315,9 @@
   display: flex;
   align-items: center;
   gap: var(--kh-space-4);
-  min-height: 2rem;
+  /* 選択すると size="sm" のボタン（36px）が出る。高さを先に取っておかないと
+     表が 4px 押し下げられる */
+  min-height: 2.25rem;
   font-size: var(--kh-text-sm);
   color: var(--kh-color-fg-muted);
 }

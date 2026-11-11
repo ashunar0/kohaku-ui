@@ -9,6 +9,11 @@
     display: inline-flex;
     align-items: center;
     gap: var(--kh-space-2);
+    /* 既定の baseline だと、inline-flex のベースラインが「中の印が見えているか」で変わる
+       （印が無いと箱の下端、あると印の位置）。チェックした瞬間に箱が上下に動き、
+       表のセルなど周りの行の高さまで変わる（実測: 表頭 48.5 → 45.5px）。
+       中央で揃えれば中身に左右されない */
+    vertical-align: middle;
     cursor: pointer;
   }
 
