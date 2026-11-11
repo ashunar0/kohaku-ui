@@ -25,7 +25,7 @@ export function App() {
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}
       <aside className="app-side">
         <div className="app-brand">
-          <Icon size="md">{icons.receipt}</Icon>
+          <Icon>{icons.receipt}</Icon>
           <span>Keihi</span>
         </div>
         <nav aria-label="メインメニュー">
@@ -33,7 +33,7 @@ export function App() {
             {nav.map((item) => (
               <li key={item.label}>
                 <a href="#" aria-current={item.current ? "page" : undefined}>
-                  <Icon size="sm">{item.icon}</Icon>
+                  <Icon>{item.icon}</Icon>
                   <span>{item.label}</span>
                 </a>
               </li>

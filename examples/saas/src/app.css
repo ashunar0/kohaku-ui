@@ -153,14 +153,24 @@
   display: flex;
   flex-direction: column;
   gap: var(--kh-space-6);
-  padding: var(--kh-space-5) var(--kh-space-4);
+  /* 左右は詰める。項目側が内側 padding を持つので、ここで二重に空けると
+     文字の左端が中に入りすぎる */
+  padding: var(--kh-space-5) var(--kh-space-2);
   background: var(--kh-color-surface);
   border-right: 1px solid var(--kh-color-border);
+}
+/* ブランド・ナビ・自分の 3 行は同じ内側 padding を持つ。
+   これで アイコンの左端 / 文字の左端 がそれぞれ 1 本の線に乗る */
+.app-brand,
+.app-nav a,
+.app-me {
+  padding-inline: var(--kh-space-2);
 }
 .app-brand {
   display: flex;
   align-items: center;
-  gap: var(--kh-space-2);
+  gap: var(--kh-space-3);
+  height: 2rem;
   font-weight: 600;
   letter-spacing: var(--kh-tracking-tight);
 }
@@ -176,7 +186,9 @@
   display: flex;
   align-items: center;
   gap: var(--kh-space-3);
-  padding: var(--kh-space-2) var(--kh-space-3);
+  /* 行間 1.75 が効くと 38.75px の端数になる。ナビは 1 行しか来ないので詰める */
+  height: 2rem;
+  line-height: var(--kh-leading-none);
   border-radius: var(--kh-radius-md);
   font-size: var(--kh-text-sm);
   color: var(--kh-color-fg-body);
@@ -198,6 +210,7 @@
   gap: var(--kh-space-3);
   margin-top: auto;
   padding-top: var(--kh-space-4);
+  line-height: var(--kh-leading-tight);
   border-top: 1px solid var(--kh-color-border);
   font-size: var(--kh-text-sm);
 }
