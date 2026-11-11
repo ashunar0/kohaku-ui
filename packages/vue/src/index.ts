@@ -11,13 +11,16 @@
  * kohaku が足す props 以外は、Vue の attrs のフォールスルーで Ark の部品にそのまま流れる。
  */
 import {
-  Checkbox as ArkCheckbox, Dialog as ArkDialog, FileUpload as ArkFileUpload,
+  Checkbox as ArkCheckbox, DatePicker as ArkDatePicker, Dialog as ArkDialog, FileUpload as ArkFileUpload,
   Menu as ArkMenu, Pagination as ArkPagination, Popover as ArkPopover, Progress as ArkProgress,
   RadioGroup as ArkRadioGroup, Select as ArkSelect, Switch as ArkSwitch,
   Toast as ArkToast, Tooltip as ArkTooltip,
 } from "@ark-ui/vue"
 
 import CheckboxVue from "./Checkbox.vue"
+import DatePickerVue from "./DatePicker.vue"
+import DatePickerCalendar from "./DatePickerCalendar.vue"
+import { translations as datePickerTranslations } from "./date-picker-text"
 import DialogContent from "./DialogContent.vue"
 import FileUploadVue from "./FileUpload.vue"
 import PaginationVue from "./Pagination.vue"
@@ -74,6 +77,12 @@ export const Tooltip = {
 }
 export const Popover = { ...ArkPopover, Content: PopoverContent, RawContent: ArkPopover.Content }
 export const Menu = { ...ArkMenu, Content: MenuContent, RawContent: ArkMenu.Content }
+export const DatePicker = Object.assign(DatePickerVue, {
+  Root: ArkDatePicker.Root, Label: ArkDatePicker.Label, Control: ArkDatePicker.Control,
+  Input: ArkDatePicker.Input, Trigger: ArkDatePicker.Trigger, ClearTrigger: ArkDatePicker.ClearTrigger,
+  Positioner: ArkDatePicker.Positioner, Content: ArkDatePicker.Content, Context: ArkDatePicker.Context,
+  Calendar: DatePickerCalendar, translations: datePickerTranslations,
+})
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,
   Track: ArkProgress.Track, Range: ArkProgress.Range, Context: ArkProgress.Context,
@@ -97,6 +106,6 @@ export const FileUpload = Object.assign(FileUploadVue, {
 })
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
-export { Collapsible, Field, Fieldset, Tabs, createListCollection, createToaster } from "@ark-ui/vue"
+export { Collapsible, Field, Fieldset, Tabs, createListCollection, createToaster, parseDate } from "@ark-ui/vue"
 
 export type { Size, FieldSize } from "./types"

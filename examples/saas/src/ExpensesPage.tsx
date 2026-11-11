@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Checkbox,
+  DatePicker,
   Dialog,
   Field,
   Group,
@@ -16,6 +17,7 @@ import {
   Select,
   Table,
   createListCollection,
+  parseDate,
 } from "@kohaku/react"
 import { Download, Ellipsis, Search } from "lucide-react"
 import { toaster } from "./App"
@@ -176,12 +178,11 @@ export function ExpensesPage() {
           </Select.Content>
         </Select.Root>
 
-        {/* 期間の絞り込み。Date Picker が無いので素の input[type=date] */}
-        <Group>
-          <Input type="date" defaultValue="2026-11-01" aria-label="開始日" />
-          <span className="range-sep" aria-hidden="true">〜</span>
-          <Input type="date" defaultValue="2026-11-30" aria-label="終了日" />
-        </Group>
+        <DatePicker
+          selectionMode="range"
+          defaultValue={[parseDate("2026-11-01"), parseDate("2026-11-30")]}
+          inputLabels={["期間の開始日", "期間の終了日"]}
+        />
       </div>
 
       {/* ── 一括操作 ──────────────────────────────────────── */}

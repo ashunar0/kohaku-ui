@@ -29,12 +29,13 @@ export { Select, type SelectTriggerProps, type SelectContentProps } from "./sele
 export { Tooltip, type TooltipRootProps, type TooltipContentProps } from "./tooltip"
 export { Popover, type PopoverContentProps } from "./popover"
 export { Menu, type MenuContentProps } from "./menu"
+export { DatePicker, type DatePickerProps } from "./date-picker"
 export { Progress, type ProgressProps } from "./progress"
 export { Pagination, type PaginationProps } from "./pagination"
 export { Toast, Toaster, type ToasterProps } from "./toast"
 export { FileUpload, type FileUploadProps } from "./file-upload"
 
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
-export { Collapsible, Field, Fieldset, Portal, Tabs, createListCollection, createToaster } from "@ark-ui/react"
+export { Collapsible, Field, Fieldset, Portal, Tabs, createListCollection, createToaster, parseDate } from "@ark-ui/react"
 
 export type { Size, FieldSize } from "./types"

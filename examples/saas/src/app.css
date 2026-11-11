@@ -246,10 +246,6 @@
 .filters > :first-child {
   flex: 1 1 20rem;
 }
-.range-sep {
-  color: var(--kh-color-fg-muted);
-  font-size: var(--kh-text-sm);
-}
 
 .bulk {
   display: flex;

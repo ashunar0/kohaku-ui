@@ -1,0 +1,259 @@
+@layer kohaku {
+  /* Ark UI DatePicker の anatomy（playground で実測）
+     root / label / control / input / trigger / clear-trigger /
+     positioner / content / view / view-control / prev-trigger / view-trigger / range-text / next-trigger /
+     table / table-head / table-header / table-body / table-row / table-cell / table-cell-trigger
+
+     日付のマスは角丸の正方形（Button・Select の項目とそろえる）。
+     週は日曜始まり・土日に色を付けない・前後の月は出さない（日本語の DS の多数派。docs/notes.md） */
+
+  [data-scope="date-picker"][data-part="root"] {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  [data-scope="date-picker"][data-part="label"] {
+    margin-bottom: var(--kh-space-2);
+    font-size: var(--kh-text-md);
+    font-weight: 500;
+    color: var(--kh-color-fg);
+  }
+
+  /* ---- 入力欄 -------------------------------------------------------------
+     枠は control が持つ（Input と同じ見た目）。範囲のときは 1 つの枠に input を 2 つ並べ、
+     カレンダーを開くボタンも枠の中に置く */
+  [data-scope="date-picker"][data-part="control"] {
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-1);
+    height: var(--kh-field-height, 2.5rem);
+    padding-inline: var(--kh-field-padding-x, var(--kh-space-4)) var(--kh-space-1);
+    font-size: var(--kh-field-font-size, var(--kh-text-md));
+    color: var(--kh-color-fg);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border-strong);
+    border-radius: var(--kh-radius);
+    transition: border-color var(--kh-duration-fast) var(--kh-ease),
+                box-shadow var(--kh-duration-fast) var(--kh-ease);
+    /* 入力欄の中の文字は、ページ上の位置の端数しだいで 1px 上下する（外に描く「〜」は動かない）。
+       枠ごと 1 枚のレイヤーにして、数字と「〜」を同じ基準で描かせる（2 倍・4 倍で実測。docs/notes.md） */
+    will-change: transform;
+  }
+  /* Input と同じく、枠そのものを 2px に見せる（border 1px + inset 1px） */
+  [data-scope="date-picker"][data-part="control"]:focus-within {
+    border-color: var(--kh-color-ring);
+    box-shadow: inset 0 0 0 var(--kh-ring-inset) var(--kh-color-ring);
+  }
+  [data-scope="date-picker"][data-part="root"][data-invalid] [data-part="control"] {
+    border-color: var(--kh-color-invalid);
+  }
+  [data-scope="date-picker"][data-part="root"][data-disabled] [data-part="control"] {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  [data-scope="date-picker"][data-part="input"] {
+    /* 中身ちょうどの幅。余ると範囲の「〜」が終了日の側に寄って見える。
+       数字は等幅なのでどの日付も同じ幅（80.8px @14px）、空のときの「yyyy/mm/dd」が 81.5px。
+       フォントを変えたら測り直す */
+    width: 5.85em;
+    min-width: 0;
+    height: 100%;
+    /* 数字だけが入るので、和文用の --kh-field-optical-shift（文字を下げる）は使わない。
+       数字のインクはベースライン寄りなので、補正なしで枠の中心より 0.07em 下に出る。
+       下げると「下にずれて見える」、0.1em 持ち上げると「上にずれて見える」と言われた位置の間
+       （実測 @14px Hiragino、4 倍で。docs/notes.md） */
+    padding: 0;
+    font: inherit;
+    line-height: var(--kh-leading-ui);
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+    background: none;
+    border: 0;
+    outline: none;
+  }
+  [data-scope="date-picker"][data-part="input"]::placeholder {
+    color: var(--kh-color-fg-muted);
+  }
+  /* 範囲の「〜」。kohaku が足す要素（Ark には無い）。
+     和文の「〜」は全角の箱の中央に描かれ、両隣の数字のインクより 1.5px 上に出るので下げる
+     （実測 @14px Hiragino、2 倍で。docs/notes.md） */
+  [data-kh="date-range-sep"] {
+    color: var(--kh-color-fg-muted);
+    translate: 0 var(--kh-date-range-sep-shift, 0.1em);
+  }
+
+  [data-scope="date-picker"][data-part="trigger"] {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    margin-inline-start: auto;
+    padding: 0;
+    color: var(--kh-color-fg-muted);
+    background: none;
+    border: 0;
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  [data-scope="date-picker"][data-part="trigger"]:hover {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="date-picker"][data-part="trigger"]:focus-visible {
+    outline: 2px solid var(--kh-color-ring);
+    outline-offset: -2px;
+  }
+  /* 空なら kohaku が描く。<svg> を入れれば :empty が外れて差し替わる */
+  [data-scope="date-picker"][data-part="trigger"]:empty::before {
+    content: "";
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-calendar) center / contain no-repeat;
+            mask: var(--kh-glyph-calendar) center / contain no-repeat;
+  }
+  [data-scope="date-picker"][data-part="trigger"] > svg {
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+  }
+
+  /* ---- カレンダー ---------------------------------------------------------
+     面は Select / Menu のドロップダウンと同じ。中身が表なので padding だけ広い */
+  [data-scope="date-picker"][data-part="content"] {
+    z-index: var(--kh-z-popover, 60);
+    padding: var(--kh-space-3);
+    font-size: var(--kh-text-md);
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg-body);
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-color-border);
+    border-radius: var(--kh-radius);
+    box-shadow: var(--kh-shadow-lg);
+  }
+  [data-scope="date-picker"][data-part="content"]:focus-visible { outline: none; }
+  [data-scope="date-picker"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
+  [data-scope="date-picker"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+
+  [data-scope="date-picker"][data-part="view-control"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--kh-space-2);
+  }
+  [data-scope="date-picker"]:is([data-part="prev-trigger"], [data-part="next-trigger"], [data-part="view-trigger"]) {
+    height: 2rem;
+    font: inherit;
+    color: var(--kh-color-fg-muted);
+    background: none;
+    border: 0;
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  [data-scope="date-picker"][data-part="view-trigger"] {
+    padding: 0 var(--kh-space-2);
+    font-weight: 600;
+    color: var(--kh-color-fg);
+  }
+  [data-scope="date-picker"]:is([data-part="prev-trigger"], [data-part="next-trigger"]) {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    padding: 0;
+  }
+  [data-scope="date-picker"]:is([data-part="prev-trigger"], [data-part="next-trigger"]):empty::before {
+    content: "";
+    width:  var(--kh-icon-size, 1rem);
+    height: var(--kh-icon-size, 1rem);
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-chevron-left) center / contain no-repeat;
+            mask: var(--kh-glyph-chevron-left) center / contain no-repeat;
+  }
+  [data-scope="date-picker"][data-part="next-trigger"]:empty::before {
+    -webkit-mask-image: var(--kh-glyph-chevron-right);
+            mask-image: var(--kh-glyph-chevron-right);
+  }
+  [data-scope="date-picker"]:is([data-part="prev-trigger"], [data-part="next-trigger"], [data-part="view-trigger"]):hover {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="date-picker"]:is([data-part="prev-trigger"], [data-part="next-trigger"], [data-part="view-trigger"]):focus-visible {
+    outline: 2px solid var(--kh-color-ring);
+    outline-offset: -2px;
+  }
+
+  [data-scope="date-picker"][data-part="table"] {
+    border-collapse: collapse;
+  }
+  [data-scope="date-picker"][data-part="table-header"] {
+    height: 2rem;
+    padding: 0;
+    font-size: var(--kh-text-sm);
+    font-weight: 400;
+    color: var(--kh-color-fg-muted);
+  }
+  [data-scope="date-picker"][data-part="table-cell"] {
+    padding: 0;
+  }
+
+  [data-scope="date-picker"][data-part="table-cell-trigger"] {
+    display: grid;
+    place-items: center;
+    width: var(--kh-date-cell-size, 2.25rem);
+    height: var(--kh-date-cell-size, 2.25rem);
+    font-variant-numeric: tabular-nums;
+    color: var(--kh-color-fg-body);
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  /* 月・年の表は 4 列。日の表（7 列）と幅をそろえる */
+  [data-scope="date-picker"][data-part="table-cell-trigger"]:is([data-view="month"], [data-view="year"]) {
+    width: calc(var(--kh-date-cell-size, 2.25rem) * 7 / 4);
+    height: 2.75rem;
+  }
+  [data-scope="date-picker"][data-part="table-cell-trigger"]:hover {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="date-picker"][data-part="table-cell-trigger"]:focus-visible {
+    outline: 2px solid var(--kh-color-ring);
+    outline-offset: -2px;
+  }
+  /* 前後の月は出さない。場所は残す（週の並びを崩さない） */
+  [data-scope="date-picker"][data-part="table-cell-trigger"][data-outside-range] {
+    visibility: hidden;
+  }
+  [data-scope="date-picker"][data-part="table-cell-trigger"]:is([data-disabled], [data-unavailable]):not([data-outside-range]) {
+    color: var(--kh-color-fg-faint);
+    background: none;
+    cursor: not-allowed;
+  }
+
+  /* 範囲の帯は td に塗る。端の日は半分だけ塗って、選んだ日の四角とつなげる */
+  [data-scope="date-picker"][data-part="table-cell"]:has(> [data-in-range]) {
+    background: var(--kh-color-accent-subtle);
+  }
+  [data-scope="date-picker"][data-part="table-cell"]:has(> [data-range-start]) {
+    background: linear-gradient(to right, transparent 50%, var(--kh-color-accent-subtle) 50%);
+  }
+  [data-scope="date-picker"][data-part="table-cell"]:has(> [data-range-end]) {
+    background: linear-gradient(to left, transparent 50%, var(--kh-color-accent-subtle) 50%);
+  }
+  [data-scope="date-picker"][data-part="table-cell"]:has(> [data-range-start][data-range-end]) {
+    background: none;
+  }
+  /* 帯（accent-subtle）は hover の地と同じ色なので、帯の上では 1 段濃くする */
+  [data-scope="date-picker"][data-part="table-cell-trigger"][data-in-range]:hover {
+    background: var(--kh-color-border);
+  }
+
+  /* 今日は線、選んだ日は塗り。今日まで塗ると選んだ日と見分けられない */
+  [data-scope="date-picker"][data-part="table-cell-trigger"][data-today] {
+    box-shadow: inset 0 0 0 1px var(--kh-color-fg-muted);
+  }
+  [data-scope="date-picker"][data-part="table-cell-trigger"][data-selected] {
+    background: var(--kh-color-accent);
+    color: var(--kh-color-accent-fg);
+  }
+}

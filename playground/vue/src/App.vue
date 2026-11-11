@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Button, IconButton, Card, Checkbox, Collapsible, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Button, IconButton, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
-  createListCollection, createToaster,
+  createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
 import { ref, watchEffect } from "vue"
 
@@ -57,7 +57,17 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Table — 素の table を包むだけ。行は 48px にそろう</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">DatePicker — 入力欄とカレンダーの組み立ては隠れている</h2>
+    <div :style="{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'end' }">
+      <DatePicker label="申請日" />
+      <DatePicker
+        label="期間"
+        selection-mode="range"
+        :default-value="[parseDate('2026-11-03'), parseDate('2026-11-13')]"
+      />
+    </div>
+
+    <h2 :style="h2">Table — 素の table を包むだけ。行は 48px にそろう</h2>
     <Table>
       <thead>
         <tr>

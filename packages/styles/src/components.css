@@ -25,6 +25,7 @@
 @import "./components/tooltip.css";
 @import "./components/popover.css";
 @import "./components/menu.css";
+@import "./components/date-picker.css";
 @import "./components/collapsible.css";
 @import "./components/progress.css";
 @import "./components/pagination.css";
