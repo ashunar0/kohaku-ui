@@ -95,7 +95,7 @@
 }
 .app-nav a[aria-current="page"] {
   background: var(--kh-color-accent-subtle);
-  /* 文字もアイコン（currentColor）も青。P1 の上で 5.55:1、dark は P10 の上で 4.87:1 */
+  /* 文字もアイコン（currentColor）も青。P2 の上で 5.03:1、dark は P10 の上で 4.87:1 */
   color: var(--kh-color-accent);
   font-weight: 500;
 }

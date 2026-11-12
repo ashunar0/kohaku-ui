@@ -243,9 +243,9 @@
   [data-scope="date-picker"][data-part="table-cell"]:has(> [data-range-start][data-range-end]) {
     background: none;
   }
-  /* 帯（accent-subtle）は hover の地と同じ色なので、帯の上では 1 段濃くする */
+  /* 帯の上で hover の地（S2）を塗っても帯と見分けられない。帯より 1 段濃い青にする */
   [data-scope="date-picker"][data-part="table-cell-trigger"][data-in-range]:hover {
-    background: var(--kh-color-border);
+    background: var(--kh-color-accent-subtle-hover);
   }
 
   /* 今日は線、選んだ日は塗り。今日まで塗ると選んだ日と見分けられない */

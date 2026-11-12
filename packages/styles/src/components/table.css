@@ -51,6 +51,8 @@
   }
   [data-kh="table"] tbody tr[data-selected] {
     background: var(--kh-color-accent-subtle);
+    /* 選んだ行の中の補助文字（部署名など）を、青い地の上でも読める濃さにする */
+    --kh-color-fg-muted: var(--kh-color-fg-muted-on-subtle);
   }
 
   /* 金額・件数。桁をそろえて右に寄せる */

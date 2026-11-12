@@ -165,7 +165,10 @@
   --kh-color-accent:        var(--kh-blue-7);
   --kh-color-accent-hover:  var(--kh-blue-8);
   --kh-color-accent-fg:     #ffffff;
-  --kh-color-accent-subtle: var(--kh-blue-1);  /* 選んだ行・範囲の帯 */
+  --kh-color-accent-subtle:       var(--kh-blue-2);  /* P2 選んだ行・範囲の帯。P1 より帯がはっきりする */
+  --kh-color-accent-subtle-hover: var(--kh-blue-3);  /* P3 帯の上の hover。S2・S4 だと帯と差が出ない */
+  /* 帯の上の補助文字。fg-muted（S9）は P2 の上で 4.28:1 で割れるので 1 段濃い S10（7.94:1） */
+  --kh-color-fg-muted-on-subtle:  var(--kh-gray-10);
 
   /* ---- link ------------------------------------------------------------- */
   --kh-color-link:       var(--kh-color-accent);
@@ -246,7 +249,9 @@
   --kh-color-accent:        var(--kh-blue-4);
   --kh-color-accent-hover:  var(--kh-blue-3);
   --kh-color-accent-fg:     var(--kh-mono-10);
-  --kh-color-accent-subtle: var(--kh-blue-10);
+  --kh-color-accent-subtle:       var(--kh-blue-10);
+  --kh-color-accent-subtle-hover: var(--kh-blue-9);
+  --kh-color-fg-muted-on-subtle:  var(--kh-gray-6);   /* fg-muted のまま。P10 の上で 6.22:1 */
 
   --kh-color-neutral-soft:  var(--kh-gray-10);
   --kh-color-danger-soft:   var(--kh-red-10);
