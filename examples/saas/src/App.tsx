@@ -1,6 +1,8 @@
 import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
+import { useEffect, useState } from "react"
 import { ExpensesPage } from "./ExpensesPage"
+import { SignupPage } from "./SignupPage"
 
 export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
 
@@ -13,7 +15,27 @@ const nav = [
   { label: "設定", Glyph: Settings },
 ]
 
+/** #/signup だけ別の画面（ログイン前なのでサイドバーを出さない） */
+function useHash() {
+  const [hash, setHash] = useState(location.hash)
+  useEffect(() => {
+    const on = () => setHash(location.hash)
+    addEventListener("hashchange", on)
+    return () => removeEventListener("hashchange", on)
+  }, [])
+  return hash
+}
+
 export function App() {
+  const hash = useHash()
+  if (hash === "#/signup") {
+    return (
+      <>
+        <SignupPage />
+        <Toaster toaster={toaster} />
+      </>
+    )
+  }
   return (
     <div className="app">
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}

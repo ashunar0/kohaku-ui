@@ -245,3 +245,42 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- 会員登録（#/signup） ---------------------------------------------- */
+.signup {
+  min-height: 100vh;
+  background: var(--kh-color-canvas);
+}
+.signup-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-3);
+  height: 3.5rem;
+  padding: 0 var(--kh-space-8);
+  font-weight: 600;
+  border-bottom: 1px solid var(--kh-color-border);
+}
+.signup-main {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--kh-space-8) var(--kh-space-4);
+}
+.signup-head h1 {
+  margin: 0;
+  font-size: var(--kh-text-xl);
+  letter-spacing: var(--kh-tracking-tight);
+}
+.signup-head p {
+  margin: var(--kh-space-2) 0 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.signup-section h2 {
+  margin: 0 0 var(--kh-space-4);
+  padding-bottom: var(--kh-space-2);
+  font-size: var(--kh-text-lg);
+  border-bottom: 1px solid var(--kh-color-border);
+}
+.signup-narrow {
+  max-width: 16rem;
+}
+
