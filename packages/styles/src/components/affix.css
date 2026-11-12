@@ -10,9 +10,10 @@
     align-self: flex-start;
     min-height: var(--kh-field-height, 2.5rem);
     flex-shrink: 0;
-    /* 入力欄の文字と同じ高さに見せる。input は上 padding で和文の ink を下げているので、
-       同じだけ下げる（--kh-field-optical-shift） */
-    padding-block-start: calc(var(--kh-field-optical-shift, 0.07em) * 2);
+    /* 入力欄の文字と同じ高さに見せる。input とは文字の丸め方が違い、補正なしだと 14px で入力欄の
+       文字より 0.88px 下に出る。数字の欄と同じく補正の量を下の padding に置いて持ち上げる
+       （14px でずれ -0.13、16px は補正 0 で -0.13。位置の端数を 4 通り変えて測った。docs/notes.md） */
+    padding-block: 0 calc(var(--kh-field-optical-shift, 0.5px) * 2);
     font-size: var(--kh-field-font-size, var(--kh-text-md));
     line-height: var(--kh-leading-ui);
     color: var(--kh-color-fg-body);

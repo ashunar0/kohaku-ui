@@ -113,7 +113,7 @@ DOM で測れるものは Playwright の `browser_evaluate` で computed style �
 
 ```
 --kh-icon-optical-shift    Button 内のアイコン
---kh-field-optical-shift   Input の文字
+--kh-field-optical-shift   Input の文字（px の固定値。入力欄の文字は 1px 単位で描かれるので em 比例にしない）
 ```
 
 フォントを変えたら測り直す。

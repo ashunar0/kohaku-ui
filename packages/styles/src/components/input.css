@@ -12,9 +12,11 @@
     height: var(--kh-field-height, 2.5rem);
     padding-inline: var(--kh-field-padding-x, var(--kh-space-4));
     /* 和文フォントの ink box は em より縦に大きく、中心が em 中心より上に出る。
-       高さ固定なので、上下 padding の差の半分だけ中心が動く。
-       差 2×shift で shift ぶん下げる。実測 1px @14px ≒ 0.07em。 */
-    padding-block: calc(var(--kh-field-optical-shift, 0.07em) * 2) 0;
+       高さ固定なので、上下 padding の差の半分だけ中心が動く。差 2×shift で shift ぶん下げる。
+       入力欄の文字は 1px 単位で描かれるので、em 比例にしない（0.07em = 0.98px だと位置の端数で
+       揺れた）。14px は上 1px（shift 0.5px）で揺れずに中心から -0.38px、16px（lg）は補正なしで 0。
+       ページ上の位置の端数を 4 通り変えて測った（docs/notes.md） */
+    padding-block: calc(var(--kh-field-optical-shift, 0.5px) * 2) 0;
     font-size: var(--kh-field-font-size, var(--kh-text-md));
     color: var(--kh-color-fg);
     background: var(--kh-color-surface);
@@ -23,6 +25,12 @@
     transition: border-color var(--kh-duration-fast) var(--kh-ease),
                 box-shadow var(--kh-duration-fast) var(--kh-ease);
   }
+  /* 素の <select> は input と文字の丸め方が違い、上 1px だと中心より +0.5px、下 1px だと -0.5px で
+     どちらも揺れない。Ark の Select の表示欄（-0.5px）にそろえて下に置く（docs/notes.md） */
+  [data-scope="field"][data-part="select"] {
+    padding-block: 0 calc(var(--kh-field-optical-shift, 0.5px) * 2);
+  }
+
   [data-scope="field"][data-part="input"]::placeholder,
   [data-scope="field"][data-part="textarea"]::placeholder,
   [data-kh="input"]::placeholder,
@@ -63,11 +71,11 @@
   /* 数字だけが入る欄（金額・数量）。表の data-numeric と同じく右に寄せて桁をそろえる。
      右の単位（Affix の「円」）と数字がひと続きに読める。
      数字のインクはベースライン寄りで、和文用の補正（上の padding で下げる）のままだと枠の中心より
-     1px 下に出る。逆に下の padding で持ち上げる。入力欄の文字は 1px 単位で描かれるので、ページ上の
-     位置の端数を 3 通り変えて測り、どれもずれ 0（@14px Hiragino、4 倍・枠線基準。docs/notes.md） */
+     1px 下に出る。同じ量を下の padding に置いて持ち上げる。14px でずれ 0、16px（lg）は補正なしで
+     +0.25px（補正すると -0.75px）。位置の端数を 4 通り変えて測った（docs/notes.md） */
   [data-scope="field"][data-part="input"][data-numeric],
   [data-kh="input"][data-numeric] {
-    padding-block: 0 var(--kh-field-numeric-shift, 0.07em);
+    padding-block: 0 calc(var(--kh-field-optical-shift, 0.5px) * 2);
     font-variant-numeric: tabular-nums;
     text-align: right;
   }
@@ -85,6 +93,7 @@
     --kh-field-height:    2.75rem;
     --kh-field-padding-x: var(--kh-space-4);
     --kh-field-font-size: var(--kh-text-lg);
+    --kh-field-optical-shift: 0;
   }
 
   /* ---- 枠の内側の左にアイコン（検索の虫眼鏡など） -------------------------
@@ -103,10 +112,11 @@
     inset-inline-start: var(--kh-field-padding-x, var(--kh-space-4));
     display: flex;
     align-items: center;
-    /* 文字は上 padding で optical-shift だけ下がり、インクの中心は枠の中心より
-       その半分（0.5px @14px）下に来る。アイコンも同じだけ下げる（実測で差 0） */
+    /* 隣の文字のインクに合わせる。14px の和文は枠の中心より 0.38px 上に来るので、アイコンを
+       0.375px 上げる（shift 0.5px × -0.75）。16px（lg）は shift 0 で文字も中心なので動かさない。
+       どちらも位置の端数を 4 通り変えて差 0（docs/notes.md） */
     font-size: var(--kh-field-font-size, var(--kh-text-md));
-    translate: 0 calc(var(--kh-field-optical-shift, 0.07em) / 2);
+    translate: 0 calc(var(--kh-field-optical-shift, 0.5px) * -0.75);
     color: var(--kh-color-fg-muted);
     pointer-events: none;
   }

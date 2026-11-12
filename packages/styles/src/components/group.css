@@ -20,6 +20,7 @@
   [data-kh="group"][data-size="lg"] {
     --kh-field-height:    2.75rem;
     --kh-field-font-size: var(--kh-text-lg);
+    --kh-field-optical-shift: 0;
     --kh-button-font-size: var(--kh-text-lg);
   }
 

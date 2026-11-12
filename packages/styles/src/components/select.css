@@ -23,7 +23,10 @@
     width: 100%;
     height: var(--kh-field-height, 2.5rem);
     padding-inline: var(--kh-field-padding-x, var(--kh-space-4));
-    padding-block: calc(var(--kh-field-optical-shift, 0.07em) * 2) 0;
+    /* 和文の補正（--kh-field-optical-shift）は付けない。button の中の文字は input と丸め方が違い、
+       補正なしで揺れずに中心から -0.5px（14px）/ -0.25px（16px）。入力欄の和文（-0.38 / 0）とそろう。
+       位置の端数を 4 通り変えて測った（docs/notes.md） */
+    padding-block: 0;
     font-size: var(--kh-field-font-size, var(--kh-text-md));
     text-align: start;
     color: var(--kh-color-fg);
