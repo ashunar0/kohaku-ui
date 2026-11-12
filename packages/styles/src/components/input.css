@@ -25,10 +25,31 @@
     transition: border-color var(--kh-duration-fast) var(--kh-ease),
                 box-shadow var(--kh-duration-fast) var(--kh-ease);
   }
-  /* 素の <select> は input と文字の丸め方が違い、上 1px だと中心より +0.5px、下 1px だと -0.5px で
-     どちらも揺れない。Ark の Select の表示欄（-0.5px）にそろえて下に置く（docs/notes.md） */
+  /* 素の <select>（Field.Select）。見た目は Ark の Select の表示欄にそろえる。
+     ブラウザの矢印は消して、右の余白に 16px の矢印を描く。左右の余白は同じ（--kh-field-padding-x）で、
+     矢印と文字の間は 8px（Ark の Select の gap と同じ）。
+     背景の絵は currentColor を拾えないので、色を入れた矢印を tokens が light / dark で持つ */
   [data-scope="field"][data-part="select"] {
-    padding-block: 0 calc(var(--kh-field-optical-shift, 0.5px) * 2);
+    appearance: none;
+    padding-inline-end: calc(var(--kh-field-padding-x, var(--kh-space-4)) + var(--kh-icon-size, 1rem) + var(--kh-space-2));
+    background-image: var(--kh-select-chevron);
+    background-repeat: no-repeat;
+    background-position: right var(--kh-field-padding-x, var(--kh-space-4)) center;
+    background-size: var(--kh-icon-size, 1rem);
+    cursor: pointer;
+    /* appearance: none の select は input とも button とも文字の丸め方が違う。上に shift そのまま
+       （14px で 0.5px、lg で 0）を置くと、位置の端数を 8 通り変えても中心から -0.5px（lg -0.25px）で
+       揺れず、Ark の Select の表示欄と同じ位置になる。下 1px だと -1.5px（docs/notes.md） */
+    padding-block: var(--kh-field-optical-shift, 0.5px) 0;
+  }
+
+  /* 値が空の option（「選んでください」）を選んでいる間は placeholder と同じ薄さにする。
+     開いた一覧の項目は通常の文字色に戻す */
+  [data-scope="field"][data-part="select"]:has(> option[value=""]:checked) {
+    color: var(--kh-color-fg-muted);
+  }
+  [data-scope="field"][data-part="select"] > option {
+    color: var(--kh-color-fg);
   }
 
   [data-scope="field"][data-part="input"]::placeholder,
@@ -46,6 +67,7 @@
      inset shadow は padding box に沿うため、角も完全に同心。 */
   [data-scope="field"][data-part="input"]:focus-visible,
   [data-scope="field"][data-part="textarea"]:focus-visible,
+  [data-scope="field"][data-part="select"]:focus-visible,
   [data-kh="input"]:focus-visible,
   [data-kh="textarea"]:focus-visible {
     outline: none;
@@ -54,6 +76,7 @@
   }
   [data-scope="field"][data-part="input"]:disabled,
   [data-scope="field"][data-part="textarea"]:disabled,
+  [data-scope="field"][data-part="select"]:disabled,
   [data-kh="input"]:disabled,
   [data-kh="textarea"]:disabled {
     background: var(--kh-color-surface-muted);
@@ -62,6 +85,7 @@
   }
   [data-part="input"][data-invalid],
   [data-part="textarea"][data-invalid],
+  [data-scope="field"][data-part="select"][data-invalid],
   [data-kh="input"][aria-invalid="true"],
   [data-kh="textarea"][aria-invalid="true"] {
     border-color: var(--kh-color-invalid);

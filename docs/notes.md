@@ -1868,3 +1868,26 @@ DatePicker で気づいた「数字だけの欄は和文の補正と逆になる
 - examples の絞り込みの行で、同じ文字を入れた入力欄と Select のインクの位置が一致した
 - -0.38 や -0.50 は 0 にできない。インクの高さが奇数 px 分あり、1px 単位でしか動かないため。近いほうを取った
 
+## 2026-11-12 会員登録の画面（examples #/signup）と素の select
+
+項目の多いフォームで穴を探すために、examples に会員登録を足した（氏名・生年月日・連絡先・住所・利用形態・
+パスワード・同意。送信時に上へエラーの一覧を出し、フォーカスを移す。デジタル庁の方針）。
+
+### 素の select（Field.Select）が半分しか整っていなかった
+
+input と同じ枠は当たっていたが、エラー・フォーカス・無効の指定から漏れていて、矢印はブラウザのままだった。
+左の余白と矢印の位置がそろわず、右が詰まって見えた（あさひ）。
+
+- **Ark の Select の表示欄にそろえる。** `appearance: none` でブラウザの矢印を消し、右に 16px の矢印を描く。
+  左右の余白は同じ（--kh-field-padding-x）、矢印と文字の間は 8px。並べて見て同じ位置
+- **矢印は背景の絵で、色を入れたものを tokens が light / dark で持つ**（`--kh-select-chevron`）。select には
+  擬似要素が無いので mask で currentColor を使う手が取れない
+- **文字の縦位置は上に shift そのまま**（14px で 0.5px、lg で 0）。appearance: none の select は input とも button
+  とも丸め方が違った。端数を 8 通り変えて -0.5px（lg -0.25px）で揺れず、Ark の Select と同じ
+- 値が空の option（「選んでください」）の間は placeholder と同じ薄さ（`:has(option[value=""]:checked)`）
+
+### Ark の Field の ids.control は入力欄の id ではない
+
+`ids={{ control }}` は名前に反して Field の外側の箱（role=group）の id になる（Ark 5.39 の use-field.js）。
+入力欄と label の htmlFor は `Field.Root` の `id` で決まる。エラーの一覧から入力欄へ飛ばすなら `id` を使う。
+

@@ -60,6 +60,35 @@ export const Textarea: Story = {
 }
 
 /**
+ * 素の `<select>`（Field.Select）。都道府県のように項目が多く、スマホで OS の選択画面を使いたいとき用。
+ * 見た目は Ark の Select の表示欄にそろえる（矢印・余白・文字の位置）。
+ * 値が空の option を選んでいる間は placeholder と同じ薄さになる。
+ */
+export const NativeSelect: Story = {
+  render: () => {
+    const prefs = ["北海道", "東京都", "大阪府", "沖縄県"]
+    const Row = ({ label, ...props }: { label: string } & Parameters<typeof Field.Root>[0]) => (
+      <Field.Root {...props} style={{ maxWidth: "12rem" }}>
+        <Field.Label>{label}</Field.Label>
+        <Field.Select defaultValue={label === "選んだあと" ? "東京都" : ""}>
+          <option value="">選んでください</option>
+          {prefs.map((p) => <option key={p}>{p}</option>)}
+        </Field.Select>
+        <Field.ErrorText>都道府県を選んでください。</Field.ErrorText>
+      </Field.Root>
+    )
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <Row label="選ぶ前" />
+        <Row label="選んだあと" />
+        <Row label="エラー" invalid />
+        <Row label="無効" disabled />
+      </div>
+    )
+  },
+}
+
+/**
  * PC 前提の項目が多いフォーム用。祖先に `data-label-position="side"` を付けると
  * 中の Field がまとめて横並びになる。ラベル列の幅は `--kh-field-label-width`（既定 9rem）。
  * ラベルは左寄せで、入力欄の 1 行目と中心を揃える（textarea も）。
