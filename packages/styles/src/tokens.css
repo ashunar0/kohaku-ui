@@ -143,7 +143,10 @@
      ====================================================================== */
 
   /* ---- surface: 奥から手前へ -------------------------------------------- */
-  --kh-color-canvas:        var(--kh-gray-1);    /* S1 ページの地（freee の背景色） */
+  /* 中身の地は白、サイドバーなど脇の地は S1（freee の背景は「S1 か白」）。
+     中身を S1 にすると、白い表や面と並んだときに地が濁って見えた */
+  --kh-color-canvas:        #ffffff;             /* ページの地 */
+  --kh-color-canvas-muted:  var(--kh-gray-1);    /* S1 脇の地（サイドバーなど） */
   --kh-color-surface:       #ffffff;             /* 持ち上がった面 */
   --kh-color-surface-muted: var(--kh-gray-2);    /* S2 沈んだ面。S3 だと fg-muted が 4.29:1 で割れる */
   --kh-color-bg:            var(--kh-color-canvas);  /* alias */
@@ -207,7 +210,7 @@
      danger-deep に相乗りさせられない理由: あちらは soft 地 (#ffe2dd) の上の文字を
      兼ねており、鮮やかにすると soft 地との差が 3.9:1 まで落ちる。
      「薄い赤地の上」と「ページの地の上」は要求が違う。 */
-  --kh-color-invalid: var(--kh-color-danger);   /* RE5  canvas 4.52:1 */
+  --kh-color-invalid: var(--kh-color-danger);   /* RE5  白 4.91:1 / S1 4.52:1 */
 
   /* ---- misc -------------------------------------------------------------- */
   --kh-color-overlay: rgb(30 30 30 / 0.5);      /* GY10 */
@@ -229,6 +232,9 @@
    status は soft = 10、line = 7、deep = 2（10 の上で 5.45〜9.69:1） */
 :root[data-theme="dark"] {
   --kh-color-canvas:        var(--kh-mono-10);   /* GY10 */
+  /* light の S1 に当たる「中身より沈んだ段」が dark には無い（GY10 が一番暗い）。
+     面と同じ GY7 にして、明るさの差で分ける（GY10 と 1.30:1） */
+  --kh-color-canvas-muted:  var(--kh-mono-7);
   --kh-color-surface:       var(--kh-mono-7);    /* GY7 */
   --kh-color-surface-muted: var(--kh-gray-10);   /* S10 */
 

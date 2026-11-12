@@ -105,7 +105,7 @@
   align-self: start;
   height: 100dvh;
   overflow-y: auto;
-  background: var(--kh-color-surface);
+  background: var(--kh-color-canvas-muted);
   border-right: 1px solid var(--kh-color-border);
 }
 /* ブランド・ナビ・自分の 3 行は同じ内側 padding を持つ。
