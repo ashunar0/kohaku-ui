@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import {
   Actions,
   Badge,
@@ -60,6 +60,7 @@ export function ExpensesPage() {
   const [page, setPage] = useState(1)
   const [picked, setPicked] = useState<string[]>([])
   const [open, setOpen] = useState<Expense | null>(null)
+  const dialogTitle = useRef<HTMLHeadingElement>(null)
   const [busy, setBusy] = useState(false)
 
   const rows = useMemo(
@@ -140,49 +141,52 @@ export function ExpensesPage() {
           </IconButton>
         </Group>
 
-        <Select.Root
-          collection={statusFilter}
-          value={[status]}
-          onValueChange={(d) => { setStatus(d.value[0]); setPage(1) }}
-        >
-          <Select.Trigger>
-            <Select.ValueText />
-            <Select.Indicator />
-          </Select.Trigger>
-          <Select.Content>
-            {statusFilter.items.map((item) => (
-              <Select.Item key={item.value} item={item}>
-                <Select.ItemText>{item.label}</Select.ItemText>
-                <Select.ItemIndicator />
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
+        {/* 絞り込み 3 つは 1 かたまり。狭いときは 3 つ一緒に次の行へ落とす（日付だけ落ちると取り残されて見える） */}
+        <HStack gap={3} wrap={false}>
+          <Select.Root
+            collection={statusFilter}
+            value={[status]}
+            onValueChange={(d) => { setStatus(d.value[0]); setPage(1) }}
+          >
+            <Select.Trigger>
+              <Select.ValueText />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Content>
+              {statusFilter.items.map((item) => (
+                <Select.Item key={item.value} item={item}>
+                  <Select.ItemText>{item.label}</Select.ItemText>
+                  <Select.ItemIndicator />
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
 
-        <Select.Root
-          collection={deptFilter}
-          value={[dept]}
-          onValueChange={(d) => { setDept(d.value[0]); setPage(1) }}
-        >
-          <Select.Trigger>
-            <Select.ValueText />
-            <Select.Indicator />
-          </Select.Trigger>
-          <Select.Content>
-            {deptFilter.items.map((item) => (
-              <Select.Item key={item.value} item={item}>
-                <Select.ItemText>{item.label}</Select.ItemText>
-                <Select.ItemIndicator />
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
+          <Select.Root
+            collection={deptFilter}
+            value={[dept]}
+            onValueChange={(d) => { setDept(d.value[0]); setPage(1) }}
+          >
+            <Select.Trigger>
+              <Select.ValueText />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Content>
+              {deptFilter.items.map((item) => (
+                <Select.Item key={item.value} item={item}>
+                  <Select.ItemText>{item.label}</Select.ItemText>
+                  <Select.ItemIndicator />
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
 
-        <DatePicker
-          selectionMode="range"
-          defaultValue={[parseDate("2026-11-01"), parseDate("2026-11-30")]}
-          inputLabels={["期間の開始日", "期間の終了日"]}
-        />
+          <DatePicker
+            selectionMode="range"
+            defaultValue={[parseDate("2026-11-01"), parseDate("2026-11-30")]}
+            inputLabels={["期間の開始日", "期間の終了日"]}
+          />
+        </HStack>
       </HStack>
 
       {/* ── 一括操作 ──────────────────────────────────────── */}
@@ -279,8 +283,9 @@ export function ExpensesPage() {
 
       <HStack gap={4} justify="between" className="page-foot">
         <p className="count">
-          {rows.length} 件中 {shown.length === 0 ? 0 : (page - 1) * PER_PAGE + 1}–
-          {(page - 1) * PER_PAGE + shown.length} 件を表示
+          {rows.length === 0
+            ? "0 件"
+            : `${rows.length} 件中 ${(page - 1) * PER_PAGE + 1}–${(page - 1) * PER_PAGE + shown.length} 件を表示`}
         </p>
         <Pagination
           count={rows.length}
@@ -293,9 +298,11 @@ export function ExpensesPage() {
       </VStack>
 
       {/* ── 詳細 ─────────────────────────────────────────── */}
-      <Dialog.Root open={open != null} onOpenChange={(d) => !d.open && setOpen(null)}>
+      {/* 開いたら見出しにフォーカスを置く。Ark の既定は最初の入力欄（コメント）で、
+          中身を読む前に書く欄へ飛ばされ、読み上げも詳細を飛ばしてしまう（WAI-ARIA APG の Dialog と同じ考え） */}
+      <Dialog.Root open={open != null} onOpenChange={(d) => !d.open && setOpen(null)} initialFocusEl={() => dialogTitle.current}>
         <Dialog.Content>
-          <Dialog.Title>{open?.id}</Dialog.Title>
+          <Dialog.Title ref={dialogTitle} tabIndex={-1}>{open?.id}</Dialog.Title>
           <Dialog.Description>
             {open ? `${open.applicant}（${open.dept}）が ${formatDate(open.date)} に申請` : ""}
           </Dialog.Description>
