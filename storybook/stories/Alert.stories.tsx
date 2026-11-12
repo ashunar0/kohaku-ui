@@ -79,11 +79,14 @@ export const WithActions: Story = {
 /**
  * Description の中に箇条書きを置ける。フォームのエラーの一覧はこの形で、1 件ずつ入力欄へのリンクにする。
  * 点は付けない（区切りはリンクの青と行の間で足りる）
+ *
+ * 送ったときにこの一覧へフォーカスを移すなら tabIndex={-1} を付ける。キーボードで来たときだけ、
+ * 枠が青になる（枠の外にもう 1 本描くと二重になるので、枠に重ねる）
  */
 export const List: Story = {
   render: () => (
     <div style={{ display: "grid", gap: ".75rem" }}>
-      <Alert.Root variant="danger">
+      <Alert.Root variant="danger" tabIndex={-1}>
         <Alert.Icon />
         <Alert.Title>3 件の入力に問題があります</Alert.Title>
         <Alert.Description>

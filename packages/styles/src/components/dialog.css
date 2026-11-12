@@ -47,6 +47,13 @@
     line-height: var(--kh-leading-tight);
     color: var(--kh-color-fg);
   }
+  /* 開いたときにフォーカスを見出しへ移す使い方（tabIndex=-1 と initialFocusEl）のための輪。
+     中身が長い・最初の欄が入力欄のときは、読む前に書く欄へ飛ばさないよう見出しに置く。
+     枠の無い要素なので、ボタンと同じく離して描く */
+  [data-scope="dialog"][data-part="title"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
   [data-scope="dialog"][data-part="description"] {
     margin: 0;
     margin-top: calc(var(--kh-space-4) * -1 + var(--kh-space-2));

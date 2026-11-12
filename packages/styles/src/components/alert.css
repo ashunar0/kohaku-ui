@@ -18,6 +18,13 @@
     line-height: var(--kh-leading-ui);
   }
 
+  /* フォームのエラーの一覧のように、スクリプトでフォーカスを移す先（tabIndex=-1）になる。
+     自分の枠があるので、離して描くと線が二重になる。入力欄と同じく枠の位置に重ねて青にする */
+  [data-kh="alert"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: calc(var(--kh-ring-width) * -1);
+  }
+
   [data-kh="alert"] [data-part="icon"] {
     --kh-icon-size: 1rem;
 
