@@ -24,17 +24,9 @@
 }
 
 /* Link — 下線と色だけ。kohaku に --kh-color-link はあるのに部品が無い */
-.app a,
-.crumbs a {
+.app-nav a {
   color: inherit;
   text-decoration: none;
-}
-.crumbs a {
-  color: var(--kh-color-fg-muted);
-}
-.crumbs a:hover {
-  color: var(--kh-color-fg);
-  text-decoration: underline;
 }
 .row-link {
   font: inherit;
@@ -55,25 +47,8 @@
   border-radius: var(--kh-radius-sm);
 }
 
-/* Breadcrumbs — 区切りの「/」まで含めて毎回書くことになる */
-.crumbs ol {
-  display: flex;
-  align-items: center;
-  gap: var(--kh-space-2);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-muted);
-}
-.crumbs li + li::before {
-  content: "/";
-  margin-right: var(--kh-space-2);
-  color: var(--kh-color-fg-faint);
-}
-.crumbs [aria-current="page"] {
-  color: var(--kh-color-fg);
-}
+/* Breadcrumbs — kohaku に入った（@kohaku/react の Breadcrumbs）。ここで書いていたのは
+   区切りの「/」と現在地の色 */
 
 /* Table — kohaku に入った（@kohaku/react の Table）。ここで書いていたのは
    行の高さ・罫線・数値の右揃え・表頭の扱い */

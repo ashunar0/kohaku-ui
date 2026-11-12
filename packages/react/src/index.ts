@@ -14,6 +14,7 @@ export { Button, IconButton, type ButtonProps, type IconButtonProps } from "./bu
 export { Badge, type BadgeProps } from "./badge"
 export { Card, type CardRootProps } from "./card"
 export { Table, type TableProps } from "./table"
+export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbsItemProps } from "./breadcrumbs"
 export { Alert, type AlertProps, type AlertVariant } from "./alert"
 export { Input, type InputProps } from "./input"
 export { Textarea, type TextareaProps } from "./textarea"

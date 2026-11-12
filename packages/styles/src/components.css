@@ -29,5 +29,6 @@
 @import "./components/collapsible.css";
 @import "./components/progress.css";
 @import "./components/pagination.css";
+@import "./components/breadcrumbs.css";
 @import "./components/toast.css";
 @import "./components/file-upload.css";

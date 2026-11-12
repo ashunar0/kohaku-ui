@@ -2,6 +2,7 @@ import { useMemo, useState } from "react"
 import {
   Actions,
   Badge,
+  Breadcrumbs,
   Button,
   Card,
   Checkbox,
@@ -87,13 +88,10 @@ export function ExpensesPage() {
 
   return (
     <div className="page">
-      {/* ── パンくず: kohaku に無いので利用側で組む ──────────────── */}
-      <nav aria-label="現在の位置" className="crumbs">
-        <ol>
-          <li><a href="#">ホーム</a></li>
-          <li aria-current="page">経費申請</li>
-        </ol>
-      </nav>
+      <Breadcrumbs>
+        <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
+        <Breadcrumbs.Item current>経費申請</Breadcrumbs.Item>
+      </Breadcrumbs>
 
       <header className="page-head">
         <div>

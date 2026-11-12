@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Breadcrumbs — Ark に無いので kohaku が持つ
+
+   見た目は freee Vibes に合わせる（区切りはシェブロン、リンクは青、現在地はリンクに
+   しない）。デジタル庁も同じ形。下線は hover のときだけ（Vibes は常に引く）。
+   長くなったら改行する（デジタル庁の方針）。
+
+   中の <a> は何でもよい（ルーターの Link が出す <a> にも同じ見た目が当たる）。
+   ========================================================================== */
+
+@layer kohaku {
+  [data-kh="breadcrumbs"] > ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--kh-breadcrumbs-font-size, var(--kh-text-md));
+    line-height: var(--kh-leading-ui);
+    color: var(--kh-color-fg-muted);
+  }
+
+  [data-kh="breadcrumbs"] li {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  /* 区切りは CSS が描く。読み上げに「>」が混ざらない */
+  [data-kh="breadcrumbs"] li + li::before {
+    content: "";
+    flex: none;
+    width: 1em;
+    height: 1em;
+    margin-inline: var(--kh-space-1);
+    /* 行の中で文字のインクは中心より 0.5px 下に来る（14px の和文・欧文とも実測）。
+       Button のアイコン補正とは向きが逆。docs/notes.md */
+    translate: 0 var(--kh-breadcrumbs-optical-shift, 0.036em);
+    /* currentColor にしない。li の文字色を拾うので、現在地の前だけ濃くなる */
+    background: var(--kh-color-fg-muted);
+    mask: var(--kh-glyph-chevron-right) center / contain no-repeat;
+  }
+
+  [data-kh="breadcrumbs"] a {
+    color: var(--kh-color-link);
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+    border-radius: var(--kh-radius-sm);
+  }
+  [data-kh="breadcrumbs"] a:hover {
+    color: var(--kh-color-link-hover);
+    text-decoration: underline;
+  }
+  [data-kh="breadcrumbs"] a:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+
+  [data-kh="breadcrumbs"] [aria-current="page"] {
+    color: var(--kh-color-fg);
+  }
+}

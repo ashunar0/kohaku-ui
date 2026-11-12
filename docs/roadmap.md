@@ -13,7 +13,6 @@
 
 | 部品 | メモ |
 |---|---|
-| Breadcrumbs | |
 | Link | |
 | Spinner | |
 | Stack / Cluster | 縦積み・横並びのレイアウト |

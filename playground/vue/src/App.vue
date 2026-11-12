@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Button, IconButton, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, IconButton, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -57,7 +57,22 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">DatePicker — 入力欄とカレンダーの組み立ては隠れている</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">Breadcrumbs — nav / ol と区切りは隠れている</h2>
+    <div style="display: grid; gap: 1rem">
+      <Breadcrumbs>
+        <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="#">経費申請</Breadcrumbs.Item>
+        <Breadcrumbs.Item current>EX-1042</Breadcrumbs.Item>
+      </Breadcrumbs>
+      <Breadcrumbs style="max-width: 20rem">
+        <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="#">組織の設定</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="#">部署とメンバー</Breadcrumbs.Item>
+        <Breadcrumbs.Item current>マーケティング部の承認ルート</Breadcrumbs.Item>
+      </Breadcrumbs>
+    </div>
+
+    <h2 :style="h2">DatePicker — 入力欄とカレンダーの組み立ては隠れている</h2>
     <div :style="{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'end' }">
       <DatePicker label="申請日" />
       <DatePicker

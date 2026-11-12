@@ -17,6 +17,8 @@ import {
   Toast as ArkToast, Tooltip as ArkTooltip,
 } from "@ark-ui/vue"
 
+import BreadcrumbsVue from "./Breadcrumbs.vue"
+import BreadcrumbsItem from "./BreadcrumbsItem.vue"
 import CheckboxVue from "./Checkbox.vue"
 import DatePickerVue from "./DatePicker.vue"
 import DatePickerCalendar from "./DatePickerCalendar.vue"
@@ -47,6 +49,7 @@ export { default as Actions } from "./Actions.vue"
 export { default as Affix } from "./Affix.vue"
 export { Card } from "./card"
 export { default as Table } from "./Table.vue"
+export const Breadcrumbs = Object.assign(BreadcrumbsVue, { Item: BreadcrumbsItem })
 export { Alert, type AlertVariant } from "./alert"
 
 // Ark に組み立て規約を被せたもの。隠した部品は同じ名前空間から素のまま出す（選択肢を奪わない）
