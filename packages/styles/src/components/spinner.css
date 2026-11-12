@@ -45,6 +45,14 @@
     animation: kh-spinner-dash 1.4s ease-in-out infinite;
   }
 
+  /* ボタンの中では文字と同じ色・アイコンと同じ大きさ。accent のままだと青いボタンの上で消える。
+     Button の loading はこれを真ん中に重ねる（button.css） */
+  [data-kh="button"] [data-kh="spinner"] {
+    --kh-spinner-color: currentColor;
+    --kh-spinner-size: var(--kh-icon-size, 1rem);
+    margin-bottom: var(--kh-icon-optical-shift, 0.072em);
+  }
+
   /* 止めると読み込み中だと伝わらないので、伸び縮みだけやめてゆっくり回す（Toast と同じ 2.4s） */
   @media (prefers-reduced-motion: reduce) {
     [data-kh="spinner"] > svg { animation-duration: 2.4s; }

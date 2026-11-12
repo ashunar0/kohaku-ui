@@ -45,7 +45,9 @@ export const States: Story = {
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
         <IconButton variant="outline" disabled label="無効な操作"><Search /></IconButton>
-        <span style={{ fontSize: ".75rem", color: "var(--kh-color-fg-faint)" }}>disabled</span>
+        <IconButton variant="outline" loading label="探す"><Search /></IconButton>
+        <IconButton loading label="探す"><Search /></IconButton>
+        <span style={{ fontSize: ".75rem", color: "var(--kh-color-fg-faint)" }}>disabled / loading</span>
       </div>
     </div>
   ),

@@ -125,4 +125,21 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  /* ---- 処理中 -----------------------------------------------------------
+     文字（とアイコン）を透明にして幅を残し、真ん中に Spinner を重ねる。
+     幅が変わらないので、並んだボタンが動かない。押せないことは書き味レイヤーが
+     aria-disabled とクリックの打ち消しで持つ（disabled にするとフォーカスが外れる） */
+  [data-kh="button"][data-loading] {
+    position: relative;
+    color: transparent;
+    cursor: progress;
+  }
+  [data-kh="button"][data-loading] > [data-kh="spinner"] {
+    position: absolute;
+    inset: 0;
+    /* 隣に文字が無いので和文の補正は要らない（IconButton と同じ） */
+    margin: auto;
+    --kh-spinner-color: var(--kh-button-fg);
+  }
 }

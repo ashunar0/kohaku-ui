@@ -24,6 +24,7 @@ const SearchGlyph = <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 export function App() {
   const [invalid, setInvalid] = useState(false)
+  const [saving, setSaving] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
   useEffect(() => {
@@ -53,7 +54,15 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Button loading — 文字をくるくるに入れ替える。幅は変わらない</h2>
+      <HStack>
+        <Button variant="outline" loading>差し戻す</Button>
+        <Button loading loadingLabel="承認中">承認する</Button>
+        <IconButton variant="ghost" label="ヘルプ" loading>{SearchGlyph}</IconButton>
+        <Button onClick={() => { setSaving(true); setTimeout(() => setSaving(false), 1500) }} loading={saving}>押すと 1.5 秒</Button>
+      </HStack>
+
+      <h2 style={h2}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
       <p style={{ margin: 0, fontSize: ".875rem" }}>
         この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>
       </p>

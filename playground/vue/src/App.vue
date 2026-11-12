@@ -7,6 +7,8 @@ import {
 import { ref, watchEffect } from "vue"
 
 const invalid = ref(false)
+const saving = ref(false)
+const save = () => { saving.value = true; setTimeout(() => (saving.value = false), 1500) }
 // v-model の確認（Vue だけの欄）
 const agree = ref(false)
 const publish = ref(true)
@@ -57,7 +59,17 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">Button loading — 文字をくるくるに入れ替える。幅は変わらない</h2>
+    <HStack>
+      <Button variant="outline" loading>差し戻す</Button>
+      <Button loading loading-label="承認中">承認する</Button>
+      <IconButton variant="ghost" label="ヘルプ" loading>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+      </IconButton>
+      <Button :loading="saving" @click="save">押すと 1.5 秒</Button>
+    </HStack>
+
+    <h2 :style="h2">VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
     <p style="margin: 0; font-size: .875rem">
       この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>
     </p>

@@ -60,6 +60,7 @@ export function ExpensesPage() {
   const [page, setPage] = useState(1)
   const [picked, setPicked] = useState<string[]>([])
   const [open, setOpen] = useState<Expense | null>(null)
+  const [busy, setBusy] = useState(false)
 
   const rows = useMemo(
     () =>
@@ -314,7 +315,18 @@ export function ExpensesPage() {
             <Button variant="outline" onClick={() => { setOpen(null); toaster.create({ title: "差し戻しました" }) }}>
               差し戻す
             </Button>
-            <Button onClick={() => { const id = open!.id; setOpen(null); approve([id]) }}>承認する</Button>
+            {/* 送信を待つふり（0.8 秒）。処理中は幅を保ったままくるくるに替わり、押しても何も起きない */}
+            <Button
+              loading={busy}
+              loadingLabel="承認中"
+              onClick={() => {
+                const id = open!.id
+                setBusy(true)
+                setTimeout(() => { setBusy(false); setOpen(null); approve([id]) }, 800)
+              }}
+            >
+              承認する
+            </Button>
           </Actions>
         </Dialog.Content>
       </Dialog.Root>

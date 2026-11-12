@@ -17,6 +17,7 @@ const meta = {
     variant: { control: "inline-radio", options: ["solid", "outline", "ghost", "danger"] },
     size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
     disabled: { control: "boolean" },
+    loading: { control: "boolean" },
   },
 } satisfies Meta<typeof Button>
 
@@ -62,3 +63,31 @@ export const WithIcon: Story = {
 }
 
 export const Disabled: Story = { args: { disabled: true } }
+
+/**
+ * 処理中。文字をくるくるに入れ替え、幅はそのまま（並んだボタンが動かない）。
+ * disabled にはしない（フォーカスが外れる）。aria-disabled を付けてクリックと送信を打ち消す。
+ * 読み上げは loadingLabel（既定「処理中」）
+ */
+export const Loading: Story = {
+  render: () => (
+    <Group>
+      <Button variant="outline">差し戻す</Button>
+      <Button loading loadingLabel="承認中">承認する</Button>
+    </Group>
+  ),
+}
+
+/** variant ごとの状態。左から ふだん / 押せない / 処理中 */
+export const States: Story = {
+  render: () => (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, max-content)", gap: "0.75rem 1rem" }}>
+      {(["solid", "outline", "ghost", "danger"] as const).flatMap((v) => [
+        <Button key={`${v}-n`} variant={v}>{v}</Button>,
+        <Button key={`${v}-d`} variant={v} disabled>{v}</Button>,
+        <Button key={`${v}-l`} variant={v} loading>{v}</Button>,
+      ])}
+    </div>
+  ),
+}
+
