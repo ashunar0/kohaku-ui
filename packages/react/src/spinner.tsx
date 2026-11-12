@@ -12,7 +12,7 @@ export function Spinner({ size, label = "読み込み中", ...props }: SpinnerPr
   return (
     <span data-kh="spinner" data-size={size} role="status" {...props}>
       <svg viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" /></svg>
-      <span data-part="label">{label}</span>
+      <span data-kh="visually-hidden">{label}</span>
     </span>
   )
 }

@@ -13,6 +13,7 @@
 export { Button, IconButton, type ButtonProps, type IconButtonProps } from "./button"
 export { Badge, type BadgeProps } from "./badge"
 export { Tag, type TagProps } from "./tag"
+export { VisuallyHidden, type VisuallyHiddenProps } from "./visually-hidden"
 export { Card, type CardRootProps } from "./card"
 export { Table, type TableProps } from "./table"
 export { Link, type LinkProps } from "./link"

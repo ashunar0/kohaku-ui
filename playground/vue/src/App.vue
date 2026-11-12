@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -57,7 +57,12 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
+    <p style="margin: 0; font-size: .875rem">
+      この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>
+    </p>
+
+    <h2 :style="h2">Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
     <HStack>
       <Tag type="状態" @remove="toaster.create({ title: '状態の条件を外しました' })">承認待ち</Tag>
       <Tag type="部署" @remove="() => {}">営業部</Tag>

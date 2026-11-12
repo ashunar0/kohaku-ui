@@ -6,6 +6,6 @@ withDefaults(defineProps<{ size?: "sm" | "md" | "lg"; label?: string }>(), { lab
 <template>
   <span data-kh="spinner" :data-size="size" role="status">
     <svg viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" /></svg>
-    <span data-part="label">{{ label }}</span>
+    <span data-kh="visually-hidden">{{ label }}</span>
   </span>
 </template>

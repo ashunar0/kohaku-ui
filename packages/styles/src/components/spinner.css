@@ -7,7 +7,7 @@
    マークアップ（React / Vue は書き味レイヤーが出す）:
      <span data-kh="spinner" role="status">
        <svg viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" /></svg>
-       <span data-part="label">読み込み中</span>
+       <span data-kh="visually-hidden">読み込み中</span>
      </span>
    ========================================================================== */
 
@@ -43,17 +43,6 @@
     stroke-width: 5;
     stroke-linecap: round;
     animation: kh-spinner-dash 1.4s ease-in-out infinite;
-  }
-
-  /* 読み上げだけに出す */
-  [data-kh="spinner"] > [data-part="label"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 
   /* 止めると読み込み中だと伝わらないので、伸び縮みだけやめてゆっくり回す（Toast と同じ 2.4s） */

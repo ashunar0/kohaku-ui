@@ -18,6 +18,7 @@ import {
   Pagination,
   Select,
   Table,
+  VisuallyHidden,
   VStack,
   createListCollection,
   parseDate,
@@ -208,7 +209,7 @@ export function ExpensesPage() {
               <th scope="col">科目</th>
               <th scope="col" data-numeric>金額</th>
               <th scope="col" data-fit>状態</th>
-              <th scope="col" data-fit><span className="sr-only">操作</span></th>
+              <th scope="col" data-fit><VisuallyHidden>操作</VisuallyHidden></th>
             </tr>
           </thead>
           <tbody>

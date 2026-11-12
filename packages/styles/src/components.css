@@ -4,6 +4,7 @@
 
 @import "./tokens.css";
 @import "./components/part.css";
+@import "./components/visually-hidden.css";
 @import "./components/icon.css";
 @import "./components/button.css";
 @import "./components/card.css";

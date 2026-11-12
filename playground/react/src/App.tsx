@@ -1,5 +1,5 @@
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -53,7 +53,12 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
+      <p style={{ margin: 0, fontSize: ".875rem" }}>
+        この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>
+      </p>
+
+      <h2 style={h2}>Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
       <HStack>
         <Tag type="状態" onRemove={() => toaster.create({ title: "状態の条件を外しました" })}>承認待ち</Tag>
         <Tag type="部署" onRemove={() => {}}>営業部</Tag>
