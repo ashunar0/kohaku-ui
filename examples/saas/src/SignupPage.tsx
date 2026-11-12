@@ -10,6 +10,7 @@ import {
   Group,
   Icon,
   Link,
+  PasswordInput,
   RadioGroup,
   VStack,
 } from "@kohaku/react"
@@ -273,7 +274,7 @@ export function SignupPage() {
               <h2>ログイン情報</h2>
               <Field.Root required invalid={!!err("password")} id="password">
                 <Field.Label>パスワード<Field.RequiredIndicator /></Field.Label>
-                <Field.Input type="password" autoComplete="new-password" {...bind("password")} />
+                <PasswordInput autoComplete="new-password" {...bind("password")} />
                 <Field.HelperText>8 文字以上。英字と数字を混ぜると安全です。</Field.HelperText>
                 <Field.ErrorText>{err("password")}</Field.ErrorText>
               </Field.Root>

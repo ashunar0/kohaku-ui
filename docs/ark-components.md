@@ -38,6 +38,7 @@ tree-view
 | collapsible | ✅ 対応済み・実機検証済み（React / Vue で動作一致） |
 | progress | ✅ 対応済み・実機検証済み（線形だけ。React / Vue で動作一致） |
 | pagination | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
+| password-input | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致。表示切り替えは Tab で止めてキーボードでも動く） |
 | toast | ✅ 対応済み・実機検証済み（React / Vue で寸法・動作一致） |
 | file-upload | ✅ 対応済み・実機検証済み（React / Vue で寸法一致。ドロップは手で確認） |
 | menu | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Affix, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Affix, Alert, PasswordInput, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -59,7 +59,17 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Input numeric — 金額・数量。右寄せ・等幅数字・数字用の縦位置</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">PasswordInput — 右端のボタンで表示を切り替える。Tab で止まる</h2>
+    <div style="display: grid; gap: 1rem; max-width: 20rem">
+      <PasswordInput label="パスワード" model-value="abcd1234" auto-complete="current-password" />
+      <Field.Root invalid required>
+        <Field.Label>新しいパスワード<Field.RequiredIndicator /></Field.Label>
+        <PasswordInput auto-complete="new-password" />
+        <Field.ErrorText>8 文字以上で入力してください。</Field.ErrorText>
+      </Field.Root>
+    </div>
+
+    <h2 :style="h2">Input numeric — 金額・数量。右寄せ・等幅数字・数字用の縦位置</h2>
     <HStack :gap="6">
       <Group><Input numeric model-value="12,800" aria-label="金額" style="width: 10rem" /><Affix>円</Affix></Group>
       <Group><Input numeric model-value="3" aria-label="数量" style="width: 5rem" /><Affix>個</Affix></Group>

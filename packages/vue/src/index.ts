@@ -12,7 +12,7 @@
  */
 import {
   Checkbox as ArkCheckbox, DatePicker as ArkDatePicker, Dialog as ArkDialog, FileUpload as ArkFileUpload,
-  Menu as ArkMenu, Pagination as ArkPagination, Popover as ArkPopover, Progress as ArkProgress,
+  Menu as ArkMenu, Pagination as ArkPagination, PasswordInput as ArkPasswordInput, Popover as ArkPopover, Progress as ArkProgress,
   RadioGroup as ArkRadioGroup, Select as ArkSelect, Switch as ArkSwitch,
   Toast as ArkToast, Tooltip as ArkTooltip,
 } from "@ark-ui/vue"
@@ -26,6 +26,8 @@ import { translations as datePickerTranslations } from "./date-picker-text"
 import DialogContent from "./DialogContent.vue"
 import FileUploadVue from "./FileUpload.vue"
 import PaginationVue from "./Pagination.vue"
+import PasswordInputVue from "./PasswordInput.vue"
+import { translations as passwordInputTranslations } from "./password-input-text"
 import MenuContent from "./MenuContent.vue"
 import PopoverContent from "./PopoverContent.vue"
 import ProgressVue from "./Progress.vue"
@@ -91,6 +93,12 @@ export const DatePicker = Object.assign(DatePickerVue, {
   Input: ArkDatePicker.Input, Trigger: ArkDatePicker.Trigger, ClearTrigger: ArkDatePicker.ClearTrigger,
   Positioner: ArkDatePicker.Positioner, Content: ArkDatePicker.Content, Context: ArkDatePicker.Context,
   Calendar: DatePickerCalendar, translations: datePickerTranslations,
+})
+export const PasswordInput = Object.assign(PasswordInputVue, {
+  Root: ArkPasswordInput.Root, Label: ArkPasswordInput.Label, Control: ArkPasswordInput.Control,
+  Input: ArkPasswordInput.Input, VisibilityTrigger: ArkPasswordInput.VisibilityTrigger,
+  Indicator: ArkPasswordInput.Indicator, Context: ArkPasswordInput.Context,
+  translations: passwordInputTranslations,
 })
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,

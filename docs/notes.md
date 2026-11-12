@@ -1891,3 +1891,20 @@ input と同じ枠は当たっていたが、エラー・フォーカス・無�
 `ids={{ control }}` は名前に反して Field の外側の箱（role=group）の id になる（Ark 5.39 の use-field.js）。
 入力欄と label の htmlFor は `Field.Root` の `id` で決まる。エラーの一覧から入力欄へ飛ばすなら `id` を使う。
 
+## 2026-11-12 PasswordInput（Ark の password-input）
+
+会員登録でパスワードの表示切り替えが無かった。Ark にあるので CSS を当てる。
+
+- **目のアイコンにした**（「表示」「隠す」の文字ボタンと並べて、あさひ）。隠しているときは eye、見せているときは
+  eye-off。位置と大きさは素の select の矢印と同じ（右から 16px の絵、16px）で、フォームの右端がそろう。
+  文字ボタンは青い文字がリンクに見え、入力欄の右を 4.5rem 使う。絵は `--kh-glyph-eye` / `--kh-glyph-eye-off`
+  （部品を操作するために要る図形なので同梱する）
+- **Ark のボタンは Tab で止まらず、マウスでしか動かない**（tabIndex=-1、pointerdown だけ）。キーボードだけでは
+  切り替えられないので、書き味レイヤーで tabIndex=0 にし、キーボード由来の click（detail が 0）で切り替える。
+  マウスは Ark の pointerdown が受けるので二重には動かない
+- 読み上げの文言は日本語（「パスワードを表示」「パスワードを隠す」）
+- 入力欄の属性（value / onChange / placeholder）は input へ、表示の状態と autoComplete は Root へ流す。
+  Field.Root の中に置くと invalid / required と入力欄の id を Field から受け取る
+- Ark の Vue 版は `PasswordInput.Context` の型が `value` を必須にしている（型の誤り）。ボタンを小さい部品に分け、
+  `usePasswordInputContext` で状態を受け取った
+

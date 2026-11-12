@@ -11,6 +11,7 @@
 @import "./components/table.css";
 @import "./components/field.css";
 @import "./components/input.css";
+@import "./components/password-input.css";
 @import "./components/textarea.css";
 @import "./components/fieldset.css";
 @import "./components/group.css";

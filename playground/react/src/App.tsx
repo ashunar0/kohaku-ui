@@ -1,6 +1,6 @@
 import {
   Actions, Affix, Alert, Badge, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
-  FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
+  FileUpload, Icon, IconButton, Input, PasswordInput, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
 import { useEffect, useState } from "react"
@@ -54,7 +54,17 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Input numeric — 金額・数量。右寄せ・等幅数字・数字用の縦位置</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>PasswordInput — 右端のボタンで表示を切り替える。Tab で止まる</h2>
+      <div style={{ display: "grid", gap: "1rem", maxWidth: "20rem" }}>
+        <PasswordInput label="パスワード" defaultValue="abcd1234" autoComplete="current-password" />
+        <Field.Root invalid required>
+          <Field.Label>新しいパスワード<Field.RequiredIndicator /></Field.Label>
+          <PasswordInput autoComplete="new-password" />
+          <Field.ErrorText>8 文字以上で入力してください。</Field.ErrorText>
+        </Field.Root>
+      </div>
+
+      <h2 style={h2}>Input numeric — 金額・数量。右寄せ・等幅数字・数字用の縦位置</h2>
       <HStack gap={6}>
         <Group><Input numeric defaultValue="12,800" aria-label="金額" style={{ width: "10rem" }} /><Affix>円</Affix></Group>
         <Group><Input numeric defaultValue="3" aria-label="数量" style={{ width: "5rem" }} /><Affix>個</Affix></Group>
