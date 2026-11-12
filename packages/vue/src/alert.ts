@@ -8,6 +8,7 @@ export const Alert = Object.assign(AlertVue, {
   Root: AlertRoot,
   Icon: part("icon", "span"),
   Title: part("title", "p"),
-  Description: part("description", "p"),
+  // 中に箇条書き（ul）も置けるように div にしてある
+  Description: part("description"),
   Actions: part("actions"),
 })

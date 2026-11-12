@@ -47,6 +47,14 @@
     margin: 0;
     color: var(--kh-color-fg-muted);
   }
+  /* 中に箇条書きを置ける（description は div）。エラーの一覧のように 1 件ずつがリンクになるので、
+     点は付けずに見出しと同じ左端へ並べる。区切りはリンクの青と行の間で足りる（GOV.UK と同じ） */
+  [data-kh="alert"] [data-part="description"] > ul {
+    margin: var(--kh-space-1) 0 0;
+  }
+  [data-kh="alert"] [data-part="description"] > ul > li + li {
+    margin-top: var(--kh-space-1);
+  }
   [data-kh="alert"]:not(:has([data-part="icon"])) { grid-template-columns: 1fr; }
   /* actions は文と同じ行の右端に置く。文の下に置くと、読み終えた視線が
      左に戻ってからボタンを探すことになる */
@@ -83,7 +91,12 @@
   /* 地を塗る版。情報量は同じで、主張だけ強い。多用しない */
   [data-kh="alert"][data-tone="soft"] [data-part="icon"]        { --kh-alert-icon: currentColor; }
   [data-kh="alert"][data-tone="soft"] [data-part="title"]       { color: inherit; }
-  [data-kh="alert"][data-tone="soft"] [data-part="description"] { color: inherit; opacity: 0.75; }
+  /* 薄めない。deep は soft の地の上で 4.5:1 を超えるように選んであり、opacity 0.75 を掛けると
+     warning / success で 3.3:1 まで落ちていた。見出しとは太さで分ける */
+  [data-kh="alert"][data-tone="soft"] [data-part="description"] { color: inherit; }
+  /* soft の地の上ではリンクの青が沈む（danger の地で 3.8:1）。Link は常に下線があるので、
+     色は Alert の文字に合わせても見分けられる */
+  [data-kh="alert"][data-tone="soft"] [data-part="description"] [data-kh="link"] { color: inherit; }
 
   [data-kh="alert"][data-tone="soft"][data-variant="danger"] {
     --kh-alert-bg: var(--kh-color-danger-soft);

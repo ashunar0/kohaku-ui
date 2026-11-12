@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Alert, Button, Icon } from "@kohaku/react"
+import { Alert, Button, Icon, Link } from "@kohaku/react"
 
 const meta = {
   title: "Feedback/Alert",
@@ -73,5 +73,38 @@ export const WithActions: Story = {
         <Button size="sm">入力する</Button>
       </Alert.Actions>
     </Alert.Root>
+  ),
+}
+
+/**
+ * Description の中に箇条書きを置ける。フォームのエラーの一覧はこの形で、1 件ずつ入力欄へのリンクにする。
+ * 点は付けない（区切りはリンクの青と行の間で足りる）
+ */
+export const List: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: ".75rem" }}>
+      <Alert.Root variant="danger">
+        <Alert.Icon />
+        <Alert.Title>3 件の入力に問題があります</Alert.Title>
+        <Alert.Description>
+          <ul>
+            <li><Link href="#">姓を入力してください</Link></li>
+            <li><Link href="#">メールアドレスの形式が正しくありません</Link></li>
+            <li><Link href="#">利用規約への同意が必要です</Link></li>
+          </ul>
+        </Alert.Description>
+      </Alert.Root>
+      <Alert.Root variant="danger" tone="soft">
+        <Alert.Icon />
+        <Alert.Title>3 件の入力に問題があります</Alert.Title>
+        <Alert.Description>
+          <ul>
+            <li><Link href="#">姓を入力してください</Link></li>
+            <li><Link href="#">メールアドレスの形式が正しくありません</Link></li>
+            <li><Link href="#">利用規約への同意が必要です</Link></li>
+          </ul>
+        </Alert.Description>
+      </Alert.Root>
+    </div>
   ),
 }

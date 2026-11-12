@@ -25,7 +25,7 @@ export function Alert({ variant, tone, icon, title, children, ...props }: AlertP
     <div data-kh="alert" data-variant={variant} data-tone={tone} {...props}>
       {icon ? <span data-part="icon">{icon}</span> : hasGlyph ? <span data-part="icon" /> : null}
       {title ? <p data-part="title">{title}</p> : null}
-      {children ? <p data-part="description">{children}</p> : null}
+      {children ? <div data-part="description">{children}</div> : null}
     </div>
   )
 }
@@ -35,5 +35,6 @@ Alert.Root = function AlertRoot({ variant, tone, ...props }: Div & { variant?: A
 }
 Alert.Icon = (props: ComponentPropsWithoutRef<"span">) => <span data-part="icon" {...props} />
 Alert.Title = (props: ComponentPropsWithoutRef<"p">) => <p data-part="title" {...props} />
-Alert.Description = (props: ComponentPropsWithoutRef<"p">) => <p data-part="description" {...props} />
+/** 中に箇条書き（ul）も置けるように div にしてある */
+Alert.Description = (props: Div) => <div data-part="description" {...props} />
 Alert.Actions = (props: Div) => <div data-part="actions" {...props} />

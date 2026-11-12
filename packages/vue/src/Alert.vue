@@ -23,6 +23,6 @@ const hasGlyph = computed(() => props.variant !== undefined && props.variant !==
     <span v-if="slots.icon" data-part="icon"><slot name="icon" /></span>
     <span v-else-if="hasGlyph" data-part="icon" />
     <p v-if="title || slots.title" data-part="title"><slot name="title">{{ title }}</slot></p>
-    <p v-if="slots.default" data-part="description"><slot /></p>
+    <div v-if="slots.default" data-part="description"><slot /></div>
   </div>
 </template>

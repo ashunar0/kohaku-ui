@@ -121,15 +121,17 @@ export function SignupPage() {
               <Alert.Root variant="danger" ref={summary} tabIndex={-1} className="signup-summary">
                 <Alert.Icon />
                 <Alert.Title>{listed.length} 件の入力に問題があります</Alert.Title>
-                <ul>
-                  {listed.map(([id]) => (
-                    <li key={id}>
-                      <Link href={`#${id}`} onClick={(ev) => { ev.preventDefault(); document.getElementById(id)?.focus() }}>
-                        {errors[id]}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <Alert.Description>
+                  <ul>
+                    {listed.map(([id]) => (
+                      <li key={id}>
+                        <Link href={`#${id}`} onClick={(ev) => { ev.preventDefault(); document.getElementById(id)?.focus() }}>
+                          {errors[id]}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Alert.Description>
               </Alert.Root>
             ) : null}
 
