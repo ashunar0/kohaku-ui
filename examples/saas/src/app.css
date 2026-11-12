@@ -32,7 +32,8 @@
 /* Table — kohaku に入った（@kohaku/react の Table）。ここで書いていたのは
    行の高さ・罫線・数値の右揃え・表頭の扱い */
 
-/* Stack / Cluster — 縦積み・横並び。これが無いので下の B 側が全部 flex 直書きになる */
+/* VStack / HStack — kohaku に入った。ページ・見出しの行・絞り込み・一括操作・表の下・ヘッダーで
+   flex を直書きしていた。header など意味のある要素には data-kh="hstack" を直接書く */
 
 /* ===========================================================
    B. この画面固有のレイアウト（kohaku に入れるものではない）
@@ -154,21 +155,12 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--kh-space-4);
   /* 線より上を 56px にする（線を高さに含めると中身の中心が 0.5px 上がり、ロゴの行とずれる） */
   box-sizing: content-box;
   height: 3.5rem;
   padding: 0 var(--kh-space-8);
   background: var(--kh-color-canvas);
   border-bottom: 1px solid var(--kh-color-border);
-}
-.app-head-tools {
-  display: flex;
-  align-items: center;
-  gap: var(--kh-space-2);
 }
 .app-search {
   width: 16rem;
@@ -177,16 +169,7 @@
   padding: var(--kh-space-6) var(--kh-space-8);
 }
 .page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--kh-space-5);
   max-width: 76rem;
-}
-.page-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--kh-space-4);
 }
 .page-head h1 {
   margin: 0;
@@ -221,29 +204,16 @@
   color: var(--kh-color-fg-faint);
 }
 
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--kh-space-3);
-}
 .filters > :first-child {
   flex: 1 1 20rem;
 }
 
 .bulk {
-  display: flex;
-  align-items: center;
-  gap: var(--kh-space-4);
   /* 選んだときだけ出す。出た分だけ表は下にずれる（普段の空きを詰めるほうを選んだ） */
   font-size: var(--kh-text-sm);
   color: var(--kh-color-fg);
 }
 
-.who {
-  display: flex;
-  flex-direction: column;
-}
 .who small {
   color: var(--kh-color-fg-muted);
 }
@@ -256,12 +226,6 @@
   font-size: var(--kh-text-sm);
 }
 
-.page-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--kh-space-4);
-}
 .count {
   margin: 0;
   font-size: var(--kh-text-sm);

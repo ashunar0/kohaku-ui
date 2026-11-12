@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, IconButton, Link, Spinner, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -57,7 +57,20 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Spinner — role="status" と読み上げの文言を持つ</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">VStack / HStack — 間隔は kohaku の間隔トークンの番号</h2>
+    <VStack :gap="6" style="font-size: .875rem">
+      <HStack>
+        <span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">HStack</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">既定は 8px</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">縦は中央</span>
+      </HStack>
+      <HStack :gap="4" justify="between">
+        <span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">gap=4</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">justify=between</span>
+      </HStack>
+      <VStack>
+        <span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">入れ子の VStack</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">外が gap=6 でも既定の 16px</span>
+      </VStack>
+    </VStack>
+
+    <h2 :style="h2">Spinner — role="status" と読み上げの文言を持つ</h2>
     <div style="display: flex; align-items: center; gap: 1.5rem; font-size: .875rem">
       <Spinner size="sm" /><Spinner /><Spinner size="lg" />
       <span style="display: flex; align-items: center; gap: .5rem; color: var(--kh-color-fg-muted)">

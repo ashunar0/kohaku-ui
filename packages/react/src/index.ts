@@ -22,6 +22,7 @@ export { Input, type InputProps } from "./input"
 export { Textarea, type TextareaProps } from "./textarea"
 export { Icon, type IconProps } from "./icon"
 export { Group, Actions, Affix, type GroupProps, type ActionsProps, type AffixProps } from "./layout"
+export { VStack, HStack, type VStackProps, type HStackProps, type Space } from "./stack"
 
 // Ark に組み立て規約を被せたもの
 export { Checkbox, type CheckboxProps } from "./checkbox"

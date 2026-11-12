@@ -1,0 +1,46 @@
+/* ==========================================================================
+   VStack / HStack — 縦に積む・横に並べる（freee Vibes と同じ名前と形）
+
+   Group はフォームの部品の高さ揃えと連結、Actions は操作の行。それ以外の並べる箱はこれ。
+   間隔は kohaku の間隔トークンの番号（data-gap="4" = --kh-space-4 = 16px。Tailwind の gap-4 と同じ）。
+
+   間隔は CSS 変数で渡さず、data-gap ごとに gap を直接書く。変数にすると、入れ子の内側の箱が
+   外側の間隔を受け継いでしまう（data-gap を書いていない内側まで外と同じ間隔になる）。
+   ========================================================================== */
+
+@layer kohaku {
+  [data-kh="vstack"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kh-space-4);
+  }
+  [data-kh="hstack"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kh-space-2);
+  }
+  [data-kh="hstack"][data-nowrap] { flex-wrap: nowrap; }
+
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="0"] { gap: 0; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="1"] { gap: var(--kh-space-1); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="2"] { gap: var(--kh-space-2); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="3"] { gap: var(--kh-space-3); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="4"] { gap: var(--kh-space-4); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="5"] { gap: var(--kh-space-5); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="6"] { gap: var(--kh-space-6); }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-gap="8"] { gap: var(--kh-space-8); }
+
+  /* 交差軸（VStack なら横、HStack なら縦） */
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-align="start"] { align-items: flex-start; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-align="center"] { align-items: center; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-align="end"] { align-items: flex-end; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-align="stretch"] { align-items: stretch; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-align="baseline"] { align-items: baseline; }
+
+  /* 主軸 */
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-justify="start"] { justify-content: flex-start; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-justify="center"] { justify-content: center; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-justify="end"] { justify-content: flex-end; }
+  :is([data-kh="vstack"], [data-kh="hstack"])[data-justify="between"] { justify-content: space-between; }
+}

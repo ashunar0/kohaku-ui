@@ -1723,3 +1723,19 @@ kohaku の Toast の loading は、薄い輪＋灰色 1/4 の弧（border）で�
   切り替える必要がある。あさひの判断で一旦置いた
 - **Toast の loading はまだ border の輪のまま。** 擬似要素なので SVG を入れられない。揃えるなら作り直しが要る
 
+## 2026-11-12 VStack / HStack を足した
+
+examples の B 側（画面固有）がほぼ全部 flex の直書きだった。縦に積む（ページ・名前と所属）と
+横に並べる（見出しの行・絞り込み・一括操作・表の下・ヘッダー）の 2 種類に分かれた。
+
+- **名前は Vibes に合わせて VStack / HStack**（Stack / Cluster は SmartHR・Every Layout）。freee に寄せる方針で、
+  名前で向きが分かる（あさひ）。Vibes には direction で切り替える Stack もあるが、持たない
+- **間隔は kohaku の間隔トークンの番号**（`gap={4}` = 16px）。Vibes は rem で指定するが、Tailwind の `gap-4` と
+  数字がそろうほうを取った
+- 既定: VStack は 16px・横幅いっぱい。HStack は 8px（Group・Actions と同じ）・縦は中央・折り返す（Vibes と同じ）
+- **間隔は CSS 変数で渡さず data-gap ごとに gap を書く。** 変数だと入れ子の内側が外側の間隔を受け継ぐ。
+  外が 24px でも内側は既定の 16px のままなのを確かめた
+- Group（フォームの部品の高さ揃えと連結）と Actions（操作の行）は残す。それ以外の並べる箱が VStack / HStack
+- header など意味のある要素には部品を使わず `data-kh="hstack"` を直接書く。CSS が本体なので同じ並べ方になる
+- examples を置き換え、置き換え前後で 15 か所の位置が 0.01px 単位で同じだった
+

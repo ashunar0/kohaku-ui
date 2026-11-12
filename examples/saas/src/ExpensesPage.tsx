@@ -9,6 +9,7 @@ import {
   Dialog,
   Field,
   Group,
+  HStack,
   Icon,
   IconButton,
   Input,
@@ -17,6 +18,7 @@ import {
   Pagination,
   Select,
   Table,
+  VStack,
   createListCollection,
   parseDate,
 } from "@kohaku/react"
@@ -87,8 +89,8 @@ export function ExpensesPage() {
   }
 
   return (
-    <div className="page">
-      <header className="page-head">
+    <VStack gap={5} className="page">
+      <header className="page-head" data-kh="hstack" data-justify="between" data-align="end" data-gap="4">
         <div>
           <h1>経費申請</h1>
           <p>部署の申請を確認して承認します。</p>
@@ -120,7 +122,7 @@ export function ExpensesPage() {
       </div>
 
       {/* ── 絞り込み ──────────────────────────────────────── */}
-      <div className="filters">
+      <HStack gap={3} className="filters">
         <Group attached>
           <Input
             placeholder="申請者・摘要・申請番号で探す"
@@ -176,17 +178,17 @@ export function ExpensesPage() {
           defaultValue={[parseDate("2026-11-01"), parseDate("2026-11-30")]}
           inputLabels={["期間の開始日", "期間の終了日"]}
         />
-      </div>
+      </HStack>
 
       {/* ── 一括操作 ──────────────────────────────────────── */}
       {picked.length > 0 ? (
-        <div className="bulk">
+        <HStack gap={4} className="bulk">
           <span>{picked.length} 件を選択中</span>
           <Actions align="start">
             <Button size="sm" onClick={() => approve(picked)}>まとめて承認</Button>
             <Button size="sm" variant="outline" onClick={() => setPicked([])}>選択を解除</Button>
           </Actions>
-        </div>
+        </HStack>
       ) : null}
 
       {/* ── 一覧 ──────────────────────────────────────────── */}
@@ -226,10 +228,10 @@ export function ExpensesPage() {
                 </td>
                 <td data-fit>{formatDate(e.date)}</td>
                 <td>
-                  <span className="who">
+                  <VStack gap={0} className="who">
                     <strong>{e.applicant}</strong>
                     <small>{e.dept}</small>
-                  </span>
+                  </VStack>
                 </td>
                 <td>{e.category}</td>
                 <td data-numeric>{yen(e.amount)}</td>
@@ -270,7 +272,7 @@ export function ExpensesPage() {
           </tbody>
       </Table>
 
-      <div className="page-foot">
+      <HStack gap={4} justify="between" className="page-foot">
         <p className="count">
           {rows.length} 件中 {shown.length === 0 ? 0 : (page - 1) * PER_PAGE + 1}–
           {(page - 1) * PER_PAGE + shown.length} 件を表示
@@ -282,7 +284,7 @@ export function ExpensesPage() {
           onPageChange={(d) => setPage(d.page)}
           siblingCount={1}
         />
-      </div>
+      </HStack>
 
       {/* ── 詳細 ─────────────────────────────────────────── */}
       <Dialog.Root open={open != null} onOpenChange={(d) => !d.open && setOpen(null)}>
@@ -315,6 +317,6 @@ export function ExpensesPage() {
           </Actions>
         </Dialog.Content>
       </Dialog.Root>
-    </div>
+    </VStack>
   )
 }

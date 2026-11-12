@@ -47,6 +47,8 @@ export { default as Icon } from "./Icon.vue"
 export { default as Group } from "./Group.vue"
 export { default as Actions } from "./Actions.vue"
 export { default as Affix } from "./Affix.vue"
+export { default as VStack } from "./VStack.vue"
+export { default as HStack } from "./HStack.vue"
 export { Card } from "./card"
 export { default as Table } from "./Table.vue"
 export { default as Link } from "./Link.vue"
@@ -113,4 +115,4 @@ export const FileUpload = Object.assign(FileUploadVue, {
 // Ark をそのまま使うもの（隠すものが無いので再輸出）
 export { Collapsible, Field, Fieldset, Tabs, createListCollection, createToaster, parseDate } from "@ark-ui/vue"
 
-export type { Size, FieldSize } from "./types"
+export type { Size, FieldSize, Space } from "./types"

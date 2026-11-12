@@ -1,4 +1,4 @@
-import { Breadcrumbs, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
+import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { ExpensesPage } from "./ExpensesPage"
 
@@ -45,17 +45,17 @@ export function App() {
 
       <main className="app-main">
         {/* ── ヘッダー: 左にパンくず、右に全体の検索とヘルプ ─────── */}
-        <header className="app-head">
+        <header className="app-head" data-kh="hstack" data-justify="between" data-gap="4" data-nowrap="">
           <Breadcrumbs>
             <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
             <Breadcrumbs.Item current>経費申請</Breadcrumbs.Item>
           </Breadcrumbs>
-          <div className="app-head-tools">
+          <HStack wrap={false}>
             <Input type="search" size="sm" icon={<Search />} placeholder="申請・メンバーを検索" aria-label="検索" className="app-search" />
             <IconButton variant="ghost" size="sm" label="ヘルプ">
               <Icon asChild><CircleHelp /></Icon>
             </IconButton>
-          </div>
+          </HStack>
         </header>
         <div className="app-body">
           <ExpensesPage />
