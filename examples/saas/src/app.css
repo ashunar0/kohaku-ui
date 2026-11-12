@@ -21,6 +21,9 @@
 /* Table — kohaku に入った（@kohaku/react の Table）。ここで書いていたのは
    行の高さ・罫線・数値の右揃え・表頭の扱い */
 
+/* 空の表 — kohaku に入った（Table の行に data-empty）。ここで書いていたのは
+   高さ・中央寄せ・薄い文字。hover の地が付くのは消せていなかった */
+
 /* VStack / HStack — kohaku に入った。ページ・見出しの行・絞り込み・一括操作・表の下・ヘッダーで
    flex を直書きしていた。header など意味のある要素には data-kh="hstack" を直接書く */
 
@@ -205,14 +208,6 @@
 
 .who small {
   color: var(--kh-color-fg-muted);
-}
-
-[data-kh="table"] .empty {
-  /* 行の高さの既定（48px）より高く取る。空の表だと分かるように */
-  height: 8rem;
-  text-align: center;
-  color: var(--kh-color-fg-muted);
-  font-size: var(--kh-text-sm);
 }
 
 .count {

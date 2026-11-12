@@ -133,6 +133,26 @@ export const States: Story = {
   ),
 }
 
+/** 該当なしの表。行に data-empty を付け、1 つのセルで全列をまたぐ。ホバーの地は付かない */
+export const Empty: Story = {
+  render: () => (
+    <Table>
+      <thead>
+        <tr>
+          <th scope="col" data-fit>申請番号</th>
+          <th scope="col">科目</th>
+          <th scope="col" data-numeric>金額</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-empty="">
+          <td colSpan={3}>条件に合う申請はありません。</td>
+        </tr>
+      </tbody>
+    </Table>
+  ),
+}
+
 /** 行と表頭の高さは L3 トークンで寄せられる。祖先に置けば中の表がまとめて変わる */
 export const Compact: Story = {
   render: () => (

@@ -266,8 +266,8 @@ export function ExpensesPage() {
               </tr>
             ))}
             {shown.length === 0 ? (
-              <tr>
-                <td colSpan={8} className="empty">条件に合う申請はありません。</td>
+              <tr data-empty="">
+                <td colSpan={8}>条件に合う申請はありません。</td>
               </tr>
             ) : null}
           </tbody>

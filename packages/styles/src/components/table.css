@@ -46,13 +46,22 @@
     border-bottom: 0;
   }
 
-  [data-kh="table"] tbody tr:hover {
+  [data-kh="table"] tbody tr:not([data-empty]):hover {
     background: var(--kh-color-surface-muted);
   }
   [data-kh="table"] tbody tr[data-selected] {
     background: var(--kh-color-accent-subtle);
     /* 選んだ行の中の補助文字（部署名など）を、青い地の上でも読める濃さにする */
     --kh-color-fg-muted: var(--kh-color-fg-muted-on-subtle);
+  }
+
+  /* 空の表。1 つのセルで全列をまたぐ（<tr data-empty><td colSpan={列数}>…）。
+     押せない行なので hover を付けない。高さは普段の行より取って、空だと分かるようにする */
+  [data-kh="table"] tbody tr[data-empty] > td {
+    height: var(--kh-table-empty-height, 8rem);
+    text-align: center;
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-fg-muted);
   }
 
   /* 金額・件数。桁をそろえて右に寄せる */
