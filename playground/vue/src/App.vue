@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Affix, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -59,7 +59,14 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Button loading — 文字をくるくるに入れ替える。幅は変わらない</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">Input numeric — 金額・数量。右寄せ・等幅数字・数字用の縦位置</h2>
+    <HStack :gap="6">
+      <Group><Input numeric model-value="12,800" aria-label="金額" style="width: 10rem" /><Affix>円</Affix></Group>
+      <Group><Input numeric model-value="3" aria-label="数量" style="width: 5rem" /><Affix>個</Affix></Group>
+      <Input model-value="交通費" aria-label="科目" style="width: 10rem" />
+    </HStack>
+
+    <h2 :style="h2">Button loading — 文字をくるくるに入れ替える。幅は変わらない</h2>
     <HStack>
       <Button variant="outline" loading>差し戻す</Button>
       <Button loading loading-label="承認中">承認する</Button>

@@ -60,6 +60,18 @@
     --kh-color-ring: var(--kh-color-invalid);
   }
 
+  /* 数字だけが入る欄（金額・数量）。表の data-numeric と同じく右に寄せて桁をそろえる。
+     右の単位（Affix の「円」）と数字がひと続きに読める。
+     数字のインクはベースライン寄りで、和文用の補正（上の padding で下げる）のままだと枠の中心より
+     1px 下に出る。逆に下の padding で持ち上げる。入力欄の文字は 1px 単位で描かれるので、ページ上の
+     位置の端数を 3 通り変えて測り、どれもずれ 0（@14px Hiragino、4 倍・枠線基準。docs/notes.md） */
+  [data-scope="field"][data-part="input"][data-numeric],
+  [data-kh="input"][data-numeric] {
+    padding-block: 0 var(--kh-field-numeric-shift, 0.07em);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
   [data-kh="input"][data-size="sm"],
   [data-kh="input-icon"][data-size="sm"],
   [data-kh="textarea"][data-size="sm"] {

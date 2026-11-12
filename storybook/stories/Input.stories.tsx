@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Input } from "@kohaku/react"
+import { Affix, Field, Group, Input } from "@kohaku/react"
 
 /**
  * Field の外で使う素の入力欄。Field.Root の中では Ark の `<Field.Input>` を使う
@@ -57,3 +57,27 @@ export const WithIcon: Story = {
     </div>
   ),
 }
+
+/**
+ * 数字だけが入る欄（金額・数量）は numeric。表の data-numeric と同じく右寄せ・等幅数字にし、
+ * 縦位置を数字に合わせる（和文用の補正のままだと 1px 下に出る）。inputMode は numeric になる。
+ * Field.Input には `data-numeric` を直接付ける
+ */
+export const Numeric: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "0.75rem" }}>
+      <Group>
+        <Input numeric defaultValue="12,800" aria-label="金額" style={{ width: "10rem" }} />
+        <Affix>円</Affix>
+      </Group>
+      <Field.Root>
+        <Field.Label>数量</Field.Label>
+        <Group>
+          <Field.Input data-numeric="" inputMode="numeric" defaultValue="3" style={{ width: "5rem" }} />
+          <Affix>個</Affix>
+        </Group>
+      </Field.Root>
+    </div>
+  ),
+}
+
