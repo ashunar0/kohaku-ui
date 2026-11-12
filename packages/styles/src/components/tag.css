@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Tag — 選んだ値を示す札。外せる（freee Vibes の TagBox と同じ形）
+
+   Badge は状態（承認待ち）を示し、外さない。形から変えて、押せる札と状態を見分けられるようにする。
+   白地に線のピル型。線は S8（白地 3.47:1 / dark の面 3.70:1）。kohaku の border（S4・S5）だと
+   薄すぎて札に見えない。
+
+     <span data-kh="tag">
+       <span data-part="type">状態</span>承認待ち
+       <button type="button" data-part="remove" aria-label="状態「承認待ち」を外す"></button>
+     </span>
+   ========================================================================== */
+
+@layer kohaku {
+  [data-kh="tag"] {
+    --kh-tag-border: var(--kh-gray-8);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kh-space-1);
+    height: var(--kh-tag-height, 1.5rem);
+    padding-inline: 0.625rem;
+    font-size: var(--kh-text-md);
+    line-height: var(--kh-leading-none);
+    color: var(--kh-color-fg);
+    white-space: nowrap;
+    background: var(--kh-color-surface);
+    border: 1px solid var(--kh-tag-border);
+    border-radius: var(--kh-radius-full);
+  }
+  /* 外すボタンがあるときは右の余白を詰める。ボタン自身が丸い当たり判定を持つ */
+  [data-kh="tag"]:has(> [data-part="remove"]) {
+    padding-inline-end: 1px;
+  }
+
+  [data-kh="tag"] > [data-part="type"] {
+    font-size: var(--kh-text-sm);
+    color: var(--kh-color-fg-muted);
+  }
+
+  [data-kh="tag"] > [data-part="remove"] {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 1.375rem;
+    height: 1.375rem;
+    padding: 0;
+    color: var(--kh-color-fg-muted);
+    background: none;
+    border: 0;
+    border-radius: var(--kh-radius-full);
+    cursor: pointer;
+    /* 和文のインクは札の中心より 0.5px 上に出る（Button と同じ）。⊗ を文字に合わせて上げる。
+       4 倍で枠線の上端を基準に測った（docs/notes.md） */
+    translate: 0 calc(var(--kh-tag-optical-shift, 0.036em) * -1);
+  }
+  [data-kh="tag"] > [data-part="remove"]::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: currentColor;
+    mask: var(--kh-glyph-circle-x) center / contain no-repeat;
+  }
+  [data-kh="tag"] > [data-part="remove"]:hover {
+    color: var(--kh-color-fg);
+  }
+  [data-kh="tag"] > [data-part="remove"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: 0;
+  }
+}

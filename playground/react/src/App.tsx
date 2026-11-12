@@ -1,5 +1,5 @@
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, HStack, Link, Spinner, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -53,7 +53,15 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>VStack / HStack — 間隔は kohaku の間隔トークンの番号</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
+      <HStack>
+        <Tag type="状態" onRemove={() => toaster.create({ title: "状態の条件を外しました" })}>承認待ち</Tag>
+        <Tag type="部署" onRemove={() => {}}>営業部</Tag>
+        <Tag onRemove={() => {}}>タクシー</Tag>
+        <Tag type="期間">11/1〜11/30</Tag>
+      </HStack>
+
+      <h2 style={h2}>VStack / HStack — 間隔は kohaku の間隔トークンの番号</h2>
       <VStack gap={6} style={{ fontSize: ".875rem" }}>
         <HStack>
           <span style={{ padding: ".5rem .75rem", border: "1px dashed var(--kh-color-border-strong)", borderRadius: ".25rem" }}>HStack</span><span style={{ padding: ".5rem .75rem", border: "1px dashed var(--kh-color-border-strong)", borderRadius: ".25rem" }}>既定は 8px</span><span style={{ padding: ".5rem .75rem", border: "1px dashed var(--kh-color-border-strong)", borderRadius: ".25rem" }}>縦は中央</span>

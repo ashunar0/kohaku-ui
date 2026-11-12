@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -57,7 +57,15 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">VStack / HStack — 間隔は kohaku の間隔トークンの番号</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">Tag — 選んだ値の札。onRemove で外すボタンが出る</h2>
+    <HStack>
+      <Tag type="状態" @remove="toaster.create({ title: '状態の条件を外しました' })">承認待ち</Tag>
+      <Tag type="部署" @remove="() => {}">営業部</Tag>
+      <Tag @remove="() => {}">タクシー</Tag>
+      <Tag type="期間">11/1〜11/30</Tag>
+    </HStack>
+
+    <h2 :style="h2">VStack / HStack — 間隔は kohaku の間隔トークンの番号</h2>
     <VStack :gap="6" style="font-size: .875rem">
       <HStack>
         <span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">HStack</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">既定は 8px</span><span style="padding: .5rem .75rem; border: 1px dashed var(--kh-color-border-strong); border-radius: .25rem">縦は中央</span>
