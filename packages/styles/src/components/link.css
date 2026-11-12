@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Link — 文中・表・単独のどこでも常に下線を引き、hover で色を濃くする（freee Vibes と同じ）
+
+   リンクの青（P7）と本文（GY7）の差は 2.07:1 で、WCAG 1.4.1 の 3:1 に届かない。
+   色だけでは文中のリンクを見分けられないので、下線は外さない。
+   <a> にも <button> にも付けられる（表の行を開くボタンなど）。
+   パンくずのリンクは nav の中なので Breadcrumbs が別に持つ（下線は hover だけ）。
+   ========================================================================== */
+
+@layer kohaku {
+  [data-kh="link"] {
+    color: var(--kh-color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    border-radius: var(--kh-radius-sm);
+    cursor: pointer;
+  }
+  /* <button> の既定の見た目を消して、文字と同じに並ぶようにする */
+  button[data-kh="link"] {
+    padding: 0;
+    background: none;
+    border: 0;
+    text-align: inherit;
+  }
+  [data-kh="link"]:hover {
+    color: var(--kh-color-link-hover);
+  }
+  [data-kh="link"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+}

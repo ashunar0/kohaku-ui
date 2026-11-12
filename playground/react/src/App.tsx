@@ -1,5 +1,5 @@
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, Link, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -53,7 +53,17 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Breadcrumbs — nav / ol と区切りは隠れている</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Link — 常に下線。表の行を開くボタンは asChild</h2>
+      <div style={{ display: "grid", gap: ".75rem", fontSize: ".875rem" }}>
+        <p style={{ margin: 0 }}>
+          交通費は<Link href="#">経費精算の規程</Link>に沿って申請してください。
+        </p>
+        <p style={{ margin: 0 }}>
+          <Link asChild><button type="button" onClick={() => toaster.create({ title: "EX-1042 を開きました" })}>EX-1042</button></Link>
+        </p>
+      </div>
+
+      <h2 style={h2}>Breadcrumbs — nav / ol と区切りは隠れている</h2>
       <div style={{ display: "grid", gap: "1rem" }}>
         <Breadcrumbs>
           <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>

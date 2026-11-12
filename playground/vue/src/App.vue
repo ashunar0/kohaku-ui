@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, IconButton, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, IconButton, Link, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -57,7 +57,17 @@ const h2 = {
       </span>
     </div>
 
-    <h2 :style="{ ...h2, marginTop: 0 }">Breadcrumbs — nav / ol と区切りは隠れている</h2>
+    <h2 :style="{ ...h2, marginTop: 0 }">Link — 常に下線。表の行を開くボタンは asChild</h2>
+    <div style="display: grid; gap: .75rem; font-size: .875rem">
+      <p style="margin: 0">
+        交通費は<Link href="#">経費精算の規程</Link>に沿って申請してください。
+      </p>
+      <p style="margin: 0">
+        <Link as-child><button type="button" @click="toaster.create({ title: 'EX-1042 を開きました' })">EX-1042</button></Link>
+      </p>
+    </div>
+
+    <h2 :style="h2">Breadcrumbs — nav / ol と区切りは隠れている</h2>
     <div style="display: grid; gap: 1rem">
       <Breadcrumbs>
         <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>

@@ -13,7 +13,6 @@
 
 | 部品 | メモ |
 |---|---|
-| Link | |
 | Spinner | |
 | Stack / Cluster | 縦積み・横並びのレイアウト |
 | 閉じるボタン付き Badge | 今の Badge に足す |

@@ -49,6 +49,7 @@ export { default as Actions } from "./Actions.vue"
 export { default as Affix } from "./Affix.vue"
 export { Card } from "./card"
 export { default as Table } from "./Table.vue"
+export { default as Link } from "./Link.vue"
 export const Breadcrumbs = Object.assign(BreadcrumbsVue, { Item: BreadcrumbsItem })
 export { Alert, type AlertVariant } from "./alert"
 

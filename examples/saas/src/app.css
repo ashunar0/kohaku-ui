@@ -23,29 +23,8 @@
   border: 0;
 }
 
-/* Link — 下線と色だけ。kohaku に --kh-color-link はあるのに部品が無い */
-.app-nav a {
-  color: inherit;
-  text-decoration: none;
-}
-.row-link {
-  font: inherit;
-  color: var(--kh-color-link);
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  font-variant-numeric: tabular-nums;
-}
-.row-link:hover {
-  color: var(--kh-color-link-hover);
-  text-decoration: underline;
-}
-.row-link:focus-visible {
-  outline: 2px solid var(--kh-color-ring);
-  outline-offset: 2px;
-  border-radius: var(--kh-radius-sm);
-}
+/* Link — kohaku に入った（@kohaku/react の Link）。ここで書いていたのは
+   色・hover・focus ring と、<button> の既定の見た目を消すところ */
 
 /* Breadcrumbs — kohaku に入った（@kohaku/react の Breadcrumbs）。ここで書いていたのは
    区切りの「/」と現在地の色 */
@@ -119,6 +98,7 @@
   /* 13px（text-sm）だと和文では小さい。ナビは本文と同じ段を使う */
   font-size: var(--kh-text-md);
   color: var(--kh-color-fg-body);
+  text-decoration: none;
 }
 .app-nav a:hover {
   background: var(--kh-color-surface-muted);
@@ -311,3 +291,9 @@
 .detail-amount {
   font-variant-numeric: tabular-nums;
 }
+
+/* 申請番号の桁をそろえる。Table の tabular-nums は金額の列（data-numeric）だけ */
+.row-id {
+  font-variant-numeric: tabular-nums;
+}
+

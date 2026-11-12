@@ -12,6 +12,7 @@ import {
   Icon,
   IconButton,
   Input,
+  Link,
   Menu,
   Pagination,
   Select,
@@ -221,7 +222,7 @@ export function ExpensesPage() {
                   />
                 </td>
                 <td data-fit>
-                  <button type="button" className="row-link" onClick={() => setOpen(e)}>{e.id}</button>
+                  <Link asChild><button type="button" className="row-id" onClick={() => setOpen(e)}>{e.id}</button></Link>
                 </td>
                 <td data-fit>{formatDate(e.date)}</td>
                 <td>
