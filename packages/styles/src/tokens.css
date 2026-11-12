@@ -11,6 +11,9 @@
    ========================================================================== */
 
 :root {
+  /* スクロールバー・textarea のつまみなど、ブラウザが描く部品の色。dark で切り替える */
+  color-scheme: light;
+
   /* ---- L1 primitive: blue（Primary P1〜P10） ------------------------------ */
   --kh-blue-1:  #ebf3ff;
   --kh-blue-2:  #dce8ff;
@@ -233,6 +236,8 @@
    freee に dark は無い。同じパレットの暗い段から kohaku が組む。
    status は soft = 10、line = 7、deep = 2（10 の上で 5.45〜9.69:1） */
 :root[data-theme="dark"] {
+  color-scheme: dark;
+
   --kh-color-canvas:        var(--kh-mono-10);   /* GY10 */
   --kh-color-surface:       var(--kh-mono-7);    /* GY7 */
   --kh-color-surface-muted: var(--kh-gray-10);   /* S10 */

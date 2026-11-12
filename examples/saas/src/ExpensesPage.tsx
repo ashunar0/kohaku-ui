@@ -90,8 +90,10 @@ export function ExpensesPage() {
     })
   }
 
+  // まとまり（見出し / 数字 / 一覧）の間は 32px、一覧の中（絞り込み・表・ページ送り）は 12px。
+  // どこも同じ間隔だと、絞り込みがどの表に効くのか読めない
   return (
-    <VStack gap={5} className="page">
+    <VStack gap={8} className="page">
       <header className="page-head" data-kh="hstack" data-justify="between" data-align="end" data-gap="4">
         <div>
           <h1>経費申請</h1>
@@ -123,6 +125,7 @@ export function ExpensesPage() {
         ))}
       </div>
 
+      <VStack gap={3}>
       {/* ── 絞り込み ──────────────────────────────────────── */}
       <HStack gap={3} className="filters">
         <Group attached>
@@ -287,6 +290,7 @@ export function ExpensesPage() {
           siblingCount={1}
         />
       </HStack>
+      </VStack>
 
       {/* ── 詳細 ─────────────────────────────────────────── */}
       <Dialog.Root open={open != null} onOpenChange={(d) => !d.open && setOpen(null)}>
