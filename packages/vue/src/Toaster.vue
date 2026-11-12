@@ -15,6 +15,10 @@ defineProps<{ toaster: CreateToasterReturn }>()
   <Toaster :toaster="toaster" aria-label="通知" v-slot="t">
     <slot v-bind="t">
       <Toast.Root>
+        <!-- 読み上げは Toast の title が持つので、Spinner の文言は付けない -->
+        <span v-if="t.type === 'loading'" data-kh="spinner" aria-hidden="true">
+          <svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" /></svg>
+        </span>
         <Toast.Title v-if="t.title != null">{{ t.title }}</Toast.Title>
         <Toast.Description v-if="t.description != null">{{ t.description }}</Toast.Description>
         <Toast.ActionTrigger v-if="t.action">{{ t.action.label }}</Toast.ActionTrigger>

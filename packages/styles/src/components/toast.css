@@ -75,14 +75,27 @@
     --kh-toast-glyph: var(--kh-glyph-circle-x);
   }
 
-  /* 読み込み中は輪を回す。絵柄ではなく線で描く */
+  /* 読み込み中は Spinner。::before には SVG を入れられず、Spinner の伸び縮みが描けないので、
+     書き味レイヤーの Toaster が root の中に Spinner を置く（読み上げは Toast が持つので aria-hidden）。
+     置いたときは ::before を消す */
+  [data-scope="toast"][data-part="root"] > [data-kh="spinner"] {
+    --kh-spinner-size: 1rem;
+    grid-column: icon;
+    grid-row: 1 / span 2;
+    margin-inline-end: var(--kh-space-3);
+    margin-top: calc((var(--kh-leading-ui) * 1em - 1rem) / 2);
+  }
+  [data-scope="toast"][data-part="root"][data-type="loading"]:has(> [data-kh="spinner"])::before {
+    content: none;
+  }
+  /* 素の Ark で組んだとき（Spinner が無いとき）の代わり。Spinner に寄せて、輪は描かず青い弧だけ回す */
   @keyframes kh-spin { to { rotate: 1turn } }
   [data-scope="toast"][data-part="root"][data-type="loading"]::before {
     background: none;
     -webkit-mask: none;
             mask: none;
-    border: 2px solid var(--kh-color-neutral-soft);
-    border-top-color: var(--kh-color-fg-muted);
+    border: 2px solid transparent;
+    border-top-color: var(--kh-color-accent);
     border-radius: var(--kh-radius-full);
     animation: kh-spin 0.8s linear infinite;
   }

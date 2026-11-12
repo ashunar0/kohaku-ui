@@ -1807,3 +1807,14 @@ Vibes の Button は処理中を持たない（くるくるは InlineSpinner を
   （文字のボタン 16px、IconButton 20px）。真ん中に置くので和文の補正は付けない（測って中心のずれ 0）
 - 読み上げは `loadingLabel`（既定「処理中」）。ボタンの名前は「承認する 処理中」になる
 
+## 2026-11-12 Toast の読み込み中を Spinner にそろえた
+
+前は root の ::before に灰色の輪を回していた（Spinner より前に作ったもの）。
+
+- **::before では Spinner の動きが描けない。** 弧の伸び縮みは SVG の stroke-dasharray で、擬似要素には SVG を
+  入れられない。書き味レイヤーの Toaster が、type が loading のときだけ root の中に Spinner を置く。
+  置いたときは `:has()` で ::before を消す
+- **Spinner の文言は付けない（aria-hidden）。** Toast 自身が title を読み上げるので、「読み込み中」が重なる
+- 大きさは種類のアイコンと同じ 16px、位置も同じ（1 行目の中央。測ってずれ 0）。色は Spinner と同じ accent
+- **素の Ark で組んだときのために ::before は残す。** 薄い輪は描かず、青い弧だけ回す（Spinner に寄せた）
+
