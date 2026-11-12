@@ -61,15 +61,50 @@
   }
 
   [data-kh="input"][data-size="sm"],
+  [data-kh="input-icon"][data-size="sm"],
   [data-kh="textarea"][data-size="sm"] {
     --kh-field-height:    2.25rem;
     --kh-field-padding-x: var(--kh-space-3);
     --kh-field-font-size: var(--kh-text-md);
   }
   [data-kh="input"][data-size="lg"],
+  [data-kh="input-icon"][data-size="lg"],
   [data-kh="textarea"][data-size="lg"] {
     --kh-field-height:    2.75rem;
     --kh-field-padding-x: var(--kh-space-4);
     --kh-field-font-size: var(--kh-text-lg);
+  }
+
+  /* ---- 枠の内側の左にアイコン（検索の虫眼鏡など） -------------------------
+     単位（年・歳・円）は枠の外（Affix）。こちらは入力欄の働きを示す絵なので内側。
+     size は箱にも付くので、箱の中のアイコンも入力欄と同じ padding を見られる */
+  [data-kh="input-icon"] {
+    position: relative;
+    display: block;
+    /* 入力欄の中の文字は、ページ上の位置の端数しだいで 1px 上下する（外に描くアイコンは
+       動かない）。箱ごと 1 枚のレイヤーにして同じ基準で描かせる（DatePicker と同じ） */
+    will-change: transform;
+  }
+  [data-kh="input-icon"] > [data-part="icon"] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--kh-field-padding-x, var(--kh-space-4));
+    display: flex;
+    align-items: center;
+    /* 文字は上 padding で optical-shift だけ下がり、インクの中心は枠の中心より
+       その半分（0.5px @14px）下に来る。アイコンも同じだけ下げる（実測で差 0） */
+    font-size: var(--kh-field-font-size, var(--kh-text-md));
+    translate: 0 calc(var(--kh-field-optical-shift, 0.07em) / 2);
+    color: var(--kh-color-fg-muted);
+    pointer-events: none;
+  }
+  [data-kh="input-icon"] > [data-part="icon"] > svg {
+    width: var(--kh-input-icon-size, 1rem);
+    height: var(--kh-input-icon-size, 1rem);
+  }
+  [data-kh="input-icon"] > [data-kh="input"] {
+    padding-inline-start: calc(
+      var(--kh-field-padding-x, var(--kh-space-4)) + var(--kh-input-icon-size, 1rem) + var(--kh-space-2)
+    );
   }
 }

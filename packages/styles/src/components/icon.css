@@ -25,6 +25,14 @@
   [data-kh="button"][data-size="sm"] { --kh-icon-size: 0.875rem; }
   [data-kh="button"][data-size="lg"] { --kh-icon-size: 1.125rem; }
 
+  /* アイコンだけのボタンは、ボタンの高さの半分（xs 14 / sm 18 / md 20 / lg 22px）。
+     文字の隣に置くときの大きさのままだと、枠に対して小さく見えた（約 0.4）。
+     数字で他の場所（入力欄の虫眼鏡 16px など）とそろえない。置き場所ごとに見て決める */
+  [data-kh="button"][data-icon]                 { --kh-icon-size: 1.25rem; }
+  [data-kh="button"][data-icon][data-size="xs"] { --kh-icon-size: 0.875rem; }
+  [data-kh="button"][data-icon][data-size="sm"] { --kh-icon-size: 1.125rem; }
+  [data-kh="button"][data-icon][data-size="lg"] { --kh-icon-size: 1.375rem; }
+
   /* 和文スタックの ink box は em より縦に大きく、中心が em 中心よりわずかに上に出る。
      実測 0.5px @14px ≒ 0.036em。flex 中央揃えでは margin の半分だけ動く。 */
   [data-kh="button"] [data-kh="icon"] { margin-bottom: var(--kh-icon-optical-shift, 0.072em); }

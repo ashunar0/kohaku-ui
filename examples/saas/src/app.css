@@ -73,6 +73,8 @@
   /* 左右は詰める。項目側が内側 padding を持つので、ここで二重に空けると
      文字の左端が中に入りすぎる */
   padding: var(--kh-space-5) var(--kh-space-2);
+  /* ロゴの行（32px）の中心をヘッダー（56px）の中心にそろえる: (56 - 32) / 2 = 12px */
+  padding-block-start: var(--kh-space-3);
   /* 画面の高さに固定し、本文だけスクロールさせる。
      grid の既定（stretch）だと本文の長さに合わせて伸びてしまう */
   position: sticky;
@@ -165,8 +167,34 @@
 }
 
 .app-main {
-  padding: var(--kh-space-6) var(--kh-space-8);
   min-width: 0;
+}
+/* 本文の上に固定する。区切りは下の線 1 本（地はどちらも白なので線で分ける） */
+.app-head {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kh-space-4);
+  /* 線より上を 56px にする（線を高さに含めると中身の中心が 0.5px 上がり、ロゴの行とずれる） */
+  box-sizing: content-box;
+  height: 3.5rem;
+  padding: 0 var(--kh-space-8);
+  background: var(--kh-color-canvas);
+  border-bottom: 1px solid var(--kh-color-border);
+}
+.app-head-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--kh-space-2);
+}
+.app-search {
+  width: 16rem;
+}
+.app-body {
+  padding: var(--kh-space-6) var(--kh-space-8);
 }
 .page {
   display: flex;

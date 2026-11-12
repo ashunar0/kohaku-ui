@@ -39,3 +39,21 @@ export const Disabled: Story = { args: { disabled: true, defaultValue: "plan_fre
  * 見えるため、border 1px + inset 1px で同心の矩形にしている。
  */
 export const Invalid: Story = { args: { "aria-invalid": true, defaultValue: "my workspace" } }
+
+const SearchGlyph = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+  </svg>
+)
+
+/** icon を渡すと枠の内側の左に置く。飾りなので読み上げには出さない（名前は aria-label で持たせる）。
+ *  単位（円・歳）は枠の外。そちらは Affix */
+export const WithIcon: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "0.75rem", maxWidth: "20rem" }}>
+      <Input type="search" size="sm" icon={SearchGlyph} placeholder="申請・メンバーを検索" aria-label="検索" />
+      <Input type="search" icon={SearchGlyph} placeholder="申請・メンバーを検索" aria-label="検索" />
+      <Input type="search" size="lg" icon={SearchGlyph} placeholder="申請・メンバーを検索" aria-label="検索" />
+    </div>
+  ),
+}

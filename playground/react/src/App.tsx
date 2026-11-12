@@ -20,6 +20,8 @@ const h2 = {
   color: "var(--kh-color-fg-muted)", margin: "2.5rem 0 .75rem", fontWeight: 600,
 }
 
+const SearchGlyph = <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+
 export function App() {
   const [invalid, setInvalid] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark">("light")
@@ -327,6 +329,7 @@ export function App() {
           <Input placeholder="you@example.com" />
           <Button>招待する</Button>
         </Group>
+        <Input type="search" icon={SearchGlyph} placeholder="申請・メンバーを検索" aria-label="検索" />
         <Group attached>
           <Input placeholder="キーワードで検索" />
           <Button variant="outline">検索</Button>
