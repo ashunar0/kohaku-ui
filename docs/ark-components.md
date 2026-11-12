@@ -4,7 +4,7 @@
 **この一覧にあるものは自作しない。Ark の `data-scope` / `data-part` を CSS で狙う。**
 
 一覧に無いもの（振る舞いを持たない、純粋な見た目・レイアウトの箱）は kohaku が持つ。
-例: Button, IconButton, Card, Badge, Alert, Group, Table, Breadcrumbs, Link
+例: Button, IconButton, Card, Badge, Alert, Group, Table, Breadcrumbs, Link, Spinner
 
 取得元: `chakra-ui/ark` → `packages/react/src/components`（2026-09 時点、63 件）
 

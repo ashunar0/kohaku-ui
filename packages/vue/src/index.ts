@@ -50,6 +50,7 @@ export { default as Affix } from "./Affix.vue"
 export { Card } from "./card"
 export { default as Table } from "./Table.vue"
 export { default as Link } from "./Link.vue"
+export { default as Spinner } from "./Spinner.vue"
 export const Breadcrumbs = Object.assign(BreadcrumbsVue, { Item: BreadcrumbsItem })
 export { Alert, type AlertVariant } from "./alert"
 

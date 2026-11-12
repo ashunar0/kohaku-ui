@@ -28,6 +28,7 @@
 @import "./components/date-picker.css";
 @import "./components/collapsible.css";
 @import "./components/progress.css";
+@import "./components/spinner.css";
 @import "./components/pagination.css";
 @import "./components/link.css";
 @import "./components/breadcrumbs.css";

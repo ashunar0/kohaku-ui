@@ -1,5 +1,5 @@
 import {
-  Actions, Alert, Badge, Breadcrumbs, Button, Link, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Alert, Badge, Breadcrumbs, Button, Link, Spinner, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -53,7 +53,15 @@ export function App() {
         </span>
       </div>
 
-      <h2 style={{ ...h2, marginTop: 0 }}>Link — 常に下線。表の行を開くボタンは asChild</h2>
+      <h2 style={{ ...h2, marginTop: 0 }}>Spinner — role="status" と読み上げの文言を持つ</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", fontSize: ".875rem" }}>
+        <Spinner size="sm" /><Spinner /><Spinner size="lg" />
+        <span style={{ display: "flex", alignItems: "center", gap: ".5rem", color: "var(--kh-color-fg-muted)" }}>
+          <Spinner size="sm" label="申請の一覧を読み込み中" />読み込み中…
+        </span>
+      </div>
+
+      <h2 style={h2}>Link — 常に下線。表の行を開くボタンは asChild</h2>
       <div style={{ display: "grid", gap: ".75rem", fontSize: ".875rem" }}>
         <p style={{ margin: 0 }}>
           交通費は<Link href="#">経費精算の規程</Link>に沿って申請してください。
