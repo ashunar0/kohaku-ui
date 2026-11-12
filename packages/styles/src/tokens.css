@@ -143,10 +143,9 @@
      ====================================================================== */
 
   /* ---- surface: 奥から手前へ -------------------------------------------- */
-  /* 中身の地は白、サイドバーなど脇の地は S1（freee の背景は「S1 か白」）。
-     中身を S1 にすると、白い表や面と並んだときに地が濁って見えた */
+  /* 地は白（freee の背景は「S1 か白」）。S1 にすると白い表や面と並んで濁り、
+     サイドバーだけ S1 にすると選択中の青（P1）がグレーの上で濁った */
   --kh-color-canvas:        #ffffff;             /* ページの地 */
-  --kh-color-canvas-muted:  var(--kh-gray-1);    /* S1 脇の地（サイドバーなど） */
   --kh-color-surface:       #ffffff;             /* 持ち上がった面 */
   --kh-color-surface-muted: var(--kh-gray-2);    /* S2 沈んだ面。S3 だと fg-muted が 4.29:1 で割れる */
   --kh-color-bg:            var(--kh-color-canvas);  /* alias */
@@ -232,9 +231,6 @@
    status は soft = 10、line = 7、deep = 2（10 の上で 5.45〜9.69:1） */
 :root[data-theme="dark"] {
   --kh-color-canvas:        var(--kh-mono-10);   /* GY10 */
-  /* light の S1 に当たる「中身より沈んだ段」が dark には無い（GY10 が一番暗い）。
-     面と同じ GY7 にして、明るさの差で分ける（GY10 と 1.30:1） */
-  --kh-color-canvas-muted:  var(--kh-mono-7);
   --kh-color-surface:       var(--kh-mono-7);    /* GY7 */
   --kh-color-surface-muted: var(--kh-gray-10);   /* S10 */
 

@@ -105,7 +105,7 @@
   align-self: start;
   height: 100dvh;
   overflow-y: auto;
-  background: var(--kh-color-canvas-muted);
+  background: var(--kh-color-surface);
   border-right: 1px solid var(--kh-color-border);
 }
 /* ブランド・ナビ・自分の 3 行は同じ内側 padding を持つ。
@@ -148,7 +148,8 @@
 }
 .app-nav a[aria-current="page"] {
   background: var(--kh-color-accent-subtle);
-  color: var(--kh-color-fg);
+  /* 文字もアイコン（currentColor）も青。P1 の上で 5.55:1、dark は P10 の上で 4.87:1 */
+  color: var(--kh-color-accent);
   font-weight: 500;
 }
 .app-nav a span {

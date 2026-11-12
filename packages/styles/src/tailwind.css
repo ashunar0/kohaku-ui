@@ -13,7 +13,6 @@
 @theme inline {
   /* ---- color: L2 semantic をそのまま Tailwind の色名にする -------------- */
   --color-canvas:        var(--kh-color-canvas);
-  --color-canvas-muted:  var(--kh-color-canvas-muted);
   --color-surface:       var(--kh-color-surface);
   --color-surface-muted: var(--kh-color-surface-muted);
 
