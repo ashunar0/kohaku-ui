@@ -39,8 +39,8 @@ Dialog や Select の中身は `<body>` 直下に飛ぶ。子孫セレクタは�
 ### 4. トークンは 3 層。利用者が触るのは L2 だけ
 
 ```
-L1 primitive   --kh-gray-900        生の値。意味を持たない
-L2 semantic    --kh-color-accent    役割。ブランド色の注入はここ
+L1 primitive   --kh-blue-7          生の値。意味を持たない
+L2 semantic    --kh-color-accent    役割。利用側が色を変えるならここ
 L3 component   --kh-button-bg       個別調整の逃げ道
 ```
 
@@ -169,7 +169,11 @@ pnpm ink <png>    # 文字のインク位置を測る
 
 ## 方針
 
-- **ブランド色を持たない。** accent は無彩色。ブランド色は利用側が L2 を 3 行上書きして注入
+- **色は freee の指定カラーをそのまま使う**（https://brand.freee.co.jp/designelements/color/）。
+  利用者はあさひ 1 人なので、自前で色を組むより確実で早い。L1 はパレットの写しで、段の番号も
+  freee と同じ（P5 = `--kh-blue-5`、S = `--kh-gray-*`、GY = `--kh-mono-*`）。L2 の割り当ては
+  freee Vibes の「色についての方針」に従い、Vibes が決めていない役割（枠線・選択の地・dark）だけ
+  kohaku が決める。**パレットに無い色を作らない。** トークン名に freee は入れない（public なので）
 - **a11y は WCAG 2.2 AA を目標。AAA は追わない。** 見送った項目は `docs/notes.md` の
   Known Gaps に、切り替え用の CSS ごと書いてある
 - **アイコンは「部品を操作するために要る図形」だけ持つ。** チェック・丸・シェブロン・×

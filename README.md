@@ -15,7 +15,7 @@ Ark UI が出す DOM は React / Vue / Solid / Svelte のどれでも同じな�
 
 ## 方針
 
-- **ブランド色を持たない。** accent は無彩色。ブランド色は利用側がトークンを上書きして入れる
+- **色は freee の指定カラーを使う。** 割り当ては freee Vibes に従い、決まっていない役割と dark は kohaku が決める
 - **利用側の CSS / Tailwind が必ず勝つ。** kohaku の CSS はすべて `@layer kohaku` の中にある
 - **和文が基準。** 行間 1.75 / 字送り 0.02em / `palt`
 - **a11y は WCAG 2.2 AA が目標**
@@ -121,7 +121,7 @@ import { Button, Dialog } from "@kohaku/vue"
 ## トークン
 
 ```
-L1 primitive   --kh-gray-900        生の値
+L1 primitive   --kh-blue-7          生の値
 L2 semantic    --kh-color-accent    役割。利用側が触るのはここ
 L3 component   --kh-button-bg       個別調整の逃げ道
 ```

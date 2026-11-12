@@ -62,21 +62,3 @@ export const WithIcon: Story = {
 }
 
 export const Disabled: Story = { args: { disabled: true } }
-
-/** accent を 3 行上書きするとブランド色が入る。kohaku 自身は無彩色 */
-export const BrandInjection: Story = {
-  render: () => (
-    <div
-      style={{
-        "--kh-color-accent": "oklch(0.55 0.20 265)",
-        "--kh-color-accent-hover": "oklch(0.48 0.20 265)",
-        "--kh-color-accent-fg": "oklch(0.99 0 0)",
-      } as React.CSSProperties}
-    >
-      <Group>
-        <Button>solid</Button>
-        <Button variant="outline">outline</Button>
-      </Group>
-    </div>
-  ),
-}
