@@ -1991,3 +1991,14 @@ Switch と同じ穴（補足の置き場所が無く、aria-describedby もつ�
 1 行目の中央に置く。ラベルが折り返したときも 1 行目（以前は 2 行の真ん中に来ていた）。
 root を inline-flex から inline-grid に変えたが、既存の画面（会員登録・表のセル）で箱の位置・行の高さ・幅は
 変更前と同じことを測って確かめた。
+
+## Dialog の右上に × を置く（2026-11-13）
+
+「× だけ / × 閉じる（デジタル庁）/ × なし（SmartHR・それまでの kohaku）」を並べて、× だけにした
+（あさひ「『閉じる』みたいなのはいらない」）。足もとには決める操作だけを置き、「閉じる」を並べない。
+確認ダイアログの「やめる」は選ぶ操作なので足もとに残す。
+
+Dialog.Content が空の CloseTrigger を先頭に置き、CSS が × を描く（Toast と同じ）。読み上げの名前は「閉じる」。
+見た目は IconButton の ghost・sm（36px・絵柄 18px）。見出しの 1 行目の中央に置き、見出しは × の手前で折り返す。
+CSS は content の直下の close-trigger に絞る。足もとの「やめる」（CloseTrigger asChild）を巻き込まないため。
+出さないときは `withoutCloseTrigger`。

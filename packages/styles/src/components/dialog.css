@@ -23,6 +23,9 @@
 
   [data-scope="dialog"][data-part="content"] {
     --kh-dialog-padding: var(--kh-space-6);
+    /* 右上の × の置き場所の基準。大きさは見出しの右の空きにも使うので content で持つ */
+    position: relative;
+    --kh-dialog-close-size: 2.25rem;
 
     width: 100%;
     max-width: var(--kh-dialog-width, 28rem);
@@ -54,6 +57,50 @@
     outline: var(--kh-ring-width) solid var(--kh-color-ring);
     outline-offset: var(--kh-ring-offset);
   }
+  /* ---- 右上の × ----------------------------------------------------------
+     書き味レイヤーの Dialog.Content が空の close-trigger を直下に置き、CSS が × を描く（Toast と同じ）。
+     直下に絞るのは、足もとに置いた「やめる」などの CloseTrigger（asChild）を巻き込まないため。
+     見た目は IconButton の ghost・sm（36px、絵柄は半分の 18px）。
+     見出しの 1 行目の中央に置き、見出しの文字は × の手前で折り返す */
+  [data-scope="dialog"][data-part="content"] > [data-part="close-trigger"] {
+    position: absolute;
+    top: calc(var(--kh-dialog-padding) + (var(--kh-text-xl) * var(--kh-leading-tight) - var(--kh-dialog-close-size)) / 2);
+    right: var(--kh-dialog-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--kh-dialog-close-size);
+    height: var(--kh-dialog-close-size);
+    padding: 0;
+    color: var(--kh-color-fg-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--kh-radius);
+    cursor: pointer;
+    transition:
+      background-color var(--kh-duration-fast) var(--kh-ease),
+      color var(--kh-duration-fast) var(--kh-ease);
+  }
+  [data-scope="dialog"][data-part="content"] > [data-part="close-trigger"]:hover {
+    background: var(--kh-color-surface-muted);
+    color: var(--kh-color-fg);
+  }
+  [data-scope="dialog"][data-part="content"] > [data-part="close-trigger"]:focus-visible {
+    outline: var(--kh-ring-width) solid var(--kh-color-ring);
+    outline-offset: var(--kh-ring-offset);
+  }
+  [data-scope="dialog"][data-part="content"] > [data-part="close-trigger"]:empty::before {
+    content: "";
+    width: calc(var(--kh-dialog-close-size) / 2);
+    height: calc(var(--kh-dialog-close-size) / 2);
+    background: currentColor;
+    -webkit-mask: var(--kh-glyph-x) center / contain no-repeat;
+            mask: var(--kh-glyph-x) center / contain no-repeat;
+  }
+  [data-scope="dialog"][data-part="content"]:has(> [data-part="close-trigger"]) > [data-part="title"] {
+    padding-inline-end: calc(var(--kh-dialog-close-size) + var(--kh-space-2));
+  }
+
   [data-scope="dialog"][data-part="description"] {
     margin: 0;
     margin-top: calc(var(--kh-space-4) * -1 + var(--kh-space-2));

@@ -322,7 +322,6 @@ export function ExpensesPage() {
           </Field.Root>
 
           <Actions>
-            <Dialog.CloseTrigger asChild><Button variant="ghost">閉じる</Button></Dialog.CloseTrigger>
             <Button variant="outline" onClick={() => { setOpen(null); toaster.create({ title: "差し戻しました" }) }}>
               差し戻す
             </Button>
