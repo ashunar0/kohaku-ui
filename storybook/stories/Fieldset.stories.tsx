@@ -119,3 +119,13 @@ export const LabelSide: Story = {
     </form>
   ),
 }
+
+/** 箱が 26rem より狭いと legend を上に戻す（Field の LabelSideNarrow と同じ） */
+export const LabelSideNarrow: Story = {
+  decorators: [(Story) => <div style={{ width: "22rem" }}><Story /></div>],
+  render: () => (
+    <form data-label-position="side" style={{ display: "grid", gap: "1.5rem" }}>
+      <Form />
+    </form>
+  ),
+}

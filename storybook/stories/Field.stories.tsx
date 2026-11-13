@@ -144,3 +144,33 @@ export const LabelSide: Story = {
     </form>
   ),
 }
+
+/**
+ * 横並びは、置かれた箱が 26rem より狭いとラベルを上に戻す（画面の幅ではなく箱の幅で決める。
+ * 広い画面でもダイアログやサイドパネルの中では狭くなるため）。
+ * 26rem = ラベル列 9rem + 隙間 1rem + 入力欄が最低 16rem。左が 32rem、右が 22rem の箱。
+ */
+export const LabelSideNarrow: Story = {
+  render: () => {
+    const form = (
+      <form data-label-position="side" style={{ display: "grid", gap: "1rem" }}>
+        <Field.Root required invalid>
+          <Field.Label>メールアドレス<Field.RequiredIndicator /></Field.Label>
+          <Field.Input defaultValue="asahi@" />
+          <Field.ErrorText>メールアドレスの形式が正しくありません。</Field.ErrorText>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>自己紹介</Field.Label>
+          <Field.Textarea />
+          <Field.HelperText>プロフィールに表示されます。</Field.HelperText>
+        </Field.Root>
+      </form>
+    )
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "start" }}>
+        <div style={{ width: "32rem" }}>{form}</div>
+        <div style={{ width: "22rem" }}>{form}</div>
+      </div>
+    )
+  },
+}

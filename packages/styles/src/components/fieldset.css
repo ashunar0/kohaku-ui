@@ -72,6 +72,8 @@
     display: grid;
     grid-template-columns: var(--kh-field-label-width, 9rem) minmax(0, 1fr);
     column-gap: var(--kh-space-4);
+    /* 狭いときは legend を上に戻す（Field と同じ。field.css の @container） */
+    container-type: inline-size;
   }
   :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
       [data-scope="fieldset"][data-part="root"][data-label-position="side"]) > * {
@@ -90,6 +92,23 @@
   :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
       [data-scope="fieldset"][data-part="root"][data-label-position="side"]):has([data-scope="field"][data-part="label"]) > [data-part="legend"] {
     margin-top: calc(var(--kh-text-sm) * var(--kh-leading-ui) + var(--kh-space-1));
+  }
+
+  @container (width < 26rem) {
+    :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]) > * {
+      grid-column: 1 / -1;
+    }
+    :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]) > [data-part="legend"],
+    :is([data-label-position="side"] [data-scope="fieldset"][data-part="root"],
+      [data-scope="fieldset"][data-part="root"][data-label-position="side"]):has([data-scope="field"][data-part="label"]) > [data-part="legend"] {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      min-height: 0;
+      margin-top: 0;
+      margin-bottom: var(--kh-space-2);
+    }
   }
 
   /* Field を Group で横に並べたとき。高さの違う補足文やエラーが出ても

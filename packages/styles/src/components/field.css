@@ -80,6 +80,9 @@
     display: grid;
     grid-template-columns: var(--kh-field-label-width, 9rem) minmax(0, 1fr);
     column-gap: var(--kh-space-4);
+    /* 自分の幅で縦に戻す（下の @container）。画面の幅ではなく置かれた箱の幅で決めるのは、
+       広い画面でもダイアログやサイドパネルの中では狭くなるため */
+    container-type: inline-size;
   }
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
       [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) > * {
@@ -98,6 +101,24 @@
   :is([data-label-position="side"] [data-scope="field"][data-part="root"],
       [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *):has(> [data-part="textarea"]) > [data-part="label"] {
     min-height: calc(var(--kh-space-3) * 2 + var(--kh-leading-ui) * 1em + 2px);
+  }
+
+  /* 狭いときはラベルを上に戻す。26rem = ラベル列 9rem + 隙間 1rem + 入力欄が最低 16rem。
+     ラベル列を広げたときは閾値が追従しない（@container に var() は書けない） */
+  @container (width < 26rem) {
+    :is([data-label-position="side"] [data-scope="field"][data-part="root"],
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) > * {
+      grid-column: 1 / -1;
+    }
+    :is([data-label-position="side"] [data-scope="field"][data-part="root"],
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *) > [data-part="label"],
+    :is([data-label-position="side"] [data-scope="field"][data-part="root"],
+      [data-scope="field"][data-part="root"][data-label-position="side"]):not([data-scope="fieldset"] *):has(> [data-part="textarea"]) > [data-part="label"] {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      min-height: 0;
+      margin-bottom: var(--kh-space-2);  /* 縦に置いたときと同じ */
+    }
   }
 
   /* 無効化されたフィールドはラベルまで落とす。Ark は root の状態を全 part に配る */
