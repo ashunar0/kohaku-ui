@@ -24,16 +24,35 @@ export const Disabled: Story = {
 }
 
 /**
+ * ラベルと補足が左、スイッチは右端（iOS の設定と同じ）。縦に並べるとスイッチの列がそろう。
+ * スイッチはラベルの 1 行目の中央に置く。補足は `aria-describedby` でつながり、
+ * 読み上げではラベルとは別に読まれる（Ark の Switch はつながないので kohaku が足している）。
+ */
+export const Description: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem", maxWidth: "28rem" }}>
+      <Switch defaultChecked description="自分が承認する申請が出されたら知らせます。">申請が届いたとき</Switch>
+      <Switch description="毎週月曜の朝に、先週の申請の件数と金額を送ります。">週のまとめ</Switch>
+      <Switch>補足なし</Switch>
+    </div>
+  ),
+}
+
+/**
  * checkbox と違い、切り替えた瞬間に効く設定に使う。
  * 送信して初めて反映されるものは checkbox。
  */
 export const States: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: ".5rem" }}>
+    <div style={{ display: "grid", gap: ".75rem", maxWidth: "20rem" }}>
       <Switch>off</Switch>
       <Switch defaultChecked>on</Switch>
       <Switch disabled>無効</Switch>
       <Switch disabled defaultChecked>無効・on</Switch>
+      <Switch invalid>invalid</Switch>
+      <Switch description="補足文">補足つき</Switch>
+      <Switch disabled description="補足文も薄くなる">無効・補足つき</Switch>
+      <Switch aria-label="ラベルなし" />
     </div>
   ),
 }
@@ -44,7 +63,7 @@ export const States: Story = {
  */
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: ".75rem" }}>
+    <div style={{ display: "grid", gap: ".75rem", maxWidth: "20rem" }}>
       {[
         ["既定", {}],
         ["小", { "--kh-switch-width": "1.625rem", "--kh-switch-height": "1rem" }],

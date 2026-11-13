@@ -335,8 +335,8 @@ export function App() {
           </Checkbox>
         </div>
 
-        <div style={{ display: "grid", gap: ".5rem" }}>
-          <Switch defaultChecked>ワークスペースを公開する</Switch>
+        <div style={{ display: "grid", gap: "1rem", maxWidth: "28rem" }}>
+          <Switch defaultChecked description="URL を知っている人なら誰でも見られます。">ワークスペースを公開する</Switch>
           <Switch>ゲストの招待を許可する</Switch>
           <Switch disabled>エンタープライズ機能（プラン外）</Switch>
         </div>
@@ -478,3 +478,4 @@ export function App() {
     </div>
   )
 }
+

@@ -1,11 +1,26 @@
 @layer kohaku {
-  /* Ark の switch。root は <label>、control がトラック、thumb がつまみ */
+  /* Ark の switch。root は <label>、control がトラック、thumb がつまみ。
+     description は Ark に無いので kohaku が足す（書き味レイヤーが aria-describedby でつなぐ） */
 
+  /* ラベルと補足が左、スイッチは右端（iOS の設定・Primer と同じ）。
+     縦に並べたときスイッチの列が 1 本にそろう。DOM の順は Ark のまま、grid で置き場所だけ決める */
   [data-scope="switch"][data-part="root"] {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--kh-space-2);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: var(--kh-space-4);
     cursor: pointer;
+  }
+  [data-scope="switch"][data-part="label"]       { grid-column: 1; grid-row: 1; }
+  [data-scope="switch"][data-part="description"] { grid-column: 1; grid-row: 2; }
+  [data-scope="switch"][data-part="control"]     { grid-column: 2; grid-row: 1; }
+
+  /* ラベルの無いスイッチ（表のセルなど）は右端に飛ばさず、その場に置く */
+  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"])) {
+    display: inline-flex;
+  }
+  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"])) > [data-part="control"] {
+    margin-top: 0;
   }
 
   /* ---- control（トラック） ---------------------------------------------- */
@@ -22,6 +37,11 @@
     /* 1.4.11 (3:1) を意図的に満たしていない。経緯と切り替え用の 1 行は
        docs/notes.md の Known Gaps */
     background: var(--kh-switch-track-off, var(--kh-color-border-strong));
+
+    /* 補足で 2 行以上になっても、ラベルの 1 行目の中央に置く: (行の高さ - スイッチの高さ) / 2 */
+    margin-top: calc(
+      (var(--kh-switch-font-size, var(--kh-text-md)) * var(--kh-leading-ui) - var(--kh-switch-height, 1.125rem)) / 2
+    );
 
     transition: background-color var(--kh-duration-md) var(--kh-ease);
   }
@@ -64,6 +84,15 @@
     font-feature-settings: var(--kh-font-feature);
     color: var(--kh-color-fg);
     user-select: none;
+  }
+
+  [data-scope="switch"][data-part="description"] {
+    margin-top: 2px;
+    font-size: var(--kh-text-sm);
+    line-height: var(--kh-leading-ui);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    color: var(--kh-color-fg-muted);
   }
 
   /* ---- state ------------------------------------------------------------ */

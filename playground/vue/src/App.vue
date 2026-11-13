@@ -335,8 +335,8 @@ const h2 = {
         </Checkbox>
       </div>
 
-      <div style="display: grid; gap: 0.5rem">
-        <Switch default-checked>ワークスペースを公開する</Switch>
+      <div style="display: grid; gap: 1rem; max-width: 28rem">
+        <Switch default-checked description="URL を知っている人なら誰でも見られます。">ワークスペースを公開する</Switch>
         <Switch>ゲストの招待を許可する</Switch>
         <Switch disabled>エンタープライズ機能（プラン外）</Switch>
       </div>
