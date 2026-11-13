@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge, Button, Card, Group } from "@kohaku/react"
+import { Actions, Badge, Button, Card, Group } from "@kohaku/react"
 
 const meta = {
   title: "Layout/Card",
@@ -50,6 +50,31 @@ export const InLayout: Story = {
           </Card.Header>
           <Card.Footer>
             <Button size="sm" variant="outline">詳細</Button>
+          </Card.Footer>
+        </Card.Root>
+      ))}
+    </div>
+  ),
+}
+
+/**
+ * footer は既定で右寄せ。寄せ方を変えるときは中に Actions を置いて align を渡す
+ * （Actions は footer の幅いっぱいに伸びる）。設定画面のように、見出しの左端にボタンをそろえたいとき用。
+ */
+export const FooterAlign: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem", maxWidth: "24rem" }}>
+      {(["end", "start", "between"] as const).map((align) => (
+        <Card.Root key={align}>
+          <Card.Header>
+            <Card.Title>align="{align}"</Card.Title>
+            <Card.Description>すべての端末からログアウトします。</Card.Description>
+          </Card.Header>
+          <Card.Footer>
+            <Actions align={align}>
+              <Button variant="ghost" size="sm">やめる</Button>
+              <Button variant="outline" size="sm">ログアウト</Button>
+            </Actions>
           </Card.Footer>
         </Card.Root>
       ))}

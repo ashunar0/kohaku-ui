@@ -27,6 +27,11 @@
     gap: var(--kh-space-2);
     justify-content: flex-end;
   }
+  /* footer に Actions を置いたら幅いっぱいに伸ばす。伸ばさないと Actions ごと右に寄り、
+     align（start / between）が効かない */
+  [data-kh="card"] > [data-part="footer"] > [data-kh="actions"] {
+    flex: 1;
+  }
 
   /* 情報の区画が本当に別物のときだけ線を引く。線の両側を gap で揃える */
   [data-kh="card"][data-divided] > [data-part="header"] {

@@ -1976,3 +1976,10 @@ disabled はそのどれもしないので、文字を薄くしてよい。読�
 Input / Textarea / PasswordInput / Select / DatePicker に入れた。素の select（Field.Select）は
 HTML に readonly が無いので対象外。デジタル庁はラベルに「編集不可」と出すが、kohaku は補足文に
 理由を書くことで足りるとして持たない（要る画面が出たら考える）。
+
+## Card.Footer の中の Actions は幅いっぱいに伸ばす（2026-11-13）
+
+設定画面で、カードのボタンを見出しの左端にそろえようと `<Actions align="start">` を footer に置いたら、
+右に寄ったままだった。footer が右寄せの flex で、Actions ごと右に押していた。
+footer に `align` を足すのではなく、footer の直下の Actions を伸ばして Actions の align を効かせる。
+寄せ方を決める部品は Actions 1 つにしておく（足すより削る）。
