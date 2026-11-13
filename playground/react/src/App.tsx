@@ -323,7 +323,7 @@ export function App() {
       <div style={{ display: "grid", gap: "1.25rem", maxWidth: "28rem" }}>
         <div style={{ display: "grid", gap: ".5rem" }}>
           <Checkbox defaultChecked>メールで通知を受け取る</Checkbox>
-          <Checkbox>週次のダイジェストを送る</Checkbox>
+          <Checkbox description="毎週月曜の朝に、先週の動きをまとめて送ります。">週次のダイジェストを送る</Checkbox>
           <Checkbox checked="indeterminate">一部のメンバーだけ選択中（indeterminate）</Checkbox>
           <Checkbox disabled>この設定は変更できません</Checkbox>
           <Checkbox invalid>利用規約に同意する（未同意 = invalid）</Checkbox>

@@ -3,12 +3,17 @@
      実体の <input> は視覚的に隠されている。CSS は control だけを描く。
 
      indicator は Ark が hidden を付ける part なので :not([hidden]) で囲う。
-     外すと未チェックでもチェックが出る（dialog の content と同じ罠） */
+     外すと未チェックでもチェックが出る（dialog の content と同じ罠）
 
+     description は Ark に無いので kohaku が足す（書き味レイヤーが aria-describedby でつなぐ） */
+
+  /* 箱が左、ラベルと補足が右。補足はラベルの左端にそろえる。
+     DOM の順は Ark のまま、grid で置き場所だけ決める */
   [data-scope="checkbox"][data-part="root"] {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--kh-space-2);
+    display: inline-grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: var(--kh-space-2);
     /* 既定の baseline だと、inline-flex のベースラインが「中の印が見えているか」で変わる
        （印が無いと箱の下端、あると印の位置）。チェックした瞬間に箱が上下に動き、
        表のセルなど周りの行の高さまで変わる（実測: 表頭 48.5 → 45.5px）。
@@ -17,9 +22,25 @@
     cursor: pointer;
   }
 
+  [data-scope="checkbox"][data-part="control"]     { grid-column: 1; grid-row: 1; }
+  [data-scope="checkbox"][data-part="label"]       { grid-column: 2; grid-row: 1; }
+  [data-scope="checkbox"][data-part="description"] { grid-column: 2; grid-row: 2; }
+
+  /* ラベルの無いチェックボックス（表のセルなど）は箱だけ */
+  [data-scope="checkbox"][data-part="root"]:not(:has(> [data-part="label"])) {
+    display: inline-flex;
+  }
+  [data-scope="checkbox"][data-part="root"]:not(:has(> [data-part="label"])) > [data-part="control"] {
+    margin-top: 0;
+  }
+
   /* ---- control ---------------------------------------------------------- */
   [data-scope="checkbox"][data-part="control"] {
     flex: none;
+    /* ラベルが折り返したり補足が付いたりしても、1 行目の中央に置く: (行の高さ - 箱の高さ) / 2 */
+    margin-top: calc(
+      (var(--kh-checkbox-font-size, var(--kh-text-md)) * var(--kh-leading-ui) - var(--kh-checkbox-size, 1.125rem)) / 2
+    );
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,6 +104,15 @@
     font-feature-settings: var(--kh-font-feature);
     color: var(--kh-color-fg);
     user-select: none;
+  }
+
+  [data-scope="checkbox"][data-part="description"] {
+    margin-top: 2px;
+    font-size: var(--kh-text-sm);
+    line-height: var(--kh-leading-ui);
+    letter-spacing: var(--kh-tracking-normal);
+    font-feature-settings: var(--kh-font-feature);
+    color: var(--kh-color-fg-muted);
   }
 
   /* ---- state ------------------------------------------------------------ */

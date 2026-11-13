@@ -60,6 +60,24 @@ export const States: Story = {
       <Checkbox disabled>無効</Checkbox>
       <Checkbox disabled defaultChecked>無効・チェック済み</Checkbox>
       <Checkbox invalid>invalid</Checkbox>
+      <Checkbox description="補足文">補足つき</Checkbox>
+      <Checkbox disabled description="補足文も薄くなる">無効・補足つき</Checkbox>
+      <Checkbox aria-label="ラベルなし" />
+    </div>
+  ),
+}
+
+/**
+ * 補足はラベルの下、ラベルの左端にそろえる。箱はラベルの 1 行目の中央に置く。
+ * 補足は `aria-describedby` でつながり、読み上げではラベルとは別に読まれる（Switch と同じ）。
+ */
+export const Description: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem", maxWidth: "24rem" }}>
+      <Checkbox defaultChecked description="ログインと、お知らせの送り先に使います。">メールで通知を受け取る</Checkbox>
+      <Checkbox description="毎週月曜の朝に、先週の申請の件数と金額を送ります。ラベルが長くて折り返しても、箱は 1 行目の中央に置きます。">
+        週次のダイジェストを送る（ラベルが長いときの折り返しも確かめる）
+      </Checkbox>
     </div>
   ),
 }
