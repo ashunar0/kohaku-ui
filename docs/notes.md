@@ -2002,3 +2002,10 @@ Dialog.Content が空の CloseTrigger を先頭に置き、CSS が × を描く�
 見た目は IconButton の ghost・sm（36px・絵柄 18px）。見出しの 1 行目の中央に置き、見出しは × の手前で折り返す。
 CSS は content の直下の close-trigger に絞る。足もとの「やめる」（CloseTrigger asChild）を巻き込まないため。
 出さないときは `withoutCloseTrigger`。
+
+## Dialog の見出しは 16px（2026-11-13）
+
+24px（ページ見出しと同じ・freee のダイアログと同じ）を、あさひが「デカい、ダサい」と言った。
+24 / 20 / 16 を同じダイアログで並べて 16 にした（あさひ「太くしていれば大きくする必要性を感じない」）。
+本文 14px との差は 2px だが、太さ（600）で見出しになる。Card の見出しと同じ大きさ・太さ。
+L3 の `--kh-dialog-title-size` で変えられ、右上の × はこの大きさから 1 行目の中央を計算する。

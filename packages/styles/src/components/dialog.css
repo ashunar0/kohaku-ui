@@ -43,9 +43,11 @@
      外すと閉じたダイアログが画面中央に出たまま消えない */
   [data-scope="dialog"][data-part="content"]:not([hidden]) { display: flex; }
 
+  /* 見出しは本文（14px）より 1 段上の 16px で、太さで見出しにする（Card の見出しと同じ）。
+     ページ見出しの 24px は大きすぎた（あさひ。24 / 20 / 16 を並べて 16 を選んだ） */
   [data-scope="dialog"][data-part="title"] {
     margin: 0;
-    font-size: var(--kh-text-xl);
+    font-size: var(--kh-dialog-title-size, var(--kh-text-lg));
     font-weight: 600;
     line-height: var(--kh-leading-tight);
     color: var(--kh-color-fg);
@@ -64,7 +66,7 @@
      見出しの 1 行目の中央に置き、見出しの文字は × の手前で折り返す */
   [data-scope="dialog"][data-part="content"] > [data-part="close-trigger"] {
     position: absolute;
-    top: calc(var(--kh-dialog-padding) + (var(--kh-text-xl) * var(--kh-leading-tight) - var(--kh-dialog-close-size)) / 2);
+    top: calc(var(--kh-dialog-padding) + (var(--kh-dialog-title-size, var(--kh-text-lg)) * var(--kh-leading-tight) - var(--kh-dialog-close-size)) / 2);
     right: var(--kh-dialog-padding);
     display: flex;
     align-items: center;
