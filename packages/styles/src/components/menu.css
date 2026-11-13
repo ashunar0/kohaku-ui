@@ -29,6 +29,17 @@
     background: var(--kh-color-surface-muted);
     color: var(--kh-color-fg);
   }
+  /* 危険な操作（削除など）。文字だけ赤くし、当てたときの地はほかの項目と同じ灰色
+     （あさひ。色なし / 文字だけ赤 / 当てると赤い地 を並べて選んだ）。押したあとは確認ダイアログが出る前提。
+     地の上に置く赤い文字なので、塗りの danger ではなく、テーマで反転する invalid を使う */
+  [data-scope="menu"][data-part="item"][data-variant="danger"]:not([data-disabled]) {
+    color: var(--kh-menu-item-danger-fg, var(--kh-color-invalid));
+  }
+  /* 当てたときの灰色の地の上では invalid が AA を割る（light 4.22 / dark 3.6）。1 段濃い赤にする。
+     Link が当てると濃くなるのと同じ向き */
+  [data-scope="menu"][data-part="item"][data-variant="danger"][data-highlighted]:not([data-disabled]) {
+    color: var(--kh-menu-item-danger-fg-hover, var(--kh-color-danger-deep));
+  }
   [data-scope="menu"][data-part="item"][data-disabled] {
     color: var(--kh-color-fg-faint);
     cursor: not-allowed;

@@ -252,6 +252,13 @@ export function ExpensesPage() {
                       if (d.value === "view") setOpen(e)
                       if (d.value === "approve") approve([e.id])
                       if (d.value === "reject") toaster.create({ title: "差し戻しました", description: e.id })
+                      if (d.value === "delete") {
+                        toaster.create({
+                          title: "下書きを削除しました",
+                          description: e.id,
+                          action: { label: "取り消す", onClick: () => toaster.create({ title: "削除を取り消しました" }) },
+                        })
+                      }
                     }}
                   >
                     <Menu.Trigger asChild>
@@ -266,6 +273,12 @@ export function ExpensesPage() {
                           <Menu.Separator />
                           <Menu.Item value="approve">承認する</Menu.Item>
                           <Menu.Item value="reject">差し戻す</Menu.Item>
+                        </>
+                      ) : null}
+                      {e.status === "draft" ? (
+                        <>
+                          <Menu.Separator />
+                          <Menu.Item value="delete" variant="danger">削除する</Menu.Item>
                         </>
                       ) : null}
                     </Menu.Content>

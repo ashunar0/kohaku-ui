@@ -24,10 +24,10 @@ export const Default: Story = {
   ),
 }
 
-/** 項目の状態。上から ハイライト（ホバー・矢印キー）/ 通常 / 無効 */
+/** 項目の状態。上から ハイライト（ホバー・矢印キー）/ 通常 / 無効 / 危険 */
 export const States: Story = {
   render: () => (
-    <div style={{ height: "12rem" }}>
+    <div style={{ height: "14rem" }}>
       <Menu.Root defaultOpen defaultHighlightedValue="view" positioning={{ placement: "bottom-start" }}>
         <Menu.Trigger asChild><Button variant="outline">操作</Button></Menu.Trigger>
         <Menu.Content>
@@ -35,6 +35,28 @@ export const States: Story = {
           <Menu.Item value="copy">通常</Menu.Item>
           <Menu.Separator />
           <Menu.Item value="archive" disabled>無効</Menu.Item>
+          <Menu.Separator />
+          <Menu.Item value="delete" variant="danger">危険（variant="danger"）</Menu.Item>
+        </Menu.Content>
+      </Menu.Root>
+    </div>
+  ),
+}
+
+/**
+ * 削除など危険な操作は `variant="danger"` で文字だけ赤くする。当てたときの地はほかの項目と同じ。
+ * 区切り線で離し、いちばん下に置く。押したあとに確認ダイアログか「取り消す」付きの通知を出す。
+ */
+export const Danger: Story = {
+  render: () => (
+    <div style={{ height: "12rem" }}>
+      <Menu.Root defaultOpen positioning={{ placement: "bottom-start" }}>
+        <Menu.Trigger asChild><Button variant="outline">操作</Button></Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item value="edit">編集する</Menu.Item>
+          <Menu.Item value="copy">複製する</Menu.Item>
+          <Menu.Separator />
+          <Menu.Item value="delete" variant="danger">削除する</Menu.Item>
         </Menu.Content>
       </Menu.Root>
     </div>

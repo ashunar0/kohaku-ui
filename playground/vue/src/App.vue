@@ -192,6 +192,7 @@ const h2 = {
         <Menu.Item value="copy">複製する</Menu.Item>
         <Menu.Separator />
         <Menu.Item value="archive" disabled>アーカイブ</Menu.Item>
+        <Menu.Item value="delete" variant="danger">削除する</Menu.Item>
       </Menu.Content>
     </Menu.Root>
 

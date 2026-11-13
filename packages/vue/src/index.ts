@@ -29,6 +29,7 @@ import PaginationVue from "./Pagination.vue"
 import PasswordInputVue from "./PasswordInput.vue"
 import { translations as passwordInputTranslations } from "./password-input-text"
 import MenuContent from "./MenuContent.vue"
+import MenuItem from "./MenuItem.vue"
 import PopoverContent from "./PopoverContent.vue"
 import ProgressVue from "./Progress.vue"
 import RadioGroupVue from "./RadioGroup.vue"
@@ -87,7 +88,7 @@ export const Tooltip = {
   RawRoot: ArkTooltip.Root, RawContent: ArkTooltip.Content,
 }
 export const Popover = { ...ArkPopover, Content: PopoverContent, RawContent: ArkPopover.Content }
-export const Menu = { ...ArkMenu, Content: MenuContent, RawContent: ArkMenu.Content }
+export const Menu = { ...ArkMenu, Content: MenuContent, Item: MenuItem, RawContent: ArkMenu.Content, RawItem: ArkMenu.Item }
 export const DatePicker = Object.assign(DatePickerVue, {
   Root: ArkDatePicker.Root, Label: ArkDatePicker.Label, Control: ArkDatePicker.Control,
   Input: ArkDatePicker.Input, Trigger: ArkDatePicker.Trigger, ClearTrigger: ArkDatePicker.ClearTrigger,
