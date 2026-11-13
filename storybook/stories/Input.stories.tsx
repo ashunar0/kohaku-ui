@@ -34,6 +34,9 @@ export const Sizes: Story = {
 
 export const Disabled: Story = { args: { disabled: true, defaultValue: "plan_free" } }
 
+/** 枠だけ点線。フォーカスでき、文字は濃いまま（Field の ReadOnly を参照） */
+export const ReadOnly: Story = { args: { readOnly: true, defaultValue: "asahi@example.com" } }
+
 /**
  * focus リングは枠に重ねて描く。離して描くと隙間の分だけ「ずれている」ように
  * 見えるため、border 1px + inset 1px で同心の矩形にしている。

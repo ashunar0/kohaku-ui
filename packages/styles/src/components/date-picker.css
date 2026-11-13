@@ -46,6 +46,10 @@
   [data-scope="date-picker"][data-part="root"][data-invalid] [data-part="control"] {
     border-color: var(--kh-color-invalid);
   }
+  /* 読み取り専用は Input と同じく枠だけ点線（input.css） */
+  [data-scope="date-picker"][data-part="root"][data-readonly]:not([data-disabled]) [data-part="control"] {
+    border-style: dashed;
+  }
   [data-scope="date-picker"][data-part="root"][data-disabled] [data-part="control"] {
     background: var(--kh-color-surface-muted);
     color: var(--kh-color-fg-faint);

@@ -46,6 +46,33 @@ export const Invalid: Story = { args: { invalid: true, required: true } }
 
 export const Disabled: Story = { args: { disabled: true } }
 
+/**
+ * 読み取り専用は枠だけ点線（デジタル庁と同じ）。値は読めるので文字は濃いまま。
+ * disabled と違ってフォーカスでき、読み上げられ、送信もされる。
+ * 変えられない理由は補足文に書く。
+ */
+export const ReadOnly: Story = { args: { readOnly: true } }
+
+export const States: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem", maxWidth: "24rem" }}>
+      {([
+        ["ふつう", {}],
+        ["エラー", { invalid: true }],
+        ["読み取り専用", { readOnly: true }],
+        ["無効", { disabled: true }],
+      ] as const).map(([label, props]) => (
+        <Field.Root key={label} {...props}>
+          <Field.Label>{label}</Field.Label>
+          <Field.Input defaultValue="my-workspace" />
+          <Field.HelperText>半角英数字とハイフン。</Field.HelperText>
+          <Field.ErrorText>使用できない文字が含まれています。</Field.ErrorText>
+        </Field.Root>
+      ))}
+    </div>
+  ),
+}
+
 /** textarea も同じ part 名で当たる */
 export const Textarea: Story = {
   render: () => (

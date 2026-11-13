@@ -87,6 +87,15 @@
     color: var(--kh-color-fg-faint);
     cursor: not-allowed;
   }
+  /* 読み取り専用。値は読めるので文字は濃いまま、枠だけ点線にする（デジタル庁と同じ）。
+     disabled と違ってフォーカスでき、読み上げられ、送信もされる */
+  [data-scope="field"][data-part="input"][readonly]:not(:disabled),
+  [data-scope="field"][data-part="textarea"][readonly]:not(:disabled),
+  [data-scope="password-input"][data-part="input"][readonly]:not(:disabled),
+  [data-kh="input"][readonly]:not(:disabled),
+  [data-kh="textarea"][readonly]:not(:disabled) {
+    border-style: dashed;
+  }
   [data-part="input"][data-invalid],
   [data-part="textarea"][data-invalid],
   [data-scope="field"][data-part="select"][data-invalid],

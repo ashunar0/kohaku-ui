@@ -382,6 +382,12 @@ export function App() {
           <Field.ErrorText>使用できない文字が含まれています。</Field.ErrorText>
         </Field.Root>
 
+        <Field.Root readOnly>
+          <Field.Label>メールアドレス（読み取り専用）</Field.Label>
+          <Field.Input defaultValue="asahi@example.com" />
+          <Field.HelperText>変えるときは管理者に連絡してください。</Field.HelperText>
+        </Field.Root>
+
         <Field.Root disabled>
           <Field.Label>プラン ID</Field.Label>
           <Field.Input defaultValue="plan_free" />
@@ -478,4 +484,5 @@ export function App() {
     </div>
   )
 }
+
 

@@ -53,4 +53,7 @@ export const Empty: Story = { render: () => render({ defaultValue: [] }) }
 
 export const Disabled: Story = { render: () => render({ disabled: true }) }
 
+/** 枠だけ点線（Input と同じ）。フォーカスはできるが開かない */
+export const ReadOnly: Story = { render: () => render({ readOnly: true }) }
+
 export const Invalid: Story = { render: () => render({ invalid: true }) }

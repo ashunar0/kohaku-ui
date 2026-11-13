@@ -41,6 +41,7 @@ export const States: Story = {
         closeOnSelect={false}
       />
       <div style={{ height: "18rem" }} />
+      <DatePicker label="読み取り専用" readOnly defaultValue={[parseDate("2026-11-03")]} />
       <DatePicker label="無効" disabled defaultValue={[parseDate("2026-11-03")]} />
       <DatePicker label="エラー" invalid defaultValue={[parseDate("2026-11-03")]} />
     </div>

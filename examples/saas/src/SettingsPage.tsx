@@ -7,7 +7,6 @@ import {
   Dialog,
   Field,
   FileUpload,
-  Input,
   Select,
   Switch,
   Tabs,
@@ -81,9 +80,9 @@ function Profile() {
           <Field.ErrorText>{error}</Field.ErrorText>
         </Field.Root>
 
-        <Field.Root>
+        <Field.Root readOnly>
           <Field.Label>メールアドレス</Field.Label>
-          <Input value="asahi@example.com" readOnly />
+          <Field.Input value="asahi@example.com" />
           <Field.HelperText>変えるときは管理者に連絡してください。</Field.HelperText>
         </Field.Root>
 

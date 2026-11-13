@@ -27,6 +27,7 @@ export const States: Story = {
     <div style={{ display: "grid", gap: ".75rem" }}>
       <Textarea placeholder="空" />
       <Textarea defaultValue={"来週からプロジェクトに参加してもらいます。\nよろしくお願いします。"} />
+      <Textarea readOnly defaultValue="読み取り専用。枠だけ点線になる。" />
       <Textarea disabled defaultValue="この欄は編集できません。" />
       <Textarea aria-invalid defaultValue="500 文字を超えています。" />
     </div>

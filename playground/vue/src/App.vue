@@ -370,20 +370,26 @@ const h2 = {
     <div style="max-width: 24rem; display: grid; gap: 1rem">
       <Field.Root>
         <Field.Label>ワークスペース名</Field.Label>
-        <Field.Input default-value="あさひの個人開発" />
+        <Field.Input value="あさひの個人開発" />
         <Field.HelperText>あとから変更できます。</Field.HelperText>
       </Field.Root>
 
       <Field.Root :invalid="invalid" required>
         <Field.Label>サブドメイン<Field.RequiredIndicator /></Field.Label>
-        <Field.Input default-value="my workspace" />
+        <Field.Input value="my workspace" />
         <Field.HelperText>半角英数字とハイフン。</Field.HelperText>
         <Field.ErrorText>使用できない文字が含まれています。</Field.ErrorText>
       </Field.Root>
 
+      <Field.Root read-only>
+        <Field.Label>メールアドレス（読み取り専用）</Field.Label>
+        <Field.Input value="asahi@example.com" />
+        <Field.HelperText>変えるときは管理者に連絡してください。</Field.HelperText>
+      </Field.Root>
+
       <Field.Root disabled>
         <Field.Label>プラン ID</Field.Label>
-        <Field.Input default-value="plan_free" />
+        <Field.Input value="plan_free" />
         <Field.HelperText>変更できません。</Field.HelperText>
       </Field.Root>
 
@@ -450,7 +456,7 @@ const h2 = {
         <Dialog.Description>変更内容はすぐに反映されます。</Dialog.Description>
         <Field.Root>
           <Field.Label>表示名</Field.Label>
-          <Field.Input default-value="あさひ" />
+          <Field.Input value="あさひ" />
         </Field.Root>
         <Actions>
           <Dialog.CloseTrigger as-child><Button variant="outline">キャンセル</Button></Dialog.CloseTrigger>
