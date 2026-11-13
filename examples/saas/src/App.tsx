@@ -2,6 +2,7 @@ import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } 
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ExpensesPage } from "./ExpensesPage"
+import { SettingsPage } from "./SettingsPage"
 import { SignupPage } from "./SignupPage"
 
 export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
@@ -9,13 +10,13 @@ export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
 /* アイコンは利用側の責任。kohaku は図形を持たないので Lucide をそのまま使い、
    サイズ規約は <Icon asChild> で与える */
 const nav = [
-  { label: "経費申請", Glyph: Receipt, current: true },
-  { label: "メンバー", Glyph: Users },
-  { label: "レポート", Glyph: BarChart3 },
-  { label: "設定", Glyph: Settings },
+  { label: "経費申請", Glyph: Receipt, href: "#/" },
+  { label: "メンバー", Glyph: Users, href: "#" },
+  { label: "レポート", Glyph: BarChart3, href: "#" },
+  { label: "設定", Glyph: Settings, href: "#/settings" },
 ]
 
-/** #/signup だけ別の画面（ログイン前なのでサイドバーを出さない） */
+/** #/signup はログイン前なのでサイドバーを出さない。#/settings はサイドバーの中で切り替える */
 function useHash() {
   const [hash, setHash] = useState(location.hash)
   useEffect(() => {
@@ -36,6 +37,7 @@ export function App() {
       </>
     )
   }
+  const page = hash === "#/settings" ? "設定" : "経費申請"
   return (
     <div className="app">
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}
@@ -46,9 +48,9 @@ export function App() {
         </div>
         <nav aria-label="メインメニュー">
           <ul className="app-nav">
-            {nav.map(({ label, Glyph, current }) => (
+            {nav.map(({ label, Glyph, href }) => (
               <li key={label}>
-                <a href="#" aria-current={current ? "page" : undefined}>
+                <a href={href} aria-current={label === page ? "page" : undefined}>
                   <Icon asChild><Glyph /></Icon>
                   <span>{label}</span>
                 </a>
@@ -70,7 +72,7 @@ export function App() {
         <header className="app-head" data-kh="hstack" data-justify="between" data-gap="4" data-nowrap="">
           <Breadcrumbs>
             <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
-            <Breadcrumbs.Item current>経費申請</Breadcrumbs.Item>
+            <Breadcrumbs.Item current>{page}</Breadcrumbs.Item>
           </Breadcrumbs>
           <HStack wrap={false}>
             <Input type="search" size="sm" icon={<Search />} placeholder="申請・メンバーを検索" aria-label="検索" className="app-search" />
@@ -80,7 +82,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          <ExpensesPage />
+          {page === "設定" ? <SettingsPage /> : <ExpensesPage />}
         </div>
       </main>
 
