@@ -1,5 +1,5 @@
 import {
-  Actions, Affix, Alert, Avatar, Badge, Steps, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Affix, Alert, Avatar, Badge, DescriptionList, Steps, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, PasswordInput, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -103,6 +103,13 @@ export function App() {
         <Steps.Item state="current">経理承認（承認待ち）</Steps.Item>
         <Steps.Item state="waiting">支払（未着手）</Steps.Item>
       </Steps>
+
+      <h2 style={h2}>DescriptionList — 項目名を左の列にそろえ、1 項目 1 行</h2>
+      <DescriptionList style={{ maxWidth: "28rem" }}>
+        <DescriptionList.Item term="申請者" align="center"><HStack gap={2} wrap={false}><Avatar name="山田 太郎" /><span>山田 太郎</span></HStack></DescriptionList.Item>
+        <DescriptionList.Item term="部署">営業部</DescriptionList.Item>
+        <DescriptionList.Item term="摘要">大阪支社との打ち合わせ（往復）。新幹線の指定席と、新大阪から支社までのタクシー代を含む</DescriptionList.Item>
+      </DescriptionList>
 
       <h2 style={h2}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
       <p style={{ margin: 0, fontSize: ".875rem" }}>

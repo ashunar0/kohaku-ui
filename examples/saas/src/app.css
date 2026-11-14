@@ -265,23 +265,6 @@
   gap: var(--kh-space-4);
   align-items: start;
 }
-.spec {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--kh-space-4) var(--kh-space-6);
-  margin: 0;
-}
-.spec-wide {
-  grid-column: 1 / -1;
-}
-.spec dt {
-  margin-bottom: var(--kh-space-1);
-  font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-muted);
-}
-.spec dd {
-  margin: 0;
-}
 .spec-amount {
   font-variant-numeric: tabular-nums;
 }

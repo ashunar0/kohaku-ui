@@ -5,6 +5,7 @@ import {
   Badge,
   Button,
   Card,
+  DescriptionList,
   Dialog,
   Field,
   HStack,
@@ -91,22 +92,19 @@ export function ExpenseDetailPage({ id }: { id: string }) {
               <Card.Title>申請内容</Card.Title>
             </Card.Header>
             <Card.Body>
-              <dl className="spec">
-                <div>
-                  <dt>申請者</dt>
-                  <dd>
-                    <HStack gap={2} wrap={false}>
-                      <Avatar name={e.applicant} />
-                      <span>{e.applicant}</span>
-                    </HStack>
-                  </dd>
-                </div>
-                <div><dt>部署</dt><dd>{e.dept}</dd></div>
-                <div><dt>申請日</dt><dd>{formatDate(e.date)}</dd></div>
-                <div><dt>科目</dt><dd>{e.category}</dd></div>
-                <div><dt>金額</dt><dd className="spec-amount">{yen(e.amount)}</dd></div>
-                <div className="spec-wide"><dt>摘要</dt><dd>{e.note}</dd></div>
-              </dl>
+              <DescriptionList>
+                <DescriptionList.Item term="申請者" align="center">
+                  <HStack gap={2} wrap={false}>
+                    <Avatar name={e.applicant} />
+                    <span>{e.applicant}</span>
+                  </HStack>
+                </DescriptionList.Item>
+                <DescriptionList.Item term="部署">{e.dept}</DescriptionList.Item>
+                <DescriptionList.Item term="申請日">{formatDate(e.date)}</DescriptionList.Item>
+                <DescriptionList.Item term="科目">{e.category}</DescriptionList.Item>
+                <DescriptionList.Item term="金額"><span className="spec-amount">{yen(e.amount)}</span></DescriptionList.Item>
+                <DescriptionList.Item term="摘要">{e.note}</DescriptionList.Item>
+              </DescriptionList>
             </Card.Body>
           </Card.Root>
 

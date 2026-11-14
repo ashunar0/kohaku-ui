@@ -1,0 +1,35 @@
+@layer kohaku {
+  /* 項目名と値の並び（申請の詳細など）。項目名を左の列にそろえ、1 項目 1 行で上から読む。
+     値の上に項目名を置いて 2 列に並べる形と比べて、項目名が縦にそろって探しやすいほうを選んだ（あさひ）。
+     振る舞いを持たない見た目だけの並びなので kohaku が持つ。名前は freee Vibes に合わせた。
+     区切りは線でなく余白で作る */
+  [data-kh="description-list"] {
+    display: grid;
+    grid-template-columns: var(--kh-description-list-term-width, 8rem) minmax(0, 1fr);
+    gap: var(--kh-space-3) var(--kh-space-4);
+    margin: 0;
+    font-size: var(--kh-text-md);
+    line-height: var(--kh-leading-ui);
+  }
+  /* 1 項目を div で包む（dl の中の div は HTML で認められている）。列は親にそろえる */
+  [data-kh="description-list"] > [data-part="item"] {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    /* 項目名は値の 1 行目の文字とベースラインでそろう（値が何行あっても 1 行目に付く） */
+    align-items: baseline;
+  }
+  /* 値がアイコンと名前を横に並べた 1 行のときは、行の真ん中にそろえる。
+     横に並べた箱の基準線はアイコンの中の 1 文字目で決まり、ベースラインだと項目名が 2px 上に出る */
+  [data-kh="description-list"] > [data-part="item"][data-align="center"] {
+    align-items: center;
+  }
+  [data-kh="description-list"] [data-part="term"] {
+    color: var(--kh-color-fg-muted);
+  }
+  [data-kh="description-list"] [data-part="details"] {
+    min-width: 0;
+    margin: 0;
+    color: var(--kh-color-fg);
+  }
+}

@@ -32,6 +32,8 @@ import MenuContent from "./MenuContent.vue"
 import MenuItem from "./MenuItem.vue"
 import PopoverContent from "./PopoverContent.vue"
 import AvatarVue from "./Avatar.vue"
+import DescriptionListVue from "./DescriptionList.vue"
+import DescriptionListItem from "./DescriptionListItem.vue"
 import StepsVue from "./Steps.vue"
 import StepsItem from "./StepsItem.vue"
 import ProgressVue from "./Progress.vue"
@@ -108,6 +110,7 @@ export const Avatar = Object.assign(AvatarVue, {
   Root: ArkAvatar.Root, Image: ArkAvatar.Image, Fallback: ArkAvatar.Fallback, Context: ArkAvatar.Context,
 })
 export const Steps = Object.assign(StepsVue, { Item: StepsItem })
+export const DescriptionList = Object.assign(DescriptionListVue, { Item: DescriptionListItem })
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,
   Track: ArkProgress.Track, Range: ArkProgress.Range, Context: ArkProgress.Context,
