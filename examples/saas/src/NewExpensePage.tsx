@@ -73,7 +73,7 @@ export function NewExpensePage() {
   const listed = order.filter((id) => errors[id])
 
   return (
-    <VStack gap={8} className="page new-expense">
+    <VStack gap={4} className="page new-expense">
       <header className="page-head">
         <h1>新規申請</h1>
       </header>

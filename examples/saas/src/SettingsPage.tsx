@@ -30,8 +30,10 @@ const notices = [
 ]
 
 export function SettingsPage() {
+  // 見出しの下はほかの画面と同じ 16px に見せる。タブは高さ 40px の真ん中に文字があり、上の縁が見えないので、
+  // 箱の間を 16px にすると文字まで 27px 離れて見える。文字までが 16px 前後になるよう 4px にする
   return (
-    <VStack gap={8} className="page settings">
+    <VStack gap={1} className="page settings">
       <header className="page-head">
         <h1>設定</h1>
       </header>

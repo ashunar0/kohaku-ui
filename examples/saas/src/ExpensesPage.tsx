@@ -91,10 +91,10 @@ export function ExpensesPage() {
     })
   }
 
-  // まとまり（見出し / 数字 / 一覧）の間は 32px、一覧の中（絞り込み・表・ページ送り）は 12px。
+  // 見出しの下は 16px、まとまり（数字 / 一覧）の間は 32px、一覧の中（絞り込み・表・ページ送り）は 12px。
   // どこも同じ間隔だと、絞り込みがどの表に効くのか読めない
   return (
-    <VStack gap={8} className="page">
+    <VStack gap={4} className="page">
       <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
         <h1>経費申請</h1>
         <Actions>
@@ -106,6 +106,7 @@ export function ExpensesPage() {
         </Actions>
       </header>
 
+      <VStack gap={8}>
       {/* ── サマリ ────────────────────────────────────────── */}
       <div className="stats">
         {[
@@ -304,6 +305,7 @@ export function ExpensesPage() {
           siblingCount={1}
         />
       </HStack>
+      </VStack>
       </VStack>
 
       {/* ── 詳細 ─────────────────────────────────────────── */}
