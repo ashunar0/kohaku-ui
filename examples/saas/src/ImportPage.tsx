@@ -184,7 +184,7 @@ export function ImportPage() {
                             value={r.category ? [r.category] : []}
                             onValueChange={(d) => setRows((rs) => rs.map((x) => (x.id === r.id ? { ...x, category: d.value[0] ?? "" } : x)))}
                           >
-                            <Select.Trigger aria-label={`${r.payee} の科目`}>
+                            <Select.Trigger size="sm" aria-label={`${r.payee} の科目`}>
                               <Select.ValueText placeholder="選択してください" />
                               <Select.Indicator />
                             </Select.Trigger>

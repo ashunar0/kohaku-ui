@@ -2222,3 +2222,13 @@ Ark の名前のままなので、Ark の Steps を当てたものは **Steps**�
 （承認経路）を **Timeline** に改名した（Chakra・Mantine と同じ呼び名。丸と線で縦につなぎ、担当者と日付を並べるもの）。
 属性は `data-kh="timeline"` / `data-kh="timeline-item"`、L3 は `--kh-timeline-*` / `--kh-steps-*`。
 上の 2 つの節の「Steps」「Stepper」は当時の名前。
+
+## Select に size を足した（2026-11-14）
+
+取り込み画面の表で、行ごとに科目を Select で選ばせたら、行 48px に Select 40px で上下 4px しか空かず窮屈だった。
+40 / 36 / 32px を実際の表で縦に並べて **36px（あさひが B）**。Input の sm と同じ値なので、表の中に Input と
+Select を並べても高さがそろう。
+
+- 大きさは Trigger に付ける（`<Select.Trigger size="sm">`）。高さを持つのは Trigger で、Input も入力欄そのものに付けている
+- 値は Input の size と同じ（sm 36 / md 40 / lg 44px、sm は左右 12px）。--kh-field-* を Trigger の上で差し替えるだけ
+- 高さが偶数 px ずつ変わるだけなので、文字の縦位置（中心から -0.5px）は md と同じ

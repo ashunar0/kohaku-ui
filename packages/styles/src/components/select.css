@@ -116,4 +116,16 @@
   @keyframes kh-pop-out { to   { opacity: 0; transform: translateY(-2px) } }
   [data-scope="select"][data-part="content"][data-state="open"]   { animation: kh-pop-in  var(--kh-duration-fast) var(--kh-ease); }
   [data-scope="select"][data-part="content"][data-state="closed"] { animation: kh-pop-out var(--kh-duration-fast) var(--kh-ease); }
+
+  /* 大きさ。Input の size と同じ値（並べたときに高さがそろう）。表の中は sm（行 48px に 36px） */
+  [data-scope="select"][data-part="trigger"][data-size="sm"] {
+    --kh-field-height:    2.25rem;
+    --kh-field-padding-x: var(--kh-space-3);
+    --kh-field-font-size: var(--kh-text-md);
+  }
+  [data-scope="select"][data-part="trigger"][data-size="lg"] {
+    --kh-field-height:    2.75rem;
+    --kh-field-padding-x: var(--kh-space-4);
+    --kh-field-font-size: var(--kh-text-lg);
+  }
 }

@@ -29,10 +29,10 @@ const meta: Meta<typeof Select.Root<Plan>> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const render = (extra: Record<string, unknown> = {}) => (
+const render = (extra: Record<string, unknown> = {}, size?: "sm" | "md" | "lg") => (
   <Select.Root collection={plans} defaultValue={["pro"]} {...extra}>
     <Select.Label>プラン</Select.Label>
-    <Select.Trigger>
+    <Select.Trigger size={size}>
       <Select.ValueText placeholder="選択してください" />
       <Select.Indicator />
     </Select.Trigger>
@@ -48,6 +48,17 @@ const render = (extra: Record<string, unknown> = {}) => (
 )
 
 export const Default: Story = { render: () => render() }
+
+/** Input の size と同じ高さ（sm 36 / md 40 / lg 44px）。大きさは Trigger に付ける。表の中は sm */
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem", maxWidth: "16rem" }}>
+      {render({}, "sm")}
+      {render({}, "md")}
+      {render({}, "lg")}
+    </div>
+  ),
+}
 
 export const Empty: Story = { render: () => render({ defaultValue: [] }) }
 

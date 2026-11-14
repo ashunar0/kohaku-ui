@@ -515,7 +515,7 @@ const h2 = {
     <h2 :style="h2">Select — Control / Teleport / Positioner は隠れている</h2>
     <Select.Root :collection="plans" :default-value="['pro']" style="max-width: 16rem">
       <Select.Label>プラン</Select.Label>
-      <Select.Trigger>
+      <Select.Trigger size="sm">
         <Select.ValueText placeholder="選択してください" />
         <Select.Indicator />
       </Select.Trigger>
