@@ -97,6 +97,7 @@ export function ExpensesPage() {
             <Icon asChild><Download /></Icon>
             CSV 出力
           </Button>
+          <Button variant="outline" asChild><a href="#/import">明細の取り込み</a></Button>
           <Button asChild><a href="#/new">新規申請</a></Button>
         </Actions>
       </header>

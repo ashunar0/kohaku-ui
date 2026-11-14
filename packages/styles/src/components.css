@@ -18,6 +18,7 @@
 @import "./components/group.css";
 @import "./components/stack.css";
 @import "./components/steps.css";
+@import "./components/stepper.css";
 @import "./components/affix.css";
 @import "./components/checkbox.css";
 @import "./components/switch.css";

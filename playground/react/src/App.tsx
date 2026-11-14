@@ -1,5 +1,5 @@
 import {
-  Actions, Affix, Alert, Avatar, Badge, DescriptionList, Steps, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Affix, Alert, Avatar, Badge, DescriptionList, Steps, Stepper, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, PasswordInput, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -103,6 +103,11 @@ export function App() {
         <Steps.Item state="current">経理承認（承認待ち）</Steps.Item>
         <Steps.Item state="waiting">支払（未着手）</Steps.Item>
       </Steps>
+
+      <h2 style={h2}>Stepper — 入力を段階に分けて進める画面の段階（Ark の Steps）</h2>
+      <Stepper steps={["ファイル選択", "内容確認", "完了"]} step={1} style={{ maxWidth: "36rem" }}>
+        <Stepper.Content index={1}>内容確認の中身</Stepper.Content>
+      </Stepper>
 
       <h2 style={h2}>DescriptionList — 項目名を左の列にそろえ、1 項目 1 行</h2>
       <DescriptionList style={{ maxWidth: "28rem" }}>

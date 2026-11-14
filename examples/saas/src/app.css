@@ -296,3 +296,17 @@
   gap: var(--kh-space-3);
   height: 1lh;
 }
+
+/* ---- カード明細の取り込み（#/import） ---------------------------------- */
+.import-form {
+  max-width: 36rem;
+}
+.import-progress {
+  max-width: 36rem;
+}
+/* 段階の表示は下のフォームと同じ幅にして、段階の間を開きすぎない */
+.import-stepper > [data-part="list"] {
+  max-width: 36rem;
+  margin-bottom: var(--kh-space-8);
+}
+

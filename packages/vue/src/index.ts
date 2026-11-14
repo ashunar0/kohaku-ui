@@ -13,7 +13,7 @@
 import {
   Avatar as ArkAvatar, Checkbox as ArkCheckbox, DatePicker as ArkDatePicker, Dialog as ArkDialog, FileUpload as ArkFileUpload,
   Menu as ArkMenu, Pagination as ArkPagination, PasswordInput as ArkPasswordInput, Popover as ArkPopover, Progress as ArkProgress,
-  RadioGroup as ArkRadioGroup, Select as ArkSelect, Switch as ArkSwitch,
+  RadioGroup as ArkRadioGroup, Select as ArkSelect, Steps as ArkSteps, Switch as ArkSwitch,
   Toast as ArkToast, Tooltip as ArkTooltip,
 } from "@ark-ui/vue"
 
@@ -36,6 +36,7 @@ import DescriptionListVue from "./DescriptionList.vue"
 import DescriptionListItem from "./DescriptionListItem.vue"
 import StepsVue from "./Steps.vue"
 import StepsItem from "./StepsItem.vue"
+import StepperVue from "./Stepper.vue"
 import ProgressVue from "./Progress.vue"
 import RadioGroupVue from "./RadioGroup.vue"
 import RadioGroupItem from "./RadioGroupItem.vue"
@@ -110,6 +111,12 @@ export const Avatar = Object.assign(AvatarVue, {
   Root: ArkAvatar.Root, Image: ArkAvatar.Image, Fallback: ArkAvatar.Fallback, Context: ArkAvatar.Context,
 })
 export const Steps = Object.assign(StepsVue, { Item: StepsItem })
+export const Stepper = Object.assign(StepperVue, {
+  Content: ArkSteps.Content,
+  Root: ArkSteps.Root, List: ArkSteps.List, Item: ArkSteps.Item, Trigger: ArkSteps.Trigger,
+  Indicator: ArkSteps.Indicator, Separator: ArkSteps.Separator, CompletedContent: ArkSteps.CompletedContent,
+  NextTrigger: ArkSteps.NextTrigger, PrevTrigger: ArkSteps.PrevTrigger, Context: ArkSteps.Context,
+})
 export const DescriptionList = Object.assign(DescriptionListVue, { Item: DescriptionListItem })
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,
