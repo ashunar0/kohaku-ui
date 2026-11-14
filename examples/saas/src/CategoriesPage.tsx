@@ -53,10 +53,14 @@ export function CategoriesPage() {
 
   return (
     <VStack gap={4} className="page">
-      <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
-        <h1>勘定科目</h1>
-        <Button onClick={() => setAdding(true)}>科目を追加</Button>
-      </header>
+      <VStack gap={1}>
+        <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
+          <h1>勘定科目</h1>
+          <Button onClick={() => setAdding(true)}>科目を追加</Button>
+        </header>
+        {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く */}
+        <p className="page-desc">無効にした科目は、経費申請で選択できなくなります。上限額を超える申請には、承認時に警告が表示されます。</p>
+      </VStack>
 
       <Table>
         <thead>
@@ -95,6 +99,7 @@ export function CategoriesPage() {
           ))}
         </tbody>
       </Table>
+
 
       <Add open={adding} onOpenChange={setAdding} onAdd={(c) => setItems((xs) => [...xs, c])} />
     </VStack>

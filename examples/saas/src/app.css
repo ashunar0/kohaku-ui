@@ -338,3 +338,9 @@
   font-variant-numeric: tabular-nums;
 }
 
+
+/* ---- 勘定科目（#/categories） ------------------------------------------ */
+.page-desc {
+  margin: 0;
+  color: var(--kh-color-fg-muted);
+}
