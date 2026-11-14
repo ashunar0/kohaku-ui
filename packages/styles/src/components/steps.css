@@ -8,6 +8,8 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    /* 本文と同じ 14px。持たないと利用側の 16px を受け継ぎ、カードの見出しと同じ大きさになった */
+    font-size: var(--kh-text-md);
   }
   [data-kh="step"] {
     --kh-step-color: var(--kh-color-border-strong);
