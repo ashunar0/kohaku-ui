@@ -9,6 +9,8 @@
   body {
     font-family: var(--kh-font-sans);
     font-feature-settings: var(--kh-font-feature);
+    /* 本文は 14px。無いとブラウザの既定の 16px になり、部品に入っていない文字だけ大きくなる */
+    font-size: var(--kh-text-md);
     line-height: var(--kh-leading-normal);
     letter-spacing: var(--kh-tracking-normal);
     background: var(--kh-color-bg);
