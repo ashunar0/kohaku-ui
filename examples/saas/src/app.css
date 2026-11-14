@@ -302,6 +302,12 @@
   justify-content: space-between;
   gap: var(--kh-space-4);
 }
-.step-who {
-  display: block;
+/* 段階名とバッジの行。高さを 1 行ぶんに固定して、バッジ（23px）を段階名の行（21px）の中心にそろえる。
+   丸も同じ 1 行目の中心にそろっている */
+.step-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kh-space-3);
+  height: 1lh;
 }

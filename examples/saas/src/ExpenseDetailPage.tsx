@@ -34,6 +34,9 @@ const approverOf: Record<string, string> = {
 type Step = { name: string; who: string; state: "done" | "current" | "rejected" | "waiting"; date?: string }
 
 const stepLabel: Record<Step["state"], string> = { done: "完了", current: "承認待ち", rejected: "差し戻し", waiting: "未着手" }
+const stepVariant: Record<Step["state"], "success" | "warning" | "danger" | undefined> = {
+  done: "success", current: "warning", rejected: "danger", waiting: undefined,
+}
 
 function flowOf(e: Expense): Step[] {
   const dept = approverOf[e.dept] ?? "田中 彩"
@@ -136,13 +139,11 @@ export function ExpenseDetailPage({ id }: { id: string }) {
             <Steps>
               {flowOf(e).map((s) => (
                 <Steps.Item key={s.name} state={s.state}>
-                  <HStack gap={3} justify="between" align="baseline" wrap={false}>
-                    <span>
-                      {s.name}
-                      <span className="muted step-who">{s.who}{s.date ? `・${formatDate(s.date)}` : ""}</span>
-                    </span>
-                    <span className="muted">{stepLabel[s.state]}</span>
-                  </HStack>
+                  <div className="step-head">
+                    <span>{s.name}</span>
+                    <Badge variant={stepVariant[s.state]}>{stepLabel[s.state]}</Badge>
+                  </div>
+                  <span className="muted">{s.who}{s.date ? `・${formatDate(s.date)}` : ""}</span>
                 </Steps.Item>
               ))}
             </Steps>

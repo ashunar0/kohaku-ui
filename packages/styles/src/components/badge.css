@@ -9,7 +9,9 @@
     display: inline-flex;
     align-items: center;
     gap: var(--kh-space-1);
-    padding: 0.15rem var(--kh-space-2);
+    /* 和文のインクは箱の中心より上に出る（0.5〜1.0px）。上の余白を増やし下を減らして、文字だけ下げる。
+       高さは変えない。入力欄と同じく 1px 単位で描かれるので px で持つ */
+    padding: calc(0.15rem + var(--kh-badge-optical-shift, 0.5px)) var(--kh-space-2) calc(0.15rem - var(--kh-badge-optical-shift, 0.5px));
     font-size: var(--kh-text-sm);
     font-weight: 500;
     line-height: var(--kh-leading-ui);

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { HStack, Steps } from "@kohaku/react"
+import { Badge, Steps } from "@kohaku/react"
 
 /**
  * 決まった順番で進む段階と、いまどこまで進んだか（承認経路など）。表示するだけで操作は無い。
@@ -17,17 +17,20 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const row = (name: string, who: string, state: string) => (
-  <HStack gap={3} justify="between" align="baseline" wrap={false}>
-    <span>
-      {name}
-      <span style={{ display: "block", fontSize: "var(--kh-text-sm)", color: "var(--kh-color-fg-muted)" }}>{who}</span>
-    </span>
-    <span style={{ fontSize: "var(--kh-text-sm)", color: "var(--kh-color-fg-muted)" }}>{state}</span>
-  </HStack>
+const variant = { 完了: "success", 承認待ち: "warning", 差し戻し: "danger", 未着手: undefined } as const
+
+/** 段階名とバッジの行は高さを 1 行に固定し、バッジを段階名の行の中心にそろえる（丸も同じ行の中心） */
+const row = (name: string, who: string, state: keyof typeof variant) => (
+  <>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", height: "1lh" }}>
+      <span>{name}</span>
+      <Badge variant={variant[state]}>{state}</Badge>
+    </div>
+    <span style={{ fontSize: "var(--kh-text-sm)", color: "var(--kh-color-fg-muted)" }}>{who}</span>
+  </>
 )
 
-/** 承認経路。担当者と日付を 2 行目に、状態を右端に置く */
+/** 承認経路。状態はバッジで右端に、担当者と日付を 2 行目に置く */
 export const Default: Story = {
   render: () => (
     <Steps style={{ maxWidth: "20rem" }}>
