@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { DatePicker, parseDate } from "@kohaku/react"
+import { DatePicker, Field, parseDate } from "@kohaku/react"
 
 const meta = {
   title: "Form/DatePicker",
@@ -44,6 +44,28 @@ export const States: Story = {
       <DatePicker label="読み取り専用" readOnly defaultValue={[parseDate("2026-11-03")]} />
       <DatePicker label="無効" disabled defaultValue={[parseDate("2026-11-03")]} />
       <DatePicker label="エラー" invalid defaultValue={[parseDate("2026-11-03")]} />
+    </div>
+  ),
+}
+
+/**
+ * 必須の印・補足文・エラー文言は Field で包んで出す（Select と同じ書き方）。
+ * Ark の DatePicker は Field と連携しないので、書き味レイヤーが Field から
+ * required / invalid / disabled / readOnly とラベル・補足文・エラー文言の紐付けを受け取る。
+ * label には `<Field.RequiredIndicator />` を置ける（Vue は `#label` スロット）。
+ */
+export const InField: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem", justifyItems: "start" }}>
+      <Field.Root required>
+        <DatePicker label={<>利用日<Field.RequiredIndicator /></>} />
+        <Field.HelperText>領収書の日付です。</Field.HelperText>
+      </Field.Root>
+      <Field.Root required invalid>
+        <DatePicker label={<>利用日<Field.RequiredIndicator /></>} />
+        <Field.HelperText>領収書の日付です。</Field.HelperText>
+        <Field.ErrorText>利用日を入力してください。</Field.ErrorText>
+      </Field.Root>
     </div>
   ),
 }

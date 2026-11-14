@@ -1,11 +1,14 @@
-import { DatePicker as Ark, Portal } from "@ark-ui/react"
-import type { ComponentPropsWithoutRef } from "react"
+import { DatePicker as Ark, Portal, useFieldContext } from "@ark-ui/react"
+import type { ComponentPropsWithoutRef, ReactNode } from "react"
 
 type RootProps = ComponentPropsWithoutRef<typeof Ark.Root>
 
 export type DatePickerProps = RootProps & {
-  /** 入力欄の上に出す見出し。無いときは aria-label などで名前を付ける */
-  label?: string
+  /**
+   * 入力欄の上に出す見出し。無いときは aria-label などで名前を付ける。
+   * Field で包んだときは `<Field.RequiredIndicator />` を中に置ける
+   */
+  label?: ReactNode
   /** 範囲のときの入力欄の名前（読み上げ用）。既定は「開始日」「終了日」 */
   inputLabels?: [string, string]
 }
@@ -41,21 +44,35 @@ const translations: NonNullable<RootProps["translations"]> = {
  */
 export function DatePicker({ label, inputLabels = ["開始日", "終了日"], translations: t, positioning, children, ...props }: DatePickerProps) {
   const range = props.selectionMode === "range"
+  // Ark の DatePicker は Field と連携しない（Select などはする）。Field で包まれたら
+  // Select と同じものを Field から受け取る: 状態・ラベルの紐付け・補足文とエラー文言の紐付け
+  const field = useFieldContext()
+  const required = props.required ?? field?.required
+  const described = field && {
+    "aria-describedby": field.ariaDescribedby,
+    "aria-errormessage": field.invalid ? field.getInputProps()["aria-errormessage"] : undefined,
+  }
   return (
     <Ark.Root
+      ids={field ? { label: () => field.ids.label, input: (i) => (i === 0 ? field.ids.control : `${field.ids.control}::${i}`), ...props.ids } : props.ids}
+      disabled={field?.disabled}
+      readOnly={field?.readOnly}
+      invalid={field?.invalid}
+      required={required}
       locale="ja-JP"
       translations={{ ...translations, ...t }}
       // カレンダーは入力欄より広いので、中央でなく左端にそろえる
       positioning={{ placement: "bottom-start", ...positioning }}
       {...props}
     >
-      {label ? <Ark.Label>{label}</Ark.Label> : null}
+      {/* data-required は任意の印を消すため（Field のラベルと同じ。field.css） */}
+      {label ? <Ark.Label data-required={required ? "" : undefined}>{label}</Ark.Label> : null}
       <Ark.Control>
-        <Ark.Input index={0} aria-label={range ? inputLabels[0] : undefined} />
+        <Ark.Input index={0} aria-label={range ? inputLabels[0] : undefined} {...described} />
         {range ? (
           <>
             <span data-kh="date-range-sep" aria-hidden="true">〜</span>
-            <Ark.Input index={1} aria-label={inputLabels[1]} />
+            <Ark.Input index={1} aria-label={inputLabels[1]} {...described} />
           </>
         ) : null}
         <Ark.Trigger />

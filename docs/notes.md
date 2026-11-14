@@ -2085,3 +2085,16 @@ CSS で狙えないので使わない。Ark のラベルは required のとき `
   ラベルだけ flex でなく印が 4px に寄るので、ほかと同じ flex + gap にした
 - 必須の印とエラー文言を Select に出すには、Field で包む（Ark の Select は Field と連携する）。kohaku で
   別の仕組みは作らない（Ark にあるものは自作しない）
+
+### DatePicker を Field とつなぐ（2026-11-14）
+
+DatePicker には必須の印もエラー文言も出せなかった。Ark の Select・RadioGroup・FileUpload などは Field と連携
+するが、DatePicker だけはしない（Ark 5.39 / Zag 1.43）。書き味レイヤーで Field の文脈を読み、Select と同じ
+もの（状態・ラベルと入力欄の紐付け・aria-describedby / aria-errormessage）を DatePicker に渡した。
+これで書き方が Select とそろう（Field で包み、ラベルに `<Field.RequiredIndicator />`）。
+label は文字列から ReactNode に広げた（Vue は `#label` スロット）。必須の Field では Label に data-required を
+付け、任意の印が出ないようにした。React と Vue で属性が一致することを測った。
+
+あわせて、invalid のとき枠を赤くする CSS が一度も効いていなかった。`root[data-invalid]` を見ていたが、
+Ark は invalid を input にだけ付ける。`control:has(input[data-invalid])` に直した（Story の States の「エラー」も
+これで赤くなった）。Ark が Field と連携するようになったら、書き味レイヤーの受け渡しは消す。

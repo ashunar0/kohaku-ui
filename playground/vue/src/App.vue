@@ -153,6 +153,13 @@ const h2 = {
         selection-mode="range"
         :default-value="[parseDate('2026-11-03'), parseDate('2026-11-13')]"
       />
+      <Field.Root required invalid>
+        <DatePicker>
+          <template #label>利用日<Field.RequiredIndicator /></template>
+        </DatePicker>
+        <Field.HelperText>Field で包むと必須・補足・エラーが出る</Field.HelperText>
+        <Field.ErrorText>利用日を入力してください。</Field.ErrorText>
+      </Field.Root>
     </div>
 
     <h2 :style="h2">Table — 素の table を包むだけ。行は 48px にそろう</h2>

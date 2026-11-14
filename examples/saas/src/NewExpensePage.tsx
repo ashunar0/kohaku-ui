@@ -13,6 +13,7 @@ import {
   VStack,
   createListCollection,
 } from "@kohaku/react"
+import type { DateValue } from "@ark-ui/react"
 import { toaster } from "./App"
 
 /* 経費の新しい申請（#/new）。日付・金額・区分・領収書を 1 つのフォームで組んで、
@@ -28,6 +29,7 @@ const approvers = createListCollection({
 })
 
 export function NewExpensePage() {
+  const [date, setDate] = useState<DateValue[]>([])
   const [amount, setAmount] = useState("")
   const [payee, setPayee] = useState("")
   const [purpose, setPurpose] = useState("")
@@ -38,6 +40,7 @@ export function NewExpensePage() {
   const submit = (e: FormEvent) => {
     e.preventDefault()
     const next: Record<string, string> = {}
+    if (!date.length) next.date = "利用日を入力してください。"
     if (!category.length) next.category = "区分を選んでください。"
     if (!amount.trim()) next.amount = "金額を入力してください。"
     if (!payee.trim()) next.payee = "支払先を入力してください。"
@@ -69,7 +72,11 @@ export function NewExpensePage() {
             </Alert.Root>
           )}
 
-          <DatePicker label="利用日" />
+          <Field.Root required invalid={!!errors.date}>
+            <DatePicker label={<>利用日<Field.RequiredIndicator /></>} value={date} onValueChange={(d) => setDate(d.value)} />
+            <Field.HelperText>領収書の日付です。</Field.HelperText>
+            <Field.ErrorText>{errors.date}</Field.ErrorText>
+          </Field.Root>
 
           {/* Select は Ark の Field と連携する（required / invalid / ラベルの紐付けを Field から受け取る） */}
           <Field.Root required invalid={!!errors.category}>
