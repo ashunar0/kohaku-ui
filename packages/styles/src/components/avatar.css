@@ -1,0 +1,31 @@
+@layer kohaku {
+  /* 利用者のアイコン。Ark の Avatar。画像が無い・読み込めないときは名前の 1 文字目を出す。
+     見た目は Badge の灰色と同じ組（neutral-soft の地に fg-body の文字）。
+     大きさは fallback で持ち、祖先から --kh-avatar-size で寄せられる */
+  [data-scope="avatar"][data-part="root"] {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: var(--kh-avatar-size, 2rem);
+    height: var(--kh-avatar-size, 2rem);
+    overflow: hidden;
+    border-radius: var(--kh-radius-full);
+    background: var(--kh-color-neutral-soft);
+    color: var(--kh-color-fg-body);
+    /* 32px で 12px。大きさに比例させる */
+    font-size: calc(var(--kh-avatar-size, 2rem) * 0.375);
+    font-weight: 500;
+    line-height: 1;
+    user-select: none;
+  }
+  /* 画像と 1 文字目は同じマスに重ねる。読み込めた方だけ Ark が hidden を外す */
+  [data-scope="avatar"][data-part="image"],
+  [data-scope="avatar"][data-part="fallback"] {
+    grid-area: 1 / 1;
+  }
+  [data-scope="avatar"][data-part="image"] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

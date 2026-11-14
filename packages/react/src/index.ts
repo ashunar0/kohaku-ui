@@ -37,6 +37,7 @@ export { Tooltip, type TooltipRootProps, type TooltipContentProps } from "./tool
 export { Popover, type PopoverContentProps } from "./popover"
 export { Menu, type MenuContentProps, type MenuItemProps } from "./menu"
 export { DatePicker, type DatePickerProps } from "./date-picker"
+export { Avatar, type AvatarProps } from "./avatar"
 export { Progress, type ProgressProps } from "./progress"
 export { Pagination, type PaginationProps } from "./pagination"
 export { Toast, Toaster, type ToasterProps } from "./toast"

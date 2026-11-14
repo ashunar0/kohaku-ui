@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Affix, Alert, PasswordInput, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Affix, Alert, Avatar, PasswordInput, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -94,6 +94,15 @@ const h2 = {
       <IconButton variant="ghost" label="ヘルプ" as-child>
         <a href="#help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></a>
       </IconButton>
+    </HStack>
+
+    <h2 :style="h2">Avatar — 画像が無い・読み込めないときは名前の 1 文字目</h2>
+    <HStack>
+      <Avatar name="あさひ" />
+      <Avatar name="山田 太郎" />
+      <Avatar name="Asahi" />
+      <Avatar name="佐藤 めぐみ" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b4c8f0'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23285ac8'/%3E%3Crect x='6' y='22' width='20' height='12' rx='6' fill='%23285ac8'/%3E%3C/svg%3E" />
+      <Avatar name="鈴木 一郎" src="/no-such-image.png" />
     </HStack>
 
     <h2 :style="h2">VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>

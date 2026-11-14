@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, type FormEvent } from "react"
 import {
   Actions,
+  Avatar,
   Badge,
   Button,
   Dialog,
@@ -120,7 +121,7 @@ export function MembersPage() {
               <tr key={m.id}>
                 <td>
                   <HStack gap={3} wrap={false}>
-                    <span className="app-avatar" aria-hidden="true">{m.name[0]}</span>
+                    <Avatar name={m.name} />
                     <VStack gap={0} className="who">
                       <strong>{m.name}</strong>
                       <small>{m.email}</small>

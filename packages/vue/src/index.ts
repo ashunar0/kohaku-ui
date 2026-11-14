@@ -11,7 +11,7 @@
  * kohaku が足す props 以外は、Vue の attrs のフォールスルーで Ark の部品にそのまま流れる。
  */
 import {
-  Checkbox as ArkCheckbox, DatePicker as ArkDatePicker, Dialog as ArkDialog, FileUpload as ArkFileUpload,
+  Avatar as ArkAvatar, Checkbox as ArkCheckbox, DatePicker as ArkDatePicker, Dialog as ArkDialog, FileUpload as ArkFileUpload,
   Menu as ArkMenu, Pagination as ArkPagination, PasswordInput as ArkPasswordInput, Popover as ArkPopover, Progress as ArkProgress,
   RadioGroup as ArkRadioGroup, Select as ArkSelect, Switch as ArkSwitch,
   Toast as ArkToast, Tooltip as ArkTooltip,
@@ -31,6 +31,7 @@ import { translations as passwordInputTranslations } from "./password-input-text
 import MenuContent from "./MenuContent.vue"
 import MenuItem from "./MenuItem.vue"
 import PopoverContent from "./PopoverContent.vue"
+import AvatarVue from "./Avatar.vue"
 import ProgressVue from "./Progress.vue"
 import RadioGroupVue from "./RadioGroup.vue"
 import RadioGroupItem from "./RadioGroupItem.vue"
@@ -100,6 +101,9 @@ export const PasswordInput = Object.assign(PasswordInputVue, {
   Input: ArkPasswordInput.Input, VisibilityTrigger: ArkPasswordInput.VisibilityTrigger,
   Indicator: ArkPasswordInput.Indicator, Context: ArkPasswordInput.Context,
   translations: passwordInputTranslations,
+})
+export const Avatar = Object.assign(AvatarVue, {
+  Root: ArkAvatar.Root, Image: ArkAvatar.Image, Fallback: ArkAvatar.Fallback, Context: ArkAvatar.Context,
 })
 export const Progress = Object.assign(ProgressVue, {
   Root: ArkProgress.Root, Label: ArkProgress.Label, ValueText: ArkProgress.ValueText,

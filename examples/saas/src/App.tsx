@@ -1,4 +1,4 @@
-import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
+import { Avatar, Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ExpensesPage } from "./ExpensesPage"
@@ -62,7 +62,7 @@ export function App() {
           </ul>
         </nav>
         <div className="app-me">
-          <span className="app-avatar" aria-hidden="true">あ</span>
+          <Avatar name="あさひ" />
           <span>
             <strong>あさひ</strong>
             <small>経理担当</small>
