@@ -23,10 +23,10 @@ const depts = createListCollection({
 })
 
 const notices = [
-  { id: "submitted", label: "承認依頼" },
-  { id: "approved", label: "承認結果" },
-  { id: "weekly", label: "週次レポート" },
-  { id: "news", label: "新機能のお知らせ" },
+  { id: "submitted", label: "承認依頼", when: "自分宛ての承認依頼が届いたとき" },
+  { id: "approved", label: "承認結果", when: "自分の申請が承認または差し戻されたとき" },
+  { id: "weekly", label: "週次レポート", when: "毎週月曜日に、前週の経費の集計" },
+  { id: "news", label: "新機能のお知らせ", when: "Keihi の新機能や改善" },
 ]
 
 export function SettingsPage() {
@@ -123,12 +123,15 @@ function Profile() {
 function Notify() {
   const [on, setOn] = useState<Record<string, boolean>>({ submitted: true, approved: true, weekly: false, news: false })
 
+  // 届く先（メール）と、各項目がいつ届くかは、名前だけでは読めないので書く
   return (
     <VStack gap={6} className="settings-form">
+      <p className="page-desc">オンにした項目は、メール（asahi@example.com）でお知らせします。</p>
       {notices.map((n) => (
         <Switch
           key={n.id}
           checked={on[n.id]}
+          description={n.when}
           onCheckedChange={(d) => {
             setOn((p) => ({ ...p, [n.id]: d.checked }))
             toaster.create({ title: `「${n.label}」を${d.checked ? "オン" : "オフ"}にしました` })
