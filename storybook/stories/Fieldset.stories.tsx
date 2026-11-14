@@ -120,7 +120,11 @@ export const LabelSide: Story = {
   ),
 }
 
-/** 箱が 26rem より狭いと legend を上に戻す（Field の LabelSideNarrow と同じ） */
+/**
+ * 箱が 26rem より狭いと legend を上に戻す（Field の LabelSideNarrow と同じ）。
+ * 横に並べた Field は 8rem（`--kh-field-min-width`）を割ると次の行に落ちる。
+ * 住所なら郵便番号・都道府県は残り、市区町村だけが落ちる。
+ */
 export const LabelSideNarrow: Story = {
   decorators: [(Story) => <div style={{ width: "22rem" }}><Story /></div>],
   render: () => (
