@@ -2,6 +2,7 @@ import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } 
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ExpensesPage } from "./ExpensesPage"
+import { NewExpensePage } from "./NewExpensePage"
 import { SettingsPage } from "./SettingsPage"
 import { SignupPage } from "./SignupPage"
 
@@ -38,6 +39,7 @@ export function App() {
     )
   }
   const page = hash === "#/settings" ? "設定" : "経費申請"
+  const isNew = hash === "#/new"
   return (
     <div className="app">
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}
@@ -72,7 +74,14 @@ export function App() {
         <header className="app-head" data-kh="hstack" data-justify="between" data-gap="4" data-nowrap="">
           <Breadcrumbs>
             <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
-            <Breadcrumbs.Item current>{page}</Breadcrumbs.Item>
+            {isNew ? (
+              <>
+                <Breadcrumbs.Item href="#/">{page}</Breadcrumbs.Item>
+                <Breadcrumbs.Item current>新しい申請</Breadcrumbs.Item>
+              </>
+            ) : (
+              <Breadcrumbs.Item current>{page}</Breadcrumbs.Item>
+            )}
           </Breadcrumbs>
           <HStack wrap={false}>
             <Input type="search" size="sm" icon={<Search />} placeholder="申請・メンバーを検索" aria-label="検索" className="app-search" />
@@ -82,7 +91,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : isNew ? <NewExpensePage /> : <ExpensesPage />}
         </div>
       </main>
 

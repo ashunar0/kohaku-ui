@@ -289,3 +289,9 @@
 .settings-form {
   max-width: 36rem;
 }
+
+
+/* ---- 新しい申請（#/new） ---------------------------------------------- */
+.new-expense-form {
+  max-width: 36rem;
+}

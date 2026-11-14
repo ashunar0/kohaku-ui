@@ -105,7 +105,7 @@ export function ExpensesPage() {
             <Icon asChild><Download /></Icon>
             CSV で書き出す
           </Button>
-          <Button>新しい申請</Button>
+          <Button onClick={() => { location.hash = "#/new" }}>新しい申請</Button>
         </Actions>
       </header>
 
