@@ -340,6 +340,15 @@
 
 
 /* ---- 勘定科目（#/categories） ------------------------------------------ */
+/* 列の見出しと横の「?」。inline-flex で文字と「?」の中心をそろえる
+   （?を行の中に置くと、行の高さが広がって文字が 1.3px 上に寄った） */
+.th-with-help {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kh-space-1);
+}
+
+/* 画面の見出しの下の説明（設定の通知など） */
 .page-desc {
   margin: 0;
   color: var(--kh-color-fg-muted);

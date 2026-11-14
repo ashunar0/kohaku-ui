@@ -12,11 +12,12 @@ import {
   Select,
   Switch,
   Table,
+  Tooltip,
   VisuallyHidden,
   VStack,
   createListCollection,
 } from "@kohaku/react"
-import { Ellipsis } from "lucide-react"
+import { CircleHelp, Ellipsis } from "lucide-react"
 import { toaster } from "./App"
 import { yen } from "./data"
 
@@ -53,22 +54,19 @@ export function CategoriesPage() {
 
   return (
     <VStack gap={4} className="page">
-      <VStack gap={1}>
-        <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
-          <h1>勘定科目</h1>
-          <Button onClick={() => setAdding(true)}>科目を追加</Button>
-        </header>
-        {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く */}
-        <p className="page-desc">無効にした科目は、経費申請で選択できなくなります。上限額を超える申請には、承認時に警告が表示されます。</p>
-      </VStack>
+      <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
+        <h1>勘定科目</h1>
+        <Button onClick={() => setAdding(true)}>科目を追加</Button>
+      </header>
 
       <Table>
         <thead>
           <tr>
             <th scope="col">科目名</th>
             <th scope="col">税区分</th>
-            <th scope="col" data-numeric>上限額（1 件あたり）</th>
-            <th scope="col" data-fit>有効</th>
+            {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く。PC の業務画面なので、当てて読む形 */}
+            <th scope="col" data-numeric><span className="th-with-help">上限額（1 件あたり）<Help label="上限額">上限額を超える申請には、承認時に警告が表示されます。</Help></span></th>
+            <th scope="col" data-fit><span className="th-with-help">有効<Help label="有効">無効にした科目は、経費申請で選択できなくなります。</Help></span></th>
             <th scope="col" data-fit><VisuallyHidden>操作</VisuallyHidden></th>
           </tr>
         </thead>
@@ -103,6 +101,20 @@ export function CategoriesPage() {
 
       <Add open={adding} onOpenChange={setAdding} onAdd={(c) => setItems((xs) => [...xs, c])} />
     </VStack>
+  )
+}
+
+/* 列の見出しの横の「?」。当てる・フォーカスすると説明が出る */
+function Help({ label, children }: { label: string; children: string }) {
+  return (
+    <Tooltip.Root openDelay={200}>
+      <Tooltip.Trigger asChild>
+        <IconButton size="xs" variant="ghost" label={`「${label}」の説明`}>
+          <Icon asChild><CircleHelp /></Icon>
+        </IconButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content>{children}</Tooltip.Content>
+    </Tooltip.Root>
   )
 }
 
