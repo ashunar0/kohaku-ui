@@ -354,3 +354,13 @@
   color: var(--kh-color-fg-muted);
 }
 
+
+/* 勘定科目の表の列の幅（CategoriesPage のコメント参照） */
+.categories :is(th, td) { white-space: nowrap; }
+.categories :is(th, td):nth-child(1),
+.categories :is(th, td):nth-child(2) { width: 30%; }
+.categories :is(th, td):nth-child(3) { width: 1px; }
+.categories :is(th, td):nth-child(4) { width: 20%; text-align: center; }
+.categories td:nth-child(4) [data-scope="switch"][data-part="root"] { margin-inline: auto; }
+.categories th:nth-child(4) .th-with-help { justify-content: center; }
+.categories :is(th, td):nth-child(5) { width: 1px; }

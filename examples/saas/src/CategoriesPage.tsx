@@ -52,6 +52,49 @@ export function CategoriesPage() {
     toaster.create({ title: `「${c.name}」を${active ? "有効" : "無効"}にしました` })
   }
 
+  // 列の幅: 上限額は金額ぴったり（右寄せの列に空きがあると、空きが金額の左に出て税区分が広く見え、
+  // 金額が有効に詰まる）。余りは科目名・税区分・有効で分け、有効はスイッチを真ん中に（app.css の .categories）
+  const table = (rows: Category[]) => (
+        <Table className="categories">
+          <thead>
+            <tr>
+              <th scope="col">科目名</th>
+              <th scope="col">税区分</th>
+              {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く。PC の業務画面なので、当てて読む形 */}
+              <th scope="col" data-numeric><span className="th-with-help">上限額（1 件あたり）<Help label="上限額">上限額を超える申請には、承認時に警告が表示されます。</Help></span></th>
+              <th scope="col" data-fit><span className="th-with-help">有効<Help label="有効">無効にした科目は、経費申請で選択できなくなります。</Help></span></th>
+              <th scope="col" data-fit><VisuallyHidden>操作</VisuallyHidden></th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((c) => (
+              <tr key={c.id}>
+                <th scope="row">{c.name}</th>
+                <td>{c.tax}</td>
+                <td data-numeric>{c.limit == null ? "—" : yen(c.limit)}</td>
+                <td data-fit>
+                  <Switch checked={c.active} onCheckedChange={(d) => toggle(c, d.checked)} aria-label={`${c.name} を有効にする`} />
+                </td>
+                <td data-fit>
+                  <Menu.Root positioning={{ placement: "bottom-end" }}>
+                    <Menu.Trigger asChild>
+                      <IconButton size="sm" variant="ghost" label={`${c.name} の操作`}>
+                        <Icon asChild><Ellipsis /></Icon>
+                      </IconButton>
+                    </Menu.Trigger>
+                    <Menu.Content>
+                      <Menu.Item value="edit">編集</Menu.Item>
+                      <Menu.Separator />
+                      <Menu.Item value="delete" variant="danger">削除</Menu.Item>
+                    </Menu.Content>
+                  </Menu.Root>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+  )
+
   return (
     <VStack gap={4} className="page">
       <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
@@ -59,44 +102,7 @@ export function CategoriesPage() {
         <Button onClick={() => setAdding(true)}>科目を追加</Button>
       </header>
 
-      <Table>
-        <thead>
-          <tr>
-            <th scope="col">科目名</th>
-            <th scope="col">税区分</th>
-            {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く。PC の業務画面なので、当てて読む形 */}
-            <th scope="col" data-numeric><span className="th-with-help">上限額（1 件あたり）<Help label="上限額">上限額を超える申請には、承認時に警告が表示されます。</Help></span></th>
-            <th scope="col" data-fit><span className="th-with-help">有効<Help label="有効">無効にした科目は、経費申請で選択できなくなります。</Help></span></th>
-            <th scope="col" data-fit><VisuallyHidden>操作</VisuallyHidden></th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((c) => (
-            <tr key={c.id}>
-              <th scope="row">{c.name}</th>
-              <td>{c.tax}</td>
-              <td data-numeric>{c.limit == null ? "—" : yen(c.limit)}</td>
-              <td data-fit>
-                <Switch checked={c.active} onCheckedChange={(d) => toggle(c, d.checked)} aria-label={`${c.name} を有効にする`} />
-              </td>
-              <td data-fit>
-                <Menu.Root positioning={{ placement: "bottom-end" }}>
-                  <Menu.Trigger asChild>
-                    <IconButton size="sm" variant="ghost" label={`${c.name} の操作`}>
-                      <Icon asChild><Ellipsis /></Icon>
-                    </IconButton>
-                  </Menu.Trigger>
-                  <Menu.Content>
-                    <Menu.Item value="edit">編集</Menu.Item>
-                    <Menu.Separator />
-                    <Menu.Item value="delete" variant="danger">削除</Menu.Item>
-                  </Menu.Content>
-                </Menu.Root>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {table(items)}
 
 
       <Add open={adding} onOpenChange={setAdding} onAdd={(c) => setItems((xs) => [...xs, c])} />
