@@ -38,6 +38,27 @@ export const Default: Story = {}
 export const Required: Story = { args: { required: true } }
 
 /**
+ * 任意の印は必須と同じ形の灰色のバッジ。ラベルに `data-optional` を付ける（opt-in）。
+ * 必須と任意のどちらに印を付けるかは画面が決める（少ない方だけに付けるなど）。
+ * required の Field では付けても出ない（Ark のラベルが持つ `data-required` で消している）。
+ * 文言は `--kh-field-optional-text` で変えられる。
+ */
+export const Optional: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem", maxWidth: "24rem" }}>
+      <Field.Root required>
+        <Field.Label>会社名<Field.RequiredIndicator /></Field.Label>
+        <Field.Input />
+      </Field.Root>
+      <Field.Root>
+        <Field.Label data-optional>部署</Field.Label>
+        <Field.Input />
+      </Field.Root>
+    </div>
+  ),
+}
+
+/**
  * 枠線とエラー文言が `--kh-color-invalid` を見る（必須のバッジは塗りなので danger の soft）。
  * danger（塗り用）とは別のトークン。テーマで反転する
  * （light #e7000b / dark #ff6055）。

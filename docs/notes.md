@@ -2059,3 +2059,17 @@ freee Vibes の浮く面の影（ぼかし 16〜32px の 10% に、近い影 20%
 Group の中の Field は `flex: 1 1 var(--kh-field-min-width, 8rem)` で wrap する。basis を 0 から 8rem に
 変えても、等分（姓・名）は basis がそろっているので変わらない。落ちた行の間は Group を重ねたときと同じ 12px。
 広い箱の story と会員登録の画面では、どの行も 1 行のままなのを測った。
+
+## 任意の印（2026-11-14）
+
+2026-09-23 の「未決: 任意の印」の答え。「灰色の塗り / 線だけ / 文字だけ」を必須と並べて、灰色の塗りにした
+（あさひ「A でいい」）。必須と同じ形にしておくと、並んだときに印として同じ場所を見れば済む。文字だけは
+必須だけがバッジになって形がばらつく。
+
+どちらに印を付けるか（必須だけ / 任意だけ / 両方 / 少ない方）は調べた先でも割れていたので、kohaku は
+決めない。opt-in で、ラベル（legend）に `data-optional` を付ける。Ark の fallback は data-part を持たず
+CSS で狙えないので使わない。Ark のラベルは required のとき `data-required` を持つので、
+`:not([data-required])` で両方付けたときは必須だけが出る。
+
+地は S2（surface-muted）。Badge と同じ S3 の上の fg-muted は light で 4.29:1 で AA を割る。Badge のように
+文字を fg-body にすると必須より濃く見えるので、地を薄くした（light 4.53 / dark 5.09）。

@@ -25,6 +25,7 @@ type Story = StoryObj<typeof meta>
  * 問い全体が必須なので、バッジは legend に 1 つ（`data-required`）。
  * 読み上げ用には中の Field それぞれに required を付ける。
  * 住所のように項目ごとに必須かどうかが違うときは、中のラベルに付ける。
+ * 任意の印は `data-optional`（legend にも付けられる）。
  */
 const Name = ({ legend, last, first, required = true, invalid = false }: {
   legend: string; last: string; first: string; required?: boolean; invalid?: boolean
@@ -65,7 +66,7 @@ const Address = () => (
     </Group>
     <Group>
       <Field.Root>
-        <Field.Label>建物名・部屋番号</Field.Label>
+        <Field.Label data-optional>建物名・部屋番号</Field.Label>
         <Field.Input autoComplete="address-line2" />
       </Field.Root>
     </Group>

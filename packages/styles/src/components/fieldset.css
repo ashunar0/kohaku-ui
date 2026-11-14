@@ -39,8 +39,8 @@
     margin-top: var(--kh-space-3);
   }
 
-  /* 必須バッジの見た目は field.css と共通。Field のラベル（gap 4 + margin 4）と同じ 8px 離す */
-  [data-scope="fieldset"][data-part="legend"][data-required]::after {
+  /* 必須・任意のバッジの見た目は field.css と共通。Field のラベル（gap 4 + margin 4）と同じ 8px 離す */
+  [data-scope="fieldset"][data-part="legend"]:is([data-required], [data-optional])::after {
     flex-shrink: 0;
     margin-inline-start: var(--kh-space-2);
   }
