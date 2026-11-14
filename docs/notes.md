@@ -2279,3 +2279,19 @@ Select を並べても高さがそろう。
 - 点は読み上げないので、label に状態を書く（examples は「通知（未読 3 件）」）
 - 地の色の縁取り 2px でアイコンの線と切り離す（L3 `--kh-button-indicator-ring`、大きさは `--kh-button-indicator-size`）
 - Ark に該当する部品は無い（見た目だけ）
+
+## Switch の読み上げと、ラベルを出さないときの位置を直した（2026-11-14）
+
+勘定科目（examples の #/categories）で、表の「有効」の列にラベルなしの Switch を置いたら 3 つ出た。
+
+- **「チェックボックス」と読まれていた。** Ark の入力は type="checkbox" のままで role が無い。書き味レイヤーで
+  role="switch" を付けた（React / Vue。ラベルのある Switch も同じ）
+- **ラベルなしだと名前が入力に届いていなかった。** aria-label は Root の <label> に付くだけで、入力は
+  出していない Label の id に aria-labelledby で結ばれていた（Chromium は外側の <label> から拾って
+  読めていたが、たまたま）。aria-label を画面に出さない Label（visually-hidden・aria-hidden）にして、
+  Ark の結び付けのまま名前が届くようにした。aria-hidden は文字として 2 回読ませないため
+  （aria-labelledby は aria-hidden の要素も名前に使える）。aria-labelledby を undefined で消す方法は、
+  Ark が undefined を無視して効かなかった
+- **表のセルで中心から 1.5px 上にずれた。** ラベルなしは inline-flex で、行の中でベースラインに乗っていた。
+  ブロック（flex + fit-content）にしてセルの縦中央に任せ、ずれ 0。画面に出さない Label は
+  「ラベルあり」の判定から外す（数えると右端寄せの grid になる）

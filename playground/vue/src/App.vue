@@ -390,6 +390,7 @@ const h2 = {
         <Switch default-checked description="URL を知っている人なら誰でも見られます。">ワークスペースを公開する</Switch>
         <Switch>ゲストの招待を許可する</Switch>
         <Switch disabled>エンタープライズ機能（プラン外）</Switch>
+        <Switch default-checked aria-label="交通費 を有効にする" />
       </div>
 
       <RadioGroup label="プラン" default-value="pro">

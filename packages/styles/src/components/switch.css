@@ -15,11 +15,15 @@
   [data-scope="switch"][data-part="description"] { grid-column: 1; grid-row: 2; }
   [data-scope="switch"][data-part="control"]     { grid-column: 2; grid-row: 1; }
 
-  /* ラベルの無いスイッチ（表のセルなど）は右端に飛ばさず、その場に置く */
-  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"])) {
-    display: inline-flex;
+  /* ラベルを出さないスイッチ（表のセルなど）は右端に飛ばさず、その場に置く。
+     書き味レイヤーは名前のために画面に出さないラベル（visually-hidden）を置くので、それは数えない */
+  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"]:not([data-kh="visually-hidden"]))) {
+    /* inline-flex だと行の中でベースラインに乗り、表のセルで中心から 1.5px 上にずれた。
+       ブロックにしてセルの縦中央に任せる。幅はスイッチの分だけ */
+    display: flex;
+    width: fit-content;
   }
-  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"])) > [data-part="control"] {
+  [data-scope="switch"][data-part="root"]:not(:has(> [data-part="label"]:not([data-kh="visually-hidden"]))) > [data-part="control"] {
     margin-top: 0;
   }
 

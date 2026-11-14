@@ -1,6 +1,7 @@
 import { Avatar, Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
-import { BarChart3, Bell, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
+import { BarChart3, Bell, BookOpen, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
+import { CategoriesPage } from "./CategoriesPage"
 import { ExpenseDetailPage } from "./ExpenseDetailPage"
 import { ExpensesPage } from "./ExpensesPage"
 import { ImportPage } from "./ImportPage"
@@ -18,6 +19,7 @@ export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
 const nav = [
   { label: "経費申請", Glyph: Receipt, href: "#/" },
   { label: "メンバー", Glyph: Users, href: "#/members" },
+  { label: "勘定科目", Glyph: BookOpen, href: "#/categories" },
   { label: "レポート", Glyph: BarChart3, href: "#/reports" },
   { label: "設定", Glyph: Settings, href: "#/settings" },
 ]
@@ -45,7 +47,7 @@ export function App() {
       </>
     )
   }
-  const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : hash === "#/reports" ? "レポート" : hash === "#/notifications" ? "通知" : "経費申請"
+  const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : hash === "#/reports" ? "レポート" : hash === "#/notifications" ? "通知" : hash === "#/categories" ? "勘定科目" : "経費申請"
   const isNew = hash === "#/new"
   const isImport = hash === "#/import"
   const detailId = hash.startsWith("#/expenses/") ? decodeURIComponent(hash.slice("#/expenses/".length)) : null
@@ -103,7 +105,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : page === "通知" ? <NotificationsPage items={notices} setItems={setNotices} /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : page === "勘定科目" ? <CategoriesPage /> : page === "通知" ? <NotificationsPage items={notices} setItems={setNotices} /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
         </div>
       </main>
 
