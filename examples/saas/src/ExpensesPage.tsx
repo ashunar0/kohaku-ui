@@ -109,15 +109,14 @@ export function ExpensesPage() {
       {/* ── サマリ ────────────────────────────────────────── */}
       <div className="stats">
         {[
-          { label: "承認待ち", value: `${pendingCount} 件`, hint: "最も古い申請は 6 日前" },
-          { label: "今月の確定額", value: yen(total), hint: "下書きを除く" },
-          { label: "差し戻し", value: `${rejectedCount} 件`, hint: "申請者の対応待ち" },
+          { label: "承認待ち", value: `${pendingCount} 件` },
+          { label: "今月の確定額", value: yen(total) },
+          { label: "差し戻し", value: `${rejectedCount} 件` },
         ].map((s) => (
           <Card.Root key={s.label}>
             <Card.Body>
               <p className="stat-label">{s.label}</p>
               <p className="stat-value">{s.value}</p>
-              <p className="stat-hint">{s.hint}</p>
             </Card.Body>
           </Card.Root>
         ))}
@@ -128,12 +127,12 @@ export function ExpensesPage() {
       <HStack gap={3} className="filters">
         <Group attached>
           <Input
-            placeholder="申請者・摘要・申請番号で探す"
+            placeholder="申請者・摘要・申請番号で検索"
             value={q}
             onChange={(e) => { setQ(e.currentTarget.value); setPage(1) }}
-            aria-label="申請を探す"
+            aria-label="申請を検索"
           />
-          <IconButton variant="outline" label="探す">
+          <IconButton variant="outline" label="検索">
             <Icon asChild><Search /></Icon>
           </IconButton>
         </Group>
@@ -327,7 +326,7 @@ export function ExpensesPage() {
 
           <Field.Root>
             <Field.Label>コメント</Field.Label>
-            <Field.Textarea rows={3} placeholder="差し戻す場合は理由を書いてください。" />
+            <Field.Textarea rows={3} placeholder="差し戻す場合は理由を入力してください。" />
             <Field.HelperText>申請者に通知されます。</Field.HelperText>
           </Field.Root>
 

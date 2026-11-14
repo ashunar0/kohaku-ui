@@ -188,11 +188,6 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--kh-tracking-tight);
 }
-.stat-hint {
-  margin: var(--kh-space-1) 0 0;
-  font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-faint);
-}
 
 .filters > :first-child {
   flex: 1 1 20rem;

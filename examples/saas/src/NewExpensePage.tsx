@@ -51,7 +51,7 @@ export function NewExpensePage() {
     e.preventDefault()
     const next: Record<string, string> = {}
     if (!date.length) next.date = "利用日を入力してください。"
-    if (!category.length) next.category = "区分を選んでください。"
+    if (!category.length) next.category = "区分を選択してください。"
     if (!amount.trim()) next.amount = "金額を入力してください。"
     if (!payee.trim()) next.payee = "支払先を入力してください。"
     if (!purpose.trim()) next.purpose = "目的を入力してください。"
@@ -64,7 +64,7 @@ export function NewExpensePage() {
     setBusy(true)
     setTimeout(() => {
       setBusy(false)
-      toaster.success({ title: "申請しました", description: "承認されたらお知らせします。" })
+      toaster.success({ title: "申請しました" })
     }, 800)
   }
 
@@ -100,7 +100,6 @@ export function NewExpensePage() {
 
           <Field.Root required invalid={!!errors.date} id="date">
             <DatePicker label={<>利用日<Field.RequiredIndicator /></>} value={date} onValueChange={(d) => setDate(d.value)} />
-            <Field.HelperText>領収書の日付です。</Field.HelperText>
             <Field.ErrorText>{errors.date}</Field.ErrorText>
           </Field.Root>
 
@@ -109,7 +108,7 @@ export function NewExpensePage() {
             <Select.Root collection={categories} value={category} onValueChange={(d) => setCategory(d.value)}>
               <Select.Label>区分<Field.RequiredIndicator /></Select.Label>
               <Select.Trigger>
-                <Select.ValueText placeholder="選んでください" />
+                <Select.ValueText placeholder="選択してください" />
                 <Select.Indicator />
               </Select.Trigger>
               <Select.Content>
@@ -131,21 +130,18 @@ export function NewExpensePage() {
               <Field.Input data-numeric="" inputMode="numeric" value={amount} onChange={(e) => setAmount(e.currentTarget.value)} style={{ width: "12rem" }} />
               <Affix>円</Affix>
             </Group>
-            <Field.HelperText>税込みの金額です。</Field.HelperText>
             <Field.ErrorText>{errors.amount}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root required invalid={!!errors.payee} id="payee">
             <Field.Label>支払先<Field.RequiredIndicator /></Field.Label>
             <Field.Input value={payee} onChange={(e) => setPayee(e.currentTarget.value)} />
-            <Field.HelperText>領収書に書かれたお店や会社の名前です。</Field.HelperText>
             <Field.ErrorText>{errors.payee}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root required invalid={!!errors.purpose} id="purpose">
             <Field.Label>目的<Field.RequiredIndicator /></Field.Label>
             <Field.Textarea rows={3} value={purpose} onChange={(e) => setPurpose(e.currentTarget.value)} />
-            <Field.HelperText>誰と・何のために使ったかを書きます。</Field.HelperText>
             <Field.ErrorText>{errors.purpose}</Field.ErrorText>
           </Field.Root>
 
@@ -159,7 +155,7 @@ export function NewExpensePage() {
           <Select.Root collection={approvers}>
             <Select.Label data-optional>承認者</Select.Label>
             <Select.Trigger>
-              <Select.ValueText placeholder="部署の承認者に送ります" />
+              <Select.ValueText placeholder="選択してください" />
               <Select.Indicator />
             </Select.Trigger>
             <Select.Content>
