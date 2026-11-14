@@ -322,3 +322,18 @@
 }
 
 
+
+/* ---- 通知（#/notifications） ------------------------------------------- */
+/* 未読の印。既読の行も同じ幅を取り、列がずれないようにする */
+.notice-dot {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--kh-radius-full);
+}
+.notice-dot[data-unread] {
+  background: var(--kh-color-accent);
+}
+.notice-at {
+  font-variant-numeric: tabular-nums;
+}

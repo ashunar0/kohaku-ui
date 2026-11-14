@@ -1,11 +1,12 @@
 import { Avatar, Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
-import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
+import { BarChart3, Bell, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ExpenseDetailPage } from "./ExpenseDetailPage"
 import { ExpensesPage } from "./ExpensesPage"
 import { ImportPage } from "./ImportPage"
 import { MembersPage } from "./MembersPage"
 import { NewExpensePage } from "./NewExpensePage"
+import { NotificationsPage } from "./NotificationsPage"
 import { ReportPage } from "./ReportPage"
 import { SettingsPage } from "./SettingsPage"
 import { SignupPage } from "./SignupPage"
@@ -42,7 +43,7 @@ export function App() {
       </>
     )
   }
-  const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : hash === "#/reports" ? "レポート" : "経費申請"
+  const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : hash === "#/reports" ? "レポート" : hash === "#/notifications" ? "通知" : "経費申請"
   const isNew = hash === "#/new"
   const isImport = hash === "#/import"
   const detailId = hash.startsWith("#/expenses/") ? decodeURIComponent(hash.slice("#/expenses/".length)) : null
@@ -91,13 +92,16 @@ export function App() {
           </Breadcrumbs>
           <HStack wrap={false}>
             <Input type="search" size="sm" icon={<Search />} placeholder="申請・メンバーを検索" aria-label="検索" className="app-search" />
+            <IconButton variant="ghost" size="sm" label="通知" asChild>
+              <a href="#/notifications"><Icon asChild><Bell /></Icon></a>
+            </IconButton>
             <IconButton variant="ghost" size="sm" label="ヘルプ">
               <Icon asChild><CircleHelp /></Icon>
             </IconButton>
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : page === "通知" ? <NotificationsPage /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
         </div>
       </main>
 
