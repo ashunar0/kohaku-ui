@@ -10,6 +10,7 @@
  *
  * asChild で vnode を複製するため、template ではなく render 関数で書いている（Icon と同じ）。
  */
+import { firstElement } from "./as-child"
 import { cloneVNode, defineComponent, h, type VNode } from "vue"
 
 export default defineComponent({
@@ -24,7 +25,7 @@ export default defineComponent({
     return () => {
       const nodes: VNode[] = slots.default?.() ?? []
       if (props.asChild) {
-        const child = nodes.find((n) => typeof n.type !== "symbol") ?? nodes[0]
+        const child = firstElement(nodes)
         if (!child) return null
         return cloneVNode(child, { "data-kh": "link", ...attrs })
       }

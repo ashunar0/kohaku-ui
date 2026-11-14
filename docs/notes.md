@@ -2098,3 +2098,13 @@ label は文字列から ReactNode に広げた（Vue は `#label` スロット�
 あわせて、invalid のとき枠を赤くする CSS が一度も効いていなかった。`root[data-invalid]` を見ていたが、
 Ark は invalid を input にだけ付ける。`control:has(input[data-invalid])` に直した（Story の States の「エラー」も
 これで赤くなった）。Ark が Field と連携するようになったら、書き味レイヤーの受け渡しは消す。
+
+### Button に asChild（2026-11-14）
+
+一覧の「新しい申請」は画面を移る操作なので `<a>` にしたかったが、Button には Link のような asChild が
+無かった。`<button>` で移動すると、新しいタブで開く・URL をコピーするができない。Link と同じ作りで
+asChild を足した（見た目の属性だけ渡す。type と loading はリンクに無いので渡さない）。`<a>` の下線は
+button.css で消す。<button> と `<a>` で大きさ・文字の位置・色が同じことを測った（React / Vue とも）。
+
+Vue では IconButton → Button と slot を中継すると中身が Fragment に包まれて届き、asChild が空振りした。
+Fragment をほどく `firstElement` を作って Button・Icon・Link で共有した。

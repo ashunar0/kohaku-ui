@@ -79,6 +79,14 @@ export function App() {
         <Button onClick={() => { setSaving(true); setTimeout(() => setSaving(false), 1500) }} loading={saving}>押すと 1.5 秒</Button>
       </HStack>
 
+      <h2 style={h2}>Button asChild — 画面を移る操作をボタンの形で出す</h2>
+      <HStack>
+        <Button>新しい申請</Button>
+        <Button asChild><a href="#new">新しい申請</a></Button>
+        <Button variant="outline" asChild><a href="#new">一覧に戻る</a></Button>
+        <IconButton variant="ghost" label="ヘルプ" asChild><a href="#help">{SearchGlyph}</a></IconButton>
+      </HStack>
+
       <h2 style={h2}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
       <p style={{ margin: 0, fontSize: ".875rem" }}>
         この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>

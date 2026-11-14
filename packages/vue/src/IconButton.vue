@@ -16,6 +16,8 @@ defineProps<{
   type?: "button" | "submit" | "reset"
   loading?: boolean
   loadingLabel?: string
+  /** slot の要素に見た目だけ渡す（Button と同じ） */
+  asChild?: boolean
 }>()
 </script>
 
@@ -28,5 +30,6 @@ defineProps<{
     :type="type ?? 'button'"
     :loading="loading"
     :loading-label="loadingLabel ?? '処理中'"
+    :as-child="asChild"
   ><slot /></Button>
 </template>

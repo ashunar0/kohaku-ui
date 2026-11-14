@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef } from "react"
+import { Children, cloneElement, isValidElement, type ComponentPropsWithoutRef, type ReactElement } from "react"
 import { Spinner } from "./spinner"
 import type { Size } from "./types"
 
@@ -9,9 +9,28 @@ export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   loading?: boolean
   /** 処理中に読み上げる文言。既定は「処理中」 */
   loadingLabel?: string
+  /**
+   * children の要素に見た目だけ渡す。画面を移る操作（<a>・ルーターの Link）をボタンの形で出すとき。
+   *   <Button asChild><a href="/new">新しい申請</a></Button>
+   * type と loading は渡さない（リンクには無い）
+   */
+  asChild?: boolean
 }
 
-export function Button({ variant, size, type = "button", loading, loadingLabel = "処理中", onClick, children, ...props }: ButtonProps) {
+export function Button({ variant, size, type = "button", loading, loadingLabel = "処理中", onClick, asChild, children, ...props }: ButtonProps) {
+  if (asChild) {
+    const child = Children.only(children)
+    if (!isValidElement(child)) return null
+    /* 利用側が child に直接書いた属性を勝たせる（Link の asChild と同じ） */
+    return cloneElement(child as ReactElement<Record<string, unknown>>, {
+      "data-kh": "button",
+      "data-variant": variant,
+      "data-size": size,
+      onClick,
+      ...props,
+      ...(child.props as Record<string, unknown>),
+    })
+  }
   return (
     <button
       data-kh="button"

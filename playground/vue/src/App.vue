@@ -86,6 +86,16 @@ const h2 = {
       <Button :loading="saving" @click="save">押すと 1.5 秒</Button>
     </HStack>
 
+    <h2 :style="h2">Button asChild — 画面を移る操作をボタンの形で出す</h2>
+    <HStack>
+      <Button>新しい申請</Button>
+      <Button as-child><a href="#new">新しい申請</a></Button>
+      <Button variant="outline" as-child><a href="#new">一覧に戻る</a></Button>
+      <IconButton variant="ghost" label="ヘルプ" as-child>
+        <a href="#help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></a>
+      </IconButton>
+    </HStack>
+
     <h2 :style="h2">VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
     <p style="margin: 0; font-size: .875rem">
       この文の後ろに、読み上げにだけ出る文があります。<VisuallyHidden>（ここは画面には出ません）</VisuallyHidden>

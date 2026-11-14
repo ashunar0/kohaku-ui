@@ -25,6 +25,8 @@
     border-radius: var(--kh-button-radius, var(--kh-radius));
     background: var(--kh-button-bg);
     color: var(--kh-button-fg);
+    /* asChild で <a> になったときの下線を消す */
+    text-decoration: none;
     cursor: pointer;
 
     transition:

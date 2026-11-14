@@ -79,6 +79,20 @@ export const Loading: Story = {
 }
 
 /** variant ごとの状態。左から ふだん / 押せない / 処理中 */
+/**
+ * 画面を移る操作は <a>（ルーターの Link）にする。`asChild` で子の要素に見た目だけ渡す。
+ * <button> で移動すると、新しいタブで開く・URL をコピーするができない。
+ * type と loading は渡さない（リンクには無い）
+ */
+export const AsChild: Story = {
+  render: () => (
+    <Group>
+      <Button asChild><a href="#new">新しい申請</a></Button>
+      <Button variant="outline" asChild><a href="#list">一覧に戻る</a></Button>
+    </Group>
+  ),
+}
+
 export const States: Story = {
   render: () => (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, max-content)", gap: "0.75rem 1rem" }}>
