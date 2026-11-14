@@ -198,7 +198,7 @@ export function ImportPage() {
                             </Select.Content>
                           </Select.Root>
                         ) : (
-                          r.category || "—"
+                          <span className="cell-text">{r.category || "—"}</span>
                         )}
                       </td>
                       <td data-fit>

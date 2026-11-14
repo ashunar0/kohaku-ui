@@ -311,3 +311,9 @@
 }
 
 
+
+/* Select が並ぶ列のただの文字を、Select の中の文字の頭にそろえる（枠 1px + sm の左の余白 12px）。
+   列の値が縦 1 本に並ぶ。大半が Select の列なので、値の線に乗せる */
+.cell-text {
+  padding-inline-start: calc(var(--kh-space-3) + 1px);
+}
