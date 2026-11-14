@@ -85,6 +85,7 @@ export function App() {
         <Button asChild><a href="#new">新しい申請</a></Button>
         <Button variant="outline" asChild><a href="#new">一覧に戻る</a></Button>
         <IconButton variant="ghost" label="ヘルプ" asChild><a href="#help">{SearchGlyph}</a></IconButton>
+        <IconButton variant="ghost" label="通知（未読あり）" indicator asChild><a href="#help">{SearchGlyph}</a></IconButton>
       </HStack>
 
       <h2 style={h2}>Avatar — 画像が無い・読み込めないときは名前の 1 文字目</h2>

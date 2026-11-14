@@ -94,6 +94,9 @@ const h2 = {
       <IconButton variant="ghost" label="ヘルプ" as-child>
         <a href="#help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></a>
       </IconButton>
+      <IconButton variant="ghost" label="通知（未読あり）" indicator as-child>
+        <a href="#help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></a>
+      </IconButton>
     </HStack>
 
     <h2 :style="h2">Avatar — 画像が無い・読み込めないときは名前の 1 文字目</h2>

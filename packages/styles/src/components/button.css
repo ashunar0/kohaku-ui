@@ -77,6 +77,26 @@
        正方形が崩れたら意味が無いので縮まないようにする */
     flex: none;
   }
+  /* 未読などの印。アイコンの右上に accent の点を重ねる（赤は失敗・危険な操作の色なので使わない）。
+     点は読み上げないので、label に状態を書く（「通知（未読 3 件）」）。
+     位置はアイコンの右上の角。アイコンはボタンの高さの半分なので、角は端から高さの 1/4 */
+  [data-kh="button"][data-icon][data-indicator] {
+    position: relative;
+  }
+  [data-kh="button"][data-icon][data-indicator]::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--kh-button-height, 2.5rem) / 4 - 2px);
+    right: calc(var(--kh-button-height, 2.5rem) / 4 - 2px);
+    width: var(--kh-button-indicator-size, 0.5rem);
+    height: var(--kh-button-indicator-size, 0.5rem);
+    border-radius: var(--kh-radius-full);
+    background: var(--kh-color-accent);
+    /* 地の色の縁取り。アイコンの線と点が溶け合わないように切り離す */
+    box-shadow: 0 0 0 2px var(--kh-button-indicator-ring, var(--kh-color-surface));
+    pointer-events: none;
+  }
+
   /* 円にしたいとき（ツールバーの ghost など）は L3 で 1 行。
      Tailwind 併用なら rounded-full でも勝つ（利用側は layer の外） */
 

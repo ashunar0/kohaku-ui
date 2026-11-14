@@ -6,7 +6,7 @@ import { ExpensesPage } from "./ExpensesPage"
 import { ImportPage } from "./ImportPage"
 import { MembersPage } from "./MembersPage"
 import { NewExpensePage } from "./NewExpensePage"
-import { NotificationsPage } from "./NotificationsPage"
+import { NotificationsPage, initialNotices } from "./NotificationsPage"
 import { ReportPage } from "./ReportPage"
 import { SettingsPage } from "./SettingsPage"
 import { SignupPage } from "./SignupPage"
@@ -35,6 +35,8 @@ function useHash() {
 
 export function App() {
   const hash = useHash()
+  const [notices, setNotices] = useState(initialNotices)
+  const unread = notices.filter((n) => n.unread).length
   if (hash === "#/signup") {
     return (
       <>
@@ -92,7 +94,7 @@ export function App() {
           </Breadcrumbs>
           <HStack wrap={false}>
             <Input type="search" size="sm" icon={<Search />} placeholder="申請・メンバーを検索" aria-label="検索" className="app-search" />
-            <IconButton variant="ghost" size="sm" label="通知" asChild>
+            <IconButton variant="ghost" size="sm" label={unread ? `通知（未読 ${unread} 件）` : "通知"} indicator={unread > 0} asChild>
               <a href="#/notifications"><Icon asChild><Bell /></Icon></a>
             </IconButton>
             <IconButton variant="ghost" size="sm" label="ヘルプ">
@@ -101,7 +103,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : page === "通知" ? <NotificationsPage /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : page === "レポート" ? <ReportPage /> : page === "通知" ? <NotificationsPage items={notices} setItems={setNotices} /> : isNew ? <NewExpensePage /> : isImport ? <ImportPage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
         </div>
       </main>
 

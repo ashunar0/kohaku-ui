@@ -53,6 +53,25 @@ export const States: Story = {
   ),
 }
 
+const Bell = () => (
+  <Icon><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></Icon>
+)
+
+/**
+ * `indicator` で右上に点を出す（未読があるときなど）。色は accent（赤は失敗・危険な操作の色なので使わない）。
+ * 点は読み上げないので、label にも状態を書く（「通知（未読 3 件）」）。件数は出さない（行き先の画面で見せる）
+ */
+export const Indicator: Story = {
+  render: () => (
+    <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+      {(["xs", "sm", "md", "lg"] as const).map((sz) => (
+        <IconButton key={sz} variant="ghost" size={sz} indicator label="通知（未読 3 件）"><Bell /></IconButton>
+      ))}
+      <IconButton variant="outline" indicator label="通知（未読 3 件）"><Bell /></IconButton>
+    </div>
+  ),
+}
+
 /**
  * 円にしたいとき（ツールバーの ghost など）は L3 トークンで 1 行。
  * Tailwind 併用なら `rounded-full` でも勝つ（利用側は layer の外）。

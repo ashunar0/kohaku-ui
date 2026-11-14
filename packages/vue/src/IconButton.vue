@@ -18,12 +18,15 @@ defineProps<{
   loadingLabel?: string
   /** slot の要素に見た目だけ渡す（Button と同じ） */
   asChild?: boolean
+  /** 右上に点を出す（未読があるときなど）。点は読み上げないので、label にも状態を書く */
+  indicator?: boolean
 }>()
 </script>
 
 <template>
   <Button
     data-icon=""
+    :data-indicator="indicator ? '' : undefined"
     :aria-label="label"
     :variant="variant"
     :size="size"

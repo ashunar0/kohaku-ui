@@ -57,8 +57,12 @@ export function Button({ variant, size, type = "button", loading, loadingLabel =
  * 書くのは「操作の名前」で、絵柄の名前ではない（虫眼鏡なら「拡大」ではなく「探す」）。
  * 見た目は Button と同じ CSS（`data-icon` が付くだけ）なので variant / size / loading はそのまま使える。
  */
-export type IconButtonProps = Omit<ButtonProps, "aria-label"> & { label: string }
+export type IconButtonProps = Omit<ButtonProps, "aria-label"> & {
+  label: string
+  /** 右上に点を出す（未読があるときなど）。点は読み上げないので、label にも状態を書く */
+  indicator?: boolean
+}
 
-export function IconButton({ label, ...props }: IconButtonProps) {
-  return <Button data-icon="" aria-label={label} {...props} />
+export function IconButton({ label, indicator, ...props }: IconButtonProps) {
+  return <Button data-icon="" data-indicator={indicator ? "" : undefined} aria-label={label} {...props} />
 }

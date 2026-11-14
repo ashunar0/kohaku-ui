@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type Dispatch, type SetStateAction } from "react"
 import { Badge, Button, Link, Table, Tabs, VStack, VisuallyHidden } from "@kohaku/react"
 import { formatDate } from "./data"
 
@@ -9,9 +9,9 @@ type Kind = "request" | "rejected" | "approved" | "system"
 const kindLabel: Record<Kind, string> = { request: "承認依頼", rejected: "差し戻し", approved: "承認", system: "お知らせ" }
 const kindVariant = { request: "warning", rejected: "danger", approved: "success", system: "neutral" } as const
 
-type Notice = { id: string; at: string; kind: Kind; text: string; ref?: string; unread: boolean }
+export type Notice = { id: string; at: string; kind: Kind; text: string; ref?: string; unread: boolean }
 
-const initial: Notice[] = [
+export const initialNotices: Notice[] = [
   { id: "n1", at: "2026-11-14T10:24", kind: "request", text: "山田 太郎さんから承認依頼が届きました", ref: "EX-2026-1043", unread: true },
   { id: "n2", at: "2026-11-14T09:02", kind: "request", text: "佐藤 めぐみさんから承認依頼が届きました", ref: "EX-2026-1042", unread: true },
   { id: "n3", at: "2026-11-13T17:45", kind: "approved", text: "田中 彩さんが申請を承認しました", ref: "EX-2026-1040", unread: true },
@@ -21,8 +21,8 @@ const initial: Notice[] = [
   { id: "n7", at: "2026-11-10T15:20", kind: "approved", text: "中村 ひかりさんが申請を承認しました", ref: "EX-2026-1036", unread: false },
 ]
 
-export function NotificationsPage() {
-  const [items, setItems] = useState(initial)
+/* 未読の数はヘッダーのベルにも出すので、一覧は App が持つ */
+export function NotificationsPage({ items, setItems }: { items: Notice[]; setItems: Dispatch<SetStateAction<Notice[]>> }) {
   const [tab, setTab] = useState("all")
 
   const shown = tab === "unread" ? items.filter((n) => n.unread) : items
