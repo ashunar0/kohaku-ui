@@ -176,8 +176,8 @@ export function NewExpensePage() {
 
           <Actions align="start">
             <Button type="submit" loading={busy} loadingLabel="申請中">申請する</Button>
-            <Button type="button" variant="outline" onClick={() => toaster.create({ title: "下書きに保存しました" })}>
-              下書きに保存
+            <Button type="button" variant="outline" onClick={() => toaster.create({ title: "下書きを保存しました" })}>
+              下書きを保存
             </Button>
           </Actions>
         </VStack>
