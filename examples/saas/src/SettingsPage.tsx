@@ -23,10 +23,10 @@ const depts = createListCollection({
 })
 
 const notices = [
-  { id: "submitted", label: "申請が届いたとき", hint: "自分が承認する申請が出されたら知らせます。" },
-  { id: "approved", label: "申請が承認されたとき", hint: "自分の申請が承認・差し戻しされたら知らせます。" },
-  { id: "weekly", label: "週のまとめ", hint: "毎週月曜の朝に、先週の申請の件数と金額を送ります。" },
-  { id: "news", label: "新しい機能のお知らせ", hint: "月に 1 回ほど届きます。" },
+  { id: "submitted", label: "承認依頼" },
+  { id: "approved", label: "承認結果" },
+  { id: "weekly", label: "週次レポート" },
+  { id: "news", label: "新機能のお知らせ" },
 ]
 
 export function SettingsPage() {
@@ -75,20 +75,19 @@ function Profile() {
         <Field.Root required invalid={!!error}>
           <Field.Label>表示名<Field.RequiredIndicator /></Field.Label>
           <Field.Input value={name} onChange={(e) => setName(e.currentTarget.value)} />
-          <Field.HelperText>申請の一覧と承認の通知に出ます。</Field.HelperText>
           <Field.ErrorText>{error}</Field.ErrorText>
         </Field.Root>
 
         <Field.Root readOnly>
           <Field.Label>メールアドレス</Field.Label>
           <Field.Input value="asahi@example.com" />
-          <Field.HelperText>変えるときは管理者に連絡してください。</Field.HelperText>
+          <Field.HelperText>変更が必要な場合は管理者にお問い合わせください。</Field.HelperText>
         </Field.Root>
 
         <Select.Root collection={depts} value={dept} onValueChange={(d) => setDept(d.value)}>
           <Select.Label>部署</Select.Label>
           <Select.Trigger>
-            <Select.ValueText placeholder="選んでください" />
+            <Select.ValueText placeholder="選択してください" />
             <Select.Indicator />
           </Select.Trigger>
           <Select.Content>
@@ -127,7 +126,6 @@ function Notify() {
       {notices.map((n) => (
         <Switch
           key={n.id}
-          description={n.hint}
           checked={on[n.id]}
           onCheckedChange={(d) => {
             setOn((p) => ({ ...p, [n.id]: d.checked }))
@@ -153,7 +151,6 @@ function Account() {
       <Card.Root>
         <Card.Header>
           <Card.Title>ログアウト</Card.Title>
-          <Card.Description>すべての端末からログアウトします。</Card.Description>
         </Card.Header>
         <Card.Footer>
           <Actions align="start">
@@ -167,7 +164,7 @@ function Account() {
       <Card.Root>
         <Card.Header>
           <Card.Title>アカウントを削除</Card.Title>
-          <Card.Description>申請の履歴と添付ファイルもすべて消えます。元に戻せません。</Card.Description>
+          <Card.Description>申請履歴と添付ファイルもすべて削除されます。この操作は取り消せません。</Card.Description>
         </Card.Header>
         <Card.Footer>
           <Actions align="start">
@@ -184,13 +181,13 @@ function Account() {
       >
         <Dialog.Content>
           <Dialog.Title ref={title} tabIndex={-1}>アカウントを削除しますか</Dialog.Title>
-          <Dialog.Description>申請の履歴と添付ファイルもすべて消えます。元に戻せません。</Dialog.Description>
+          <Dialog.Description>申請履歴と添付ファイルもすべて削除されます。この操作は取り消せません。</Dialog.Description>
 
           <VStack gap={4}>
             <Alert.Root variant="danger">
               <Alert.Icon />
               <Alert.Title>承認待ちの申請が 3 件あります</Alert.Title>
-              <Alert.Description>削除すると、これらの申請は取り下げになります。</Alert.Description>
+              <Alert.Description>削除すると、これらの申請は取り下げられます。</Alert.Description>
             </Alert.Root>
             <Field.Root>
               <Field.Label>確認のため「{word}」と入力してください</Field.Label>
@@ -199,7 +196,7 @@ function Account() {
           </VStack>
 
           <Actions>
-            <Dialog.CloseTrigger asChild><Button variant="ghost">やめる</Button></Dialog.CloseTrigger>
+            <Dialog.CloseTrigger asChild><Button variant="ghost">キャンセル</Button></Dialog.CloseTrigger>
             <Button
               variant="danger"
               disabled={confirm !== word}

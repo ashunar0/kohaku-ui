@@ -51,10 +51,10 @@ export function NewExpensePage() {
     e.preventDefault()
     const next: Record<string, string> = {}
     if (!date.length) next.date = "利用日を入力してください。"
-    if (!category.length) next.category = "区分を選択してください。"
+    if (!category.length) next.category = "科目を選択してください。"
     if (!amount.trim()) next.amount = "金額を入力してください。"
     if (!payee.trim()) next.payee = "支払先を入力してください。"
-    if (!purpose.trim()) next.purpose = "目的を入力してください。"
+    if (!purpose.trim()) next.purpose = "摘要を入力してください。"
     setErrors(next)
     if (Object.keys(next).length) {
       // エラーのまとめに移る。どこを直せばいいかを先に伝える（会員登録と同じ。デジタル庁の方針）
@@ -75,7 +75,7 @@ export function NewExpensePage() {
   return (
     <VStack gap={8} className="page new-expense">
       <header className="page-head">
-        <h1>新しい申請</h1>
+        <h1>新規申請</h1>
       </header>
 
       <form noValidate onSubmit={submit} className="new-expense-form">
@@ -106,7 +106,7 @@ export function NewExpensePage() {
           {/* Select は Ark の Field と連携する（required / invalid / ラベルの紐付けを Field から受け取る） */}
           <Field.Root required invalid={!!errors.category} id="category">
             <Select.Root collection={categories} value={category} onValueChange={(d) => setCategory(d.value)}>
-              <Select.Label>区分<Field.RequiredIndicator /></Select.Label>
+              <Select.Label>科目<Field.RequiredIndicator /></Select.Label>
               <Select.Trigger>
                 <Select.ValueText placeholder="選択してください" />
                 <Select.Indicator />
@@ -140,14 +140,14 @@ export function NewExpensePage() {
           </Field.Root>
 
           <Field.Root required invalid={!!errors.purpose} id="purpose">
-            <Field.Label>目的<Field.RequiredIndicator /></Field.Label>
+            <Field.Label>摘要<Field.RequiredIndicator /></Field.Label>
             <Field.Textarea rows={3} value={purpose} onChange={(e) => setPurpose(e.currentTarget.value)} />
             <Field.ErrorText>{errors.purpose}</Field.ErrorText>
           </Field.Root>
 
-          <RadioGroup label="支払い方法" defaultValue="self">
-            <RadioGroup.Item value="self">自分で立て替えた</RadioGroup.Item>
-            <RadioGroup.Item value="card">法人カードで払った</RadioGroup.Item>
+          <RadioGroup label="支払方法" defaultValue="self">
+            <RadioGroup.Item value="self">立替払い</RadioGroup.Item>
+            <RadioGroup.Item value="card">法人カード</RadioGroup.Item>
           </RadioGroup>
 
           <FileUpload label="領収書" accept="image/*,application/pdf" maxFiles={5} maxFileSize={10 * 1024 * 1024} />

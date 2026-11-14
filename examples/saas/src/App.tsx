@@ -77,7 +77,7 @@ export function App() {
             {isNew ? (
               <>
                 <Breadcrumbs.Item href="#/">{page}</Breadcrumbs.Item>
-                <Breadcrumbs.Item current>新しい申請</Breadcrumbs.Item>
+                <Breadcrumbs.Item current>新規申請</Breadcrumbs.Item>
               </>
             ) : (
               <Breadcrumbs.Item current>{page}</Breadcrumbs.Item>

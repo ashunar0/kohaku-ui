@@ -100,9 +100,9 @@ export function ExpensesPage() {
         <Actions>
           <Button variant="outline">
             <Icon asChild><Download /></Icon>
-            CSV で書き出す
+            CSV 出力
           </Button>
-          <Button asChild><a href="#/new">新しい申請</a></Button>
+          <Button asChild><a href="#/new">新規申請</a></Button>
         </Actions>
       </header>
 
@@ -190,7 +190,7 @@ export function ExpensesPage() {
         <HStack gap={4} className="bulk">
           <span>{picked.length} 件を選択中</span>
           <Actions align="start">
-            <Button size="sm" onClick={() => approve(picked)}>まとめて承認</Button>
+            <Button size="sm" onClick={() => approve(picked)}>一括承認</Button>
             <Button size="sm" variant="outline" onClick={() => setPicked([])}>選択を解除</Button>
           </Actions>
         </HStack>
@@ -263,7 +263,7 @@ export function ExpensesPage() {
                       </IconButton>
                     </Menu.Trigger>
                     <Menu.Content>
-                      <Menu.Item value="view">内容を見る</Menu.Item>
+                      <Menu.Item value="view">詳細を表示</Menu.Item>
                       {e.status === "pending" ? (
                         <>
                           <Menu.Separator />
@@ -284,7 +284,7 @@ export function ExpensesPage() {
             ))}
             {shown.length === 0 ? (
               <tr data-empty="">
-                <td colSpan={8}>条件に合う申請はありません。</td>
+                <td colSpan={8}>該当する申請はありません。</td>
               </tr>
             ) : null}
           </tbody>

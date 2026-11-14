@@ -57,7 +57,7 @@ function validate(v: Values, plan: string, agree: boolean): Record<string, strin
   else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) e.email = "メールアドレスの形式が正しくありません。"
   if (v.tel && !/^[\d-]{10,13}$/.test(v.tel)) e.tel = "電話番号は数字とハイフンで入力してください。"
   if (!/^\d{3}-?\d{4}$/.test(v.postal ?? "")) e.postal = "郵便番号は 7 桁の数字で入力してください。"
-  if (!v.pref) e.pref = "都道府県を選んでください。"
+  if (!v.pref) e.pref = "都道府県を選択してください。"
   need("city", "市区町村"); need("street", "町名・番地")
   if (plan === "corp") need("company", "会社名")
   if ((v.password ?? "").length < 8) e.password = "パスワードは 8 文字以上で入力してください。"
@@ -114,7 +114,6 @@ export function SignupPage() {
           <VStack gap={8}>
             <div className="signup-head">
               <h1>アカウントを作成</h1>
-              <p>入力は 5 分ほどで終わります。「必須」の項目は必ず入力してください。</p>
             </div>
 
             {listed.length > 0 ? (
@@ -137,7 +136,7 @@ export function SignupPage() {
 
             {/* ── お名前 ─────────────────────────────── */}
             <section className="signup-section">
-              <h2>お名前</h2>
+              <h2>基本情報</h2>
               <VStack gap={6}>
                 <Fieldset.Root invalid={!!(err("lastName") || err("firstName"))}>
                   <Fieldset.Legend data-required>氏名</Fieldset.Legend>
@@ -200,14 +199,12 @@ export function SignupPage() {
                 <Field.Root required invalid={!!err("email")} id="email">
                   <Field.Label>メールアドレス<Field.RequiredIndicator /></Field.Label>
                   <Field.Input type="email" autoComplete="email" placeholder="asahi@example.com" {...bind("email")} />
-                  <Field.HelperText>ログインと、お知らせの送り先に使います。</Field.HelperText>
                   <Field.ErrorText>{err("email")}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={!!err("tel")} id="tel" className="signup-narrow">
                   <Field.Label>電話番号</Field.Label>
                   <Field.Input type="tel" inputMode="tel" autoComplete="tel" placeholder="090-1234-5678" {...bind("tel")} />
-                  <Field.HelperText>ハイフンはあってもなくてもかまいません。</Field.HelperText>
                   <Field.ErrorText>{err("tel")}</Field.ErrorText>
                 </Field.Root>
               </VStack>
@@ -226,7 +223,7 @@ export function SignupPage() {
                   <Field.Root required invalid={!!err("pref")} id="pref" style={{ flex: "0 0 10rem" }}>
                     <Field.Label>都道府県<Field.RequiredIndicator /></Field.Label>
                     <Field.Select autoComplete="address-level1" {...bind("pref")}>
-                      <option value="">選んでください</option>
+                      <option value="">選択してください</option>
                       {prefectures.map((p) => <option key={p}>{p}</option>)}
                     </Field.Select>
                     <Field.ErrorText>{err("pref")}</Field.ErrorText>
@@ -254,9 +251,9 @@ export function SignupPage() {
 
             {/* ── ご利用の形態 ───────────────────────── */}
             <section className="signup-section">
-              <h2>ご利用の形態</h2>
+              <h2>契約情報</h2>
               <VStack gap={6}>
-                <RadioGroup label="どなたが使いますか" value={plan} onValueChange={(d) => setPlan(d.value ?? "personal")}>
+                <RadioGroup label="利用形態" value={plan} onValueChange={(d) => setPlan(d.value ?? "personal")}>
                   <RadioGroup.Item value="personal">個人（フリーランス・個人事業主）</RadioGroup.Item>
                   <RadioGroup.Item value="corp">法人</RadioGroup.Item>
                 </RadioGroup>
@@ -277,7 +274,7 @@ export function SignupPage() {
               <Field.Root required invalid={!!err("password")} id="password">
                 <Field.Label>パスワード<Field.RequiredIndicator /></Field.Label>
                 <PasswordInput autoComplete="new-password" {...bind("password")} />
-                <Field.HelperText>8 文字以上。英字と数字を混ぜると安全です。</Field.HelperText>
+                <Field.HelperText>8 文字以上で入力してください。</Field.HelperText>
                 <Field.ErrorText>{err("password")}</Field.ErrorText>
               </Field.Root>
             </section>
@@ -285,7 +282,7 @@ export function SignupPage() {
             {/* ── 同意と送信 ─────────────────────────── */}
             <VStack gap={4}>
               <Checkbox checked={news} onCheckedChange={(d) => setNews(d.checked === true)}>
-                新しい機能のお知らせをメールで受け取る
+                新機能のお知らせをメールで受け取る
               </Checkbox>
               <Field.Root invalid={!!err("agree")}>
                 <Checkbox checked={agree} onCheckedChange={(d) => setAgree(d.checked === true)} ids={{ hiddenInput: "agree" }}>
