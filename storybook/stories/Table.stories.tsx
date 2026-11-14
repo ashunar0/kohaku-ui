@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge, Checkbox, Icon, IconButton, Table } from "@kohaku/react"
+import { Badge, Checkbox, HStack, Icon, IconButton, Switch, Table, Tooltip } from "@kohaku/react"
 import { useState } from "react"
 
 const rows = [
@@ -172,6 +172,59 @@ export const Totals: Story = {
       <tfoot>
         <tr><th scope="row">合計</th><td data-numeric>51</td><td data-numeric>¥1,994,940</td></tr>
       </tfoot>
+    </Table>
+  ),
+}
+
+const Help = ({ label, text }: { label: string; text: string }) => (
+  <Tooltip.Root openDelay={200}>
+    <Tooltip.Trigger asChild>
+      <IconButton size="xs" variant="ghost" label={`「${label}」の説明`}>
+        <Icon><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></Icon>
+      </IconButton>
+    </Tooltip.Trigger>
+    <Tooltip.Content>{text}</Tooltip.Content>
+  </Tooltip.Root>
+)
+
+/**
+ * 列の幅と揃え。既定はブラウザが中身の長さに応じて余りを配る。表ごとに次で決める。
+ *
+ * - `data-fit` 中身ぴったり（余りをもらわない）
+ * - `style={{ width: "30%" }}` 余りの取り分（割合でも rem でも）
+ * - `data-align="center" | "end"` 揃え（数字は `data-numeric`）。セルの中の箱（ラベルなしの Switch）も寄る
+ * - セルの中で文字とアイコンを並べるときは `HStack`（セルの揃えに従う）
+ *
+ * **空きは揃えの反対側に出る。** 左寄せの列と右寄せの列が隣り合うときは、右寄せの列を `data-fit` にする
+ * （空きが数字の左に出ると、左隣の列が広く・数字が右隣に詰まって見える）
+ */
+export const Columns: Story = {
+  render: () => (
+    <Table>
+      <thead>
+        <tr>
+          <th scope="col" style={{ width: "30%" }}>科目名</th>
+          <th scope="col" style={{ width: "30%" }}>税区分</th>
+          <th scope="col" data-numeric data-fit>
+            <HStack gap={1} wrap={false}>上限額<Help label="上限額" text="上限額を超える申請には、承認時に警告が表示されます。" /></HStack>
+          </th>
+          <th scope="col" data-align="center" style={{ width: "20%" }}>
+            <HStack gap={1} wrap={false}>有効<Help label="有効" text="無効にした科目は、経費申請で選択できなくなります。" /></HStack>
+          </th>
+          <th scope="col" data-fit>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[["交通費", "課税仕入 10%", "—"], ["宿泊費", "課税仕入 10%", "¥15,000"], ["新聞図書費", "課税仕入 8%（軽減）", "—"]].map(([n, t, l]) => (
+          <tr key={n}>
+            <th scope="row">{n}</th>
+            <td>{t}</td>
+            <td data-numeric data-fit>{l}</td>
+            <td data-align="center"><Switch defaultChecked aria-label={`${n} を有効にする`} /></td>
+            <td data-fit><More label={`${n} の操作`} /></td>
+          </tr>
+        ))}
+      </tbody>
     </Table>
   ),
 }

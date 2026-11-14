@@ -4,6 +4,12 @@
 
    中身は素の <table>。div[data-kh="table"] で包む（角丸と横スクロールのため。
    border-collapse の表に角丸は効かない）。
+
+   列の幅は表ごとに決める（既定は中身の長さに応じてブラウザが余りを配る）。
+     data-fit            中身ぴったり。余りをもらわない（番号・日付・状態・操作）
+     style="width: 30%"  余りの取り分を決める。割合でも rem でもよい
+   空きは揃えの反対側に出る。右寄せの列に空きがあると数字の左に空きが出て、左隣の文字の列が広く、
+   数字は右隣に詰まって見える。左寄せの列と右寄せの列が隣り合う表では、右寄せの列を data-fit にする
    ========================================================================== */
 
 @layer kohaku {
@@ -87,6 +93,20 @@
   [data-kh="table"] [data-fit] {
     width: 1px;
     white-space: nowrap;
+  }
+
+  /* 揃え。data-numeric（右・等幅数字）のほかに、中央（スイッチ・バッジ・アイコンの列）と右（数字でない右寄せ）。
+     セルの中の箱（ラベルなしの Switch など、幅が中身だけのブロック）も同じ側に寄せる */
+  [data-kh="table"] [data-align="center"] { text-align: center; }
+  [data-kh="table"] [data-align="end"]    { text-align: right; }
+  [data-kh="table"] [data-align="center"] > :not([data-kh="hstack"]) { margin-inline: auto; }
+  [data-kh="table"] :is([data-align="end"], [data-numeric]) > :not([data-kh="hstack"]) { margin-inline-start: auto; }
+
+  /* セルの中で文字とアイコンを並べる（見出しの横の「?」など）。HStack をセルの中では行内の箱にして、
+     セルの揃え（左・中央・右）にそのまま従わせる。文字を行の中にじかに置くと、アイコンの高さで行が
+     広がり、文字が上に寄る（実測 1.3px） */
+  [data-kh="table"] :is(th, td) > [data-kh="hstack"] {
+    display: inline-flex;
   }
 
   /* 選択用のチェックボックスだけのセル。隣の列に寄せる */

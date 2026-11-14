@@ -5,6 +5,7 @@ import {
   Dialog,
   Field,
   Group,
+  HStack,
   Affix,
   Icon,
   IconButton,
@@ -53,16 +54,16 @@ export function CategoriesPage() {
   }
 
   // 列の幅: 上限額は金額ぴったり（右寄せの列に空きがあると、空きが金額の左に出て税区分が広く見え、
-  // 金額が有効に詰まる）。余りは科目名・税区分・有効で分け、有効はスイッチを真ん中に（app.css の .categories）
+  // 金額が有効に詰まる）。余りは科目名・税区分・有効で分け、有効はスイッチを真ん中に
   const table = (rows: Category[]) => (
-        <Table className="categories">
+        <Table>
           <thead>
             <tr>
               <th scope="col">科目名</th>
               <th scope="col">税区分</th>
               {/* 「有効」と「上限額」が何に効くかは、無いと結果が予想できないので書く。PC の業務画面なので、当てて読む形 */}
-              <th scope="col" data-numeric><span className="th-with-help">上限額（1 件あたり）<Help label="上限額">上限額を超える申請には、承認時に警告が表示されます。</Help></span></th>
-              <th scope="col" data-fit><span className="th-with-help">有効<Help label="有効">無効にした科目は、経費申請で選択できなくなります。</Help></span></th>
+              <th scope="col" data-numeric data-fit><HStack gap={1} wrap={false}>上限額（1 件あたり）<Help label="上限額">上限額を超える申請には、承認時に警告が表示されます。</Help></HStack></th>
+              <th scope="col" data-align="center" style={{ width: "20%" }}><HStack gap={1} wrap={false}>有効<Help label="有効">無効にした科目は、経費申請で選択できなくなります。</Help></HStack></th>
               <th scope="col" data-fit><VisuallyHidden>操作</VisuallyHidden></th>
             </tr>
           </thead>
@@ -71,8 +72,8 @@ export function CategoriesPage() {
               <tr key={c.id}>
                 <th scope="row">{c.name}</th>
                 <td>{c.tax}</td>
-                <td data-numeric>{c.limit == null ? "—" : yen(c.limit)}</td>
-                <td data-fit>
+                <td data-numeric data-fit>{c.limit == null ? "—" : yen(c.limit)}</td>
+                <td data-align="center">
                   <Switch checked={c.active} onCheckedChange={(d) => toggle(c, d.checked)} aria-label={`${c.name} を有効にする`} />
                 </td>
                 <td data-fit>
