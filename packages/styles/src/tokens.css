@@ -160,6 +160,8 @@
   --kh-color-canvas:        #ffffff;             /* ページの地 */
   --kh-color-surface:       #ffffff;             /* 持ち上がった面 */
   --kh-color-surface-muted: var(--kh-gray-2);    /* S2 沈んだ面。S3 だと fg-muted が 4.29:1 で割れる */
+  --kh-color-inverse:       var(--kh-mono-10);   /* 反転した面（Tooltip）。地の上で浮かせずに目立たせる */
+  --kh-color-inverse-fg:    #ffffff;
   --kh-color-bg:            var(--kh-color-canvas);  /* alias */
 
   /* ---- text: 濃い順に 4 段。これ以外の濃さを作らない --------------------- */
@@ -251,6 +253,8 @@
   --kh-color-canvas:        var(--kh-mono-10);   /* GY10 */
   --kh-color-surface:       var(--kh-mono-7);    /* GY7 */
   --kh-color-surface-muted: var(--kh-gray-10);   /* S10 */
+  --kh-color-inverse:       var(--kh-gray-1);    /* dark では明るい面に反転する */
+  --kh-color-inverse-fg:    var(--kh-mono-10);
 
   --kh-color-fg:        var(--kh-gray-1);   /* S1 */
   --kh-color-fg-body:   var(--kh-gray-3);   /* S3 */

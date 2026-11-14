@@ -15,11 +15,11 @@
     font-size: var(--kh-text-sm);
     line-height: var(--kh-leading-ui);
 
-    /* 白地に線だけ。影は使わない（ぼかすと輪郭がぼやける。dark では shadow-sm が
-       外側の線に化けて枠線と二重になる） */
-    background: var(--kh-color-surface);
-    color: var(--kh-color-fg);
-    border: 1px solid var(--kh-color-border);
+    /* 反転した面（light は黒地に白文字、dark は明るい地に黒文字）。白地に線だけだと
+       表や本文の上で面に紛れて読みにくかった。影は使わない（ぼかすと輪郭がぼやける） */
+    background: var(--kh-tooltip-bg, var(--kh-color-inverse));
+    color: var(--kh-tooltip-fg, var(--kh-color-inverse-fg));
+    border: 0;
     border-radius: var(--kh-radius-sm);
   }
 
