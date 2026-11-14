@@ -283,3 +283,8 @@
 .new-expense-form {
   max-width: 36rem;
 }
+
+/* ---- メンバー（#/members） --------------------------------------------- */
+.filter-role {
+  width: 10rem;
+}

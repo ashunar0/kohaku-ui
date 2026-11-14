@@ -2,6 +2,7 @@ import { Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } 
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ExpensesPage } from "./ExpensesPage"
+import { MembersPage } from "./MembersPage"
 import { NewExpensePage } from "./NewExpensePage"
 import { SettingsPage } from "./SettingsPage"
 import { SignupPage } from "./SignupPage"
@@ -12,7 +13,7 @@ export const toaster = createToaster({ placement: "bottom-end", gap: 12 })
    サイズ規約は <Icon asChild> で与える */
 const nav = [
   { label: "経費申請", Glyph: Receipt, href: "#/" },
-  { label: "メンバー", Glyph: Users, href: "#" },
+  { label: "メンバー", Glyph: Users, href: "#/members" },
   { label: "レポート", Glyph: BarChart3, href: "#" },
   { label: "設定", Glyph: Settings, href: "#/settings" },
 ]
@@ -38,7 +39,7 @@ export function App() {
       </>
     )
   }
-  const page = hash === "#/settings" ? "設定" : "経費申請"
+  const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : "経費申請"
   const isNew = hash === "#/new"
   return (
     <div className="app">
@@ -91,7 +92,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : isNew ? <NewExpensePage /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : isNew ? <NewExpensePage /> : <ExpensesPage />}
         </div>
       </main>
 
