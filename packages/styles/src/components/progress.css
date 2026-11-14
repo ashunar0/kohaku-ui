@@ -33,6 +33,23 @@
     border-radius: var(--kh-radius-full);
   }
 
+  /* 数字を出してラベルが無いときは、数字を棒の右に置いて 1 行にする（表の中の構成比など）。
+     数字の幅を固定して、行が変わっても棒の長さと数字の右端がそろうようにする */
+  [data-scope="progress"][data-part="root"]:has(> [data-part="value-text"]):not(:has(> [data-part="label"])) {
+    grid-template-columns: 1fr var(--kh-progress-value-width, 3.5rem);
+    align-items: center;
+  }
+  [data-scope="progress"][data-part="root"]:has(> [data-part="value-text"]):not(:has(> [data-part="label"])) > [data-part="track"] {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  [data-scope="progress"][data-part="root"]:has(> [data-part="value-text"]):not(:has(> [data-part="label"])) > [data-part="value-text"] {
+    grid-row: 1;
+    text-align: right;
+    font-size: var(--kh-text-md);
+    color: var(--kh-color-fg-body);
+  }
+
   [data-scope="progress"][data-part="range"] {
     height: 100%;
     background: var(--kh-color-accent);

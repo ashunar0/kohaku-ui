@@ -297,6 +297,7 @@ export function App() {
         <Progress label="完了" showValue defaultValue={100} />
         <Progress label="読み込み中（終わりが分からない）" defaultValue={null} />
         <Progress aria-label="ラベルなし" defaultValue={70} />
+        <Progress aria-label="ラベルなしで数字あり" showValue defaultValue={58} />
       </div>
 
       <h2 style={h2}>Collapsible（Ark をそのまま再輸出）</h2>

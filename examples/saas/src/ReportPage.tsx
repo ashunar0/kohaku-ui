@@ -101,7 +101,7 @@ function ReportTable({ head, rows }: { head: string; rows: Row[] }) {
           <th scope="col">{head}</th>
           <th scope="col" data-numeric>件数</th>
           <th scope="col" data-numeric>金額</th>
-          <th scope="col">構成比</th>
+          <th scope="col" data-numeric>構成比</th>
           <th scope="col" data-numeric>前月比</th>
         </tr>
       </thead>
@@ -112,7 +112,13 @@ function ReportTable({ head, rows }: { head: string; rows: Row[] }) {
             <td data-numeric>{r.count}</td>
             <td data-numeric>{yen(r.amount)}</td>
             <td>
-              <Progress value={(r.amount / total) * 100} showValue aria-label={`${r.name} の構成比`} className="share" />
+              <Progress
+                value={(r.amount / total) * 100}
+                showValue
+                aria-label={`${r.name} の構成比`}
+                className="share"
+                formatOptions={{ style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 }}
+              />
             </td>
             <td data-numeric>{diff(r.amount, r.prev)}</td>
           </tr>
@@ -123,7 +129,7 @@ function ReportTable({ head, rows }: { head: string; rows: Row[] }) {
           <th scope="row">合計</th>
           <td data-numeric>{count}</td>
           <td data-numeric>{yen(total)}</td>
-          <td>{pct(1)}</td>
+          <td data-numeric>{pct(1)}</td>
           <td data-numeric>{diff(total, prev)}</td>
         </tr>
       </tfoot>

@@ -305,6 +305,7 @@ const h2 = {
       <Progress label="完了" show-value :default-value="100" />
       <Progress label="読み込み中（終わりが分からない）" :default-value="null" />
       <Progress aria-label="ラベルなし" :default-value="70" />
+      <Progress aria-label="ラベルなしで数字あり" show-value :default-value="58" />
     </div>
 
     <h2 :style="h2">Collapsible（Ark をそのまま再輸出）</h2>

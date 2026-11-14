@@ -25,6 +25,18 @@ export const States: Story = {
       <Progress label="完了" showValue defaultValue={100} />
       <Progress label="終わりが分からない読み込み中" defaultValue={null} />
       <Progress aria-label="ラベルを出さない場合" defaultValue={70} />
+      <Progress aria-label="ラベルを出さずに数字を出す場合" showValue defaultValue={58.2} formatOptions={{ style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 }} />
+    </div>
+  ),
+}
+
+/** ラベルを出さずに数字を出すと、数字が棒の右に来て 1 行になる（表の中の構成比など）。数字の幅は固定で、行が変わっても棒の長さがそろう */
+export const InTable: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "0.75rem", maxWidth: "16rem" }}>
+      {[58.2, 18.7, 1.1].map((v) => (
+        <Progress key={v} aria-label="構成比" showValue defaultValue={v} formatOptions={{ style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 }} />
+      ))}
     </div>
   ),
 }
