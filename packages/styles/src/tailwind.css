@@ -57,6 +57,7 @@
   --text-base:   var(--kh-text-md);
   --text-lg:     var(--kh-text-lg);
   --text-xl:     var(--kh-text-xl);
+  --text-2xl:    var(--kh-text-2xl);
 
   /* ---- spacing: kohaku の刻みに合わせる ---------------------------------- */
   --spacing: 0.25rem;   /* p-1 = 0.25rem, p-3 = 0.75rem … kohaku と一致 */

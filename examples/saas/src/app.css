@@ -163,12 +163,13 @@
 .page {
   max-width: 76rem;
 }
-/* 見出しは Dialog の見出しと同じ 16px・600。パンくずに画面の名前があるので大きくしなくてよい */
+/* 見出しは 20px。行の高さはボタンと同じ 40px にして、右にボタンが並んでも並ばなくても
+   見出しの行の高さと下の空きが変わらないようにする */
 .page-head h1 {
   margin: 0;
-  font-size: var(--kh-text-lg);
-  font-weight: 600;
-  line-height: var(--kh-leading-tight);
+  font-size: var(--kh-text-xl);
+  line-height: var(--kh-button-height, 2.5rem);
+  letter-spacing: var(--kh-tracking-tight);
 }
 
 .stats {
@@ -183,7 +184,7 @@
 }
 .stat-value {
   margin: var(--kh-space-1) 0 0;
-  font-size: var(--kh-text-xl);
+  font-size: var(--kh-text-2xl);
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--kh-tracking-tight);
 }
@@ -263,7 +264,7 @@
 }
 .signup-head h1 {
   margin: 0;
-  font-size: var(--kh-text-xl);
+  font-size: var(--kh-text-2xl);
   letter-spacing: var(--kh-tracking-tight);
 }
 .signup-head p {

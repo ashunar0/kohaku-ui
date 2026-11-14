@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /**
- * 文字の大きさは 4 段だけ。**12 / 14 / 16 / 24**（freee Vibes と同じ形）。
+ * 文字の大きさは 5 段だけ。**12 / 14 / 16 / 20 / 24**。
  *
- * - 下は 2px 刻み、ページ見出しだけ 1.5 倍に跳ぶ
+ * - ページ見出しは 20。40px のボタンと同じ行に並ぶので、行の高さもボタンにそろえる
+ * - 24 は大きな数字と、ログイン前の 1 画面だけのページの見出し
  * - 13px は持たない（14 と見分けがつかず、使い分けの基準が作れない）
  * - 見出しの階層は大きさだけでなく太さでも作る（h3 は本文と同じ 14px の太字）
  *
@@ -18,7 +19,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const rows = [
-  { token: "--kh-text-xl", px: 24, role: "ページ見出し・ダイアログのタイトル・大きな数字", weight: 700 },
+  { token: "--kh-text-2xl", px: 24, role: "大きな数字・ログイン前のページの見出し", weight: 700 },
+  { token: "--kh-text-xl", px: 20, role: "ページ見出し", weight: 700 },
   { token: "--kh-text-lg", px: 16, role: "セクション見出し（太字）・高さ 44px の部品", weight: 700 },
   { token: "--kh-text-md", px: 14, role: "既定。本文・ナビ・表・高さ 36〜40px の部品。小見出しは太字で", weight: 400 },
   { token: "--kh-text-sm", px: 12, role: "補助（ヘルプ・エラー・Tooltip・Badge・注記）・高さ 28px の部品", weight: 400 },

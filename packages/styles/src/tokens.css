@@ -64,12 +64,14 @@
   --kh-space-6: 1.5rem;
   --kh-space-8: 2rem;
 
-  /* 12 / 14 / 16 / 24（freee Vibes と同じ形。実測は docs/notes.md）。
-     下は 2px 刻み、ページ見出しだけ 1.5 倍に跳ぶ。13 は持たない（14 と見分けがつかない） */
-  --kh-text-sm: 0.75rem;
-  --kh-text-md: 0.875rem;
-  --kh-text-lg: 1rem;
-  --kh-text-xl: 1.5rem;
+  /* 12 / 14 / 16 / 20 / 24（実測と経緯は docs/notes.md）。13 は持たない（14 と見分けがつかない）。
+     20 はページ見出し。40px のボタンと同じ行に並べたとき、16 では小さく 24 では主張しすぎた。
+     24 は大きな数字と、ログイン前の 1 画面だけのページの見出し */
+  --kh-text-sm:  0.75rem;
+  --kh-text-md:  0.875rem;
+  --kh-text-lg:  1rem;
+  --kh-text-xl:  1.25rem;
+  --kh-text-2xl: 1.5rem;
 
   --kh-radius-sm: 0.25rem;
   --kh-radius-md: 0.5rem;
