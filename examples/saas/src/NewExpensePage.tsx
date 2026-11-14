@@ -76,7 +76,6 @@ export function NewExpensePage() {
     <VStack gap={8} className="page new-expense">
       <header className="page-head">
         <h1>新しい申請</h1>
-        <p>立て替えた経費を申請します。領収書は写真でも構いません。</p>
       </header>
 
       <form noValidate onSubmit={submit} className="new-expense-form">

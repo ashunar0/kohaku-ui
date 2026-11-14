@@ -95,11 +95,8 @@ export function ExpensesPage() {
   // どこも同じ間隔だと、絞り込みがどの表に効くのか読めない
   return (
     <VStack gap={8} className="page">
-      <header className="page-head" data-kh="hstack" data-justify="between" data-align="end" data-gap="4">
-        <div>
-          <h1>経費申請</h1>
-          <p>部署の申請を確認して承認します。</p>
-        </div>
+      <header className="page-head" data-kh="hstack" data-justify="between" data-gap="4">
+        <h1>経費申請</h1>
         <Actions>
           <Button variant="outline">
             <Icon asChild><Download /></Icon>

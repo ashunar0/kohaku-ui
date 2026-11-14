@@ -163,15 +163,12 @@
 .page {
   max-width: 76rem;
 }
+/* 見出しは Dialog の見出しと同じ 16px・600。パンくずに画面の名前があるので大きくしなくてよい */
 .page-head h1 {
   margin: 0;
-  font-size: var(--kh-text-xl);
-  letter-spacing: var(--kh-tracking-tight);
-}
-.page-head p {
-  margin: var(--kh-space-1) 0 0;
-  font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-muted);
+  font-size: var(--kh-text-lg);
+  font-weight: 600;
+  line-height: var(--kh-leading-tight);
 }
 
 .stats {

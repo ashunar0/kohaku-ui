@@ -34,7 +34,6 @@ export function SettingsPage() {
     <VStack gap={8} className="page settings">
       <header className="page-head">
         <h1>設定</h1>
-        <p>プロフィールと通知、アカウントの設定を変えます。</p>
       </header>
 
       <Tabs.Root defaultValue="profile">
