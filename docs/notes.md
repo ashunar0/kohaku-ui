@@ -2214,3 +2214,11 @@ examples の 6 画面で、足す前と後の全部の文字の大きさを比�
   進む・戻るは画面のボタンで step を変える
 - 番号の縦位置は丸の中心から 0.375px 上（4 倍・ページ位置の端数 4 通りの平均）。0.5px 未満なので補正しない
 - まだの段階の輪は border-strong で 3:1 に届かない。入力欄の枠線と同じ Known Gaps の範囲（番号の文字は 4.5:1 以上）
+
+### 名前を入れ替えた: Stepper → Steps、Steps → Timeline（2026-11-14）
+
+あさひ「Ark UI で steps なら steps なのでは」。kohaku の部品は FileUpload・Progress・Pagination と
+Ark の名前のままなので、Ark の Steps を当てたものは **Steps**。名前が埋まっていた表示だけの経路
+（承認経路）を **Timeline** に改名した（Chakra・Mantine と同じ呼び名。丸と線で縦につなぎ、担当者と日付を並べるもの）。
+属性は `data-kh="timeline"` / `data-kh="timeline-item"`、L3 は `--kh-timeline-*` / `--kh-steps-*`。
+上の 2 つの節の「Steps」「Stepper」は当時の名前。

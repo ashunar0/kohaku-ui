@@ -10,7 +10,7 @@ import {
   Field,
   HStack,
   Link,
-  Steps,
+  Timeline,
   VStack,
 } from "@kohaku/react"
 import { toaster } from "./App"
@@ -134,17 +134,17 @@ export function ExpenseDetailPage({ id }: { id: string }) {
             <Card.Title>承認経路</Card.Title>
           </Card.Header>
           <Card.Body>
-            <Steps>
+            <Timeline>
               {flowOf(e).map((s) => (
-                <Steps.Item key={s.name} state={s.state}>
+                <Timeline.Item key={s.name} state={s.state}>
                   <div className="step-head">
                     <span>{s.name}</span>
                     <Badge variant={stepVariant[s.state]}>{stepLabel[s.state]}</Badge>
                   </div>
                   <span className="muted">{s.who}{s.date ? `・${formatDate(s.date)}` : ""}</span>
-                </Steps.Item>
+                </Timeline.Item>
               ))}
-            </Steps>
+            </Timeline>
           </Card.Body>
         </Card.Root>
       </div>

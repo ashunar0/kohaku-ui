@@ -305,7 +305,7 @@
   max-width: 36rem;
 }
 /* 段階の表示は下のフォームと同じ幅にして、段階の間を開きすぎない */
-.import-stepper > [data-part="list"] {
+.import-steps > [data-part="list"] {
   max-width: 36rem;
   margin-bottom: var(--kh-space-8);
 }

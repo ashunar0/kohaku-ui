@@ -1,32 +1,50 @@
-import type { ComponentPropsWithoutRef } from "react"
+import { Steps as Ark } from "@ark-ui/react"
+import type { ComponentPropsWithoutRef, ReactNode } from "react"
 
-export type StepState = "done" | "current" | "rejected" | "waiting"
-
-export type StepsProps = ComponentPropsWithoutRef<"ol">
-export type StepsItemProps = ComponentPropsWithoutRef<"li"> & {
-  /** 完了 / いま / 差し戻し / まだ。丸の形と色が変わる。既定は waiting */
-  state?: StepState
+export type StepsProps = Omit<ComponentPropsWithoutRef<typeof Ark.Root>, "count"> & {
+  /** 段階の名前。数がそのまま段階の数になる */
+  steps: ReactNode[]
 }
 
 /**
- * 決まった順番で進む段階と、いまどこまで進んだか（承認経路など）。表示するだけで操作は無い。
- * 丸は読み上げないので、状態の文字（「完了」など）は中身に書く。
+ * 入力を段階に分けて進める画面の、段階の表示と中身（Ark の Steps）。List / Item / Trigger /
+ * Indicator / Separator を steps から組み立てて隠す。中身は Steps.Content を index ごとに置く。
  *
- *   <Steps>
- *     <Steps.Item state="done">申請</Steps.Item>
- *     <Steps.Item state="current">部署承認</Steps.Item>
+ * 既定で linear（番号を押しても飛べない）。進む・戻るは画面のボタンで step を変える。
+ * 表示するだけの経路（承認経路など）は Timeline を使う。
+ *
+ *   <Steps steps={["ファイル選択", "内容確認", "完了"]} step={step}>
+ *     <Steps.Content index={0}>…</Steps.Content>
  *   </Steps>
  */
-export function Steps(props: StepsProps) {
-  return <ol data-kh="steps" {...props} />
-}
-
-function Item({ state = "waiting", children, ...props }: StepsItemProps) {
+export function Steps({ steps, linear = true, children, ...props }: StepsProps) {
   return (
-    <li data-kh="step" data-state={state} aria-current={state === "current" ? "step" : undefined} {...props}>
-      <span data-part="indicator" aria-hidden="true" />
-      <div data-part="body">{children}</div>
-    </li>
+    <Ark.Root count={steps.length} linear={linear} {...props}>
+      <Ark.List>
+        {steps.map((name, i) => (
+          <Ark.Item key={i} index={i}>
+            <Ark.Trigger>
+              <Ark.Indicator>{i + 1}</Ark.Indicator>
+              <span>{name}</span>
+            </Ark.Trigger>
+            {i < steps.length - 1 ? <Ark.Separator /> : null}
+          </Ark.Item>
+        ))}
+      </Ark.List>
+      {children}
+    </Ark.Root>
   )
 }
-Steps.Item = Item
+
+Steps.Content = Ark.Content
+/** 素の構造で組みたいとき用 */
+Steps.Root = Ark.Root
+Steps.List = Ark.List
+Steps.Item = Ark.Item
+Steps.Trigger = Ark.Trigger
+Steps.Indicator = Ark.Indicator
+Steps.Separator = Ark.Separator
+Steps.CompletedContent = Ark.CompletedContent
+Steps.NextTrigger = Ark.NextTrigger
+Steps.PrevTrigger = Ark.PrevTrigger
+Steps.Context = Ark.Context

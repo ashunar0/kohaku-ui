@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Actions, Affix, Alert, Avatar, DescriptionList, Steps, Stepper, PasswordInput, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
+  Actions, Affix, Alert, Avatar, DescriptionList, Timeline, Steps, PasswordInput, Badge, Breadcrumbs, Button, HStack, IconButton, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, FileUpload, Group,
   Icon, Input, Menu, Pagination, Popover, Progress, RadioGroup, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/vue"
@@ -105,18 +105,18 @@ const h2 = {
       <Avatar name="鈴木 一郎" src="/no-such-image.png" />
     </HStack>
 
-    <h2 :style="h2">Steps — 決まった順番で進む段階。丸は読み上げないので状態は文字でも書く</h2>
-    <Steps :style="{ maxWidth: '20rem' }">
-      <Steps.Item state="done">申請（完了）</Steps.Item>
-      <Steps.Item state="rejected">部署承認（差し戻し）</Steps.Item>
-      <Steps.Item state="current">経理承認（承認待ち）</Steps.Item>
-      <Steps.Item state="waiting">支払（未着手）</Steps.Item>
-    </Steps>
+    <h2 :style="h2">Timeline — 決まった順番で進む段階。丸は読み上げないので状態は文字でも書く</h2>
+    <Timeline :style="{ maxWidth: '20rem' }">
+      <Timeline.Item state="done">申請（完了）</Timeline.Item>
+      <Timeline.Item state="rejected">部署承認（差し戻し）</Timeline.Item>
+      <Timeline.Item state="current">経理承認（承認待ち）</Timeline.Item>
+      <Timeline.Item state="waiting">支払（未着手）</Timeline.Item>
+    </Timeline>
 
-    <h2 :style="h2">Stepper — 入力を段階に分けて進める画面の段階（Ark の Steps）</h2>
-    <Stepper :steps="['ファイル選択', '内容確認', '完了']" :step="1" :style="{ maxWidth: '36rem' }">
-      <Stepper.Content :index="1">内容確認の中身</Stepper.Content>
-    </Stepper>
+    <h2 :style="h2">Steps — 入力を段階に分けて進める画面の段階（Ark の Steps）</h2>
+    <Steps :steps="['ファイル選択', '内容確認', '完了']" :step="1" :style="{ maxWidth: '36rem' }">
+      <Steps.Content :index="1">内容確認の中身</Steps.Content>
+    </Steps>
 
     <h2 :style="h2">DescriptionList — 項目名を左の列にそろえ、1 項目 1 行</h2>
     <DescriptionList :style="{ maxWidth: '28rem' }">

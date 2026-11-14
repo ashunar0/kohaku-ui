@@ -1,0 +1,80 @@
+@layer kohaku {
+  /* 決まった順番で進む段階と、いまどこまで進んだか（承認経路など）。表示するだけで操作は無い。
+     Ark の Steps は入力を段階に分ける画面のための部品（tablist / tab）で、表示だけの経路には合わない
+     （そちらは steps.css）。振る舞いを持たないので kohaku が持つ（Group や Card と同じ）。
+     段階の状態は丸の形と色で示す: 完了 = 塗り + ✓ / いま = 輪 + 点 / 差し戻し = 塗り + × / まだ = 輪。
+     色だけに頼らないよう、状態の文字は利用側が中身に書く（丸は読み上げない） */
+  [data-kh="timeline"] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /* 本文と同じ 14px。持たないと利用側の 16px を受け継ぎ、カードの見出しと同じ大きさになった */
+    font-size: var(--kh-text-md);
+  }
+  [data-kh="timeline-item"] {
+    --kh-timeline-color: var(--kh-color-border-strong);
+    --kh-timeline-size: 1.25rem;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--kh-timeline-size) minmax(0, 1fr);
+    column-gap: var(--kh-space-3);
+    padding-bottom: var(--kh-space-4);
+    line-height: var(--kh-leading-ui);
+  }
+  [data-kh="timeline-item"]:last-child { padding-bottom: 0; }
+  [data-kh="timeline-item"][data-state="done"]     { --kh-timeline-color: var(--kh-color-success); }
+  [data-kh="timeline-item"][data-state="current"]  { --kh-timeline-color: var(--kh-color-warning); }
+  [data-kh="timeline-item"][data-state="rejected"] { --kh-timeline-color: var(--kh-color-danger); }
+
+  /* 次の段階へつなぐ線。済んだ段階から出る線だけ完了の色にする */
+  [data-kh="timeline-item"]:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    /* 自分の丸の下端から、次の丸の上端まで（丸は 1 行目の中心にそろえて下がっている分を足し引きする） */
+    top: calc((1lh - var(--kh-timeline-size)) / 2 + var(--kh-timeline-size));
+    bottom: calc((var(--kh-timeline-size) - 1lh) / 2);
+    left: calc(var(--kh-timeline-size) / 2 - 1px);
+    width: 2px;
+    background: var(--kh-color-border);
+  }
+  [data-kh="timeline-item"][data-state="done"]:not(:last-child)::after {
+    background: var(--kh-color-success);
+  }
+
+  /* 丸。1 行目の文字の中心にそろえる */
+  [data-kh="timeline-item"] > [data-part="indicator"] {
+    display: grid;
+    place-items: center;
+    width: var(--kh-timeline-size);
+    height: var(--kh-timeline-size);
+    margin-top: calc((1lh - var(--kh-timeline-size)) / 2);
+    border-radius: var(--kh-radius-full);
+    background: var(--kh-color-surface);
+    box-shadow: inset 0 0 0 2px var(--kh-timeline-color);
+  }
+  [data-kh="timeline-item"]:is([data-state="done"], [data-state="rejected"]) > [data-part="indicator"] {
+    background: var(--kh-timeline-color);
+    box-shadow: none;
+  }
+  [data-kh="timeline-item"]:is([data-state="done"], [data-state="rejected"]) > [data-part="indicator"]::before {
+    content: "";
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--kh-color-success-fg);
+    -webkit-mask: var(--kh-glyph-check) center / contain no-repeat;
+            mask: var(--kh-glyph-check) center / contain no-repeat;
+  }
+  [data-kh="timeline-item"][data-state="rejected"] > [data-part="indicator"]::before {
+    background: var(--kh-color-danger-fg);
+    -webkit-mask-image: var(--kh-glyph-x);
+            mask-image: var(--kh-glyph-x);
+  }
+  [data-kh="timeline-item"][data-state="current"] > [data-part="indicator"]::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--kh-radius-full);
+    background: var(--kh-timeline-color);
+  }
+}

@@ -7,7 +7,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <li data-kh="step" :data-state="state" :aria-current="state === 'current' ? 'step' : undefined">
+  <li data-kh="timeline-item" :data-state="state" :aria-current="state === 'current' ? 'step' : undefined">
     <span data-part="indicator" aria-hidden="true" />
     <div data-part="body"><slot /></div>
   </li>

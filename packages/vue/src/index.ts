@@ -34,9 +34,9 @@ import PopoverContent from "./PopoverContent.vue"
 import AvatarVue from "./Avatar.vue"
 import DescriptionListVue from "./DescriptionList.vue"
 import DescriptionListItem from "./DescriptionListItem.vue"
+import TimelineVue from "./Timeline.vue"
+import TimelineItem from "./TimelineItem.vue"
 import StepsVue from "./Steps.vue"
-import StepsItem from "./StepsItem.vue"
-import StepperVue from "./Stepper.vue"
 import ProgressVue from "./Progress.vue"
 import RadioGroupVue from "./RadioGroup.vue"
 import RadioGroupItem from "./RadioGroupItem.vue"
@@ -110,8 +110,8 @@ export const PasswordInput = Object.assign(PasswordInputVue, {
 export const Avatar = Object.assign(AvatarVue, {
   Root: ArkAvatar.Root, Image: ArkAvatar.Image, Fallback: ArkAvatar.Fallback, Context: ArkAvatar.Context,
 })
-export const Steps = Object.assign(StepsVue, { Item: StepsItem })
-export const Stepper = Object.assign(StepperVue, {
+export const Timeline = Object.assign(TimelineVue, { Item: TimelineItem })
+export const Steps = Object.assign(StepsVue, {
   Content: ArkSteps.Content,
   Root: ArkSteps.Root, List: ArkSteps.List, Item: ArkSteps.Item, Trigger: ArkSteps.Trigger,
   Indicator: ArkSteps.Indicator, Separator: ArkSteps.Separator, CompletedContent: ArkSteps.CompletedContent,

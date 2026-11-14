@@ -9,7 +9,7 @@ import {
   FileUpload,
   Progress,
   Select,
-  Stepper,
+  Steps,
   Table,
   VStack,
   createListCollection,
@@ -89,10 +89,10 @@ export function ImportPage() {
         <h1>カード明細の取り込み</h1>
       </header>
 
-      <Stepper steps={stepNames} step={step} className="import-stepper">
+      <Steps steps={stepNames} step={step} className="import-steps">
 
         {/* ── 1. ファイル選択 ─────────────────────────── */}
-        <Stepper.Content index={0}>
+        <Steps.Content index={0}>
           <VStack gap={6} className="import-form">
             <Field.Root required invalid={!!errors.card}>
               <Select.Root collection={cards} value={card} onValueChange={(d) => setCard(d.value)}>
@@ -130,10 +130,10 @@ export function ImportPage() {
               <Button onClick={next}>次へ</Button>
             </Actions>
           </VStack>
-        </Stepper.Content>
+        </Steps.Content>
 
         {/* ── 2. 内容確認 ─────────────────────────────── */}
-        <Stepper.Content index={1}>
+        <Steps.Content index={1}>
           {loaded < 100 ? (
             <Progress label="明細を読み込み中" value={loaded} showValue className="import-progress" />
           ) : (
@@ -222,10 +222,10 @@ export function ImportPage() {
               </Actions>
             </VStack>
           )}
-        </Stepper.Content>
+        </Steps.Content>
 
         {/* ── 3. 完了 ─────────────────────────────────── */}
-        <Stepper.Content index={2}>
+        <Steps.Content index={2}>
           <VStack gap={4}>
             <p>{picked.length} 件を下書きとして取り込みました。</p>
             <Actions align="start">
@@ -233,8 +233,8 @@ export function ImportPage() {
               <Button variant="outline" onClick={restart}>続けて取り込む</Button>
             </Actions>
           </VStack>
-        </Stepper.Content>
-      </Stepper>
+        </Steps.Content>
+      </Steps>
     </VStack>
   )
 }

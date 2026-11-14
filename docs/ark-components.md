@@ -44,7 +44,7 @@ tree-view
 | menu | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致） |
 | date-picker | ✅ 対応済み・実機検証済み（React / Vue で DOM・動作一致。日・月・年の表） |
 | avatar | ✅ 対応済み・実機検証済み（React / Vue で DOM 一致。画像が読めないときは 1 文字目） |
-| steps | ✅ 対応済み・実機検証済み（入力を段階に分ける画面の Stepper。React / Vue で DOM 一致。表示だけの経路は kohaku の Steps） |
+| steps | ✅ 対応済み・実機検証済み（入力を段階に分ける画面。React / Vue で DOM 一致。表示だけの経路は kohaku の Timeline） |
 | それ以外 | ⬜ 未対応 |
 
 これから作る順番は [`roadmap.md`](roadmap.md)。
