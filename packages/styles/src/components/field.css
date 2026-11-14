@@ -12,6 +12,8 @@
   /* ---- label ------------------------------------------------------------ */
   [data-scope="field"][data-part="label"],
   [data-scope="file-upload"][data-part="label"],
+  [data-scope="select"][data-part="label"],
+  [data-scope="date-picker"][data-part="label"],
   [data-kh="label"] {
     display: flex;
     align-items: center;
@@ -38,7 +40,7 @@
      <Fieldset.Legend data-required> */
   [data-scope="field"][data-part="required-indicator"]::before,
   [data-scope="fieldset"][data-part="legend"][data-required]::after,
-  :is([data-scope="field"][data-part="label"], [data-scope="fieldset"][data-part="legend"])[data-optional]:not([data-required])::after {
+  :is([data-part="label"], [data-part="legend"])[data-optional]:not([data-required])::after {
     content: var(--kh-field-required-text, "必須");
     padding-inline: 0.4em;
     /* 10px。スケール外なので L3 に literal で持つ */
@@ -53,17 +55,18 @@
 
   /* 任意の印。必須と同じ形の灰色のバッジ。どちらに印を付けるかは画面が決める
      （少ない方だけに付けるなど）ので、opt-in: <Field.Label data-optional>。
+     Select・DatePicker・RadioGroup・FileUpload のラベルにも付けられる。
      Ark の Label は required のとき data-required を持つので、両方付けたら必須が勝つ。
      必須と形をそろえるのは、並んだときに「印」として同じ場所を見れば済むため */
-  :is([data-scope="field"][data-part="label"], [data-scope="fieldset"][data-part="legend"])[data-optional]:not([data-required])::after {
+  :is([data-part="label"], [data-part="legend"])[data-optional]:not([data-required])::after {
     content: var(--kh-field-optional-text, "任意");
     /* 地は Badge の neutral-soft（S3）ではなく S2。S3 の上の fg-muted は 4.29:1 で AA を割る。
        Badge のように文字を fg-body にすると、必須より濃く見えて主張する */
     background: var(--kh-color-surface-muted);
     color: var(--kh-color-fg-muted);
   }
-  /* Field のラベルでは RequiredIndicator と同じ 8px（gap 4 + margin 4）離す */
-  [data-scope="field"][data-part="label"][data-optional]:not([data-required])::after {
+  /* ラベルでは RequiredIndicator と同じ 8px（gap 4 + margin 4）離す */
+  [data-part="label"][data-optional]:not([data-required])::after {
     flex-shrink: 0;
     margin-inline-start: var(--kh-space-1);
   }

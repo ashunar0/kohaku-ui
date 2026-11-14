@@ -2073,3 +2073,15 @@ CSS で狙えないので使わない。Ark のラベルは required のとき `
 
 地は S2（surface-muted）。Badge と同じ S3 の上の fg-muted は light で 4.29:1 で AA を割る。Badge のように
 文字を fg-body にすると必須より濃く見えるので、地を薄くした（light 4.53 / dark 5.09）。
+
+## 新しい申請の画面（#/new）で見つけた穴（2026-11-14）
+
+会員登録・設定の次に、経費の新しい申請の画面を作った。日付・区分・金額・領収書を 1 つのフォームに混ぜた。
+
+- **Select・DatePicker のラベルが 4px 高かった**（25px、Field は 21px）。line-height が抜けていて、欄どうしの
+  間隔が場所でばらついた。ラベルの見た目を field.css の 1 か所にまとめた
+- **Select の invalid で枠が赤くならなかった**（Story の Invalid も同じだった）。Input と同じ指定を足した
+- **任意の印が Field のラベルにしか効かなかった**。どのラベル（legend）にも効くようにした。RadioGroup の
+  ラベルだけ flex でなく印が 4px に寄るので、ほかと同じ flex + gap にした
+- 必須の印とエラー文言を Select に出すには、Field で包む（Ark の Select は Field と連携する）。kohaku で
+  別の仕組みは作らない（Ark にあるものは自作しない）

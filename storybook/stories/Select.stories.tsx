@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Select, createListCollection } from "@kohaku/react"
+import { Field, Select, createListCollection } from "@kohaku/react"
 
 const plans = createListCollection({
   items: [
@@ -57,3 +57,49 @@ export const Disabled: Story = { render: () => render({ disabled: true }) }
 export const ReadOnly: Story = { render: () => render({ readOnly: true }) }
 
 export const Invalid: Story = { render: () => render({ invalid: true }) }
+
+/**
+ * 必須の印とエラー文言は Field で包んで出す。Ark の Select は Field と連携し、
+ * required / invalid とラベルの紐付けを Field から受け取る。
+ * 任意の印はラベルに `data-optional`（Field と同じ）。
+ */
+export const InField: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      <Field.Root required invalid>
+        <Select.Root collection={plans}>
+          <Select.Label>プラン<Field.RequiredIndicator /></Select.Label>
+          <Select.Trigger>
+            <Select.ValueText placeholder="選択してください" />
+            <Select.Indicator />
+          </Select.Trigger>
+          <Select.Content>
+            {plans.items.map((item) => (
+              <Select.Item key={item.value} item={item}>
+                <Select.ItemText>{item.label}</Select.ItemText>
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+          <Select.HiddenSelect />
+        </Select.Root>
+        <Field.ErrorText>プランを選んでください。</Field.ErrorText>
+      </Field.Root>
+      <Select.Root collection={plans}>
+        <Select.Label data-optional>前のプラン</Select.Label>
+        <Select.Trigger>
+          <Select.ValueText placeholder="選択してください" />
+          <Select.Indicator />
+        </Select.Trigger>
+        <Select.Content>
+          {plans.items.map((item) => (
+            <Select.Item key={item.value} item={item}>
+              <Select.ItemText>{item.label}</Select.ItemText>
+              <Select.ItemIndicator />
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+    </div>
+  ),
+}

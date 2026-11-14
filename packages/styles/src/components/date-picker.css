@@ -11,12 +11,7 @@
     display: inline-flex;
     flex-direction: column;
   }
-  [data-scope="date-picker"][data-part="label"] {
-    margin-bottom: var(--kh-space-2);
-    font-size: var(--kh-text-md);
-    font-weight: 500;
-    color: var(--kh-color-fg);
-  }
+  /* label は field.css（Field のラベルと同じ見た目） */
 
   /* ---- 入力欄 -------------------------------------------------------------
      枠は control が持つ（Input と同じ見た目）。範囲のときは 1 つの枠に input を 2 つ並べ、

@@ -20,6 +20,10 @@
 
   /* ---- group label ------------------------------------------------------ */
   [data-scope="radio-group"][data-part="label"] {
+    /* 必須・任意の印をほかのラベルと同じ 8px で並べるため flex（field.css） */
+    display: flex;
+    align-items: center;
+    gap: var(--kh-space-1);
     font-size: var(--kh-text-md);
     font-weight: 500;
     line-height: var(--kh-leading-ui);

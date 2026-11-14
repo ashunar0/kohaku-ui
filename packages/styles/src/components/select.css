@@ -7,12 +7,7 @@
     display: flex;
     flex-direction: column;
   }
-  [data-scope="select"][data-part="label"] {
-    margin-bottom: var(--kh-space-2);
-    font-size: var(--kh-text-md);
-    font-weight: 500;
-    color: var(--kh-color-fg);
-  }
+  /* label は field.css（Field のラベルと同じ見た目） */
 
   /* trigger は Input と同じ見た目にする */
   [data-scope="select"][data-part="trigger"] {
@@ -45,6 +40,11 @@
     background: var(--kh-color-surface-muted);
     color: var(--kh-color-fg-faint);
     cursor: not-allowed;
+  }
+  /* Field で包むと Field の invalid が届く（Ark の Select は Field と連携する） */
+  [data-scope="select"][data-part="trigger"][data-invalid] {
+    border-color: var(--kh-color-invalid);
+    --kh-color-ring: var(--kh-color-invalid);
   }
   /* 読み取り専用は Input と同じく枠だけ点線（input.css） */
   [data-scope="select"][data-part="trigger"][data-readonly]:not([data-disabled]) {
