@@ -20,6 +20,7 @@ import {
 } from "@kohaku/react"
 import { Ellipsis, Search } from "lucide-react"
 import { toaster } from "./App"
+import { formatDate } from "./data"
 
 /* メンバー一覧（#/members）。表・利用者のアイコン・招待のダイアログで kohaku の穴を探すための画面 */
 
@@ -54,11 +55,7 @@ const depts = createListCollection({
   items: ["経理部", "営業部", "開発部", "マーケティング", "コーポレート"].map((d) => ({ label: d, value: d })),
 })
 
-const formatDate = (d: string | null) => {
-  if (!d) return "—"
-  const [, m, day] = d.split("-")
-  return `${Number(m)}月${Number(day)}日`
-}
+const formatLogin = (d: string | null) => (d ? formatDate(d) : "—")
 
 export function MembersPage() {
   const [q, setQ] = useState("")
@@ -131,7 +128,7 @@ export function MembersPage() {
                 <td>{m.dept}</td>
                 <td data-fit>{roleLabel[m.role]}</td>
                 <td data-fit><Badge variant={stateVariant[m.state]}>{stateLabel[m.state]}</Badge></td>
-                <td data-fit>{formatDate(m.lastLogin)}</td>
+                <td data-fit>{formatLogin(m.lastLogin)}</td>
                 <td data-fit>
                   <Menu.Root
                     positioning={{ placement: "bottom-end" }}

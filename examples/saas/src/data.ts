@@ -55,7 +55,5 @@ export const expenses: Expense[] = raw.map(
 
 export const yen = (n: number) => `¥${n.toLocaleString("ja-JP")}`
 
-export const formatDate = (iso: string) => {
-  const [, m, d] = iso.split("-")
-  return `${Number(m)}月${Number(d)}日`
-}
+/** yyyy/MM/dd */
+export const formatDate = (iso: string) => iso.replaceAll("-", "/")

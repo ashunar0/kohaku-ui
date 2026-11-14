@@ -261,7 +261,7 @@
 /* ---- 申請の詳細（#/expenses/<申請番号>） ------------------------------- */
 .detail-layout {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
   gap: var(--kh-space-4);
   align-items: start;
 }
@@ -302,24 +302,6 @@
   justify-content: space-between;
   gap: var(--kh-space-4);
 }
-.flow {
-  display: grid;
-  gap: var(--kh-space-4);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.flow li {
-  display: grid;
-  gap: var(--kh-space-1);
-}
-.flow-state {
-  font-size: var(--kh-text-sm);
-  color: var(--kh-color-fg-muted);
-}
-.flow li[data-state="current"] .flow-state {
-  color: var(--kh-color-warning-deep);
-}
-.flow li[data-state="rejected"] .flow-state {
-  color: var(--kh-color-invalid);
+.step-who {
+  display: block;
 }

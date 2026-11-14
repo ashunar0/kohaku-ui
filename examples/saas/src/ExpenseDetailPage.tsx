@@ -9,6 +9,7 @@ import {
   Field,
   HStack,
   Link,
+  Steps,
   VStack,
 } from "@kohaku/react"
 import { toaster } from "./App"
@@ -129,20 +130,22 @@ export function ExpenseDetailPage({ id }: { id: string }) {
 
         <Card.Root>
           <Card.Header>
-            <Card.Title>承認状況</Card.Title>
+            <Card.Title>承認経路</Card.Title>
           </Card.Header>
           <Card.Body>
-            <ol className="flow">
+            <Steps>
               {flowOf(e).map((s) => (
-                <li key={s.name} data-state={s.state}>
-                  <HStack gap={2} justify="between" wrap={false}>
-                    <strong>{s.name}</strong>
-                    <span className="flow-state">{stepLabel[s.state]}</span>
+                <Steps.Item key={s.name} state={s.state}>
+                  <HStack gap={3} justify="between" align="baseline" wrap={false}>
+                    <span>
+                      {s.name}
+                      <span className="muted step-who">{s.who}{s.date ? `・${formatDate(s.date)}` : ""}</span>
+                    </span>
+                    <span className="muted">{stepLabel[s.state]}</span>
                   </HStack>
-                  <span className="muted">{s.who}{s.date ? `・${formatDate(s.date)}` : ""}</span>
-                </li>
+                </Steps.Item>
               ))}
-            </ol>
+            </Steps>
           </Card.Body>
         </Card.Root>
       </div>

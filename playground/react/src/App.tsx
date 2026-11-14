@@ -1,5 +1,5 @@
 import {
-  Actions, Affix, Alert, Avatar, Badge, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
+  Actions, Affix, Alert, Avatar, Badge, Steps, Breadcrumbs, Button, HStack, Link, Spinner, Tag, VisuallyHidden, VStack, Card, Checkbox, Collapsible, DatePicker, Dialog, Field, Group,
   FileUpload, Icon, IconButton, Input, PasswordInput, Menu, Pagination, RadioGroup, Popover, Progress, Select, Switch, Table, Tabs, Toaster, Tooltip,
   createListCollection, createToaster, parseDate,
 } from "@kohaku/react"
@@ -95,6 +95,14 @@ export function App() {
         <Avatar name="佐藤 めぐみ" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b4c8f0'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23285ac8'/%3E%3Crect x='6' y='22' width='20' height='12' rx='6' fill='%23285ac8'/%3E%3C/svg%3E" />
         <Avatar name="鈴木 一郎" src="/no-such-image.png" />
       </HStack>
+
+      <h2 style={h2}>Steps — 決まった順番で進む段階。丸は読み上げないので状態は文字でも書く</h2>
+      <Steps style={{ maxWidth: "20rem" }}>
+        <Steps.Item state="done">申請（完了）</Steps.Item>
+        <Steps.Item state="rejected">部署承認（差し戻し）</Steps.Item>
+        <Steps.Item state="current">経理承認（承認待ち）</Steps.Item>
+        <Steps.Item state="waiting">支払（未着手）</Steps.Item>
+      </Steps>
 
       <h2 style={h2}>VisuallyHidden — 画面に出さず読み上げにだけ出す</h2>
       <p style={{ margin: 0, fontSize: ".875rem" }}>
