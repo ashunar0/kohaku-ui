@@ -123,8 +123,7 @@
 }
 /* <small> の既定は 0.83 倍。13px にかかると 10.83px になって読めない。
    補助文字は段を明示する */
-.app-me small,
-.who small {
+.app-me small {
   font-size: var(--kh-text-sm);
 }
 .app-me small {
@@ -189,10 +188,6 @@
   /* 選んだときだけ出す。出た分だけ表は下にずれる（普段の空きを詰めるほうを選んだ） */
   font-size: var(--kh-text-sm);
   color: var(--kh-color-fg);
-}
-
-.who small {
-  color: var(--kh-color-fg-muted);
 }
 
 .count {

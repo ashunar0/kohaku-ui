@@ -207,6 +207,7 @@ export function ExpensesPage() {
               <th scope="col" data-fit>申請番号</th>
               <th scope="col" data-fit>申請日</th>
               <th scope="col">申請者</th>
+              <th scope="col">部署</th>
               <th scope="col">科目</th>
               <th scope="col" data-numeric>金額</th>
               <th scope="col" data-fit>状態</th>
@@ -229,12 +230,8 @@ export function ExpensesPage() {
                   <Link href={`#/expenses/${e.id}`} className="row-id">{e.id}</Link>
                 </td>
                 <td data-fit>{formatDate(e.date)}</td>
-                <td>
-                  <VStack gap={0} className="who">
-                    <strong>{e.applicant}</strong>
-                    <small>{e.dept}</small>
-                  </VStack>
-                </td>
+                <td>{e.applicant}</td>
+                <td>{e.dept}</td>
                 <td>{e.category}</td>
                 <td data-numeric>{yen(e.amount)}</td>
                 <td data-fit><Badge variant={statusVariant[e.status]}>{statusLabel[e.status]}</Badge></td>
@@ -281,7 +278,7 @@ export function ExpensesPage() {
             ))}
             {shown.length === 0 ? (
               <tr data-empty="">
-                <td colSpan={8}>該当する申請はありません。</td>
+                <td colSpan={9}>該当する申請はありません。</td>
               </tr>
             ) : null}
           </tbody>
