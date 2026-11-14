@@ -106,6 +106,7 @@ export function MembersPage() {
           <thead>
             <tr>
               <th scope="col">氏名</th>
+              <th scope="col">メールアドレス</th>
               <th scope="col">部署</th>
               <th scope="col" data-fit>権限</th>
               <th scope="col" data-fit>状態</th>
@@ -119,12 +120,10 @@ export function MembersPage() {
                 <td>
                   <HStack gap={3} wrap={false}>
                     <Avatar name={m.name} />
-                    <VStack gap={0} className="who">
-                      <strong>{m.name}</strong>
-                      <small>{m.email}</small>
-                    </VStack>
+                    <span>{m.name}</span>
                   </HStack>
                 </td>
+                <td>{m.email}</td>
                 <td>{m.dept}</td>
                 <td data-fit>{roleLabel[m.role]}</td>
                 <td data-fit><Badge variant={stateVariant[m.state]}>{stateLabel[m.state]}</Badge></td>
@@ -160,7 +159,7 @@ export function MembersPage() {
             ))}
             {rows.length === 0 ? (
               <tr data-empty="">
-                <td colSpan={6}>該当するメンバーはいません。</td>
+                <td colSpan={7}>該当するメンバーはいません。</td>
               </tr>
             ) : null}
           </tbody>
