@@ -1,6 +1,7 @@
 import { Avatar, Breadcrumbs, HStack, Icon, IconButton, Input, Toaster, createToaster } from "@kohaku/react"
 import { BarChart3, CircleHelp, Receipt, Search, Settings, Users } from "lucide-react"
 import { useEffect, useState } from "react"
+import { ExpenseDetailPage } from "./ExpenseDetailPage"
 import { ExpensesPage } from "./ExpensesPage"
 import { MembersPage } from "./MembersPage"
 import { NewExpensePage } from "./NewExpensePage"
@@ -41,6 +42,7 @@ export function App() {
   }
   const page = hash === "#/settings" ? "設定" : hash === "#/members" ? "メンバー" : "経費申請"
   const isNew = hash === "#/new"
+  const detailId = hash.startsWith("#/expenses/") ? decodeURIComponent(hash.slice("#/expenses/".length)) : null
   return (
     <div className="app">
       {/* ── サイドナビ: kohaku に無いので利用側で組む ───────────── */}
@@ -75,10 +77,10 @@ export function App() {
         <header className="app-head" data-kh="hstack" data-justify="between" data-gap="4" data-nowrap="">
           <Breadcrumbs>
             <Breadcrumbs.Item href="#">ホーム</Breadcrumbs.Item>
-            {isNew ? (
+            {isNew || detailId ? (
               <>
                 <Breadcrumbs.Item href="#/">{page}</Breadcrumbs.Item>
-                <Breadcrumbs.Item current>新規申請</Breadcrumbs.Item>
+                <Breadcrumbs.Item current>{detailId ?? "新規申請"}</Breadcrumbs.Item>
               </>
             ) : (
               <Breadcrumbs.Item current>{page}</Breadcrumbs.Item>
@@ -92,7 +94,7 @@ export function App() {
           </HStack>
         </header>
         <div className="app-body">
-          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : isNew ? <NewExpensePage /> : <ExpensesPage />}
+          {page === "設定" ? <SettingsPage /> : page === "メンバー" ? <MembersPage /> : isNew ? <NewExpensePage /> : detailId ? <ExpenseDetailPage key={detailId} id={detailId} /> : <ExpensesPage />}
         </div>
       </main>
 

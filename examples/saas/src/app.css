@@ -201,28 +201,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.detail {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--kh-space-3) var(--kh-space-5);
-  margin: 0;
-  padding: var(--kh-space-4) 0;
-  border-block: 1px solid var(--kh-color-border);
-  font-size: var(--kh-text-sm);
-}
-.detail-wide {
-  grid-column: 1 / -1;
-}
-.detail dt {
-  color: var(--kh-color-fg-muted);
-  margin-bottom: 2px;
-}
-.detail dd {
-  margin: 0;
-}
-.detail-amount {
-  font-variant-numeric: tabular-nums;
-}
 
 /* 申請番号の桁をそろえる。Table の tabular-nums は金額の列（data-numeric）だけ */
 .row-id {
@@ -278,4 +256,70 @@
 /* ---- メンバー（#/members） --------------------------------------------- */
 .filter-role {
   width: 10rem;
+}
+
+/* ---- 申請の詳細（#/expenses/<申請番号>） ------------------------------- */
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  gap: var(--kh-space-4);
+  align-items: start;
+}
+.spec {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--kh-space-4) var(--kh-space-6);
+  margin: 0;
+}
+.spec-wide {
+  grid-column: 1 / -1;
+}
+.spec dt {
+  margin-bottom: var(--kh-space-1);
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.spec dd {
+  margin: 0;
+}
+.spec-amount {
+  font-variant-numeric: tabular-nums;
+}
+.muted {
+  margin: 0;
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.receipts {
+  display: grid;
+  gap: var(--kh-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.receipts li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--kh-space-4);
+}
+.flow {
+  display: grid;
+  gap: var(--kh-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.flow li {
+  display: grid;
+  gap: var(--kh-space-1);
+}
+.flow-state {
+  font-size: var(--kh-text-sm);
+  color: var(--kh-color-fg-muted);
+}
+.flow li[data-state="current"] .flow-state {
+  color: var(--kh-color-warning-deep);
+}
+.flow li[data-state="rejected"] .flow-state {
+  color: var(--kh-color-invalid);
 }

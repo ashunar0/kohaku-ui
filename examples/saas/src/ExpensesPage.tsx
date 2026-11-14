@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import {
   Actions,
   Badge,
@@ -6,8 +6,6 @@ import {
   Card,
   Checkbox,
   DatePicker,
-  Dialog,
-  Field,
   Group,
   HStack,
   Icon,
@@ -25,7 +23,7 @@ import {
 } from "@kohaku/react"
 import { Download, Ellipsis, Search } from "lucide-react"
 import { toaster } from "./App"
-import { expenses, formatDate, statusLabel, yen, type Expense, type Status } from "./data"
+import { expenses, formatDate, statusLabel, yen, type Status } from "./data"
 
 const PER_PAGE = 8
 
@@ -59,9 +57,6 @@ export function ExpensesPage() {
   const [q, setQ] = useState("")
   const [page, setPage] = useState(1)
   const [picked, setPicked] = useState<string[]>([])
-  const [open, setOpen] = useState<Expense | null>(null)
-  const dialogTitle = useRef<HTMLHeadingElement>(null)
-  const [busy, setBusy] = useState(false)
 
   const rows = useMemo(
     () =>
@@ -230,7 +225,7 @@ export function ExpensesPage() {
                   />
                 </td>
                 <td data-fit>
-                  <Link asChild><button type="button" className="row-id" onClick={() => setOpen(e)}>{e.id}</button></Link>
+                  <Link href={`#/expenses/${e.id}`} className="row-id">{e.id}</Link>
                 </td>
                 <td data-fit>{formatDate(e.date)}</td>
                 <td>
@@ -246,7 +241,7 @@ export function ExpensesPage() {
                   <Menu.Root
                     positioning={{ placement: "bottom-end" }}
                     onSelect={(d) => {
-                      if (d.value === "view") setOpen(e)
+                      if (d.value === "view") location.hash = `#/expenses/${e.id}`
                       if (d.value === "approve") approve([e.id])
                       if (d.value === "reject") toaster.create({ title: "差し戻しました", description: e.id })
                       if (d.value === "delete") {
@@ -307,50 +302,6 @@ export function ExpensesPage() {
       </HStack>
       </VStack>
       </VStack>
-
-      {/* ── 詳細 ─────────────────────────────────────────── */}
-      {/* 開いたら見出しにフォーカスを置く。Ark の既定は最初の入力欄（コメント）で、
-          中身を読む前に書く欄へ飛ばされ、読み上げも詳細を飛ばしてしまう（WAI-ARIA APG の Dialog と同じ考え） */}
-      <Dialog.Root open={open != null} onOpenChange={(d) => !d.open && setOpen(null)} initialFocusEl={() => dialogTitle.current}>
-        <Dialog.Content>
-          <Dialog.Title ref={dialogTitle} tabIndex={-1}>{open?.id}</Dialog.Title>
-          <Dialog.Description>
-            {open ? `${open.applicant}（${open.dept}）が ${formatDate(open.date)} に申請` : ""}
-          </Dialog.Description>
-
-          <dl className="detail">
-            <div><dt>科目</dt><dd>{open?.category}</dd></div>
-            <div><dt>金額</dt><dd className="detail-amount">{open ? yen(open.amount) : ""}</dd></div>
-            <div><dt>状態</dt><dd>{open ? <Badge variant={statusVariant[open.status]}>{statusLabel[open.status]}</Badge> : null}</dd></div>
-            <div><dt>領収書</dt><dd>{open?.receipts} 枚</dd></div>
-            <div className="detail-wide"><dt>摘要</dt><dd>{open?.note}</dd></div>
-          </dl>
-
-          <Field.Root>
-            <Field.Label>コメント</Field.Label>
-            <Field.Textarea rows={3} placeholder="差し戻す場合は理由を入力してください。" />
-            <Field.HelperText>申請者に通知されます。</Field.HelperText>
-          </Field.Root>
-
-          <Actions>
-            <Button variant="outline" onClick={() => { setOpen(null); toaster.create({ title: "差し戻しました" }) }}>
-              差し戻す
-            </Button>
-            {/* 送信を待つふり（0.8 秒）。処理中は幅を保ったままくるくるに替わり、押しても何も起きない */}
-            <Button
-              loading={busy}
-              loadingLabel="承認中"
-              onClick={() => {
-                const id = open!.id
-                setBusy(true)
-                setTimeout(() => { setBusy(false); setOpen(null); approve([id]) }, 800)
-              }}
-            >
-              承認する
-            </Button>
-          </Actions>
-        </Dialog.Content>
-      </Dialog.Root>
     </VStack>
   )
 }
