@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react"
+import { useRef, useState, type FormEvent } from "react"
 import {
   Actions,
   Affix,
@@ -8,6 +8,7 @@ import {
   Field,
   FileUpload,
   Group,
+  Link,
   RadioGroup,
   Select,
   VStack,
@@ -28,6 +29,15 @@ const approvers = createListCollection({
   items: ["田中 彩（コーポレート）", "高橋 健（開発部）", "中村 ひかり（営業部）"].map((a) => ({ label: a, value: a })),
 })
 
+const order = ["date", "category", "amount", "payee", "purpose"]
+
+/** Field の id は入力欄に付く。Select は隠れた <select> に付くので、見えている表示欄に移る */
+function focusField(id: string) {
+  const el = document.getElementById(id)
+  const trigger = el?.closest('[data-scope="select"][data-part="root"]')?.querySelector<HTMLElement>('[data-part="trigger"]')
+  ;(trigger ?? el)?.focus()
+}
+
 export function NewExpensePage() {
   const [date, setDate] = useState<DateValue[]>([])
   const [amount, setAmount] = useState("")
@@ -46,7 +56,11 @@ export function NewExpensePage() {
     if (!payee.trim()) next.payee = "支払先を入力してください。"
     if (!purpose.trim()) next.purpose = "目的を入力してください。"
     setErrors(next)
-    if (Object.keys(next).length) return
+    if (Object.keys(next).length) {
+      // エラーのまとめに移る。どこを直せばいいかを先に伝える（会員登録と同じ。デジタル庁の方針）
+      requestAnimationFrame(() => summary.current?.focus())
+      return
+    }
     setBusy(true)
     setTimeout(() => {
       setBusy(false)
@@ -54,7 +68,9 @@ export function NewExpensePage() {
     }, 800)
   }
 
-  const count = Object.keys(errors).length
+  const summary = useRef<HTMLDivElement>(null)
+  // 並びは画面の上から。まとめのリンクもこの順に出す
+  const listed = order.filter((id) => errors[id])
 
   return (
     <VStack gap={8} className="page new-expense">
@@ -65,21 +81,32 @@ export function NewExpensePage() {
 
       <form noValidate onSubmit={submit} className="new-expense-form">
         <VStack gap={6}>
-          {count > 0 && (
-            <Alert.Root variant="danger">
+          {listed.length > 0 && (
+            <Alert.Root variant="danger" ref={summary} tabIndex={-1}>
               <Alert.Icon />
-              <Alert.Title>{count} 件の項目を直してください</Alert.Title>
+              <Alert.Title>{listed.length} 件の入力に問題があります</Alert.Title>
+              <Alert.Description>
+                <ul>
+                  {listed.map((id) => (
+                    <li key={id}>
+                      <Link href={`#${id}`} onClick={(ev) => { ev.preventDefault(); focusField(id) }}>
+                        {errors[id]}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Alert.Description>
             </Alert.Root>
           )}
 
-          <Field.Root required invalid={!!errors.date}>
+          <Field.Root required invalid={!!errors.date} id="date">
             <DatePicker label={<>利用日<Field.RequiredIndicator /></>} value={date} onValueChange={(d) => setDate(d.value)} />
             <Field.HelperText>領収書の日付です。</Field.HelperText>
             <Field.ErrorText>{errors.date}</Field.ErrorText>
           </Field.Root>
 
           {/* Select は Ark の Field と連携する（required / invalid / ラベルの紐付けを Field から受け取る） */}
-          <Field.Root required invalid={!!errors.category}>
+          <Field.Root required invalid={!!errors.category} id="category">
             <Select.Root collection={categories} value={category} onValueChange={(d) => setCategory(d.value)}>
               <Select.Label>区分<Field.RequiredIndicator /></Select.Label>
               <Select.Trigger>
@@ -99,7 +126,7 @@ export function NewExpensePage() {
             <Field.ErrorText>{errors.category}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.amount}>
+          <Field.Root required invalid={!!errors.amount} id="amount">
             <Field.Label>金額<Field.RequiredIndicator /></Field.Label>
             <Group>
               <Field.Input data-numeric="" inputMode="numeric" value={amount} onChange={(e) => setAmount(e.currentTarget.value)} style={{ width: "12rem" }} />
@@ -109,14 +136,14 @@ export function NewExpensePage() {
             <Field.ErrorText>{errors.amount}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.payee}>
+          <Field.Root required invalid={!!errors.payee} id="payee">
             <Field.Label>支払先<Field.RequiredIndicator /></Field.Label>
             <Field.Input value={payee} onChange={(e) => setPayee(e.currentTarget.value)} />
             <Field.HelperText>領収書に書かれたお店や会社の名前です。</Field.HelperText>
             <Field.ErrorText>{errors.payee}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.purpose}>
+          <Field.Root required invalid={!!errors.purpose} id="purpose">
             <Field.Label>目的<Field.RequiredIndicator /></Field.Label>
             <Field.Textarea rows={3} value={purpose} onChange={(e) => setPurpose(e.currentTarget.value)} />
             <Field.HelperText>誰と・何のために使ったかを書きます。</Field.HelperText>
