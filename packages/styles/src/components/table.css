@@ -46,6 +46,19 @@
     border-bottom: 0;
   }
 
+  /* 行の見出し（<th scope="row">）。ブラウザの既定の太字を消し、ほかのセルと同じ文字にする。
+     見出しであることは読み上げに任せる */
+  [data-kh="table"] :is(tbody, tfoot) th {
+    font-weight: inherit;
+  }
+
+  /* 合計の行。表頭と同じ地で、表の上と下を閉じる。太字にしない（列の幅が変わる） */
+  [data-kh="table"] tfoot :is(th, td) {
+    background: var(--kh-color-surface-muted);
+    border-top: 1px solid var(--kh-color-border);
+    border-bottom: 0;
+  }
+
   [data-kh="table"] tbody tr:not([data-empty]):hover {
     background: var(--kh-color-surface-muted);
   }

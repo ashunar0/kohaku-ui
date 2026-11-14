@@ -317,3 +317,12 @@
 .cell-text {
   padding-inline-start: calc(var(--kh-space-3) + 1px);
 }
+
+/* ---- レポート（#/reports） --------------------------------------------- */
+.report-month {
+  width: 10rem;
+}
+.share {
+  min-width: 8rem;
+}
+

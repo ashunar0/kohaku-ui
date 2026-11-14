@@ -153,6 +153,29 @@ export const Empty: Story = {
   ),
 }
 
+/** 集計表。行の頭は <th scope="row">（太字にしない）、合計の行は <tfoot>（表頭と同じ地で表を閉じる） */
+export const Totals: Story = {
+  render: () => (
+    <Table>
+      <thead>
+        <tr>
+          <th scope="col">部署</th>
+          <th scope="col" data-numeric>件数</th>
+          <th scope="col" data-numeric>金額</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">マーケティング</th><td data-numeric>9</td><td data-numeric>¥1,284,000</td></tr>
+        <tr><th scope="row">営業部</th><td data-numeric>18</td><td data-numeric>¥412,300</td></tr>
+        <tr><th scope="row">開発部</th><td data-numeric>24</td><td data-numeric>¥298,640</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><th scope="row">合計</th><td data-numeric>51</td><td data-numeric>¥1,994,940</td></tr>
+      </tfoot>
+    </Table>
+  ),
+}
+
 /** 行と表頭の高さは L3 トークンで寄せられる。祖先に置けば中の表がまとめて変わる */
 export const Compact: Story = {
   render: () => (
